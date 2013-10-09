@@ -6,6 +6,8 @@ package com.cathymini.cathymini2.services;
 
 import com.cathymini.cathymini2.model.Product;
 import java.util.Collection;
+import javax.ejb.Stateless;
+import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -14,6 +16,7 @@ import javax.persistence.Query;
  *
  * @author uzely
  */
+@ManagedBean(name="productBean")
 public class ProductBean {
     
     @PersistenceContext(unitName="ProductService") private EntityManager manager;

@@ -12,6 +12,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
 
     <dependencies>
@@ -74,6 +75,26 @@
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.lesscss</groupId>
+                <artifactId>lesscss-maven-plugin</artifactId>
+                <version>1.3.3</version>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/src/main/webapp/assets/bootstrap-3.0.0</sourceDirectory>
+                    <outputDirectory>${project.build.directory}/${project.build.finalName}/css</outputDirectory>
+                    <compress>true</compress>
+                    <includes>
+                        <include>bootstrap.less</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
