@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css"></link>
@@ -13,6 +14,13 @@
                 <f:ajax execute="@form"/>
             </h:commandButton>
         </h:form>
+         <ui:repeat value="#{productBean.getProducts()}" var="product">
+            <li>
+                <h:link value="#{product.name}" outcome="product">
+                    <f:param name="id" value="#{product.id}" />
+                </h:link>
+            </li>
+        </ui:repeat>
     </h:body>
 </html>
 
