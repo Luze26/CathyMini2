@@ -36,6 +36,8 @@ public class ProductBean {
     
     @PersistenceContext(unitName="com.cathymini_CathyMini2_PU") private EntityManager manager;
     
+    private static final Logger logger = Logger.getLogger(ProductBean.class.getName());
+    
     public void addProduct() {
         Product prod = new Product();
         prod.setName("test");
@@ -45,6 +47,7 @@ public class ProductBean {
             tx.begin();
             manager.persist(prod);   
             tx.commit();
+            logger.info("Product added");
         } catch (NamingException ex) {
             Logger.getLogger(ProductBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotSupportedException ex) {
