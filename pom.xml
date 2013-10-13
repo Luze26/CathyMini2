@@ -53,7 +53,7 @@
               <excludes>
                 <exclude>bootstrap-3.0.0/</exclude>
               </excludes>
-            </resource>
+            </resource>  
         </resources>
     
         <plugins>
@@ -122,6 +122,29 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                  <execution>
+                    <id>copy-resources</id>
+                    <!-- here the phase you need -->
+                    <phase>validate</phase>
+                    <goals>
+                      <goal>copy-resources</goal>
+                    </goals>
+                    <configuration>
+                      <outputDirectory>${project.build.directory}/${project.build.finalName}/assets</outputDirectory>
+                      <resources>          
+                        <resource>
+                          <directory>${basedir}/assets</directory>
+                          <filtering>true</filtering>
+                        </resource>
+                      </resources>              
+                    </configuration>            
+                  </execution>
+                </executions>
+              </plugin>
         </plugins>
     </build>
     <repositories>
