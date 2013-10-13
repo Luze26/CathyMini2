@@ -252,8 +252,6 @@ textarea {
 
 .main {
 	padding-bottom: 2em;
-	
-	border-bottom: 1px solid #000;
 }
 
 
@@ -307,6 +305,9 @@ textarea {
 */
 
 .footer {
+        bottom: 0px;
+        position: absolute;
+        width: 100%;
 	margin-top: 0;
 	
 	border-top: 1px solid #292929;
