@@ -1285,3 +1285,13 @@ color: #333;
 	
 }
 
+/*------------------------------------------------------------------
+Products
+*/
+.addProductBtn {
+    margin-bottom: 40px;
+}
+
+#addProduct .control-label {
+        width: auto;
+}

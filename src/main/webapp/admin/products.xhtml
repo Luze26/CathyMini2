@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
+          
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:body>
  
     	<ui:composition template="../template/adminLayout.xhtml">
@@ -12,6 +13,43 @@
             <ui:define name="content">
                 <div class="row">
                     <div class="span12">
+                        <div class="controls addProductBtn">
+                            <a href="#addProduct" role="button" class="btn" data-toggle="modal">Add product</a>
+                            <!-- Modal -->
+                            <div id="addProduct" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true" style="display: none;">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3 id="addProductModalLabel">Add a product</h3>
+                              </div>
+                              <div class="modal-body">
+                                <div class="tab-pane active" id="formcontrols">
+                                    <h:form id="addProduct" class="form-horizontal">
+                                        <fieldset>
+                                            <div class="control-group">											
+                                                <label class="control-label" for="name">Name</label>
+                                                <div class="controls">
+                                                    <input type="text" class="span6" id="name"/>
+                                                </div> <!-- /controls -->				
+                                            </div> <!-- /control-group -->
+                                            <div class="control-group">											
+                                                <label class="control-label" for="price">Price</label>
+                                                <div class="controls">
+                                                    <span class="add-on">$</span>
+                                                    <input type="text" class="span6" id="price"/>
+                                                </div> <!-- /controls -->				
+                                            </div> <!-- /control-group -->
+                                         </fieldset>
+                                    </h:form>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                <h:commandButton class="btn btn-primary" value="Save the product" action="#{productBean.addProduct()}">
+                                    <f:ajax execute="addProduct" render="addProduct" />
+                                </h:commandButton>
+                              </div>
+                            </div>
+			</div>
                         <div class="widget widget-table action-table">
                             <div class="widget-header"> <i class="icon-th-list"></i>
                                 <h3>Products list</h3>
