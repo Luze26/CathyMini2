@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Represent a product
@@ -13,6 +14,7 @@ import javax.persistence.Table;
  */
 @Entity(name="Product")
 @Table(name="Product")
+@XmlRootElement
 public class Product implements Serializable {
     
     @Id
