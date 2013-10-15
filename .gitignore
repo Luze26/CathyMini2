@@ -1,3 +1,5 @@
 target/
+CathyMini2/target/
 
 *~
+/CathyMini-js/nbproject/private/
