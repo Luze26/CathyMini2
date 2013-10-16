@@ -4,7 +4,10 @@
  */
 package service;
 
+import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.services.ProductBean;
+import java.util.Collection;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -26,12 +29,23 @@ public class ProductFacade {
     
     private static final Logger logger = Logger.getLogger(ProductFacade.class);
     
+    @EJB
+    private ProductBean productBean;
+    
     @POST
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/json")
     public String create(AddProduct form) {
-        logger.debug("ici" + form.name + " ppp " + form.price);
-        return "HELLLOOO";
+        logger.debug("Create product" + form);
+        productBean.addProduct();
+        return "product created";
+    }
+    
+    @GET
+    @Path("/all")
+    @Produces("application/json")
+    public Collection<Product> all() {
+        return productBean.getProducts();
     }
 }

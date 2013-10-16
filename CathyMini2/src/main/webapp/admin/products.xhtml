@@ -24,23 +24,25 @@
                               </div>
                               <div class="modal-body">
                                 <div class="tab-pane active" id="formcontrols">
-                                    <h:form id="addProduct" class="form-horizontal">
+                                    <form id="addProduct" class="form-horizontal">
                                         <fieldset>
                                             <div class="control-group">											
                                                 <label class="control-label" for="name">Name</label>
                                                 <div class="controls">
-                                                    <input type="text" class="span6" id="name"/>
+                                                    <input ng-model="product.name" type="text" class="span6" id="name"/>
                                                 </div> <!-- /controls -->				
                                             </div> <!-- /control-group -->
                                             <div class="control-group">											
                                                 <label class="control-label" for="price">Price</label>
                                                 <div class="controls">
-                                                    <span class="add-on">$</span>
-                                                    <input type="text" class="span6" id="price"/>
+                                                    <div class="input-prepend input-append">
+                                                        <span class="add-on">$</span>
+                                                        <input ng-model="product.price" type="text" class="span6" id="price"/>
+                                                    </div>
                                                 </div> <!-- /controls -->				
                                             </div> <!-- /control-group -->
                                          </fieldset>
-                                    </h:form>
+                                    </form>
                                 </div>
                               </div>
                               <div class="modal-footer">
@@ -58,38 +60,15 @@
                               <table class="table table-striped table-bordered">
                                 <thead>
                                   <tr>
-                                    <th> Free Resource </th>
-                                    <th> Download</th>
-                                    <th class="td-actions"> </th>
+                                    <th>Name</th>
+                                    <th>Price</th>
                                   </tr>
                                 </thead>
-                                <tbody>
-                                  <tr>
-                                    <td> Fresh Web Development Resources </td>
-                                    <td> http://www.egrappler.com/ </td>
-                                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                                  </tr>
-                                  <tr>
-                                    <td> Fresh Web Development Resources </td>
-                                    <td> http://www.egrappler.com/ </td>
-                                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                                  </tr>
-                                  <tr>
-                                    <td> Fresh Web Development Resources </td>
-                                    <td> http://www.egrappler.com/ </td>
-                                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                                  </tr>
-                                  <tr>
-                                    <td> Fresh Web Development Resources </td>
-                                    <td> http://www.egrappler.com/ </td>
-                                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                                  </tr>
-                                  <tr>
-                                    <td> Fresh Web Development Resources </td>
-                                    <td> http://www.egrappler.com/ </td>
-                                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                                  </tr>
-
+                                <tbody infinite-scroll="loadProducts()" infinite-scroll-distance="3">
+                                    <tr ng-repeat="prod in products">
+                                        <td>prod.name</td>
+                                        <td>prod.price</td>
+                                    </tr>
                                 </tbody>
                               </table>
                             </div>
@@ -101,6 +80,7 @@
             </ui:define>
             
             <ui:define name="scripts">
+                <script src="/assets/js/ng-infinite-scroll.min.js"></script>
                 <script src="/assets/js/modules/admin/productsModule.js"></script>
                 <script src="/assets/js/controllers/admin/productsCtrls.js"></script>
             </ui:define>

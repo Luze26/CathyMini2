@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name="Product")
 @XmlRootElement
 public class Product implements Serializable {
-    
+
     @Id
     @GeneratedValue
     @Column(name="ID")
