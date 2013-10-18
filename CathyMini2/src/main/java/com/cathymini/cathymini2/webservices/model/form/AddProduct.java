@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package service.model.form;
+package com.cathymini.cathymini2.webservices.model.form;
 
 /**
  *

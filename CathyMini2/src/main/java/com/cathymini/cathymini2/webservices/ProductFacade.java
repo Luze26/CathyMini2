@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.services.ProductBean;
@@ -14,10 +14,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
-import service.model.form.AddProduct;
+import com.cathymini.cathymini2.webservices.model.form.AddProduct;
 
 /**
  *
@@ -38,7 +37,7 @@ public class ProductFacade {
     @Produces("application/json")
     public String create(AddProduct form) {
         logger.debug("Create product" + form);
-        productBean.addProduct();
+        productBean.addProduct(form.name);
         return "product created";
     }
     
