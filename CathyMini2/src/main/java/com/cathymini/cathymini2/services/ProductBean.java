@@ -34,19 +34,11 @@ public class ProductBean {
     private static final Logger logger = Logger.getLogger(ProductBean.class);
     
     public void addProduct() {
-        HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String param = request.getParameter("addProduct");
-        logger.debug(param);
-        Enumeration<String> elems = request.getParameterNames();
-        while(elems.hasMoreElements()) {
-            logger.debug(elems.nextElement());
-        }
-        
         Product prod = new Product();
         prod.setName("test");
         UserTransaction tx;
         try {
-            tx = (UserTransaction)new InitialContext().lookup("java:comp/UserTransaction");
+            tx = (UserTransaction)new InitialContext().lookup("UserTransaction");
             tx.begin();
             manager.persist(prod);   
             tx.commit();
