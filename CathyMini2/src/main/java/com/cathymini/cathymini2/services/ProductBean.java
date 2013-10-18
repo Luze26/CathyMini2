@@ -22,21 +22,21 @@ import org.apache.log4j.Logger;
  * @author uzely
  */
 @Stateless
-@TransactionManagement(value=TransactionManagementType.CONTAINER)
+@TransactionManagement(value = TransactionManagementType.CONTAINER)
 public class ProductBean {
-    
-    @PersistenceContext(unitName="com.cathymini_CathyMini2_PU") private EntityManager manager;
-    
+
+    @PersistenceContext(unitName = "com.cathymini_CathyMini2_PU")
+    private EntityManager manager;
+
     private static final Logger logger = Logger.getLogger(ProductBean.class);
     
     public void addProduct(String name) {
         logger.debug("ici");
         Product prod = new Product();
         prod.setName(name);
-        manager.persist(prod);   
-
+        manager.persist(prod);
     }
-    
+
     public Collection<Product> getProducts() {
         Query query = manager.createQuery("SELECT p FROM Product p");
         return (Collection<Product>) query.getResultList();
