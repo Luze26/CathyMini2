@@ -24,30 +24,22 @@ import org.apache.log4j.Logger;
  *
  * @author uzely
  */
-@ManagedBean(name="productBean")
 @Stateless
-@TransactionManagement(value=TransactionManagementType.CONTAINER)
+@TransactionManagement(value = TransactionManagementType.CONTAINER)
 public class ProductBean {
-    
-    @PersistenceContext(unitName="com.cathymini_CathyMini2_PU") private EntityManager manager;
-    
+
+    @PersistenceContext(unitName = "com.cathymini_CathyMini2_PU")
+    private EntityManager manager;
+
     private static final Logger logger = Logger.getLogger(ProductBean.class);
-    
+
     public void addProduct() {
         Product prod = new Product();
         prod.setName("test");
-        UserTransaction tx;
-        try {
-            tx = (UserTransaction)new InitialContext().lookup("UserTransaction");
-            tx.begin();
-            manager.persist(prod);   
-            tx.commit();
-            logger.info("Product added");
-        } catch (Exception ex) {
-            logger.fatal("Erro while addind a product", ex);
-        }
+        manager.persist(prod);
+        logger.info("Product added");
     }
-    
+
     public Collection<Product> getProducts() {
         Query query = manager.createQuery("SELECT p FROM Product p");
         return (Collection<Product>) query.getResultList();
