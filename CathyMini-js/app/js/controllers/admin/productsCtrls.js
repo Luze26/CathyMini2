@@ -8,8 +8,7 @@ angular.module('products.productsCtrls', ['infinite-scroll']).
     };
     
     $scope.addProdduct = function() {
-        $http.post("http://localhost:8080//webresources/product/create", {name: $scope.product.name, price: $scope.product.price})
-            .success(function() { console.log("llll");})
-    };
+        $http.post("http://localhost:8080//webresources/product/create", $scope.product)
+            .success(function() { console.log("llll\n\"");    })};
   }]);
 

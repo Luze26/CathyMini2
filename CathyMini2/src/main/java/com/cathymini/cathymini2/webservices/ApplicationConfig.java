@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package com.cathymini.cathymini2.webservices;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -36,7 +36,7 @@ public class ApplicationConfig extends Application {
      * given list with all resources defined in the project.
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(service.ProductFacade.class);
+        resources.add(com.cathymini.cathymini2.webservices.ProductFacade.class);
     }
     
 }
