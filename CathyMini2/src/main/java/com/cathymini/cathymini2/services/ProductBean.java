@@ -5,6 +5,7 @@
 package com.cathymini.cathymini2.services;
 
 import com.cathymini.cathymini2.model.Product;
+import com.cathymini.cathymini2.model.Tampon;
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -32,7 +33,7 @@ public class ProductBean {
     
     public void addProduct(String name) {
         logger.debug("ici");
-        Product prod = new Product();
+        Product prod = new Tampon();
         prod.setName(name);
         manager.persist(prod);
     }

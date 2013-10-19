@@ -5,8 +5,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 
 /**
  * Represent a product
@@ -14,8 +18,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity(name="Product")
 @Table(name="Product")
-@XmlRootElement
-public class Product implements Serializable {
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="productType", discriminatorType=DiscriminatorType.STRING)
+public abstract class Product implements Serializable {
 
     @Id
     @GeneratedValue
@@ -24,6 +29,9 @@ public class Product implements Serializable {
 
     @Column(name="name")
     private String name;
+    
+    @Column(name="price")
+    private Long price;
     
     public Long getId() {
         return id;
