@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 import com.cathymini.cathymini2.webservices.model.form.AddProduct;
+import javax.ws.rs.QueryParam;
 
 /**
  *
@@ -44,7 +45,25 @@ public class ProductFacade {
     @GET
     @Path("/all")
     @Produces("application/json")
-    public Collection<Product> all() {
-        return productBean.getProducts();
+    public Collection<Product> all(@QueryParam("offset") int offset,
+            @QueryParam("length") int length) {
+        if(length == 0) {
+            length = 10;
+        }
+        return productBean.getProducts(offset, length);
+    }
+    
+    @GET
+    @Path("/populate")
+    @Produces("application/json")
+    public String populate(@QueryParam("size") int size) {
+        if(size == 0) {
+            size = 500;
+        }
+        String product = "product";
+        for(int i = 0; i < size; i++) {
+            productBean.addProduct(product + i);
+        }
+        return "populated";
     }
 }

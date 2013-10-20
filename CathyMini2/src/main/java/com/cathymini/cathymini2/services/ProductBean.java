@@ -30,7 +30,7 @@ public class ProductBean {
     private EntityManager manager;
 
     private static final Logger logger = Logger.getLogger(ProductBean.class);
-    
+        
     public void addProduct(String name) {
         logger.debug("ici");
         Product prod = new Tampon();
@@ -38,8 +38,8 @@ public class ProductBean {
         manager.persist(prod);
     }
 
-    public Collection<Product> getProducts() {
-        Query query = manager.createQuery("SELECT p FROM Product p");
-        return (Collection<Product>) query.getResultList();
+    public Collection<Product> getProducts(int offset, int length) {
+        Query allQuery = manager.createQuery("SELECT p FROM Product p").setFirstResult(offset).setMaxResults(length);
+        return (Collection<Product>) allQuery.getResultList();
     }
 }

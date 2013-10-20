@@ -1,5 +1,3 @@
-angular.module('products', [
-  'products.productsCtrls'
-]);
+var productsModule = angular.module('products', ['infinite-scroll', '$strap.directives']);
 
 

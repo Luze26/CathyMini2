@@ -25,14 +25,14 @@
                           <table class="table table-striped table-bordered">
                             <thead>
                               <tr>
-                                <th ng-click="test()">Name</th>
+                                <th>Name</th>
                                 <th>Price</th>
                               </tr>
                             </thead>
                             <tbody infinite-scroll="loadProducts()" infinite-scroll-distance="3">
                                 <tr ng-repeat="prod in products">
-                                    <td>prod.name</td>
-                                    <td>prod.price</td>
+                                    <td>{{prod.name}}</td>
+                                    <td>{{prod.price}}</td>
                                 </tr>
                             </tbody>
                           </table>
