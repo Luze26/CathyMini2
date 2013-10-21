@@ -26,6 +26,10 @@ public class ProductBean {
     @PersistenceContext(unitName = "com.cathymini_CathyMini2_PU")
     private EntityManager manager;
 
+    private enum ProductKeys {
+        ID, NAME, PRICE
+    }
+    
     private static final Logger logger = Logger.getLogger(ProductBean.class);
         
     public Product addProduct(String name, Float price) {
@@ -36,8 +40,18 @@ public class ProductBean {
         return prod;
     }
 
-    public Collection<Product> getProducts(int offset, int length) {
-        Query allQuery = manager.createQuery("SELECT p FROM Product p").setFirstResult(offset).setMaxResults(length);
+    public Collection<Product> getProducts(int offset, int length, String orderBy) {
+        String orderByKey;
+        try {
+            ProductKeys.valueOf(orderBy.toUpperCase());
+            orderByKey = orderBy.toLowerCase();
+        }
+        catch(Exception e) {
+            orderByKey = "id";
+        }
+        
+        ProductKeys.valueOf(orderBy);
+        Query allQuery = manager.createQuery("SELECT p FROM Product p ORDER BY p." + orderByKey + " ASC").setFirstResult(offset).setMaxResults(length);
         return (Collection<Product>) allQuery.getResultList();
     }
 }

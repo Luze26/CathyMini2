@@ -53,11 +53,11 @@ public class ProductFacade {
     @Path("/all")
     @Produces("application/json")
     public Collection<Product> all(@QueryParam("offset") int offset,
-            @QueryParam("length") int length) {
+            @QueryParam("length") int length, @QueryParam("orderBy") String orderBy) {
         if(length == 0) {
             length = 10;
         }
-        return productBean.getProducts(offset, length);
+        return productBean.getProducts(offset, length, orderBy);
     }
     
     @GET

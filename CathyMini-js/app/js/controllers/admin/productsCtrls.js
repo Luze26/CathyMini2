@@ -18,7 +18,7 @@ productsModule.
     
     $scope.loadProducts = function() {
         if($scope.loadMore) {
-            $http.get("http://localhost:8080//webresources/product/all?offset=" + $scope.offset + "&length=" + $scope.length)
+            $http.get("http://localhost:8080//webresources/product/all?offset=" + $scope.offset + "&length=" + $scope.length + "&orderBy=NAME")
                 .success(function(data) { 
                     if(data.length < $scope.length) {
                         $scope.loadMore = false;

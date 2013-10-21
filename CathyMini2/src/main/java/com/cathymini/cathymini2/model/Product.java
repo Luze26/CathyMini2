@@ -10,6 +10,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * Represent a product
