@@ -56,6 +56,10 @@
                     <ui:param name="okAction" value="addProduct(dismiss)" />
                     <ui:param name="ngDisabled" value="form.$invalid" />
                     <ui:define name="modalContent">
+                      <div ng-show="displayConnectionError" class="alert alert-dismissable alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Connection error!</strong> Verify your internet connection.
+                      </div>
                       <form name="form" novalidate="novalidate">
                         <fieldset>
                           <label>Name*</label>

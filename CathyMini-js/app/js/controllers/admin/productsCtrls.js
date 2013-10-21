@@ -4,14 +4,16 @@ productsModule.
     $scope.product = {};
     $scope.products = [];
     $scope.displayFeedbackDone = false;
+    $scope.displayConnectionError = false;
     $scope.loadMore = true;
     $scope.offset = 0;
     $scope.length = 30;
     
     $scope.addProduct = function(dismiss) {
+        $scope.displayConnectionError = false;
         $http.post("http://localhost:8080//webresources/product/create", $scope.product)
-            .success(function(data) {$scope.products.push(data); $scope.displayFeedbackDone = true; dismiss();});
-        
+            .success(function(data) { $scope.products.push(data); $scope.displayFeedbackDone = true; dismiss();})
+            .error(function() { $scope.displayConnectionError = true; });
     };
     
     $scope.loadProducts = function() {
