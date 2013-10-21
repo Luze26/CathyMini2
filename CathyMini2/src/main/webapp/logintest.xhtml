@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+          
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+ 
+    	<ui:composition template="/template/adminLayout.xhtml">
+            <ui:param name="ngApp" value="consumer" />
+            <ui:param name="title" value="Suscribe" />
+            <ui:param name="ngController" value="suscribeCtrl" />
+            <ui:define name="content">
+                <div class="row">
+                    <div class="span12">
+                        <div class="controls suscribeBtn">
+                            <a href="#suscribe" role="button" class="btn" data-toggle="modal">Suscribe</a>
+                            <!-- Modal -->
+                            <div id="suscribe" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="suscribeModalLabel" aria-hidden="true" style="display: none;">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3 id="suscribeModalLabel">Suscribe</h3>
+                              </div>
+                              <div class="modal-body">
+                                <div class="tab-pane active" id="formcontrols">
+                                    <form id="suscribe" class="form-horizontal">
+                                        <fieldset>
+                                            <div class="control-group">											
+                                                <label class="control-label" for="username">Username</label>
+                                                <div class="controls">
+                                                    <input ng-model="consumer.username" type="text" class="span6" id="username"/>
+                                                </div> <!-- /controls -->				
+                                            </div> <!-- /control-group -->
+                                            <div class="control-group">											
+                                                <label class="control-label" for="mail">Mail Address</label>
+                                                <div class="controls">
+                                                    <input ng-model="consumer.mail" type="text" class="span6" id="mail"/>
+                                                </div> <!-- /controls -->				
+                                            </div> <!-- /control-group -->
+                                            <div class="control-group">											
+                                                <label class="control-label" for="pwd">Password</label>
+                                                <div class="controls">
+                                                    <div class="input-prepend input-append">
+                                                        <input ng-model="consumer.pwd" type="text" class="span6" id="pwd"/>
+                                                    </div>
+                                                </div> <!-- /controls -->				
+                                            </div> <!-- /control-group -->
+                                         </fieldset>
+                                    </form>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                <button class="btn btn-primary" ng-click="suscribe()">Suscribe</button>
+                              </div>
+                            </div>
+			</div>
+                    </div>
+                </div>
+            </ui:define>
+            
+            <ui:define name="scripts">
+                <script src="/assets/js/modules/consumerModule.js"></script>
+                <script src="/assets/js/controllers/consumerCtrls.js"></script>
+            </ui:define>
+    	</ui:composition>
+        
+    </h:body>
+ 
+</html>
