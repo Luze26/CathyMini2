@@ -10,7 +10,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 
 /**
  * Represent a product
@@ -31,7 +30,7 @@ public abstract class Product implements Serializable {
     private String name;
     
     @Column(name="price")
-    private Long price;
+    private Float price;
     
     public Long getId() {
         return id;
@@ -43,5 +42,13 @@ public abstract class Product implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public Float getPrice() {
+        return price;
+    }
+    
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }

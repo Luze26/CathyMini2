@@ -10,12 +10,9 @@ import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
-import javax.faces.bean.ManagedBean;
-import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.UserTransaction;
 import org.apache.log4j.Logger;
 
 /**
@@ -31,11 +28,12 @@ public class ProductBean {
 
     private static final Logger logger = Logger.getLogger(ProductBean.class);
         
-    public void addProduct(String name) {
-        logger.debug("ici");
+    public Product addProduct(String name, Float price) {
         Product prod = new Tampon();
         prod.setName(name);
+        prod.setPrice(price);
         manager.persist(prod);
+        return prod;
     }
 
     public Collection<Product> getProducts(int offset, int length) {

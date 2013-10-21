@@ -1294,3 +1294,7 @@ Products
 #addProduct .control-label {
         width: auto;
 }
+
+input.ng-invalid-float {
+    background-color: #FA787E ! important;
+}

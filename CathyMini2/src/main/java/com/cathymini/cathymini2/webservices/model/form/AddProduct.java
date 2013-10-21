@@ -11,5 +11,13 @@ package com.cathymini.cathymini2.webservices.model.form;
 public class AddProduct {
 
     public String name;
-    public String price;
+    public Float price;
+    
+    public boolean validate() {
+        if(name != null && price != null) {
+            name = name.trim();
+            return name.length() > 0;
+        }
+        return false;
+    }
 }

@@ -17,7 +17,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 import com.cathymini.cathymini2.webservices.model.form.AddProduct;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 
 /**
  *
@@ -36,10 +38,15 @@ public class ProductFacade {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/json")
-    public String create(AddProduct form) {
-        logger.debug("Create product" + form);
-        productBean.addProduct(form.name);
-        return "product created";
+    public Product create(AddProduct form, @Context final HttpServletResponse response) {
+        if(form.validate()) {
+            Product product = productBean.addProduct(form.name, form.price);
+            return product;
+        }
+        else {
+            response.setStatus(400);
+            return null;
+        }
     }
     
     @GET
@@ -62,7 +69,7 @@ public class ProductFacade {
         }
         String product = "product";
         for(int i = 0; i < size; i++) {
-            productBean.addProduct(product + i);
+            productBean.addProduct(product + i, new Float(2));
         }
         return "populated";
     }
