@@ -1,0 +1,32 @@
+package com.cathymini.cathymini2.webservices.model;
+
+import com.cathymini.cathymini2.services.ProductBean;
+
+/**
+ *
+ * @author yuzel
+ */
+public class ProductSearch {
+    public int offset;
+    public int length;
+    public String orderBy;
+    public String input;
+    
+    public void validate() {
+        try {
+            ProductBean.ProductKeys.valueOf(orderBy.toUpperCase());
+            orderBy = orderBy.toLowerCase();
+        }
+        catch(Exception e) {
+            orderBy = "id";
+        }
+        
+        if(length == 0) {
+            length = 10;
+        }
+        
+        if(input == null) {
+            input = "";
+        }        
+    }
+}

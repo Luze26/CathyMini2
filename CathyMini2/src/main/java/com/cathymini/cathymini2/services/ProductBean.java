@@ -6,6 +6,7 @@ package com.cathymini.cathymini2.services;
 
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Tampon;
+import com.cathymini.cathymini2.webservices.model.ProductSearch;
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -26,7 +27,7 @@ public class ProductBean {
     @PersistenceContext(unitName = "com.cathymini_CathyMini2_PU")
     private EntityManager manager;
 
-    private enum ProductKeys {
+    public enum ProductKeys {
         ID, NAME, PRICE
     }
     
@@ -40,18 +41,10 @@ public class ProductBean {
         return prod;
     }
 
-    public Collection<Product> getProducts(int offset, int length, String orderBy) {
-        String orderByKey;
-        try {
-            ProductKeys.valueOf(orderBy.toUpperCase());
-            orderByKey = orderBy.toLowerCase();
-        }
-        catch(Exception e) {
-            orderByKey = "id";
-        }
-        
-        ProductKeys.valueOf(orderBy);
-        Query allQuery = manager.createQuery("SELECT p FROM Product p ORDER BY p." + orderByKey + " ASC").setFirstResult(offset).setMaxResults(length);
+    public Collection<Product> getProducts(ProductSearch searchQuery) {
+        searchQuery.validate();
+        Query allQuery = manager.createQuery("SELECT p FROM Product p WHERE p.name LIKE :searchString ORDER BY p." + searchQuery.orderBy + " ASC")
+                    .setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length).setParameter("searchString", "%" + searchQuery.input + "%");
         return (Collection<Product>) allQuery.getResultList();
     }
 }
