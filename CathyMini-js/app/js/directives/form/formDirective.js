@@ -18,7 +18,7 @@ commonModule.directive('integer', function() {
   };
 });
 
-var FLOAT_REGEXP = /^\-?\d+((\.|\,)\d+)?$/;
+var FLOAT_REGEXP = /^\-?\d+((\.|\,)\d{1,2})?$/;
 commonModule.directive('smartFloat', function() {
   return {
     require: 'ngModel',

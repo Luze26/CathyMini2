@@ -4,6 +4,8 @@
  */
 package com.cathymini.cathymini2.webservices.model.form;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author zang
@@ -18,6 +20,10 @@ public class AddProduct {
             name = name.trim();
             return name.length() > 0;
         }
+        
+        DecimalFormat df = new DecimalFormat("##.##");
+        price =  new Float(df.format(price.doubleValue()));
+        
         return false;
     }
 }
