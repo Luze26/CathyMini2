@@ -43,8 +43,14 @@ public class ProductBean {
 
     public Collection<Product> getProducts(ProductSearch searchQuery) {
         searchQuery.validate();
-        Query allQuery = manager.createQuery("SELECT p FROM Product p WHERE p.name LIKE :searchString ORDER BY p." + searchQuery.orderBy + (searchQuery.orderByASC ? " ASC" : " DESC"))
+        Query query = manager.createQuery("SELECT p FROM Product p WHERE p.name LIKE :searchString ORDER BY p." + searchQuery.orderBy + (searchQuery.orderByASC ? " ASC" : " DESC"))
                     .setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length).setParameter("searchString", "%" + searchQuery.input + "%");
-        return (Collection<Product>) allQuery.getResultList();
+        return (Collection<Product>) query.getResultList();
+    }
+    
+    public boolean delete(int id) {
+        Query query = manager.createNamedQuery("deleteById", Product.class); 
+        query.setParameter("id", id);
+        return query.executeUpdate() == 1;
     }
 }

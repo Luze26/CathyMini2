@@ -2,10 +2,10 @@ productsModule.
   controller('productsCtrl', ['$scope', '$http', function($scope, $http) {
           
     $scope.product = {};
-    $scope.search = {offset: 0, length: 30, orderBy: "id", orderByASC: true, input: ""};
+    $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: ""};
     
     $scope.products = [];
-    $scope.displayFeedbackDone = false;
+    $scope.feedbackOk = {display: false, text: ""};
     $scope.displayConnectionError = false;
     $scope.loadMore = true;
     
@@ -13,8 +13,13 @@ productsModule.
     $scope.addProduct = function(dismiss) {
         $scope.displayConnectionError = false;
         $http.post("http://localhost:8080//webresources/product/create", $scope.product)
-            .success(function(data) { $scope.products.push(data); $scope.displayFeedbackDone = true; dismiss();})
-            .error(function() { $scope.displayConnectionError = true; });
+            .success(function(data) { 
+                $scope.products.push(data); 
+                $scope.feedbackOk.display = true;  
+                $scope.feedbackOk.text = "You have correctly added the product : " + data.name;
+                dismiss();})
+            .error(function() { 
+                $scope.displayConnectionError = true; });
     };
     
     $scope.orderBy = function(property) {
@@ -30,7 +35,7 @@ productsModule.
     
     $scope.refreshSearch = function() {
         $scope.search.offset = 0;
-        $scope.search.length = 30;
+        $scope.search.length = 20;
         $scope.loadMore = true;
         $scope.loadProducts();
     };
@@ -52,5 +57,21 @@ productsModule.
                     $scope.products = $scope.products.concat(data);
                 });
          }
+    };
+    
+    $scope.edit = function(product) {
+        
+    };
+    
+    $scope.delete = function(product) {
+        $http.delete("http://localhost:8080//webresources/product/delete?id=" + product.id)
+            .success(function() { 
+                var index = $scope.products.indexOf(product);
+                if(index > -1) {
+                    $scope.products.splice(index, 1);
+                }
+                $scope.feedbackOk.display = true;  
+                $scope.feedbackOk.text = "You have correctly deleted the product : " + product.name; })
+            .error(function(data) { $scope.displayConnectionError = true; });
     };
   }]);

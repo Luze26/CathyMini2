@@ -19,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 import com.cathymini.cathymini2.webservices.model.form.AddProduct;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 
@@ -82,5 +84,24 @@ public class ProductFacade {
         }
         
         return "populated";
+    }
+    
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @DELETE
+    @Path("/delete")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String delete(@QueryParam("id") @DefaultValue("-1") int id, @Context final HttpServletResponse response) {
+        if(id >= 0) {
+            boolean deleted = productBean.delete(id);
+            if(deleted) {
+                return "";
+            }            
+        }
+        response.setStatus(400);
+        return "unknow product";
     }
 }

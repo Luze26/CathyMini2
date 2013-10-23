@@ -12,15 +12,15 @@
         <ui:param name="ngController" value="productsCtrl" />
         <ui:define name="content">
             <div class="row">
-                <div ng-show="displayFeedbackDone" class="alert alert-dismissable alert-success span12">
-                    <button type="button" class="close" ng-click="displayFeedbackDone = false">×</button>
-                    <strong>Well done!</strong> You successfully added product: {{product.name}}.
+                <div ng-show="feedbackOk.display" class="alert alert-dismissable alert-success span12">
+                    <button type="button" class="close" ng-click="feedbackOk.display = false">×</button>
+                    <strong>Well done!</strong> {{feedbackOk.text}}.
                 </div>
             </div>
             <div class="row">
                 <div class="span12">
                     <div class="controls addProductBtn">
-                        <a href="#addProduct" role="button" class="btn" bs-modal="'addProductModal.html'">Add product</a>
+                        <a bs-tooltip="'Add product'"  href="#addProduct" role="button" class="btn" bs-modal="'addProductModal.html'">Add product</a>
                     </div>
                     <div class="widget widget-table action-table">
                         <div class="widget-header"> <i class="icon-th-list"></i>
@@ -34,13 +34,18 @@
                                 <th class="clickable unselectable" ng-click="orderBy('id')">ID <b class="unselectable" ng-class="search.orderBy=='id' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
                                 <th class="clickable unselectable" ng-click="orderBy('name')">Name <b class="unselectable" ng-class="search.orderBy=='name' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
                                 <th class="clickable unselectable" ng-click="orderBy('price')">Price <b class="unselectable" ng-class="search.orderBy=='price' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
+                                <th>Actions</th>
                               </tr>
                             </thead>
-                            <tbody infinite-scroll="loadProducts()" infinite-scroll-distance="3">
+                            <tbody infinite-scroll="loadProducts()" infinite-scroll-distance="2">
                                 <tr ng-repeat="prod in products">
                                     <td>{{prod.id}}</td>
                                     <td>{{prod.name}}</td>
                                     <td>{{prod.price}}</td>
+                                    <td class="td-actions">
+                                        <a bs-tooltip="'Edit product'" ng-click="edit(prod)" class="btn btn-small"><i class="btn-icon-only icon-pencil"> </i></a>
+                                        <a bs-tooltip="'Delete product'" data-unique="1" data-placement="bottom" data-container="body"  bs-popover="'deletePopover.html'" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a>
+                                    </td>
                                 </tr>
                             </tbody>
                           </table>
@@ -50,6 +55,13 @@
                   <!-- /widget --> 
                 </div>
             </div>
+            <script type="text/ng-template" id="deletePopover.html">
+                Do you really want to delete the product : {{prod.name}}
+                <div>
+                    <button type="button" class="btn" ng-click="dismiss()">Close</button>
+                    <button class="btn btn-danger" ng-click="delete(prod); dismiss()">Delete the product</button>
+                </div>
+            </script>
             <script type="text/ng-template" id="addProductModal.html">
                 <ui:decorate template="../template/modalLayout.xhtml">
                     <ui:param name="modalTitle" value="Add product" />
