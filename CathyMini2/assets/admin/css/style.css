@@ -1298,3 +1298,41 @@ Products
 input.ng-invalid-float {
     background-color: #FA787E ! important;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+.searchTable {
+    margin-top: 5px;
+    float: right;
+    margin-right: 10px;
+}
+
+.caret-up {
+    display: inline-block;
+    width: 0px;
+    height: 0px;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: none;
+    border-bottom: 4px solid #000000;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    border-top-width: 0px;
+    border-top-style: dotted;
+    content: "";
+}
+
+.caret {
+    margin-left: 2px;
+    vertical-align: middle;
+}
+
+.unselectable {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}

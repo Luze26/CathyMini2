@@ -2,7 +2,7 @@ productsModule.
   controller('productsCtrl', ['$scope', '$http', function($scope, $http) {
           
     $scope.product = {};
-    $scope.search = {offset: 0, length: 30, orderBy: "id", input: ""};
+    $scope.search = {offset: 0, length: 30, orderBy: "id", orderByASC: true, input: ""};
     
     $scope.products = [];
     $scope.displayFeedbackDone = false;
@@ -17,7 +17,18 @@ productsModule.
             .error(function() { $scope.displayConnectionError = true; });
     };
     
-    $scope.textSearch = function() {
+    $scope.orderBy = function(property) {
+        if(property === $scope.search.orderBy) {
+            $scope.search.orderByASC = !$scope.search.orderByASC;
+        }
+        else {
+            $scope.search.orderBy = property;
+            $scope.search.orderByASC = true;
+        }
+        $scope.refreshSearch();
+    }
+    
+    $scope.refreshSearch = function() {
         $scope.search.offset = 0;
         $scope.search.length = 30;
         $scope.loadMore = true;

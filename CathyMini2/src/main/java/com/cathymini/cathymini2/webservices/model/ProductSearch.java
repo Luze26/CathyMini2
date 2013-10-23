@@ -10,6 +10,7 @@ public class ProductSearch {
     public int offset;
     public int length;
     public String orderBy;
+    public boolean orderByASC;
     public String input;
     
     public void validate() {
