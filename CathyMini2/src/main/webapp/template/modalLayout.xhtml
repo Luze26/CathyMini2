@@ -15,7 +15,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn" ng-click="#{empty closeAction ? 'dismiss()' : closeAction}">#{empty closeLabel ? 'Close' : closeLabel}</button>
-          <button class="btn btn-primary" ng-click="#{empty okAction ? 'dismiss()' : okAction}">#{empty okLabel ? 'Ok' : okLabel}</button>
+          <button class="btn btn-primary" ng-disabled="#{empty ngDisabled ? 'false' : ngDisabled}" ng-click="#{empty okAction ? 'dismiss()' : okAction}">#{empty okLabel ? 'Ok' : okLabel}</button>
         </div>
     </ui:composition>
 </html>

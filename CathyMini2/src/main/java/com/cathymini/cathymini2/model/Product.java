@@ -10,13 +10,18 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * Represent a product
  * @author uzely
  */
 @Entity(name="Product")
+@NamedQueries({
+    @NamedQuery(name="deleteById", query="DELETE FROM Product p WHERE p.id=:id"),
+    @NamedQuery(name="getProducts", query="SELECT p FROM Product p WHERE p.name LIKE :searchString ORDER BY :orderBy")
+})
 @Table(name="Product")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="productType", discriminatorType=DiscriminatorType.STRING)
@@ -31,7 +36,7 @@ public abstract class Product implements Serializable {
     private String name;
     
     @Column(name="price")
-    private Long price;
+    private Float price;
     
     public Long getId() {
         return id;
@@ -43,5 +48,13 @@ public abstract class Product implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public Float getPrice() {
+        return price;
+    }
+    
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }

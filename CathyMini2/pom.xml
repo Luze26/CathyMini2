@@ -35,9 +35,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-	    <groupId>javax.faces</groupId>
-	    <artifactId>jsf-api</artifactId>
-	    <version>2.1</version>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>2.2.0-m03</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>

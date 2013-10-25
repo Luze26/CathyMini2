@@ -12,27 +12,40 @@
         <ui:param name="ngController" value="productsCtrl" />
         <ui:define name="content">
             <div class="row">
+                <div ng-show="feedbackOk.display" class="alert alert-dismissable alert-success span12">
+                    <button type="button" class="close" ng-click="feedbackOk.display = false">×</button>
+                    <strong>Well done!</strong> {{feedbackOk.text}}.
+                </div>
+            </div>
+            <div class="row">
                 <div class="span12">
                     <div class="controls addProductBtn">
-                        <a href="#addProduct" role="button" class="btn" bs-modal="'addProductModal.html'">Add product</a>
+                        <a bs-tooltip="'Add product'" ng-click="modal = addModal" href="#addProduct" role="button" class="btn" bs-modal="'productModal.html'">Add product</a>
                     </div>
                     <div class="widget widget-table action-table">
                         <div class="widget-header"> <i class="icon-th-list"></i>
-                            <h3>Products list</h3>
+                            <h3>Products list</h3><input type="text" class="searchTable" ng-model="search.input" placeholder="Search a product" ng-change="refreshSearch()" />
                         </div>
                         <!-- /widget-header -->
                         <div class="widget-content">
                           <table class="table table-striped table-bordered">
                             <thead>
                               <tr>
-                                <th>Name</th>
-                                <th>Price</th>
+                                <th class="clickable unselectable" ng-click="orderBy('id')">ID <b class="unselectable" ng-class="search.orderBy=='id' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
+                                <th class="clickable unselectable" ng-click="orderBy('name')">Name <b class="unselectable" ng-class="search.orderBy=='name' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
+                                <th class="clickable unselectable" ng-click="orderBy('price')">Price <b class="unselectable" ng-class="search.orderBy=='price' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
+                                <th>Actions</th>
                               </tr>
                             </thead>
-                            <tbody infinite-scroll="loadProducts()" infinite-scroll-distance="3">
+                            <tbody infinite-scroll="loadProducts()" infinite-scroll-distance="2">
                                 <tr ng-repeat="prod in products">
+                                    <td>{{prod.id}}</td>
                                     <td>{{prod.name}}</td>
                                     <td>{{prod.price}}</td>
+                                    <td class="td-actions">
+                                        <a bs-tooltip="'Edit product'" ng-click="initEditModal(prod)" bs-modal="'productModal.html'" class="btn btn-small"><i class="btn-icon-only icon-pencil"></i></a>
+                                        <a bs-tooltip="'Delete product'" data-unique="1" data-placement="bottom" data-container="body"  bs-popover="'deletePopover.html'" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"></i></a>
+                                    </td>
                                 </tr>
                             </tbody>
                           </table>
@@ -42,20 +55,32 @@
                   <!-- /widget --> 
                 </div>
             </div>
-            <script type="text/ng-template" id="addProductModal.html">
+            <script type="text/ng-template" id="deletePopover.html">
+                Do you really want to delete the product : {{prod.name}}
+                <div>
+                    <button type="button" class="btn" ng-click="dismiss()">Close</button>
+                    <button class="btn btn-danger" ng-click="deleteProduct(prod); dismiss()">Delete the product</button>
+                </div>
+            </script>
+            <script type="text/ng-template" id="productModal.html">
                 <ui:decorate template="../template/modalLayout.xhtml">
-                    <ui:param name="modalTitle" value="Add product" />
-                    <ui:param name="okAction" value="addProduct(dismiss)" />
+                    <ui:param name="modalTitle" value="{{modal.title}}" />
+                    <ui:param name="okAction" value="modal.okAction(dismiss)" />
+                    <ui:param name="ngDisabled" value="form.$invalid" />
                     <ui:define name="modalContent">
-                      <form>
+                      <div ng-show="modal.displayConnectionError" class="alert alert-dismissable alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Connection error!</strong> Verify your internet connection.
+                      </div>
+                      <form name="form" novalidate="novalidate">
                         <fieldset>
-                          <label>Name</label>
-                          <input ng-model="product.name" type="text" placeholder="Product name…" autofocus="autofocus" />
+                          <label>Name*</label>
+                          <input name="pName" ng-model="modal.product.name" type="text" placeholder="Product name…" autofocus="autofocus" required="required" />
                           <div class="control-group">
-                            <label for="price">Price</label>
+                            <label for="pPrice">Price*</label>
                             <div class="controls input-prepend">
                               <span class="add-on">€</span>
-                              <input name="price" ng-model="product.price" type="text" class="form-control" autofocus="autofocus" />
+                              <input name="pPrice" ng-model="modal.product.price" type="text" min="0" smart-float="smart-float" class="form-control" autofocus="autofocus" required="required" />
                             </div>
                           </div>
                         </fieldset>
@@ -69,6 +94,8 @@
             <script src="/assets/js/ng-infinite-scroll.min.js"></script>
             <script src="/assets/js/modules/admin/productsModule.js"></script>
             <script src="/assets/js/controllers/admin/productsCtrls.js"></script>
+            <script src="/assets/js/modules/commonModule.js"></script>
+            <script src="/assets/js/directives/form/formDirective.js"></script>
         </ui:define>
     </ui:composition>
 </html>
