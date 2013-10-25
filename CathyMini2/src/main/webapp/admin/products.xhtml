@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="span12">
                     <div class="controls addProductBtn">
-                        <a bs-tooltip="'Add product'"  href="#addProduct" role="button" class="btn" bs-modal="'addProductModal.html'">Add product</a>
+                        <a bs-tooltip="'Add product'" ng-click="modal = addModal" href="#addProduct" role="button" class="btn" bs-modal="'productModal.html'">Add product</a>
                     </div>
                     <div class="widget widget-table action-table">
                         <div class="widget-header"> <i class="icon-th-list"></i>
@@ -43,8 +43,8 @@
                                     <td>{{prod.name}}</td>
                                     <td>{{prod.price}}</td>
                                     <td class="td-actions">
-                                        <a bs-tooltip="'Edit product'" ng-click="edit(prod)" class="btn btn-small"><i class="btn-icon-only icon-pencil"> </i></a>
-                                        <a bs-tooltip="'Delete product'" data-unique="1" data-placement="bottom" data-container="body"  bs-popover="'deletePopover.html'" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a>
+                                        <a bs-tooltip="'Edit product'" ng-click="initEditModal(prod)" bs-modal="'productModal.html'" class="btn btn-small"><i class="btn-icon-only icon-pencil"></i></a>
+                                        <a bs-tooltip="'Delete product'" data-unique="1" data-placement="bottom" data-container="body"  bs-popover="'deletePopover.html'" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -59,28 +59,28 @@
                 Do you really want to delete the product : {{prod.name}}
                 <div>
                     <button type="button" class="btn" ng-click="dismiss()">Close</button>
-                    <button class="btn btn-danger" ng-click="delete(prod); dismiss()">Delete the product</button>
+                    <button class="btn btn-danger" ng-click="deleteProduct(prod); dismiss()">Delete the product</button>
                 </div>
             </script>
-            <script type="text/ng-template" id="addProductModal.html">
+            <script type="text/ng-template" id="productModal.html">
                 <ui:decorate template="../template/modalLayout.xhtml">
-                    <ui:param name="modalTitle" value="Add product" />
-                    <ui:param name="okAction" value="addProduct(dismiss)" />
+                    <ui:param name="modalTitle" value="{{modal.title}}" />
+                    <ui:param name="okAction" value="modal.okAction(dismiss)" />
                     <ui:param name="ngDisabled" value="form.$invalid" />
                     <ui:define name="modalContent">
-                      <div ng-show="displayConnectionError" class="alert alert-dismissable alert-danger">
+                      <div ng-show="modal.displayConnectionError" class="alert alert-dismissable alert-danger">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Connection error!</strong> Verify your internet connection.
                       </div>
                       <form name="form" novalidate="novalidate">
                         <fieldset>
                           <label>Name*</label>
-                          <input name="pName" ng-model="product.name" type="text" placeholder="Product name…" autofocus="autofocus" required="required" />
+                          <input name="pName" ng-model="modal.product.name" type="text" placeholder="Product name…" autofocus="autofocus" required="required" />
                           <div class="control-group">
                             <label for="pPrice">Price*</label>
                             <div class="controls input-prepend">
                               <span class="add-on">€</span>
-                              <input name="pPrice" ng-model="product.price" type="text" min="0" smart-float="smart-float" class="form-control" autofocus="autofocus" required="required" />
+                              <input name="pPrice" ng-model="modal.product.price" type="text" min="0" smart-float="smart-float" class="form-control" autofocus="autofocus" required="required" />
                             </div>
                           </div>
                         </fieldset>
