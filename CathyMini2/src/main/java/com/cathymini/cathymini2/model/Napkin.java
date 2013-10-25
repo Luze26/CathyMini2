@@ -10,6 +10,6 @@ import javax.persistence.Id;
  */
 @Entity(name="Serviette")
 @DiscriminatorValue("Serviette")
-public class Serviette extends Product {
+public class Napkin extends Product {
     
 }
