@@ -6,67 +6,56 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
           
       xmlns:f="http://java.sun.com/jsf/core">
-    <h:body>
- 
-    	<ui:composition template="/template/adminLayout.xhtml">
-            <ui:param name="ngApp" value="consumer" />
-            <ui:param name="title" value="Suscribe" />
-            <ui:param name="ngController" value="suscribeCtrl" />
-            <ui:define name="content">
-                <div class="row">
-                    <div class="span12">
-                        <div class="controls suscribeBtn">
-                            <a href="#suscribe" role="button" class="btn" data-toggle="modal">Suscribe</a>
-                            <!-- Modal -->
-                            <div id="suscribe" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="suscribeModalLabel" aria-hidden="true" style="display: none;">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h3 id="suscribeModalLabel">Suscribe</h3>
-                              </div>
-                              <div class="modal-body">
-                                <div class="tab-pane active" id="formcontrols">
-                                    <form id="suscribe" class="form-horizontal">
-                                        <fieldset>
-                                            <div class="control-group">											
-                                                <label class="control-label" for="username">Username</label>
-                                                <div class="controls">
-                                                    <input ng-model="consumer.username" type="text" class="span6" id="username"/>
-                                                </div> <!-- /controls -->				
-                                            </div> <!-- /control-group -->
-                                            <div class="control-group">											
-                                                <label class="control-label" for="mail">Mail Address</label>
-                                                <div class="controls">
-                                                    <input ng-model="consumer.mail" type="text" class="span6" id="mail"/>
-                                                </div> <!-- /controls -->				
-                                            </div> <!-- /control-group -->
-                                            <div class="control-group">											
-                                                <label class="control-label" for="pwd">Password</label>
-                                                <div class="controls">
-                                                    <div class="input-prepend input-append">
-                                                        <input ng-model="consumer.pwd" type="text" class="span6" id="pwd"/>
-                                                    </div>
-                                                </div> <!-- /controls -->				
-                                            </div> <!-- /control-group -->
-                                         </fieldset>
-                                    </form>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                                <button class="btn btn-primary" ng-click="suscribe()">Suscribe</button>
-                              </div>
-                            </div>
-			</div>
-                    </div>
+    <ui:composition template="template/adminLayout.xhtml">
+        <ui:param name="ngApp" value="consumer" />
+        <ui:param name="title" value="Consumer" />
+        <ui:param name="ngController" value="consumerCtrl" />
+        <ui:define name="content">
+            <div class="row">
+                <div ng-show="feedbackOk.display" class="alert alert-dismissable alert-success span12">
+                    <button type="button" class="close" ng-click="feedbackOk.display = false">×</button>
+                    <strong>Well done!</strong> {{feedbackOk.text}}.
                 </div>
-            </ui:define>
-            
-            <ui:define name="scripts">
-                <script src="/assets/js/modules/consumerModule.js"></script>
-                <script src="/assets/js/controllers/consumerCtrls.js"></script>
-            </ui:define>
-    	</ui:composition>
-        
-    </h:body>
- 
+            </div>
+            <div class="row">
+                <div class="span12">
+                    <div class="controls suscribeBtn">
+                        <a bs-tooltip="'Suscribe'"  href="#suscribe" role="button" class="btn" bs-modal="'consumerModal.html'">Suscribe</a>
+                    </div>
+                    
+                  <!-- /widget --> 
+                </div>
+            </div>
+            <script type="text/ng-template" id="consumerModal.html">
+                <ui:decorate template="template/modalLayout.xhtml">
+                    <ui:param name="modalTitle" value="{{modal.title}}" />
+                    <ui:param name="okAction" value="suscribe(dismiss)" />
+                    <ui:param name="ngDisabled" value="form.$invalid" />
+                    <ui:define name="modalContent">
+                      <div ng-show="modal.displayConnectionError" class="alert alert-dismissable alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Connection error!</strong> Verify your internet connection.
+                      </div>
+                      <form name="form" novalidate="novalidate">
+                        <fieldset>
+                          <label>Username</label>
+                          <input name="username" ng-model="consumer.username" type="text" placeholder="Your username" autofocus="autofocus" required="required" />
+                          <label>Mail</label>
+                          <input name="mail" ng-model="consumer.mail" type="text" placeholder="Your mail address" autofocus="autofocus" required="required" />
+                          <label>Password</label>
+                          <input name="password" ng-model="consumer.pwd" type="text" placeholder="Your password" autofocus="autofocus" required="required" />                          
+                        </fieldset>
+                      </form>
+                    </ui:define>
+                </ui:decorate>
+            </script>
+        </ui:define>
+
+        <ui:define name="scripts">
+            <script src="/assets/js/modules/consumerModule.js"></script>
+            <script src="/assets/js/controllers/consumerCtrls.js"></script>
+            <script src="/assets/js/modules/commonModule.js"></script>
+            <script src="/assets/js/directives/form/formDirective.js"></script>
+        </ui:define>
+    </ui:composition>
 </html>

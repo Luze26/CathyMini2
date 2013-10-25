@@ -1,8 +1,7 @@
 package com.cathymini.cathymini2.services;
 
-import javax.ejb.Remove;
+import javax.ejb.*;
 import com.cathymini.cathymini2.model.Consumer;
-import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
