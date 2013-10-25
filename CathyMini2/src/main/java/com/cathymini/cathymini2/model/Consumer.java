@@ -6,16 +6,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
- *
+ * The class {@link Consumer} is an EJB entity representing an user.<br/>
+ * It contains two named queries '<code>ConsumerByName</code>' and '<code>ConsumerByMail</code>'.
+ * 
+ * @see DeliveryAdress
+ * @see PayementInfo
  * @author kraiss
  */
-
 @Entity
 @NamedQueries({
     @NamedQuery(name="ConsumerByName",
@@ -23,22 +27,34 @@ import javax.persistence.OneToMany;
     @NamedQuery(name="ConsumerByMail",
         query="select object(c) from Consumer c where c.mail = :mail")
 })
+@Table(name = "Consumer",
+        uniqueConstraints={@UniqueConstraint(columnNames={"username", "mail"})}
+)
 public class Consumer implements Serializable {
     @Id
     @GeneratedValue
     @Column(name="userID")
+    /** Integer primary Key */
     private Integer userID;
     
     @Column(name="username")
+    /** Consumer username */
     private String username;
+    
     @Column(name="pwd")
+    /** Consumer password */
     private String pwd;
+    
     @Column(name="mail")
+    /** Consumer mail address */
     private String mail;
     
     @OneToMany(mappedBy="consumer") 
+    /** Consumer {@link DeliveryAddress} collection */
     private Collection<DeliveryAdress> deliveryCollection;
-    @OneToMany(mappedBy="consumer") 
+    
+    @OneToMany(mappedBy="consumer")
+    /** Consumer {@link PaymentInfo} collection */
     private Collection<PayementInfo> paymentInfoCollection;
 
     public Collection<DeliveryAdress> getDeliveryCollection() {

@@ -1,21 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.cathymini.cathymini2.model;
 
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 
 /**
- *
+ * The class {@link Consumer} is an EJB entity representing an user.<br/>
+ * It contains two named queries '<code>ConsumerByName</code>' and '<code>ConsumerByMail</code>'.
+ * 
+ * @see DeliveryAdress
+ * @see PayementInfo
  * @author kraiss
  */
 @Entity
