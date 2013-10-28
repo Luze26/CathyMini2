@@ -6,7 +6,7 @@ productsModule.
     
     /** Products list */
     $scope.products = [];
-
+    
     /** Success feedback*/
     $scope.feedbackOk = {display: false, text: ""};
     
@@ -87,16 +87,15 @@ productsModule.
      */
     $scope.editProduct = function(dismiss) {
         $scope.displayConnectionError = false;
-        $scope.editModal.product.name = "hahah";
-        dismiss();
-        /*$http.post("http://localhost:8080//webresources/product/edit", $scope.editModal.product)
+        $http.post("http://localhost:8080//webresources/product/edit", $scope.editModal.product)
             .success(function(data) { 
-                $scope.products.push(data); 
+                $scope.editedProduct.name = data.name; 
+                $scope.editedProduct.price = data.price; 
                 $scope.feedbackOk.display = true;  
                 $scope.feedbackOk.text = "You have correctly edited the product : " + data.name;
                 dismiss();})
             .error(function() { 
-                $scope.displayConnectionError = true; });*/    
+                $scope.displayConnectionError = true; });    
     };
     
     /**
@@ -121,6 +120,8 @@ productsModule.
      * @param {type} product to edit
      */
     $scope.initEditModal = function(product) {
+        $scope.editedProduct = product;
+        $scope.editModal.product.id = product.id;
         $scope.editModal.product.name = product.name; 
         $scope.editModal.product.price = product.price; 
         $scope.modal = $scope.editModal;

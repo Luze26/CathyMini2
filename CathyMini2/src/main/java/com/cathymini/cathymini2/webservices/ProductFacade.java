@@ -18,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 import com.cathymini.cathymini2.webservices.model.form.AddProduct;
+import com.cathymini.cathymini2.webservices.model.form.EditProduct;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -62,6 +63,14 @@ public class ProductFacade {
             return null;    
         }
         return productBean.getProducts(query);
+    }
+    
+    @POST
+    @Path("/edit")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
+    public Product edit(EditProduct form, @Context final HttpServletResponse response) {
+        return productBean.editProduct(form.id, form.name, form.price);
     }
     
     @GET

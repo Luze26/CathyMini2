@@ -19,8 +19,7 @@ import javax.persistence.NamedQuery;
  */
 @Entity(name="Product")
 @NamedQueries({
-    @NamedQuery(name="deleteById", query="DELETE FROM Product p WHERE p.id=:id"),
-    @NamedQuery(name="getProducts", query="SELECT p FROM Product p WHERE p.name LIKE :searchString ORDER BY :orderBy")
+    @NamedQuery(name="deleteById", query="DELETE FROM Product p WHERE p.id=:id")
 })
 @Table(name="Product")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)

@@ -41,6 +41,24 @@ public class ProductBean {
         return prod;
     }
 
+    public Product editProduct(Long id, String name, Float price) {
+        logger.debug("llla)" + id);
+        Product prod;
+        try {
+        prod = manager.find(Product.class, id);
+        }catch(IllegalArgumentException e) {
+            e.printStackTrace();
+                    prod=null;
+        }
+        logger.debug(prod);
+        if(prod != null) {
+            prod.setName(name);
+            prod.setPrice(price);
+            return prod;
+        }
+        return null;
+    }
+    
     public Collection<Product> getProducts(ProductSearch searchQuery) {
         searchQuery.validate();
         Query query = manager.createQuery("SELECT p FROM Product p WHERE p.name LIKE :searchString ORDER BY p." + searchQuery.orderBy + (searchQuery.orderByASC ? " ASC" : " DESC"))
