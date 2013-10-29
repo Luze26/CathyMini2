@@ -8,8 +8,8 @@ import javax.persistence.Id;
  *
  * @author yuzel
  */
-@Entity(name="Serviette")
-@DiscriminatorValue("Serviette")
+@Entity(name="Napkin")
+@DiscriminatorValue("Napkin")
 public class Napkin extends Product {
     
 }

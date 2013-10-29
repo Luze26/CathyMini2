@@ -4,15 +4,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
- 
+      ng-app="#{ngApp}">
+
     <h:head>
         <title>#{title}</title>
-        <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css"></link>
+        <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-3.0.0/bootstrap.css"></link>
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css"></link>
     </h:head>
  
-    <h:body>
- 
+    <body ng-controller="#{ngController}">
+
 	<div id="page">
  
 	    <div id="header">
@@ -21,7 +22,7 @@
 		</ui:insert>
 	    </div>
  
-	    <div id="content">
+	    <div id="content" class="container">
 	  	<ui:insert name="content" >
 	   	</ui:insert>
 	    </div>
@@ -33,6 +34,12 @@
     	    </div>
  
         </div>
- 
-    </h:body>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.7.4/angular-strap.min.js"></script>
+
+        <ui:insert name="scripts" >
+        </ui:insert>
+    </body>
 </html>

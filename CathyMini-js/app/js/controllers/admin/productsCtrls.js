@@ -1,3 +1,4 @@
+//TODO refactor this shit
 productsModule.
   controller('productsCtrl', ['$scope', '$http', function($scope, $http) {
 
@@ -86,11 +87,12 @@ productsModule.
      * @param {type} product to edit
      */
     $scope.editProduct = function(dismiss) {
+        var editedProduct = $scope.editModal.product;
         $scope.displayConnectionError = false;
-        $http.post("http://localhost:8080//webresources/product/edit", $scope.editModal.product)
+        $http.post("http://localhost:8080//webresources/product/edit", editedProduct)
             .success(function(data) { 
-                $scope.editedProduct.name = data.name; 
-                $scope.editedProduct.price = data.price; 
+                editedProduct.name = data.name; 
+                editedProduct.price = data.price; 
                 $scope.feedbackOk.display = true;  
                 $scope.feedbackOk.text = "You have correctly edited the product : " + data.name;
                 dismiss();})
