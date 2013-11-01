@@ -5,6 +5,7 @@
             <displayName>save</displayName>
             <goals>
                 <goal>org.lesscss:lesscss-maven-plugin:1.3.3:compile</goal>
+                <goal>maven-resources-plugin:2.6:copy-resources</goal>
             </goals>
         </action>
     </actions>

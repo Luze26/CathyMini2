@@ -1,5 +1,5 @@
-productsModule.
-        controller('productsCtrl', ['$scope', '$http', function($scope, $http) {
+angular.module('products').
+        controller('productsCtrl', ['$scope', '$http', 'cartService', function($scope, $http, cartService) {
 
                 /** Search query */
                 $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: ""};
@@ -56,5 +56,9 @@ productsModule.
                                     $scope.products = $scope.products.concat(data);
                                 });
                     }
+                };
+                
+                $scope.addProductToCart = function(product) {
+                    cartService.addProduct(product);
                 };
             }]);

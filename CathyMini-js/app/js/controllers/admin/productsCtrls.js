@@ -1,5 +1,4 @@
-//TODO refactor this shit
-productsModule.
+angular.module('products').
   controller('productsCtrl', ['$scope', '$http', function($scope, $http) {
 
     /** Search query */

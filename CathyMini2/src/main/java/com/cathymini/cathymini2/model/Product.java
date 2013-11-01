@@ -2,16 +2,16 @@ package com.cathymini.cathymini2.model;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.Table;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * Represent a product
@@ -55,5 +55,9 @@ public abstract class Product implements Serializable {
     
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public String toString() {
+        return "{id: " + id + ", name: " + name + "}";
     }
 }

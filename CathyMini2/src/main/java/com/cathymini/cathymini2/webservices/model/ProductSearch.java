@@ -12,6 +12,8 @@ public class ProductSearch {
     public String orderBy;
     public boolean orderByASC;
     public String input;
+    public Integer minPrice;
+    public Integer maxPrice;
     
     public void validate() {
         try {
@@ -25,9 +27,5 @@ public class ProductSearch {
         if(length == 0) {
             length = 10;
         }
-        
-        if(input == null) {
-            input = "";
-        }        
     }
 }
