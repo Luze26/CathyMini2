@@ -18,18 +18,18 @@ import javax.persistence.Table;
  * @author uzely
  */
 @Entity(name="Product")
-@NamedQueries({
-    @NamedQuery(name="deleteById", query="DELETE FROM Product p WHERE p.id=:id")
-})
 @Table(name="Product")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="productType", discriminatorType=DiscriminatorType.STRING)
+@NamedQueries({
+    @NamedQuery(name="deleteById", query="DELETE FROM Product p WHERE p.productID=:id")
+})
 public abstract class Product implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name="ID")
-    private Long id;
+    @Column(name="productID")
+    private Long productID;
 
     @Column(name="name")
     private String name;
@@ -38,7 +38,7 @@ public abstract class Product implements Serializable {
     private Float price;
     
     public Long getId() {
-        return id;
+        return productID;
     }    
 
     public String getName() {
@@ -58,6 +58,6 @@ public abstract class Product implements Serializable {
     }
 
     public String toString() {
-        return "{id: " + id + ", name: " + name + "}";
+        return "{id: " + productID + ", name: " + name + "}";
     }
 }

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * The class {@link Consumer} is an EJB entity representing an user.<br/>
@@ -16,26 +17,26 @@ import javax.persistence.ManyToOne;
  * @see PayementInfo
  * @author kraiss
  */
-@Entity
+@Entity(name="PayementInfo")
+@Table(name="PayementInfo")
 public class PayementInfo implements Serializable {
     @Id
     @GeneratedValue
-    @Column(name="ID")
-    private Integer id;
+    @Column(name="payementInfoID")
+    private Long payementInfoID;
     
     @ManyToOne
-    @JoinColumn(name="userID")
-    private Consumer consumer; // foreign key
+    private Consumer consumer;
     
     @Column(name="info")
     private String info;
 
-    public Integer getId() {
-        return id;
+    public Long getCartId() {
+        return payementInfoID;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCartId(Long cartID) {
+        this.payementInfoID = cartID;
     }
 
     public Consumer getConsumer() {
