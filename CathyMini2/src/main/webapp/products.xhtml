@@ -18,7 +18,7 @@
                         <cart-directive></cart-directive>
                     </div>
                     <div class="row col-md-8" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
-                        <div ng-repeat="prod in products" class="product col-xs-4 col-md-4">
+                        <div ng-repeat="prod in products" class="product col-xs-12 col-sm-6 col-md-6">
                             <div>{{prod.name}}  {{prod.price}}€</div>
                             <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
                         </div>

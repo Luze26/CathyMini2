@@ -86,9 +86,9 @@ angular.module('products').
      * @param {type} product to edit
      */
     $scope.editProduct = function(dismiss) {
-        var editedProduct = $scope.editModal.product;
+        var editedProduct = $scope.editedProduct;
         $scope.displayConnectionError = false;
-        $http.post("http://localhost:8080//webresources/product/edit", editedProduct)
+        $http.post("http://localhost:8080//webresources/product/edit", $scope.editModal.product)
             .success(function(data) { 
                 editedProduct.name = data.name; 
                 editedProduct.price = data.price; 
