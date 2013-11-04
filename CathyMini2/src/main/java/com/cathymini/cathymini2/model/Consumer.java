@@ -20,22 +20,22 @@ import javax.persistence.UniqueConstraint;
  * @see PayementInfo
  * @author kraiss
  */
-@Entity
+@Entity(name="Consumer")
+@Table(name = "Consumer",
+        uniqueConstraints={@UniqueConstraint(columnNames={"username", "mail"})}
+)
 @NamedQueries({
     @NamedQuery(name="ConsumerByName",
         query="select object(c) from Consumer c where c.username = :username"),
     @NamedQuery(name="ConsumerByMail",
         query="select object(c) from Consumer c where c.mail = :mail")
 })
-@Table(name = "Consumer",
-        uniqueConstraints={@UniqueConstraint(columnNames={"username", "mail"})}
-)
 public class Consumer implements Serializable {
     @Id
     @GeneratedValue
     @Column(name="userID")
     /** Integer primary Key */
-    private Integer userID;
+    private Long userID;
     
     @Column(name="username")
     /** Consumer username */
@@ -51,17 +51,17 @@ public class Consumer implements Serializable {
     
     @OneToMany(mappedBy="consumer") 
     /** Consumer {@link DeliveryAddress} collection */
-    private Collection<DeliveryAdress> deliveryCollection;
+    private Collection<DeliveryAddress> deliveryCollection;
     
     @OneToMany(mappedBy="consumer")
     /** Consumer {@link PaymentInfo} collection */
     private Collection<PayementInfo> paymentInfoCollection;
 
-    public Collection<DeliveryAdress> getDeliveryCollection() {
+    public Collection<DeliveryAddress> getDeliveryCollection() {
         return deliveryCollection;
     }
 
-    public void setDeliveryCollection(Collection<DeliveryAdress> deliveryCollection) {
+    public void setDeliveryCollection(Collection<DeliveryAddress> deliveryCollection) {
         this.deliveryCollection = deliveryCollection;
     }
 
@@ -73,7 +73,7 @@ public class Consumer implements Serializable {
         this. paymentInfoCollection =  paymentInfoCollection;
     }
 
-    public Integer getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
@@ -89,7 +89,7 @@ public class Consumer implements Serializable {
         return mail;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(Long userID) {
         this.userID = userID;
     }
 

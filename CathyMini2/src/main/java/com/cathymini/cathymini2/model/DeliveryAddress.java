@@ -7,20 +7,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * @author kraiss
  */
-@Entity
-public class DeliveryAdress implements Serializable {
+@Entity(name="DeliveryAddress")
+@Table(name="DeliveryAddress")
+public class DeliveryAddress implements Serializable {
     @Id
     @GeneratedValue
-    @Column(name="ID")
-    private Integer id;
+    @Column(name="deliveryAddresID")
+    private Long deliveryAddresID;
     
     @ManyToOne
-    @JoinColumn(name="userID")
-    private Consumer consumer; // foreign key
+    private Consumer consumer;
     
     @Column(name="firstname")
     private String firstname;
@@ -36,15 +37,13 @@ public class DeliveryAdress implements Serializable {
     
     @Column(name="country")
     private String country;
-    
-    public DeliveryAdress() {}
 
-    public Integer getId() {
-        return id;
+    public Long getDeliveryAddresID() {
+        return deliveryAddresID;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setDeliveryAddresID(Long deliveryAddresID) {
+        this.deliveryAddresID = deliveryAddresID;
     }
 
     public Consumer getConsumer() {
