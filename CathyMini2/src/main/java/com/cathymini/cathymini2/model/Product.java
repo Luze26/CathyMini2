@@ -22,24 +22,28 @@ import javax.persistence.Table;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="productType", discriminatorType=DiscriminatorType.STRING)
 @NamedQueries({
-    @NamedQuery(name="deleteById", query="DELETE FROM Product p WHERE p.productID=:id")
+    @NamedQuery(name="deleteById", query="DELETE FROM Product p WHERE p.id=:id")
 })
 public abstract class Product implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name="productID")
-    private Long productID;
+    @Column(name="ID")
+    private Long id;
 
     @Column(name="name")
     private String name;
     
     @Column(name="price")
-    private Float price;
-    
+    private Float price;  
+
     public Long getId() {
-        return productID;
-    }    
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -58,6 +62,6 @@ public abstract class Product implements Serializable {
     }
 
     public String toString() {
-        return "{id: " + productID + ", name: " + name + "}";
+        return "{id: " + id + ", name: " + name + "}";
     }
 }
