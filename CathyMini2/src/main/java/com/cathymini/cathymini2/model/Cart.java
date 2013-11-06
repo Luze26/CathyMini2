@@ -10,8 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -24,6 +24,10 @@ import javax.persistence.Table;
  */
 @Entity(name="Cart")
 @Table(name="Cart")
+@NamedQueries({
+    @NamedQuery(name="CartByName",
+        query="select object(c) from Cart c where c.consumer = :consumer"),
+})
 public class Cart implements Serializable {
     @Id
     @GeneratedValue

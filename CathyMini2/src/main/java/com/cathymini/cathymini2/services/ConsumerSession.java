@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
  * @author kraiss
  */
 @Stateful
-public class ConsumerSession {
+public class ConsumerSession implements ConsumerSessionItf {
     private Consumer user;
     
     @PersistenceContext(unitName="com.cathymini_CathyMini2_PU")
@@ -27,7 +27,8 @@ public class ConsumerSession {
      * @param pwd Password
      * @param mail Mail Adress
      */
-    public void suscribeUser(String usr, String pwd, String mail) {
+    @Override
+    public String suscribeUser(String usr, String pwd, String mail) throws Exception {
         if (findUserByName(usr) == null) {
             if (findUserByMail(mail) == null) {
                 user = new Consumer();
@@ -36,13 +37,18 @@ public class ConsumerSession {
                 user.setMail(mail);
 
                 em.persist(user);
+                String message = "The user suscribe with success.";
+                logger.debug(message);
+                return message;
             } else {
                 String message = "This mail address is already used by another user.";
                 logger.error(message);
+                throw new Exception(message);
             }
         } else {
                 String message = "This username already exist.";
                 logger.error(message);
+                throw new Exception(message);
         }
     }
     
@@ -51,7 +57,8 @@ public class ConsumerSession {
      * @param usr Username
      * @param pwd Password
      */
-    public void connectUser(String usr, String pwd){
+    @Override
+    public String connectUser(String usr, String pwd) throws Exception {
         Consumer consumer;
         if (usr.contains("@")) { // Decide if 'usr' is a mail address or a username
             consumer = findUserByMail(usr);
@@ -64,49 +71,65 @@ public class ConsumerSession {
                 String message = "The user "+usr+" is connected.";
                 logger.debug(message);
                 user = consumer;
-                
+                return message;
             } else {
                 // Error : This user exists but the pwd is wrong
                 String message = "This user does not exist or the password is wrong.";
                 logger.error(message);
+                throw new Exception(message);
             }
             
         } else {
             // Error : This user does not exist
             String message = "This user does not exist or the password is wrong.";
             logger.error(message);
+            throw new Exception(message);
         }
     }
     
-    @Remove
     /**
      * Log the current user out.
      */
-    public void logout() {}
+    @Remove
+    @Override
+    public String logout() {
+        String message = "The user log out.";
+        logger.error(message);
+        return message;
+    }
     
-    public void deleteUser(String usr, String pwd) {
-            connectUser(usr, pwd);
+    /**
+     * Delete the user 'usr'
+     * @param usr
+     * @param pwd
+     */
+    @Override
+    public String deleteUser(String usr, String pwd) throws Exception {
+        connectUser(usr, pwd);
             
         if (user == null) {
             String message = "This user cannot be deleted.";
             logger.error(message);
+            throw new Exception(message);
         } else {
+            String message = "This user has been deleted.";
+            logger.error(message);
             deleteUser(user);
+            return message;
         }
         
     }
     
-    public void deleteUser(Consumer user) {
-        em.merge(user); // enforse synch with DB
-        em.remove(user);
-    }
-    
     @Override
     public String toString() {
-        logger.debug("See Session = " + user.getUsername() +" :: "+ user.getPwd() +" :: " + user.getMail());
+        //logger.debug("See Session = " + user.getUsername() +" :: "+ user.getPwd() +" :: " + user.getMail());
         return "You are connected as "+user.getUsername()+".";
     }
     
+    private void deleteUser(Consumer user) {
+        em.merge(user); // enforse synch with DB
+        em.remove(user);
+    }
     
     private Consumer findUserByName(String username) {
         Query q = em.createNamedQuery("ConsumerByName", Consumer.class); 

@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import com.cathymini.cathymini2.services.ConsumerSession;
 import com.cathymini.cathymini2.webservices.model.form.Suscribe;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
+import java.util.logging.Level;
 import javax.ws.rs.GET;
 
 /**
@@ -35,8 +36,11 @@ public class ConsumerFacade {
     @Produces("application/json")
     public String suscribe(Suscribe form) {
         logger.debug("Create user = " + form.username +" :: "+ form.pwd +" :: " + form.mail);
-        consumerSession.suscribeUser(form.username, form.pwd, form.mail);
-        return "User suscribed";
+        try {
+            return consumerSession.suscribeUser(form.username, form.pwd, form.mail);
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
     }
     
     @POST
@@ -44,9 +48,12 @@ public class ConsumerFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/json")
     public String connect(Connect form) {
-        logger.debug("Connect user " + form);
-        consumerSession.connectUser(form.user, form.pwd);
-        return "User connected";
+        logger.debug("Connect user " + form.user);
+        try {
+            return consumerSession.connectUser(form.user, form.pwd);
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
     }
     
     @POST
@@ -54,8 +61,7 @@ public class ConsumerFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/json")
     public String logout() {
-        consumerSession.logout();
-        return "User disconnected";
+        return consumerSession.logout();
     }
     
     @POST
@@ -64,8 +70,11 @@ public class ConsumerFacade {
     @Produces("application/json")
     public String delete(Connect form) {
         logger.debug("Delete user " + form);
-        consumerSession.deleteUser(form.user, form.pwd);
-        return "User deleted";
+        try {
+            return consumerSession.deleteUser(form.user, form.pwd);
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
     }
     
     @GET
