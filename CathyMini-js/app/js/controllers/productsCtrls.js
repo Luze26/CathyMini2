@@ -10,6 +10,9 @@ angular.module('products').
                 /** If we continue to requests the server or not */
                 $scope.loadMore = true;
 
+                /** Search by name */
+                $scope.searchName = "Nom du produit";
+                  
                 /**
                  * Order by the product's list
                  * @param {type} property
