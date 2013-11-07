@@ -130,8 +130,8 @@ angular.module('products').
     };
     
     /** Modal information for add product */
-    $scope.addModal = {title: "Add product", okAction: $scope.addProduct, product: {}};
+    $scope.addModal = {title: "Add product", okAction: $scope.addProduct, product: {type: "Serviette"}};
     
     /** Modal information for edit product */
-    $scope.editModal = {title: "Edit product", okAction: $scope.editProduct, product: {type: "Serviette"}};
+    $scope.editModal = {title: "Edit product", okAction: $scope.editProduct, product: {}};
   }]);
