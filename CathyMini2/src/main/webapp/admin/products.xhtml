@@ -77,6 +77,13 @@
                           <label>Name*</label>
                           <input name="pName" ng-model="modal.product.name" type="text" placeholder="Product name…" autofocus="autofocus" required="required" />
                           <div class="control-group">
+                            <label>Type*</label>
+                            <div class="btn-group" ng-model="modal.product.type" bs-buttons-radio="/assets/js/controllers/admin/productsCtrls.js" required="required">
+                                <button type="button" class="btn" value="Serviette">Serviette</button>
+                                <button type="button" class="btn" value="Tampon" >Tampon</button>
+                            </div>
+                          </div>
+                          <div class="control-group">
                             <label for="pPrice">Price*</label>
                             <div class="controls input-prepend">
                               <span class="add-on">€</span>
