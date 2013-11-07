@@ -14,6 +14,7 @@ public class AddProduct {
 
     public String name;
     public Float price;
+    public String type;
     
     public boolean validate() {
         if(name != null && price != null) {
