@@ -12,9 +12,11 @@ public class ProductSearch {
     public String orderBy;
     public boolean orderByASC;
     public String input;
+    public boolean tampon;
+    public boolean napkin;
     public Integer minPrice;
     public Integer maxPrice;
-    
+
     public void validate() {
         try {
             ProductBean.ProductKeys.valueOf(orderBy.toUpperCase());
@@ -27,5 +29,6 @@ public class ProductSearch {
         if(length == 0) {
             length = 10;
         }
+     
     }
 }
