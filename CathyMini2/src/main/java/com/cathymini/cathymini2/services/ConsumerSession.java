@@ -11,8 +11,8 @@ import org.apache.log4j.Logger;
  * The class {@link UserSession} is a stateful session to log in or suscribe {@link Consumer}
  * @author kraiss
  */
-@Stateful
-public class ConsumerSession implements ConsumerSessionItf {
+@Stateless
+public class ConsumerSession { //implements ConsumerSessionItf {
     private Consumer user;
     
     @PersistenceContext(unitName="com.cathymini_CathyMini2_PU")
@@ -27,7 +27,6 @@ public class ConsumerSession implements ConsumerSessionItf {
      * @param pwd Password
      * @param mail Mail Adress
      */
-    @Override
     public String suscribeUser(String usr, String pwd, String mail) throws Exception {
         if (findUserByName(usr) == null) {
             if (findUserByMail(mail) == null) {
@@ -57,7 +56,6 @@ public class ConsumerSession implements ConsumerSessionItf {
      * @param usr Username
      * @param pwd Password
      */
-    @Override
     public String connectUser(String usr, String pwd) throws Exception {
         Consumer consumer;
         if (usr.contains("@")) { // Decide if 'usr' is a mail address or a username
@@ -91,7 +89,6 @@ public class ConsumerSession implements ConsumerSessionItf {
      * Log the current user out.
      */
     @Remove
-    @Override
     public String logout() {
         String message = "The user log out.";
         logger.error(message);
@@ -103,7 +100,6 @@ public class ConsumerSession implements ConsumerSessionItf {
      * @param usr
      * @param pwd
      */
-    @Override
     public String deleteUser(String usr, String pwd) throws Exception {
         connectUser(usr, pwd);
             
@@ -123,7 +119,10 @@ public class ConsumerSession implements ConsumerSessionItf {
     @Override
     public String toString() {
         //logger.debug("See Session = " + user.getUsername() +" :: "+ user.getPwd() +" :: " + user.getMail());
-        return "You are connected as "+user.getUsername()+".";
+        if (user != null)
+            return "You are connected as "+user.getUsername()+".";
+        else 
+            return "User not defined ..";
     }
     
     private void deleteUser(Consumer user) {

@@ -15,16 +15,16 @@ import org.apache.log4j.Logger;
 import com.cathymini.cathymini2.services.ConsumerSession;
 import com.cathymini.cathymini2.webservices.model.form.Suscribe;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
-import java.util.logging.Level;
+import javax.ejb.Remote;
+import javax.ejb.Stateful;
 import javax.ws.rs.GET;
 
 /**
  * 
  * @author Kraiss
  */
-@Stateless
 @Path("/consumer")
-public class ConsumerFacade {
+public class ConsumerFacade{
     private static final Logger logger = Logger.getLogger(com.cathymini.cathymini2.webservices.ProductFacade.class);
     
     @EJB
@@ -81,8 +81,13 @@ public class ConsumerFacade {
     @Path("/seeCurrent")
     @Produces("application/json")
     public String seeCurrent() {
-        String s = consumerSession.toString();
-        logger.debug("See current session = "+s);
-        return s;
+        String s = null;
+        try {
+            s = consumerSession.toString();
+        } catch (Exception e){
+            return "Facade error";
+        }
+            logger.debug("See current session = "+s);
+            return s;
     }
 }

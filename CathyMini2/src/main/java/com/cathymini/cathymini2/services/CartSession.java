@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
  * @author Kraiss
  */
 @Stateless
-public class CartSession implements CartSessionItf {
+public class CartSession {
     private Cart cart;
 
     @PersistenceContext(unitName = "com.cathymini_CathyMini2_PU")
@@ -29,7 +29,6 @@ public class CartSession implements CartSessionItf {
     /**
      * Add a product to the Cart
      */
-    @Override
     public String addProduct(Product p) throws Exception {
         return "Not Implemented";
     }
@@ -37,7 +36,6 @@ public class CartSession implements CartSessionItf {
     /**
      * Remove a product from the cart
      */
-    @Override
     public String subProduct(Product p) throws Exception {
         return "Not Implemented";
     }
@@ -45,7 +43,6 @@ public class CartSession implements CartSessionItf {
     /**
      * Get a cart sessionBean of an user.
      */
-    @Override
     public String getUserCart(Consumer consumer) throws Exception {
         return "Not Implemented";
     }
@@ -54,7 +51,6 @@ public class CartSession implements CartSessionItf {
      * Empty the cart.
      */
     @Remove
-    @Override
     public String clear() {
         return "Not Implemented";
     }
