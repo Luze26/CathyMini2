@@ -9,7 +9,7 @@ commonModule.directive('cartDirective', ['cartService', function(cartService) {
         
         scope.cartOpen = false;
         
-        scope.products = cartService.products;
+        scope.cart = cartService.cart;
         
         scope.toggleCart = function() {
             var position;
@@ -28,14 +28,16 @@ commonModule.directive('cartDirective', ['cartService', function(cartService) {
     },
     template: '<div id="cart">' +
                 '<div id="cartTab" ng-click="toggleCart()">' +
-                    '<i class="fa fa-shopping-cart fa-3"></i>{{nbProducts()}} products' +
+                    '<i class="fa fa-shopping-cart fa-4x"></i>' +
+                    '<div>{{nbProducts()}} products</div>' +
                  '</div>' +
                  '<div id="cartPanel">' +
                     '<ul>' +
-                        '<li ng-repeat="prod in products">' +
-                            '{{prod.name}}' +
+                        '<li ng-repeat="prod in cart.products">' +
+                            '{{prod.name}} quantity : {{prod.quantity}}' +
                         '</li>' +
                     '</ul>' +
+                    'Price: {{cart.price}} €' +
                  '</div>' +
               '</div>'
   };

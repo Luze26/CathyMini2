@@ -4,6 +4,7 @@
  */
 package com.cathymini.cathymini2.services;
 
+import com.cathymini.cathymini2.model.Napkin;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Tampon;
 import com.cathymini.cathymini2.webservices.model.ProductSearch;
@@ -34,7 +35,7 @@ public class ProductBean {
      * Properties of a product (used to order by)
      */
     public enum ProductKeys {
-        ID, NAME, PRICE
+        ID, NAME, TYPE, PRICE
     }
 
     /**
@@ -42,12 +43,18 @@ public class ProductBean {
      *
      * @param name
      * @param price
+     * @param type
      * @return the product
      */
-    public Product addProduct(String name, Float price) {
-        Product prod = new Tampon();
+    public Product addProduct(String name, Float price, String type) {
+        Product prod;
+        if(type.equals(new String("Tampon")))
+            prod = new Tampon();
+        else
+            prod = new Napkin();
         prod.setName(name);
         prod.setPrice(price);
+        prod.setType(type);
         manager.persist(prod);
         logger.info("New product : " + prod);
         return prod;

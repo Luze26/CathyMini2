@@ -44,7 +44,7 @@ public class ProductFacade {
     @Produces(MediaType.APPLICATION_JSON)
     public Product create(AddProduct form, @Context final HttpServletResponse response) {
         if(form != null && form.validate()) {
-            Product product = productBean.addProduct(form.name, form.price);
+            Product product = productBean.addProduct(form.name, form.price, form.type);
             return product;
         }
         else {
@@ -89,7 +89,11 @@ public class ProductFacade {
             for(int i = 0; i < 6; i++) {
                 builder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
             }
-            productBean.addProduct(builder.toString(), new Float(rand.nextInt(100)));
+            String typeProduit = "Serviette";
+            if (new Integer(rand.nextInt(2)) == 1) {
+               typeProduit  = "Tampon"; 
+            }
+            productBean.addProduct(builder.toString(), new Float(rand.nextInt(100)), typeProduit);
         }
         
         return "populated";

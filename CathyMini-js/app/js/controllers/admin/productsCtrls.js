@@ -70,6 +70,7 @@ angular.module('products').
      */
     $scope.addProduct = function(dismiss) {
         $scope.displayConnectionError = false;
+        console.log($scope.addModal.product);
         $http.post("http://localhost:8080//webresources/product/create", $scope.addModal.product)
             .success(function(data) { 
                 $scope.addModal.product = {};
@@ -129,7 +130,7 @@ angular.module('products').
     };
     
     /** Modal information for add product */
-    $scope.addModal = {title: "Add product", okAction: $scope.addProduct, product: {}};
+    $scope.addModal = {title: "Add product", okAction: $scope.addProduct, product: {type: "Serviette"}};
     
     /** Modal information for edit product */
     $scope.editModal = {title: "Edit product", okAction: $scope.editProduct, product: {}};

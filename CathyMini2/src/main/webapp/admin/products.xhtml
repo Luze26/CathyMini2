@@ -33,6 +33,7 @@
                               <tr>
                                 <th class="clickable unselectable" ng-click="orderBy('id')">ID <b class="unselectable" ng-class="search.orderBy=='id' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
                                 <th class="clickable unselectable" ng-click="orderBy('name')">Name <b class="unselectable" ng-class="search.orderBy=='name' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
+                                <th class="clickable unselectable" ng-click="orderBy('type')">Type <b class="unselectable" ng-class="search.orderBy=='type' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
                                 <th class="clickable unselectable" ng-click="orderBy('price')">Price <b class="unselectable" ng-class="search.orderBy=='price' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
                                 <th>Actions</th>
                               </tr>
@@ -41,6 +42,7 @@
                                 <tr ng-repeat="prod in products">
                                     <td>{{prod.id}}</td>
                                     <td>{{prod.name}}</td>
+                                    <td>{{prod.type}}</td>
                                     <td>{{prod.price}}</td>
                                     <td class="td-actions">
                                         <a bs-tooltip="'Edit product'" ng-click="initEditModal(prod)" bs-modal="'productModal.html'" class="btn btn-small"><i class="btn-icon-only icon-pencil"></i></a>
@@ -76,6 +78,13 @@
                         <fieldset>
                           <label>Name*</label>
                           <input name="pName" ng-model="modal.product.name" type="text" placeholder="Product name…" autofocus="autofocus" required="required" />
+                          <div class="control-group">
+                            <label>Type*</label>
+                            <div class="btn-group" ng-model="modal.product.type" bs-buttons-radio="/assets/js/controllers/admin/productsCtrls.js" required="required">
+                                <button type="button" class="btn" value="Serviette">Serviette</button>
+                                <button type="button" class="btn" value="Tampon" >Tampon</button>
+                            </div>
+                          </div>
                           <div class="control-group">
                             <label for="pPrice">Price*</label>
                             <div class="controls input-prepend">

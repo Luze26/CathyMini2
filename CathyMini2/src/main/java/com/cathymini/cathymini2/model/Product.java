@@ -34,6 +34,9 @@ public abstract class Product implements Serializable {
     @Column(name="name")
     private String name;
     
+    @Column(name="type")
+    private String type;
+    
     @Column(name="price")
     private Float price;  
 
@@ -53,6 +56,13 @@ public abstract class Product implements Serializable {
         this.name = name;
     }
     
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
     public Float getPrice() {
         return price;
     }
@@ -64,4 +74,5 @@ public abstract class Product implements Serializable {
     public String toString() {
         return "{id: " + id + ", name: " + name + "}";
     }
+ 
 }
