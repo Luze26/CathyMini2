@@ -12,14 +12,11 @@ import org.apache.log4j.Logger;
  * @author kraiss
  */
 @Stateless
-public class ConsumerSession { //implements ConsumerSessionItf {
-    private Consumer user;
-    
+public class ConsumerBean { 
     @PersistenceContext(unitName="com.cathymini_CathyMini2_PU")
     private EntityManager em;
     
-    private static final Logger logger = Logger.getLogger(ConsumerSession.class);
-    
+    private static final Logger logger = Logger.getLogger(ConsumerBean.class);
     
     /**
      * Create a new User
@@ -27,10 +24,10 @@ public class ConsumerSession { //implements ConsumerSessionItf {
      * @param pwd Password
      * @param mail Mail Adress
      */
-    public String suscribeUser(String usr, String pwd, String mail) throws Exception {
+    public Consumer suscribeUser(String usr, String pwd, String mail) throws Exception {
         if (findUserByName(usr) == null) {
             if (findUserByMail(mail) == null) {
-                user = new Consumer();
+                Consumer user = new Consumer();
                 user.setUsername(usr);
                 user.setPwd(pwd);
                 user.setMail(mail);
@@ -38,7 +35,7 @@ public class ConsumerSession { //implements ConsumerSessionItf {
                 em.persist(user);
                 String message = "The user suscribe with success.";
                 logger.debug(message);
-                return message;
+                return user;
             } else {
                 String message = "This mail address is already used by another user.";
                 logger.error(message);
@@ -56,7 +53,7 @@ public class ConsumerSession { //implements ConsumerSessionItf {
      * @param usr Username
      * @param pwd Password
      */
-    public String connectUser(String usr, String pwd) throws Exception {
+    public Consumer connectUser(String usr, String pwd) throws Exception {
         Consumer consumer;
         if (usr.contains("@")) { // Decide if 'usr' is a mail address or a username
             consumer = findUserByMail(usr);
@@ -68,8 +65,7 @@ public class ConsumerSession { //implements ConsumerSessionItf {
             if (consumer.getPwd().equals(pwd)) {
                 String message = "The user "+usr+" is connected.";
                 logger.debug(message);
-                user = consumer;
-                return message;
+                return consumer;
             } else {
                 // Error : This user exists but the pwd is wrong
                 String message = "This user does not exist or the password is wrong.";
@@ -89,10 +85,9 @@ public class ConsumerSession { //implements ConsumerSessionItf {
      * Log the current user out.
      */
     @Remove
-    public String logout() {
+    public void logout() {
         String message = "The user log out.";
         logger.error(message);
-        return message;
     }
     
     /**
@@ -100,8 +95,8 @@ public class ConsumerSession { //implements ConsumerSessionItf {
      * @param usr
      * @param pwd
      */
-    public String deleteUser(String usr, String pwd) throws Exception {
-        connectUser(usr, pwd);
+    public void deleteUser(String usr, String pwd) throws Exception {
+        Consumer user = connectUser(usr, pwd);
             
         if (user == null) {
             String message = "This user cannot be deleted.";
@@ -111,18 +106,8 @@ public class ConsumerSession { //implements ConsumerSessionItf {
             String message = "This user has been deleted.";
             logger.error(message);
             deleteUser(user);
-            return message;
         }
         
-    }
-    
-    @Override
-    public String toString() {
-        //logger.debug("See Session = " + user.getUsername() +" :: "+ user.getPwd() +" :: " + user.getMail());
-        if (user != null)
-            return "You are connected as "+user.getUsername()+".";
-        else 
-            return "User not defined ..";
     }
     
     private void deleteUser(Consumer user) {
