@@ -21,7 +21,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * A purchase represents a {@link Product} list buy by a {@link Consumer}.
+ * The class {@link Purchase} is an EJB Entity representing a list of {@link Product} buy by a {@link Consumer}.
+ * @see PurchaseSubscription
  * @author Kraiss
  */
 @Entity(name="Purchase")

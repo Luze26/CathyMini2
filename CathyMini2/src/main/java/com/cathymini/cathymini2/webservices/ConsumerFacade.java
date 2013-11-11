@@ -6,7 +6,6 @@ package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Consumer;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;

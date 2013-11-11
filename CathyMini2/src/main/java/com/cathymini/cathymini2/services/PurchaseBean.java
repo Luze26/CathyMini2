@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 
 /**
- * The class {@link PurchaseBean} is a bean to manage purchase
+ * The class {@link PurchaseBean} is a stateless session bean to manage purchase
  * @author Kraiss
  */
 @Stateless
