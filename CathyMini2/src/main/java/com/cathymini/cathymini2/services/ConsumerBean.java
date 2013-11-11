@@ -8,7 +8,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 /**
- * The class {@link UserSession} is a stateful session to log in or suscribe {@link Consumer}
+ * The class {@link UserSession} is a bean to log in or suscribe {@link Consumer}
  * @author kraiss
  */
 @Stateless
