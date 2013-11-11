@@ -1,6 +1,6 @@
-consumerModule.
+ angular.module('common').
   controller('consumerCtrl', ['$scope', '$http', function($scope, $http) {
-
+  
     /** Initialize consumer form's attributes */
     $scope.consumer = {};
 

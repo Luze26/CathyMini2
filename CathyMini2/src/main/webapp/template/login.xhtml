@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+ 
+    <body>
+        <ui:composition>
+           <div ng-controller="consumerCtrl" class="login-zone">
+                <div ng-show="feedbackOk.display">
+                    {{feedbackOk.text}}
+                    <button type="button" class="close" ng-click="feedbackOk.display = false">×</button>
+                </div>
+                <div ng-show="!feedbackOk.display">
+                    <button type="button" class="btn btn-info" bs-modal="'consumerModal.html'">Login</button>
+                </div>
+                
+               <script type="text/ng-template" id="consumerModal.html">
+                    <ui:decorate template="modalLayout.xhtml">
+                        <ui:param name="modalTitle" value="{{modal.title}}" />
+                        <ui:param name="okAction" value="suscribe(dismiss)" />
+                        <ui:param name="ngDisabled" value="form.$invalid" />
+                        <ui:define name="modalContent">
+                          <div ng-show="modal.displayConnectionError" class="alert alert-dismissable alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <strong>Connection error!</strong> Verify your internet connection.
+                          </div>
+                          <form name="form" novalidate="novalidate">
+                            <fieldset>
+                              <label>Username</label>
+                              <input name="username" ng-model="consumer.username" type="text" placeholder="Your username" autofocus="autofocus" required="required" />
+                              <label>Mail</label>
+                              <input name="mail" ng-model="consumer.mail" type="text" placeholder="Your mail address" autofocus="autofocus" required="required" />
+                              <label>Password</label>
+                              <input name="password" ng-model="consumer.pwd" type="text" placeholder="Your password" autofocus="autofocus" required="required" />                          
+                            </fieldset>
+                          </form>
+                        </ui:define>
+                    </ui:decorate>
+                </script>
+            </div>
+        </ui:composition>
+    </body>
+</html>

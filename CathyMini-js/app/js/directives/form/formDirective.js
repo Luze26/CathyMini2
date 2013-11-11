@@ -1,5 +1,5 @@
 var INTEGER_REGEXP = /^\-?\d*$/;
-commonModule.directive('integer', function() {
+angular.module('common').directive('integer', function() {
   return {
     require: 'ngModel',
     link: function(scope, elm, attrs, ctrl) {
@@ -19,7 +19,7 @@ commonModule.directive('integer', function() {
 });
 
 var FLOAT_REGEXP = /^\-?\d+((\.|\,)\d{1,2})?$/;
-commonModule.directive('smartFloat', function() {
+angular.module('common').directive('smartFloat', function() {
   return {
     require: 'ngModel',
     link: function(scope, elm, attrs, ctrl) {        

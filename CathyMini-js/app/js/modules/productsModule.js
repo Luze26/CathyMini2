@@ -1,2 +1,2 @@
-var productsModule = angular.module('products', ['common', 'infinite-scroll', '$strap.directives']);
+var productsModule = angular.module('products', ['common', 'infinite-scroll']);
 

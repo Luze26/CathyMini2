@@ -1,4 +1,4 @@
-commonModule.directive('cartDirective', ['cartService', function(cartService) {
+angular.module('common').directive('cartDirective', ['cartService', function(cartService) {
   return {
     restrict: 'E',
     replace: true,
