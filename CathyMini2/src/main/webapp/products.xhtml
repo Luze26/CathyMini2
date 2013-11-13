@@ -18,7 +18,7 @@
                         <form action="#" id="search-form">
                             <div>
                                 <label>Rechecher par nom </label>
-                                <input name="pName" type="text" ng-model="searchName" placeholder="Product name…" class="form-control"/>
+                                <input type="text" class="searchTable" ng-model="search.input" placeholder="Search a product" ng-change="refreshSearch()" />
                             </div>
                             <div>
                                 <label>Type du produit </label>
