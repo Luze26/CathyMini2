@@ -30,12 +30,12 @@
                             <div>
                                 <label for="pPrice">Rechecher par prix </label>
                                 <div class="controls input-prepend">
+                                    <input type="text" ng-model="search.minPrice" min="0" placeholder="Minimum price" smart-float="smart-float" class="searchTable" ng-change="refreshSearch()" />
                                     <span class="add-on">€</span>
-                                    <input name="pPrice" ng-model="search.minprice" type="text" min="0" smart-float="smart-float" class="form-control" />
                                 </div>
                                 <div class="controls input-prepend">
+                                    <input type="text" ng-model="search.maxPrice" min="0" placeholder="Maximum price" smart-float="smart-float" class="searchTable" ng-change="refreshSearch()" />
                                     <span class="add-on">€</span>
-                                    <input name="pPrice" ng-model="search.maxprice" type="text" min="0" smart-float="smart-float" class="form-control" />
                                 </div>
                             </div>
                         </form>
