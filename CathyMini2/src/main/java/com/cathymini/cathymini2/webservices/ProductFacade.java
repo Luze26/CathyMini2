@@ -5,6 +5,7 @@
 package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Product;
+import com.cathymini.cathymini2.model.Tampon;
 import com.cathymini.cathymini2.services.ProductBean;
 import com.cathymini.cathymini2.webservices.model.ProductSearch;
 import java.util.Collection;
@@ -19,11 +20,18 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 import com.cathymini.cathymini2.webservices.model.form.AddProduct;
 import com.cathymini.cathymini2.webservices.model.form.EditProduct;
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
+
 
 /**
  *
@@ -73,11 +81,83 @@ public class ProductFacade {
         return productBean.editProduct(form.id, form.name, form.price);
     }
     
+    
+    @GET
+    @Path("/readXML")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void readXML(){
+            SAXBuilder sxb = new SAXBuilder();
+            Document document = null;
+      try
+      {
+         //On crée un nouveau document JDOM avec en argument le fichier XML
+         //Le parsing est terminé ;)
+         document = sxb.build(new File("/home/anaelle/Documents/m2/ECOM/listeProduit.xml"));
+      }
+      catch(Exception e){
+      }
+
+      //On initialise un nouvel élément racine avec l'élément racine du document.
+      racine = document.getRootElement();
+      afficheAll();
+      
+    }
+     Element racine;
+    
+    
+    @GET
+    @Path("/afficheAll")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void afficheAll(){
+        
+        List listEtudiants = racine.getChildren("product");
+        //On crée un Iterator sur notre liste
+        Iterator i = listEtudiants.iterator();
+        while(i.hasNext())
+        {
+           //On recrée l'Element courant à chaque tour de boucle afin de
+           //pouvoir utiliser les méthodes propres aux Element comme :
+           //sélectionner un nœud fils, modifier du texte, etc...
+           Element courant = (Element)i.next();
+           //On affiche le nom de l’élément courant
+           String nom = courant.getChild("nom").getText();
+           String marque = courant.getChild("marque").getText();
+           String description = courant.getChild("description").getText().replace("'", "\'");
+           if(courant.getAttributeValue("typeP").equals("tampon")){
+               Boolean appli = courant.getChild("applicateur").getText().equals("true");
+               
+               List listFlux = courant.getChild("listeFlux").getChildren("flux");
+               System.out.println("oya : "+listFlux.size());
+                //On crée un Iterator sur notre liste
+                Iterator j = listFlux.iterator();
+                while(j.hasNext())
+                {
+                    System.out.println("boucle");
+                   //On recrée l'Element courant à chaque tour de boucle afin de
+                   //pouvoir utiliser les méthodes propres aux Element comme :
+                   //sélectionner un nœud fils, modifier du texte, etc...
+                   Element c = (Element)j.next();
+                   Float fluxC = Float.parseFloat(c.getChild("name").getText());
+                   
+                   
+                   
+
+                   Float prix = Float.parseFloat(c.getChildText("prix"));
+                  System.out.println("avant nouveau");
+                   Product newT = new Tampon(appli, nom, "tampon", prix, fluxC, description);
+                   System.out.println("avant ajout");
+                   productBean.addProduct(newT);
+                   System.out.println("Un produit ajouté!!");
+                }
+           }
+        }
+    }
+    
     @GET
     @Path("/populate")
     @Produces(MediaType.APPLICATION_JSON)
     public String populate(@QueryParam("size") int size) {
-        final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
+       /* final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
 
         if(size == 0) {
             size = 500;
@@ -93,9 +173,12 @@ public class ProductFacade {
             if (new Integer(rand.nextInt(2)) == 1) {
                typeProduit  = "Tampon"; 
             }
+            
             productBean.addProduct(builder.toString(), new Float(rand.nextInt(100)), typeProduit);
         }
         
+        return "populated";*/
+        readXML();
         return "populated";
     }
     
