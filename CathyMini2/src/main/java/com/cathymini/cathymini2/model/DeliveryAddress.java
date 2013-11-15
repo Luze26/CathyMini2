@@ -5,11 +5,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
+ * The class {@link DeliveryAddress} is an EJB Entity representing a {@link Consumer} {@link DeliveryAddress}.
  * @author kraiss
  */
 @Entity(name="DeliveryAddress")
@@ -18,9 +18,11 @@ public class DeliveryAddress implements Serializable {
     @Id
     @GeneratedValue
     @Column(name="deliveryAddresID")
+    /** Integer primary key */
     private Long deliveryAddresID;
     
     @ManyToOne
+    /** Owner of the {@link DeliveryAddress} */
     private Consumer consumer;
     
     @Column(name="firstname")
@@ -30,8 +32,8 @@ public class DeliveryAddress implements Serializable {
     
     @Column(name="address")
     private String address;
-    @Column(name="postalcode")
-    private String postalCode;
+    @Column(name="zipcode")
+    private String zipCode;
     @Column(name="city")
     private String city;
     
@@ -78,12 +80,12 @@ public class DeliveryAddress implements Serializable {
         this.address = address;
     }
 
-    public String getPostalCode() {
-        return postalCode;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+    public void setZipCode(String postalCode) {
+        this.zipCode = postalCode;
     }
 
     public String getCity() {

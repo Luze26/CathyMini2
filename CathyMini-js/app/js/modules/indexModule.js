@@ -1,3 +1,1 @@
-angular.module('index', ['common']);
-
-
+ angular.module('index', ['common']);

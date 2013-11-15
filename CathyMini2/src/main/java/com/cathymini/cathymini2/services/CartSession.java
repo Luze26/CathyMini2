@@ -18,13 +18,13 @@ import org.apache.log4j.Logger;
  * @author Kraiss
  */
 @Stateless
-public class CartBean {
+public class CartSession {
     private Cart cart;
 
     @PersistenceContext(unitName = "com.cathymini_CathyMini2_PU")
     private EntityManager manager;
 
-    private static final Logger logger = Logger.getLogger(CartBean.class);
+    private static final Logger logger = Logger.getLogger(CartSession.class);
     
     /**
      * Add a product to the Cart

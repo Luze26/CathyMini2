@@ -10,36 +10,40 @@
         <ui:composition template="template/commonLayout.xhtml">
             <ui:param name="ngApp" value="products" />
             <ui:param name="ngController" value="productsCtrl" />
-            <ui:param name="title" value="CathyMini" />
+            <ui:param name="title" value="CathyMini - Catalogue" />
             <ui:define name="content">
                 <div class="row">
                     <div class="col-md-4">
                         Search panel
                         <form action="#" id="search-form">
-                        <div>
-                            <b>Rechecher par nom </b><input type="text" id="search-name" ng-model="searchName" class="form-control"/>
-                        </div>
-                        <div class="btn-group" bs-buttons-checkbox="/assets/js/controllers/productsCtrls.js">
-                            <b>Rechecher par type </b> <br/>
-                          <button type="button" class="btn" ng-model="button1.active" >Tampon</button>
-                          <button type="button" class="btn" ng-model="button2.active" >Serviette</button>
-                        </div>
-                            
-                        Rechecher par prix : <br />    
-                       <ul>
-                            <li ng-repeat="position in positions">
-                                <p>Name: </p>
-                                <p>Minimum Age: </p> 
-                                <p>Maximum Age: </p> 
-                                <slider floor="10" ceiling="60" ng-model-low="position.minAge" ng-model-high="position.maxAge"></slider>
-                            </li>
-                        </ul>
+                            <div>
+                                <label>Rechecher par nom </label>
+                                <input type="text" class="searchTable" ng-model="search.input" placeholder="Search a product" ng-change="refreshSearch()" />
+                            </div>
+                            <div>
+                                <label>Type du produit </label>
+                                <div class="btn-group" bs-buttons-checkbox="bs-buttons-checkbox">
+                                    <button type="button" value="true" class="btn" ng-model="search.napkin" ng-change="refreshSearch()">Serviette</button>
+                                    <button type="button" value="true" class="btn" ng-model="search.tampon" ng-change="refreshSearch()">Tampon</button>
+                                </div>
+                           </div>
+                            <div>
+                                <label for="pPrice">Rechecher par prix </label>
+                                <div class="controls input-prepend">
+                                    <input type="text" ng-model="search.minPrice" min="0" placeholder="Minimum price" smart-float="smart-float" class="searchTable" ng-change="refreshSearch()" />
+                                    <span class="add-on">€</span>
+                                </div>
+                                <div class="controls input-prepend">
+                                    <input type="text" ng-model="search.maxPrice" min="0" placeholder="Maximum price" smart-float="smart-float" class="searchTable" ng-change="refreshSearch()" />
+                                    <span class="add-on">€</span>
+                                </div>
+                            </div>
                         </form>
                         <cart-directive></cart-directive>
                     </div>
                     <div class="row col-md-8" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
                         <div ng-repeat="prod in products" class="product col-xs-12 col-sm-6 col-md-6">
-                            <div>{{prod.name}}  {{prod.price}}€</div>
+                            <div>{{prod.name}} <br /> {{prod.type}} <br /> {{prod.price}}€</div>
                             <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
                         </div>
                     </div>
@@ -50,7 +54,6 @@
                 <script src="/assets/js/ng-infinite-scroll.min.js"></script>
                 <script src="/assets/js/modules/productsModule.js"></script>
                 <script src="/assets/js/controllers/productsCtrls.js"></script>
-                <script src="/assets/js/modules/commonModule.js"></script>
                 <script src="/assets/js/services/cartService.js"></script>
                 <script src="/assets/js/directives/cartDirective.js"></script>
                 <script src="/assets/js/directives/form/formDirective.js"></script>

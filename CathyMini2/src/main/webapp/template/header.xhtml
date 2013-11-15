@@ -23,7 +23,11 @@
                             </ul>
 
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="" target="_blank">Login</a></li>
+                                <li>
+                                    <ui:insert name="login" >
+                                      <ui:include src="/template/login.xhtml" />
+                                    </ui:insert>
+                                </li>
                             </ul>
 
                         </div>

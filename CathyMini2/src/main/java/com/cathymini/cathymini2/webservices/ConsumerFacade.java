@@ -4,13 +4,13 @@
  */
 package com.cathymini.cathymini2.webservices;
 
-import com.cathymini.cathymini2.webservices.secure.Role;
-import com.cathymini.cathymini2.webservices.secure.Secure;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.webservices.model.ConsumerSession;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
 import com.cathymini.cathymini2.webservices.model.form.Suscribe;
+import com.cathymini.cathymini2.webservices.secure.Role;
+import com.cathymini.cathymini2.webservices.secure.Secure;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,7 +69,7 @@ public class ConsumerFacade{
             logger.debug("Connect user " + form.user);
             try {
                 Consumer user = consumerBean.connectUser(form.user, form.pwd);
-                // TODO Gestion de la session (ajout de l'utilisateur)
+                session.setAttribute(USER_ATTR, ConsumerSession.getSession(user));
                 return "You are connected!";
             } catch (Exception ex) {
                 return ex.getMessage();
@@ -83,21 +83,36 @@ public class ConsumerFacade{
     @Path("/logout")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String logout() {
-        consumerBean.logout();
-        // TODO Gestion de la session (suppresion de l'utilisateur)
-        return "You logout.";
+    public String logout(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+        HttpSession session = request.getSession(true);
+        
+        if (session.getAttribute(USER_ATTR) != null) {
+            consumerBean.logout();
+            session.setAttribute(USER_ATTR, null);
+            return "You logout.";
+        } else {
+            return "You are not connected.";
+        }
     }
     
     @POST
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String delete(Connect form) {
+    public String delete(Connect form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+        HttpSession session = request.getSession(true);
+        
         logger.debug("Delete user " + form);
         try {
             consumerBean.deleteUser(form.user, form.pwd);
-            // TODO Gestion de la session (suppresion de l'utilisateur)
+            
+            if (session.getAttribute(USER_ATTR) != null) {
+                ConsumerSession cs = (ConsumerSession) session.getAttribute(USER_ATTR);
+                if (cs.username.equals(form.user)) {
+                    session.setAttribute(USER_ATTR, null);
+                }
+            }
+            
             return "You delete your account.";
         } catch (Exception ex) {
             return ex.getMessage();
@@ -107,10 +122,14 @@ public class ConsumerFacade{
     @GET
     @Path("/seeCurrent")
     @Produces(MediaType.APPLICATION_JSON)
-    public String seeCurrent() {
-        String s = "...";
-        // Affichage de la session
-        logger.debug("See current session = "+s);
-        return s;
+    public String seeCurrent(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+        HttpSession session = request.getSession(true);
+        
+        if (session.getAttribute(USER_ATTR) != null) {
+            ConsumerSession cs = (ConsumerSession) session.getAttribute(USER_ATTR);
+            return cs.username;
+        } else {
+            return "";
+        }
     }
 }

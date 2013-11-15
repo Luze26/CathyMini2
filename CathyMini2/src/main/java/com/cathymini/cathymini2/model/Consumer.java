@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * The class {@link Consumer} is an EJB entity representing an user.<br/>
+ * The class {@link Consumer} is an EJB Entity representing an user.<br/>
  * It contains two named queries '<code>ConsumerByName</code>' and '<code>ConsumerByMail</code>'.
  * 
  * @see DeliveryAdress
