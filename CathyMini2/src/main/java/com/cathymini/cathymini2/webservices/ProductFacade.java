@@ -23,23 +23,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import org.apache.log4j.Logger;
-import com.cathymini.cathymini2.webservices.model.form.AddProduct;
-import com.cathymini.cathymini2.webservices.model.form.EditProduct;
-import java.io.File;
-import java.util.Iterator;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
-
-
 import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
@@ -178,10 +163,10 @@ public class ProductFacade {
 
     public String populate(@QueryParam("size") int size) {
        /* final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
-=======
+    public String populate(@QueryParam("size") int size) {
+       /* final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
     public String populate(@Context final HttpServletRequest request, @Context final HttpServletResponse response, @QueryParam("size") int size) {
         final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
->>>>>>> branch 'master' of https://github.com/Luze26/CathyMini2.git
 
         if(size == 0) {
             size = 500;
