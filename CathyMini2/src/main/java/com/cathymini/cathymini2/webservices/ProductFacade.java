@@ -4,6 +4,7 @@
  */
 package com.cathymini.cathymini2.webservices;
 
+import com.cathymini.cathymini2.model.Napkin;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Tampon;
 import com.cathymini.cathymini2.services.ProductBean;
@@ -119,7 +120,7 @@ public class ProductFacade {
            //pouvoir utiliser les méthodes propres aux Element comme :
            //sélectionner un nœud fils, modifier du texte, etc...
            Element courant = (Element)i.next();
-           //On affiche le nom de l’élément courant
+           //récupérer information sur les produits
            String nom = courant.getChild("nom").getText();
            String marque = courant.getChild("marque").getText();
            String description = courant.getChild("description").getText().replace("'", "\'");
@@ -127,29 +128,38 @@ public class ProductFacade {
                Boolean appli = courant.getChild("applicateur").getText().equals("true");
                
                List listFlux = courant.getChild("listeFlux").getChildren("flux");
-               System.out.println("oya : "+listFlux.size());
                 //On crée un Iterator sur notre liste
                 Iterator j = listFlux.iterator();
                 while(j.hasNext())
                 {
-                    System.out.println("boucle");
                    //On recrée l'Element courant à chaque tour de boucle afin de
                    //pouvoir utiliser les méthodes propres aux Element comme :
                    //sélectionner un nœud fils, modifier du texte, etc...
                    Element c = (Element)j.next();
                    Float fluxC = Float.parseFloat(c.getChild("name").getText());
-                   
-                   
-                   
-
                    Float prix = Float.parseFloat(c.getChildText("prix"));
-                  System.out.println("avant nouveau");
-                   Product newT = new Tampon(appli, nom, "tampon", prix, fluxC, description);
-                   System.out.println("avant ajout");
+                   Product newT = new Tampon(appli, nom, "tampon", prix, fluxC, description, marque);
                    productBean.addProduct(newT);
-                   System.out.println("Un produit ajouté!!");
                 }
            }
+           else
+           {
+               String typeS = courant.getChild("type").getText();
+               List listFlux = courant.getChild("listeFlux").getChildren("flux");
+                //On crée un Iterator sur notre liste
+                Iterator j = listFlux.iterator();
+                while(j.hasNext())
+                {
+                   //On recrée l'Element courant à chaque tour de boucle afin de
+                   //pouvoir utiliser les méthodes propres aux Element comme :
+                   //sélectionner un nœud fils, modifier du texte, etc...
+                   Element c = (Element)j.next();
+                   Float fluxC = Float.parseFloat(c.getChild("name").getText());
+                   Float prix = Float.parseFloat(c.getChildText("prix"));
+                   Product newT = new Napkin(typeS, nom, "serviette", prix, fluxC, description, marque);
+                   productBean.addProduct(newT);
+                }
+             }
         }
     }
     

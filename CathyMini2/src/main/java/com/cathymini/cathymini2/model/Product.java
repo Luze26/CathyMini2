@@ -29,12 +29,13 @@ public abstract class Product implements Serializable {
     public Product() {
     }
 
-    public Product(String name, String type, Float price, Float flux, String description) {
+    public Product(String name, String type, Float price, Float flux, String description, String marque) {
         this.name = name;
         this.type = type;
         this.price = price;
         this.flux = flux;
         this.description = description;
+        this.marque = marque;
     }
 
     @Id
@@ -47,6 +48,33 @@ public abstract class Product implements Serializable {
     
     @Column(name="type")
     protected String type;
+    
+    @Column(name="marque")
+    protected String marque;
+
+    public String getMarque() {
+        return marque;
+    }
+
+    public void setMarque(String marque) {
+        this.marque = marque;
+    }
+
+    public Float getFlux() {
+        return flux;
+    }
+
+    public void setFlux(Float flux) {
+        this.flux = flux;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     
     @Column(name="price")
     protected Float price;

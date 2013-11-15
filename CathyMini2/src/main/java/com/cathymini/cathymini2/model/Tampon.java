@@ -25,8 +25,8 @@ public class Tampon extends Product {
     public Tampon() {
     }
 
-    public Tampon(Boolean appli, String name, String type, Float price, Float flux, String description) {
-        super(name, type, price, flux, description);
+    public Tampon(Boolean appli, String name, String type, Float price, Float flux, String description, String marque) {
+        super(name, type, price, flux, description, marque);
         this.appli = appli;
     }
     
