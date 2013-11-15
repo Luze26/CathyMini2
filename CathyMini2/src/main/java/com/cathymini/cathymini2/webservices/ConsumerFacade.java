@@ -4,6 +4,7 @@
  */
 package com.cathymini.cathymini2.webservices;
 
+import com.cathymini.cathymini2.model.Consumer;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -12,66 +13,92 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
-import com.cathymini.cathymini2.services.ConsumerSession;
+import com.cathymini.cathymini2.services.ConsumerBean;
+import com.cathymini.cathymini2.webservices.model.ConsumerSession;
 import com.cathymini.cathymini2.webservices.model.form.Suscribe;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
-import java.util.logging.Level;
+import javax.ejb.Remote;
+import javax.ejb.Stateful;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
+import javax.ws.rs.core.Context;
 
 /**
  * 
  * @author Kraiss
  */
-@Stateless
 @Path("/consumer")
-public class ConsumerFacade {
+public class ConsumerFacade{
+    private static final String USER_ATTR = "_USER_ATTR";
     private static final Logger logger = Logger.getLogger(com.cathymini.cathymini2.webservices.ProductFacade.class);
     
     @EJB
-    private ConsumerSession consumerSession;
+    private ConsumerBean consumerBean;
     
     @POST
     @Path("/suscribe")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces("application/json")
-    public String suscribe(Suscribe form) {
-        logger.debug("Create user = " + form.username +" :: "+ form.pwd +" :: " + form.mail);
-        try {
-            return consumerSession.suscribeUser(form.username, form.pwd, form.mail);
-        } catch (Exception ex) {
-            return ex.getMessage();
+    @Produces(MediaType.APPLICATION_JSON)
+    public String suscribe(Suscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+        HttpSession session = request.getSession(true);
+
+        if (session.getAttribute(USER_ATTR) == null) {
+            try {
+                logger.debug("Create user = " + form.username +" :: "+ form.pwd +" :: " + form.mail);
+                Consumer user = consumerBean.suscribeUser(form.username, form.pwd, form.mail);
+                session.setAttribute(USER_ATTR, ConsumerSession.getSession(user));
+                return "You are suscribed!";
+            } catch (Exception ex) {
+                return ex.getMessage();
+            }
+        } else {
+            return "You are already connected";
         }
     }
     
     @POST
     @Path("/connect")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces("application/json")
-    public String connect(Connect form) {
-        logger.debug("Connect user " + form.user);
-        try {
-            return consumerSession.connectUser(form.user, form.pwd);
-        } catch (Exception ex) {
-            return ex.getMessage();
+    @Produces(MediaType.APPLICATION_JSON)
+    public String connect(Connect form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+        HttpSession session = request.getSession(true);
+
+        if (session.getAttribute(USER_ATTR) == null) {
+            logger.debug("Connect user " + form.user);
+            try {
+                Consumer user = consumerBean.connectUser(form.user, form.pwd);
+                // TODO Gestion de la session (ajout de l'utilisateur)
+                return "You are connected!";
+            } catch (Exception ex) {
+                return ex.getMessage();
+            }
+        } else {
+            return "You are already connected";
         }
     }
     
     @POST
     @Path("/logout")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public String logout() {
-        return consumerSession.logout();
+        consumerBean.logout();
+        // TODO Gestion de la session (suppresion de l'utilisateur)
+        return "You logout.";
     }
     
     @POST
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public String delete(Connect form) {
         logger.debug("Delete user " + form);
         try {
-            return consumerSession.deleteUser(form.user, form.pwd);
+            consumerBean.deleteUser(form.user, form.pwd);
+            // TODO Gestion de la session (suppresion de l'utilisateur)
+            return "You delete your account.";
         } catch (Exception ex) {
             return ex.getMessage();
         }
@@ -79,9 +106,10 @@ public class ConsumerFacade {
     
     @GET
     @Path("/seeCurrent")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public String seeCurrent() {
-        String s = consumerSession.toString();
+        String s = "...";
+        // Affichage de la session
         logger.debug("See current session = "+s);
         return s;
     }

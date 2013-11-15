@@ -108,16 +108,29 @@ public class ProductBean {
         if (searchQuery.input != null) {
             query += " LIKE '%" + searchQuery.input + "%'";
         }
-
+        if(searchQuery.tampon && searchQuery.napkin){
+            
+        } else {
+            if (searchQuery.tampon) {
+                query += " AND p.type = \"Tampon\"";
+            } else if (searchQuery.napkin) {
+                query += " AND p.type = \"Serviette\"";
+            } else {
+                query = "SELECT p FROM Product p WHERE p.name = \"Rien\"";
+                return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
+            }
+        
+        }
         if (searchQuery.minPrice != null) {
-            query += " p.price >= " + searchQuery.minPrice;
+            query += " AND p.price >= " + searchQuery.minPrice;
         }
 
         if (searchQuery.maxPrice != null) {
-            query += " p.price <= " + searchQuery.maxPrice;
+            query += " AND p.price <= " + searchQuery.maxPrice;
         }
 
         query += " ORDER BY p." + searchQuery.orderBy + " " + (searchQuery.orderByASC ? "ASC" : "DESC");
+        System.out.println(query);
         return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
     }
 }

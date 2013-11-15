@@ -2,7 +2,7 @@ angular.module('products').
   controller('productsCtrl', ['$scope', '$http', function($scope, $http) {
 
     /** Search query */
-    $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: ""};
+    $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true, napkin: true};
     
     /** Products list */
     $scope.products = [];
