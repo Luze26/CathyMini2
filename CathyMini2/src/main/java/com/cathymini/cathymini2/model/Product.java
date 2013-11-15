@@ -51,6 +51,17 @@ public abstract class Product implements Serializable {
     
     @Column(name="marque")
     protected String marque;
+    
+    @Column(name="pictureUrl")
+    protected String pictureUrl;
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
 
     public String getMarque() {
         return marque;
