@@ -7,11 +7,11 @@
     <body>
         <ui:composition>
            <div ng-controller="consumerCtrl" class="login-zone">
-                <div ng-show="feedbackOk.display">
-                    {{feedbackOk.text}}
-                    <button type="button" class="close" ng-click="feedbackOk.display = false">×</button>
+                <div ng-show="isConnected.display">
+                    Hello, {{user}} !
+                    <button type="button" class="btn btn-info" ng-click="disconnect()">Logout</button>
                 </div>
-                <div ng-show="!feedbackOk.display">
+                <div ng-show="!isConnected.display">
                     <button type="button" class="btn btn-info" bs-modal="'connectModal.html'">Login</button>
                     <button type="button" class="btn btn-info" bs-modal="'suscribeModal.html'">Suscribe</button>
                 </div>
