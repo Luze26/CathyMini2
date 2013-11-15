@@ -124,9 +124,9 @@ public class ConsumerFacade{
         
         if (session.getAttribute(USER_ATTR) != null) {
             ConsumerSession cs = (ConsumerSession) session.getAttribute(USER_ATTR);
-            return "You are connected as " +cs.username+".";
+            return cs.username;
         } else {
-            return "You are not connected.";
+            return "";
         }
     }
 }
