@@ -1,3 +1,3 @@
-var commonModule = angular.module('common', []);
+angular.module('common', ['$strap.directives']);
 
 

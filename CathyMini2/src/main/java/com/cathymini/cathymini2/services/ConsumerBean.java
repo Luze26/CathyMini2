@@ -8,13 +8,13 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 /**
- * The class {@link UserSession} is a stateful session to log in or suscribe {@link Consumer}
+ * The class {@link ConsumerBean} is a stateless session bean to log in or suscribe a {@link Consumer}
  * @author kraiss
  */
 @Stateless
 public class ConsumerBean { 
     @PersistenceContext(unitName="com.cathymini_CathyMini2_PU")
-    private EntityManager em;
+    private EntityManager manager;
     
     private static final Logger logger = Logger.getLogger(ConsumerBean.class);
     
@@ -32,7 +32,7 @@ public class ConsumerBean {
                 user.setPwd(pwd);
                 user.setMail(mail);
 
-                em.persist(user);
+                manager.persist(user);
                 String message = "The user suscribe with success.";
                 logger.debug(message);
                 return user;
@@ -91,32 +91,40 @@ public class ConsumerBean {
     }
     
     /**
-     * Delete the user 'usr'
-     * @param usr
-     * @param pwd
+     * Remove the user in parameter from the DB
      */
     public void deleteUser(String usr, String pwd) throws Exception {
-        Consumer user = connectUser(usr, pwd);
-            
-        if (user == null) {
-            String message = "This user cannot be deleted.";
-            logger.error(message);
-            throw new Exception(message);
+        Consumer consumer;
+        if (usr.contains("@")) { // Decide if 'usr' is a mail address or a username
+            consumer = findUserByMail(usr);
         } else {
-            String message = "This user has been deleted.";
-            logger.error(message);
-            deleteUser(user);
+            consumer = findUserByName(usr);
         }
         
-    }
-    
-    private void deleteUser(Consumer user) {
-        em.merge(user); // enforse synch with DB
-        em.remove(user);
+        if (consumer != null) {
+            if (consumer.getPwd().equals(pwd)) {
+                String message = "The user "+usr+" has been deleted from DB.";
+                logger.debug(message);
+                // De-comment if needed 
+                //manager.merge(user); // enforse synch with DB
+                manager.remove(consumer);
+            } else {
+                // Error : This user exists but the pwd is wrong
+                String message = "This user does not exist or the password is wrong.";
+                logger.error(message);
+                throw new Exception(message);
+            }
+            
+        } else {
+            // Error : This user does not exist
+            String message = "This user does not exist or the password is wrong.";
+            logger.error(message);
+            throw new Exception(message);
+        }
     }
     
     private Consumer findUserByName(String username) {
-        Query q = em.createNamedQuery("ConsumerByName", Consumer.class); 
+        Query q = manager.createNamedQuery("ConsumerByName", Consumer.class); 
         q.setParameter("username", username);
         
         if (q.getResultList().isEmpty())
@@ -126,7 +134,7 @@ public class ConsumerBean {
     }
     
     private Consumer findUserByMail(String mail) {
-        Query q = em.createNamedQuery("ConsumerByMail", Consumer.class); 
+        Query q = manager.createNamedQuery("ConsumerByMail", Consumer.class); 
         q.setParameter("mail", mail);
         
         if (q.getResultList().isEmpty())

@@ -1,4 +1,4 @@
-commonModule.factory('cartService', ['$http', function($http) {
+angular.module('common').factory('cartService', ['$http', function($http) {
     
     var service = {};
     

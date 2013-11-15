@@ -15,14 +15,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- *
+ * The class {@link Purchase} is an EJB Entity representing a list of {@link Product} buy by a {@link Consumer}.
+ * @see PurchaseSubscription
  * @author Kraiss
  */
 @Entity(name="Purchase")
@@ -37,17 +37,29 @@ public class Purchase implements Serializable {
     /** Integer primary Key */
     private Long transactionID;
     
+    @OneToMany
+    /** Purchase {@link Product} collection */
+    private Collection<Product> productCollection;
+    
     @ManyToOne
     /* Purchase owner */
     private Consumer consumer;
     
     @OneToOne
+    /** Consumer {@link DeliveryAddress} for the purchase */
+    private DeliveryAddress deliveryAddress;
+    
+    @OneToOne
     /** Consumer {@link PaymentInfo} for the purchase */
     private PayementInfo payementInfo;
-    
-    @OneToMany
-    /** Purchase {@link Product} collection */
-    private Collection<Product> productCollection;
+
+    public DeliveryAddress getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
 
     public PayementInfo getPayementInfo() {
         return payementInfo;
