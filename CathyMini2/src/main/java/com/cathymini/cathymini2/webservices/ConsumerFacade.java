@@ -1,27 +1,25 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Consumer;
-import javax.ejb.EJB;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import org.apache.log4j.Logger;
 import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.webservices.model.ConsumerSession;
-import com.cathymini.cathymini2.webservices.model.form.Suscribe;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
 import java.io.IOException;
+import com.cathymini.cathymini2.webservices.model.form.Suscribe;
+import com.cathymini.cathymini2.webservices.secure.Role;
+import com.cathymini.cathymini2.webservices.secure.Secure;
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import org.apache.log4j.Logger;
 
 /**
  * 
@@ -39,6 +37,7 @@ public class ConsumerFacade{
     @Path("/suscribe")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.ANONYM)
     public String suscribe(Suscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         HttpSession session = request.getSession(true);
 
