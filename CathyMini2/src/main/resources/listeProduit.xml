@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
+
+
 <liste>
 	<product typeP="tampon">
 		<nom>NETT ORIGINAL</nom>
@@ -8,14 +11,17 @@
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			  <img>Nett_original_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>Nett_original_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			  <img>Nett_original_5.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>false</applicateur>
@@ -23,8 +29,9 @@
 				Notre gamme NETT® ORIGINAL est spécialement conçue pour toutes celles qui préfèrent utiliser des tampons sans applicateur.
 				Une protection fiable et confortable grâce à leurs rainures incurvées (Système CAPTELIX®) qui recueillent le flux au fur et à mesure de son écoulement naturel et le dirigent plus efficacement au cœur du tampon. Son ouverture en COROLLE® permet une adaptation en douceur à votre corps pour recueillir le flux au plus près de votre anatomie.
 		</description>
-		
 	</product>
+	
+
 	<product typeP="tampon">
 		<nom>NETT PROCOMFORT</nom>
 		<marque>NETT</marque>
@@ -32,18 +39,22 @@
 		      <flux>
 			  <name>1</name>
 			  <prix>7</prix>
+			  <img>Nett_proConfort_1.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			  <img>Nett_proConfort_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>Nett_proConfort_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			  <img>Nett_proConfort_5.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>false</applicateur>
@@ -53,6 +64,7 @@
 		</description>
 		
 	</product>
+	
 	<product typeP="tampon">
 		<nom>NETT PROCOMFORT NUIT</nom>
 		<marque>NETT</marque>
@@ -60,10 +72,12 @@
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			  <img>Nett_proConfortNuit_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>Nett_proConfortNuit_4.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>false</applicateur>
@@ -72,6 +86,8 @@
 		</description>
 		
 	</product>
+	
+
 	<product typeP="tampon">
 		<nom>NETT BODY ADAPT</nom>
 		<marque>NETT</marque>
@@ -79,14 +95,17 @@
 		  <flux>
 			  <name>1</name>
 			  <prix>7</prix>
+			  <img>NETT_BODYADAPT_1.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			  <img>NETT_BODYADAPT_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>NETT_BODYADAPT_4.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -95,6 +114,7 @@
 		</description>
 		
 	</product>
+
 	<product typeP="tampon">
 		<nom>TAMPAX PEARL</nom>
 		<marque>TAMPAX</marque>
@@ -102,18 +122,22 @@
 		  <flux>
 			  <name>1</name>
 			  <prix>7</prix>
+			  <img>tampax_pearl_1.jpg</img>
 			</flux>
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			  <img>tampax_pearl_2.jpg</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>tampax_pearl_4.jpg</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			  <img>tampax_pearl_5.jpg</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -122,6 +146,10 @@
 		</description>
 		
 	</product>
+	
+	
+				6
+	
 	<product typeP="tampon">
 		<nom>TAMPAX COMPACT</nom>
 		<marque>TAMPAX</marque>
@@ -129,18 +157,22 @@
 			<flux>
 			  <name>1</name>
 			  <prix>7</prix>
+			  <img>tampax_compak_1.jpg</img>
 			</flux>
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			   <img>tampax_compak_2.jpg</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			   <img>tampax_compak_4.jpg</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			   <img>tampax_compak_5.jpg</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -149,6 +181,8 @@
 		</description>
 		
 	</product>
+	
+	
 	<product typeP="tampon">
 		<nom>TAMPAX COMPACT FRESHNESS</nom>
 		<marque>TAMPAX</marque>
@@ -156,10 +190,12 @@
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			  <img>tampax_compak_fresh_2.jpg</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>tampax_compak_fresh_4.jpg</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -169,6 +205,7 @@
 		</description>
 		
 	</product>
+		
 	<product typeP="tampon">
 		<nom>TAMPAX AVEC APPLICATEUR EN CARTON</nom>
 		<marque>TAMPAX</marque>
@@ -176,18 +213,22 @@
 			<flux>
 			  <name>1</name>
 			  <prix>12</prix>
+			  <img>tampax_classique_1.jpg</img>
 			</flux>
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			  <img>tampax_classique_2.jpg</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>tampax_classique_4.jpg</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			  <img>tampax_classique_5.jpg</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -195,27 +236,31 @@
 			Les tampons Tampax avec applicateur en carton possèdent un centre absorbant ainsi qu’une jupette de protection qui prévient les fuites avant qu’elles ne surviennent. Chaque tampon est enveloppé dans un emballage résistant et durable et son applicateur avec embout facile à saisir est biodégradable et jetable dans les toilettes.
 		</description>
 		
-	</product>
+	</product>	
 	
 	<product typeP="serviette">
 		<nom>MAXI CONFORT</nom>
 		<marque>VANIA</marque>
 		<listeFlux>
 			<flux>
-			  <name>1</name>
+			  <name>2</name>
 			  <prix>12</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20maxi%20Confort%20Normal.png</img>
 			</flux>
 			<flux>
-			  <name>2</name>
+			  <name>3</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20maxi%20%20Confort%20Normal%20Plus%20.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20maxi%20confort%20Super%20_0.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Maxi%20Confort%20Super%20Plus%20x14_0.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -226,6 +271,8 @@
 		</description>
 		
 	</product>
+	
+	
 	<product typeP="serviette">
 		<nom>MAXI FRESH SUPER</nom>
 		<marque>VANIA</marque>
@@ -233,6 +280,7 @@
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Maxi%20Fresh%20Super%20.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -243,6 +291,11 @@
 		</description>
 		
 	</product>
+	
+	
+
+	
+	
 	<product typeP="serviette">
 		<nom>MAXI SUPER ALOE VERA</nom>
 		<marque>VANIA</marque>
@@ -250,6 +303,7 @@
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20maxi%20Vania%C2%AE%20Super%20Aloe%20Vera%20.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -267,6 +321,7 @@
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Maxi%20Nuit.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -282,6 +337,7 @@
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Sweet%20DreamsT%20Maxi.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -293,7 +349,8 @@
 			 Faites de beaux rêves avec VANIA® Sweet Dreams™.
 		</description>
 		
-	</product>
+	</product>	
+	
 	<product typeP="serviette">
 		<nom>MAXI PROTECT</nom>
 		<marque>VANIA</marque>
@@ -301,10 +358,12 @@
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20maxi%20Protect%20Normal%20.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20%20maxi%20Protect%20Super.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -315,6 +374,7 @@
 		</description>
 		
 	</product>
+	
 	<product typeP="serviette">
 		<nom>OPTIMA AIR</nom>
 		<marque>VANIA</marque>
@@ -322,18 +382,22 @@
 			<flux>
 			  <name>1</name>
 			  <prix>12</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Optima%C2%AE%20AirT%20Mini.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Optima%C2%AE%20AirT%20Normal%20_0.png</img>
 			</flux>
 			<flux>
-			  <name>4</name>
+			  <name>3</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Optima%C2%AE%20AirT%20Normal%20Plus_0.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Optima%C2%AE%20AirT%20Super%20Plus.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -343,7 +407,8 @@
 			*moyenne de flux menstruel journalier sur une période de 5 jours
 		</description>
 		
-	</product>
+	</product>	
+	
 	<product typeP="serviette">
 		<nom>OPTIMA AIR FRESH</nom>
 		<marque>VANIA</marque>
@@ -351,10 +416,12 @@
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Optima%C2%AE%20AirT%20Fresh%20Normal.png</img>
 			</flux>
 			<flux>
-			  <name>4</name>
+			  <name>3</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Optima%C2%AE%20AirT%20Fresh%20Normal%20Plus_0.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -365,6 +432,8 @@
 		</description>
 		
 	</product>
+	
+	
 	<product typeP="serviette">
 		<nom>SWEET DREAMS EXTRA FINE</nom>
 		<marque>VANIA</marque>
@@ -372,6 +441,7 @@
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Sweet%20DreamsT%20extrafine_0.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -385,6 +455,7 @@
 		</description>
 		
 	</product>
+	
 	<product typeP="serviette">
 		<nom>ALWAYS ULTRA ACTIPEARLS</nom>
 		<marque>ALWAYS</marque>
@@ -392,22 +463,27 @@
 		  <flux>
 			  <name>2</name>
 			  <prix>7</prix>
+			  <img>http://www.always.fr/images/fr-fr/products/pads/always-ultra/thumbnails/Always-Ultra-normal.png</img>
 			</flux>
 			<flux>
 			  <name>3</name>
 			  <prix>7</prix>
+			  <img>http://www.always.fr/images/fr-fr/products/pads/always-ultra/thumbnails/Always-Ultra-normal-plus.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
+			  <img>http://www.always.fr/images/fr-fr/products/pads/always-ultra/thumbnails/Always-Ultra-long.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			  <img>http://www.always.fr/images/fr-fr/products/pads/always-ultra/thumbnails/Always-Ultra-long-plus.png</img>
 			</flux>
 			<flux>
 			  <name>6</name>
 			  <prix>7</prix>
+			  <img>http://www.always.fr/images/fr-fr/products/pads/always-ultra/thumbnails/Always-Ultra-nuit.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -423,6 +499,7 @@
 		</description>
 		
 	</product>
+	
 	<product typeP="serviette">
 		<nom>ALWAYS INFINITY</nom>
 		<marque>ALWAYS</marque>
@@ -430,14 +507,17 @@
 			<flux>
 			  <name>3</name>
 			  <prix>7</prix>
+			  <img>http://www.always.fr/images/fr-fr/products/pads/Always_Infinity/img3_101.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
+			  <img>http://www.always.fr/images/fr-fr/products/pads/Always_Infinity/img1_101.png</img>
 			</flux>
 			<flux>
 			  <name>6</name>
 			  <prix>7</prix>
+			  <img>http://www.always.fr/images/fr-fr/products/pads/Always_Infinity/img2_101.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
