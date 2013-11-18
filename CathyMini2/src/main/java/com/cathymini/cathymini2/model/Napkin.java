@@ -28,8 +28,8 @@ public class Napkin extends Product {
     public Napkin() {
     }
 
-    public Napkin(String typeS, String name, String type, Float price, Float flux, String description, String marque) {
-        super(name, type, price, flux, description, marque);
+    public Napkin(String typeS, String name, String type, Float price, Float flux, String description, String marque, String pict) {
+        super(name, type, price, flux, description, marque, pict);
         this.typeServiette = typeS;
     }
     

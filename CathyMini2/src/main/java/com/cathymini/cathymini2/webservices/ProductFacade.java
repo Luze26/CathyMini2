@@ -9,22 +9,29 @@ import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Tampon;
 import com.cathymini.cathymini2.services.ProductBean;
 import com.cathymini.cathymini2.webservices.model.ProductSearch;
-import com.cathymini.cathymini2.webservices.model.form.AddProduct;
-import com.cathymini.cathymini2.webservices.model.form.EditProduct;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import com.cathymini.cathymini2.webservices.model.form.AddProduct;
+import com.cathymini.cathymini2.webservices.model.form.EditProduct;
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
+
+
 import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
@@ -132,7 +139,8 @@ public class ProductFacade {
                    Element c = (Element)j.next();
                    Float fluxC = Float.parseFloat(c.getChild("name").getText());
                    Float prix = Float.parseFloat(c.getChildText("prix"));
-                   Product newT = new Tampon(appli, nom, "tampon", prix, fluxC, description, marque);
+                   String pict = c.getChildText("img");
+                   Product newT = new Tampon(appli, nom, "tampon", prix, fluxC, description, marque, pict);
                    productBean.addProduct(newT);
                 }
            }
@@ -150,7 +158,8 @@ public class ProductFacade {
                    Element c = (Element)j.next();
                    Float fluxC = Float.parseFloat(c.getChild("name").getText());
                    Float prix = Float.parseFloat(c.getChildText("prix"));
-                   Product newT = new Napkin(typeS, nom, "serviette", prix, fluxC, description, marque);
+                   String pict = c.getChildText("img");
+                   Product newT = new Napkin(typeS, nom, "serviette", prix, fluxC, description, marque, pict);
                    productBean.addProduct(newT);
                 }
              }
@@ -161,12 +170,9 @@ public class ProductFacade {
     @Path("/populate")
     @Produces(MediaType.APPLICATION_JSON)
 
+
     public String populate(@QueryParam("size") int size) {
        /* final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
-    public String populate(@QueryParam("size") int size) {
-       /* final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
-    public String populate(@Context final HttpServletRequest request, @Context final HttpServletResponse response, @QueryParam("size") int size) {
-        final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
 
         if(size == 0) {
             size = 500;

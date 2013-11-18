@@ -29,13 +29,14 @@ public abstract class Product implements Serializable {
     public Product() {
     }
 
-    public Product(String name, String type, Float price, Float flux, String description, String marque) {
+    public Product(String name, String type, Float price, Float flux, String description, String marque, String pict) {
         this.name = name;
         this.type = type;
         this.price = price;
         this.flux = flux;
         this.description = description;
         this.marque = marque;
+        this.pictureUrl = pict;
     }
 
     @Id
