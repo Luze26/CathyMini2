@@ -18,7 +18,7 @@
                 
                <script type="text/ng-template" id="suscribeModal.html">
                     <ui:decorate template="modalLayout.xhtml">
-                        <ui:param name="modalTitle" value="{{modal.title}}" />
+                        <ui:param name="modalTitle" value="S'inscrire" />
                         <ui:param name="okAction" value="suscribe(dismiss)" />
                         <ui:param name="ngDisabled" value="form.$invalid" />
                         <ui:define name="modalContent">
@@ -29,20 +29,23 @@
                           <form name="form" novalidate="novalidate">
                             <fieldset>
                               <label>Username</label>
-                              <input name="username" ng-model="consumer.username" type="text" placeholder="Your username" autofocus="autofocus" required="required" />
+                              <input name="username" ng-model="suscriber.username" type="text" placeholder="Your username" autofocus="autofocus" required="required" />
                               <label>Mail</label>
-                              <input name="mail" ng-model="consumer.mail" type="text" placeholder="Your mail address" autofocus="autofocus" required="required" />
+                              <input name="mail" ng-model="suscriber.mail" type="text" placeholder="Your mail address" autofocus="autofocus" required="required" />
                               <label>Password</label>
-                              <input name="password" ng-model="consumer.pwd" type="text" placeholder="Your password" autofocus="autofocus" required="required" />                          
+                              <input name="password" ng-model="suscriber.pwd" type="text" placeholder="Your password" autofocus="autofocus" required="required" />                          
                             </fieldset>
                           </form>
+                          <div ng-show="feedbackKo.display" class="alert alert-dismissable alert-danger">
+                            <strong>{{feedbackKo.text}}</strong>
+                          </div>
                         </ui:define>
                     </ui:decorate>
                 </script>
                 
                <script type="text/ng-template" id="connectModal.html">
                     <ui:decorate template="modalLayout.xhtml">
-                        <ui:param name="modalTitle" value="{{modal.title}}" />
+                        <ui:param name="modalTitle" value="Se Connecter" />
                         <ui:param name="okAction" value="connect(dismiss)" />
                         <ui:param name="ngDisabled" value="form.$invalid" />
                         <ui:define name="modalContent">
@@ -58,6 +61,9 @@
                               <input name="password" ng-model="consumer.pwd" type="text" placeholder="Your password" autofocus="autofocus" required="required" />                          
                             </fieldset>
                           </form>
+                          <div ng-show="feedbackKO.display" class="alert alert-dismissable alert-danger">
+                            <strong>{{feedbackKO.text}}</strong>
+                          </div>
                         </ui:define>
                     </ui:decorate>
                 </script>
