@@ -16,6 +16,7 @@ import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.webservices.model.ConsumerSession;
 import com.cathymini.cathymini2.webservices.model.form.Suscribe;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,11 +49,14 @@ public class ConsumerFacade{
                 session.setAttribute(USER_ATTR, ConsumerSession.getSession(user));
                 return "You are suscribed!";
             } catch (Exception ex) {
-                return ex.getMessage();
+                try {
+                    response.sendError(400, ex.getMessage());
+                    return ex.getMessage();
+                } catch (IOException ex1) {
+                }
             }
-        } else {
-            return "You are already connected";
         }
+        return "You are already connected";
     }
     
     @POST
@@ -69,11 +73,14 @@ public class ConsumerFacade{
                 session.setAttribute(USER_ATTR, ConsumerSession.getSession(user));
                 return "You are connected!";
             } catch (Exception ex) {
-                return ex.getMessage();
+                try {
+                    response.sendError(400, ex.getMessage());
+                    return ex.getMessage();
+                } catch (IOException ex1) {
+                }
             }
-        } else {
-            return "You are already connected";
         }
+        return "You are already connected";
     }
     
     @POST
@@ -112,8 +119,14 @@ public class ConsumerFacade{
             
             return "You delete your account.";
         } catch (Exception ex) {
-            return ex.getMessage();
+            try {
+                response.sendError(400, ex.getMessage());
+                return ex.getMessage();
+            } catch (IOException ex1) {
+            }
         }
+        
+        return "";
     }
     
     @GET
