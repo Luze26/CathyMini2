@@ -66,11 +66,9 @@ angular.module('products').
     
     /**
      * Create the product
-     * @param {type} dismiss function for the modal
      */
     $scope.addProduct = function(dismiss) {
         $scope.displayConnectionError = false;
-        console.log($scope.addModal.product);
         $http.post("http://localhost:8080//webresources/product/create", $scope.addModal.product)
             .success(function(data) { 
                 $scope.addModal.product = {};
@@ -84,7 +82,6 @@ angular.module('products').
     
     /**
      * Edit the product
-     * @param {type} product to edit
      */
     $scope.editProduct = function(dismiss) {
         var editedProduct = $scope.editedProduct;
@@ -95,7 +92,7 @@ angular.module('products').
                 editedProduct.price = data.price; 
                 $scope.feedbackOk.display = true;  
                 $scope.feedbackOk.text = "You have correctly edited the product : " + data.name;
-                dismiss();})
+                dismiss()})
             .error(function() { 
                 $scope.displayConnectionError = true; });    
     };
@@ -125,7 +122,8 @@ angular.module('products').
         $scope.editedProduct = product;
         $scope.editModal.product.id = product.id;
         $scope.editModal.product.name = product.name; 
-        $scope.editModal.product.price = product.price; 
+        $scope.editModal.product.price = product.price;
+        $scope.editModal.product.type = product.type; 
         $scope.modal = $scope.editModal;
     };
     
