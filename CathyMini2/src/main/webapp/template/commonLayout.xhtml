@@ -8,7 +8,7 @@
 
     <h:head>
         <title>#{title}</title>
-        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"/>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css"></link>
         <link rel="stylesheet" type="text/css" href="/assets/css/main.css"></link>
     </h:head>
@@ -37,11 +37,56 @@
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.7.4/angular-strap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.2/js/bootstrap.min.js"></script>
         <script src="/assets/js/modules/commonModule.js"></script>
         <script src="/assets/js/controllers/consumerCtrls.js"></script>       
         <ui:insert name="scripts" >
         </ui:insert>
+
+        <ui:decorate template="modalLayout.xhtml">
+            <ui:param name="modalId" value="connectModal" />
+            <ui:param name="modalTitle" value="{{modal.title}}" />
+            <ui:param name="okAction" value="suscribe(dismiss)" />
+            <ui:param name="ngDisabled" value="form.$invalid" />
+            <ui:define name="modalContent">
+                <div ng-show="modal.displayConnectionError" class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Connection error!</strong> Verify your internet connection.
+                </div>
+                <form name="form" novalidate="novalidate">
+                    <fieldset>
+                        <label>Username</label>
+                        <input name="username" ng-model="consumer.username" type="text" placeholder="Your username" autofocus="autofocus" required="required" />
+                        <label>Mail</label>
+                        <input name="mail" ng-model="consumer.mail" type="text" placeholder="Your mail address" autofocus="autofocus" required="required" />
+                        <label>Password</label>
+                        <input name="password" ng-model="consumer.pwd" type="text" placeholder="Your password" autofocus="autofocus" required="required" />                          
+                    </fieldset>
+                </form>
+            </ui:define>
+        </ui:decorate>
+        <ui:decorate template="modalLayout.xhtml">
+            <ui:param name="modalTitle" value="{{modal.title}}" />
+            <ui:param name="ngCtrl" value="subscribeModalCtrl" />
+            <ui:param name="modalId" value="subscribeModal" />
+            <ui:param name="okAction" value="subscribe()" />
+            <ui:param name="ngDisabled" value="form.$invalid" />
+            <ui:define name="modalContent">
+                <div ng-show="modal.displayConnectionError" class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Connection error!</strong> Verify your internet connection.
+                </div>
+                <form name="form" novalidate="novalidate">
+                    <fieldset>
+                        <label>Username</label>
+                        <input name="username" ng-model="consumer.username" type="text" placeholder="Your username" autofocus="autofocus" required="required" />
+                        <label>Mail</label>
+                        <input name="mail" ng-model="consumer.mail" type="text" placeholder="Your mail address" autofocus="autofocus" required="required" />
+                        <label>Password</label>
+                        <input name="password" ng-model="consumer.pwd" type="text" placeholder="Your password" autofocus="autofocus" required="required" />                          
+                    </fieldset>
+                </form>
+            </ui:define>
+        </ui:decorate>
     </body>
 </html>
