@@ -9,44 +9,11 @@
     $scope.isConnected = {display: false, text: ""};
     $scope.user = "";
     
-    /** Failure feedback */
-    $scope.feedbackKo = {display: false, text: ""};
-    
-    /** Connection error on modals */
-    $scope.displayConnectionError = false;
-    
-    /**
-     * Connect a user
-     * @param {type} dismiss function for the modal
-     */
-    $scope.connect = function(dismiss) {
-        $scope.displayConnectionError = false;
-        $scope.feedbackKo.display = false;
-        
-        $http.post("http://localhost:8080//webresources/consumer/connect", $scope.consumer)
-            .success(function() { 
-                $scope.isConnected.display = true;  
-                $scope.isConnected.text = "You connect to CathyMini";
-                $scope.getCurrentUser();
-                dismiss();})
-            .error(function(data, status, headers, config) { 
-                if (status === 400) {
-                    var sliceAfter = data.indexOf("<b>message</b>") + 14;
-                    var sliceBefore = data.indexOf("</p><p><b>description</b>");
-                    $scope.feedbackKo.display = true;
-                    $scope.feedbackKo.text = data.slice(sliceAfter, sliceBefore);
-                } else {
-                    $scope.displayConnectionError = true;
-                }
-            });
-    };
-    
     /**
      * Logout a connected user
      */
     $scope.disconnect = function() {
         $scope.displayConnectionError = false;
-        $scope.feedbackKo.display = false;
         
         $http.post("http://localhost:8080//webresources/consumer/logout", null)
             .success(function() { 
@@ -102,12 +69,19 @@
     $scope.getCurrentUser();
   }])
     .controller('subscribeModalCtrl', ['$scope', '$http', function($scope, $http) {
-              /**
+            
+    /** Failure feedback */
+    $scope.feedbackKo = {display: false, text: ""};
+    
+    /** Connection error on modals */
+    $scope.displayConnectionError = false;
+    
+    /**
      * Subscribe a new user
      * @param {type} dismiss function for the modal
      */
     $scope.subscribe = function() {
-       $scope.displayConnectionError = false;
+        $scope.displayConnectionError = false;
         $scope.feedbackKo.display = false;
         
         $http.post("http://localhost:8080//webresources/consumer/suscribe", $scope.suscriber)
@@ -116,6 +90,40 @@
                 $scope.isConnected.text = "You correctly suscribe to CathyMini";
                 $scope.getCurrentUser();})
             .error(function(data, status, headers, config) {
+                if (status === 400) {
+                    var sliceAfter = data.indexOf("<b>message</b>") + 14;
+                    var sliceBefore = data.indexOf("</p><p><b>description</b>");
+                    $scope.feedbackKo.display = true;
+                    $scope.feedbackKo.text = data.slice(sliceAfter, sliceBefore);
+                } else {
+                    $scope.displayConnectionError = true;
+                }
+            });
+    };
+  }])
+  .controller('connectionModalCtrl', ['$scope', '$http', function($scope, $http) {
+          
+    /** Failure feedback */
+    $scope.feedbackKo = {display: false, text: ""};
+    
+    /** Connection error on modals */
+    $scope.displayConnectionError = false;
+    
+    /**
+     * Connect a user
+     * @param {type} dismiss function for the modal
+     */
+    $scope.connect = function(dismiss) {
+        $scope.displayConnectionError = false;
+        $scope.feedbackKo.display = false;
+        
+        $http.post("http://localhost:8080//webresources/consumer/connect", $scope.consumer)
+            .success(function() { 
+                $scope.isConnected.display = true;  
+                $scope.isConnected.text = "You connect to CathyMini";
+                $scope.getCurrentUser();
+                dismiss();})
+            .error(function(data, status, headers, config) { 
                 if (status === 400) {
                     var sliceAfter = data.indexOf("<b>message</b>") + 14;
                     var sliceBefore = data.indexOf("</p><p><b>description</b>");

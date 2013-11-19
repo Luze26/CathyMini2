@@ -43,11 +43,11 @@
         <ui:insert name="scripts" >
         </ui:insert>
 
-        <ui:decorate template="modalLayout.xhtml">
-            <ui:param name="modalId" value="connectModal" />
-            <ui:param name="modalTitle" value="Se connecter" />
+        <ui:decorate template="modalLayout.xhtml">           
+            <ui:param name="modalTitle" value="S'inscire" />
             <ui:param name="ngCtrl" value="subscribeModalCtrl" />
-            <ui:param name="okAction" value="connect()" />
+            <ui:param name="modalId" value="subscribeModal" />
+            <ui:param name="okAction" value="subscribe()" />
             <ui:param name="ngDisabled" value="form.$invalid" />
             <ui:define name="modalContent">
                 <div ng-show="modal.displayConnectionError" class="alert alert-dismissable alert-danger">
@@ -70,10 +70,10 @@
             </ui:define>
         </ui:decorate>
         <ui:decorate template="modalLayout.xhtml">
-            <ui:param name="modalTitle" value="S'inscire" />
-            <ui:param name="ngCtrl" value="subscribeModalCtrl" />
-            <ui:param name="modalId" value="subscribeModal" />
-            <ui:param name="okAction" value="subscribe()" />
+            <ui:param name="modalId" value="connectModal" />
+            <ui:param name="modalTitle" value="Se connecter" />
+            <ui:param name="ngCtrl" value="connectionModalCtrl" />
+            <ui:param name="okAction" value="connect()" />
             <ui:param name="ngDisabled" value="form.$invalid" />
             <ui:define name="modalContent">
                 <div ng-show="modal.displayConnectionError" class="alert alert-dismissable alert-danger">
