@@ -59,6 +59,12 @@ public class ProductBean {
         logger.info("New product : " + prod);
         return prod;
     }
+    
+    public Product addProduct(Product prod) {
+        manager.persist(prod);
+        logger.info("New product : " + prod);
+        return prod;
+    }
 
     /**
      * Edit the product

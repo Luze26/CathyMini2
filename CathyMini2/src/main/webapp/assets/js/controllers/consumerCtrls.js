@@ -2,6 +2,7 @@
   controller('consumerCtrl', ['$scope', '$http', function($scope, $http) {
   
     /** Initialize consumer form's attributes */
+    $scope.suscriber = {};
     $scope.consumer = {};
 
     /** Connected user info */
@@ -28,10 +29,12 @@
                 $scope.isConnected.text = "You connect to CathyMini";
                 $scope.getCurrentUser();
                 dismiss();})
-            .error(function(errorMsg, status) { 
+            .error(function(data, status, headers, config) { 
                 if (status === 400) {
+                    var sliceAfter = data.indexOf("<b>message</b>") + 14;
+                    var sliceBefore = data.indexOf("</p><p><b>description</b>");
                     $scope.feedbackKo.display = true;
-                    $scope.feedbackKo.text = errorMsg;
+                    $scope.feedbackKo.text = data.slice(sliceAfter, sliceBefore);
                 } else {
                     $scope.displayConnectionError = true;
                 }
@@ -51,10 +54,12 @@
                 $scope.isConnected.text = "You logout";
                 $scope.getCurrentUser();
             })
-            .error(function(errorMsg, status) { 
+            .error(function(data, status, headers, config) { 
                 if (status === 400) {
+                    var sliceAfter = data.indexOf("<b>message</b>") + 14;
+                    var sliceBefore = data.indexOf("</p><p><b>description</b>");
                     $scope.feedbackKo.display = true;
-                    $scope.feedbackKo.text = errorMsg;
+                    $scope.feedbackKo.text = data.slice(sliceAfter, sliceBefore);
                 } else {
                     $scope.displayConnectionError = true;
                 }
@@ -70,21 +75,24 @@
         
         $http.get("http://localhost:8080//webresources/consumer/seeCurrent", null)
             .success(function(user) { 
-                console.log("user -> "+user);
                 if (user === "") {
+                    console.log("You are not connected.");
                     $scope.isConnected.display = false;  
                     $scope.isConnected.text = "";
                     $scope.user = "";
                 } else {
+                    console.log("You are connected as "+user);
                     $scope.isConnected.display = true;
                     $scope.isConnected.text = "You are connected";
                     $scope.user = user;
                 }
             })
-            .error(function(errorMsg, status) { 
+            .error(function(data, status, headers, config) { 
                 if (status === 400) {
+                    var sliceAfter = data.indexOf("<b>message</b>") + 14;
+                    var sliceBefore = data.indexOf("</p><p><b>description</b>");
                     $scope.feedbackKo.display = true;
-                    $scope.feedbackKo.text = errorMsg;
+                    $scope.feedbackKo.text = data.slice(sliceAfter, sliceBefore);
                 } else {
                     $scope.displayConnectionError = true;
                 }
@@ -99,19 +107,20 @@
      * @param {type} dismiss function for the modal
      */
     $scope.subscribe = function() {
-        $scope.displayConnectionError = false;
+       $scope.displayConnectionError = false;
         $scope.feedbackKo.display = false;
         
-        $http.post("http://localhost:8080//webresources/consumer/suscribe", $scope.consumer)
+        $http.post("http://localhost:8080//webresources/consumer/suscribe", $scope.suscriber)
             .success(function() { 
                 $scope.isConnected.display = true;  
                 $scope.isConnected.text = "You correctly suscribe to CathyMini";
-                $scope.getCurrentUser();
-                dismiss();})
-            .error(function(errorMsg, status) { 
+                $scope.getCurrentUser();})
+            .error(function(data, status, headers, config) {
                 if (status === 400) {
+                    var sliceAfter = data.indexOf("<b>message</b>") + 14;
+                    var sliceBefore = data.indexOf("</p><p><b>description</b>");
                     $scope.feedbackKo.display = true;
-                    $scope.feedbackKo.text = errorMsg;
+                    $scope.feedbackKo.text = data.slice(sliceAfter, sliceBefore);
                 } else {
                     $scope.displayConnectionError = true;
                 }

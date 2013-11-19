@@ -43,7 +43,9 @@
                     </div>
                     <div class="row col-md-8" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
                         <div ng-repeat="prod in products" class="product col-xs-12 col-sm-6 col-md-6">
-                            <div>{{prod.name}} <br /> {{prod.type}} <br /> {{prod.price}}€</div>
+                            <div>
+                                <img class="imgGallery" ng-src="{{prod.pictureUrl}}{{hash}}"/>       
+                                {{prod.name}} <br /> {{prod.type}} <br /> {{prod.flux}}<br /> {{prod.price}}€</div>
                             <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
                         </div>
                     </div>

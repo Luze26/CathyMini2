@@ -4,25 +4,34 @@
  */
 package com.cathymini.cathymini2.webservices;
 
+import com.cathymini.cathymini2.model.Napkin;
 import com.cathymini.cathymini2.model.Product;
+import com.cathymini.cathymini2.model.Tampon;
 import com.cathymini.cathymini2.services.ProductBean;
 import com.cathymini.cathymini2.webservices.model.ProductSearch;
-import com.cathymini.cathymini2.webservices.model.form.AddProduct;
-import com.cathymini.cathymini2.webservices.model.form.EditProduct;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import com.cathymini.cathymini2.webservices.model.form.AddProduct;
+import com.cathymini.cathymini2.webservices.model.form.EditProduct;
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
+
+
 import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
@@ -74,11 +83,96 @@ public class ProductFacade {
         return productBean.editProduct(form.id, form.name, form.price);
     }
     
+    
+    @GET
+    @Path("/readXML")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void readXML(){
+            SAXBuilder sxb = new SAXBuilder();
+            Document document = null;
+      try
+      {
+         //On crée un nouveau document JDOM avec en argument le fichier XML
+         //Le parsing est terminé ;)
+         document = sxb.build(new File("/home/anaelle/Documents/m2/ECOM/listeProduit.xml"));
+      }
+      catch(Exception e){
+      }
+
+      //On initialise un nouvel élément racine avec l'élément racine du document.
+      racine = document.getRootElement();
+      afficheAll();
+      
+    }
+     Element racine;
+    
+    
+    @GET
+    @Path("/afficheAll")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void afficheAll(){
+        
+        List listEtudiants = racine.getChildren("product");
+        //On crée un Iterator sur notre liste
+        Iterator i = listEtudiants.iterator();
+        while(i.hasNext())
+        {
+           //On recrée l'Element courant à chaque tour de boucle afin de
+           //pouvoir utiliser les méthodes propres aux Element comme :
+           //sélectionner un nœud fils, modifier du texte, etc...
+           Element courant = (Element)i.next();
+           //récupérer information sur les produits
+           String nom = courant.getChild("nom").getText();
+           String marque = courant.getChild("marque").getText();
+           String description = courant.getChild("description").getText().replace("'", "\'");
+           if(courant.getAttributeValue("typeP").equals("tampon")){
+               Boolean appli = courant.getChild("applicateur").getText().equals("true");
+               
+               List listFlux = courant.getChild("listeFlux").getChildren("flux");
+                //On crée un Iterator sur notre liste
+                Iterator j = listFlux.iterator();
+                while(j.hasNext())
+                {
+                   //On recrée l'Element courant à chaque tour de boucle afin de
+                   //pouvoir utiliser les méthodes propres aux Element comme :
+                   //sélectionner un nœud fils, modifier du texte, etc...
+                   Element c = (Element)j.next();
+                   Float fluxC = Float.parseFloat(c.getChild("name").getText());
+                   Float prix = Float.parseFloat(c.getChildText("prix"));
+                   String pict = c.getChildText("img");
+                   Product newT = new Tampon(appli, nom, "tampon", prix, fluxC, description, marque, pict);
+                   productBean.addProduct(newT);
+                }
+           }
+           else
+           {
+               String typeS = courant.getChild("type").getText();
+               List listFlux = courant.getChild("listeFlux").getChildren("flux");
+                //On crée un Iterator sur notre liste
+                Iterator j = listFlux.iterator();
+                while(j.hasNext())
+                {
+                   //On recrée l'Element courant à chaque tour de boucle afin de
+                   //pouvoir utiliser les méthodes propres aux Element comme :
+                   //sélectionner un nœud fils, modifier du texte, etc...
+                   Element c = (Element)j.next();
+                   Float fluxC = Float.parseFloat(c.getChild("name").getText());
+                   Float prix = Float.parseFloat(c.getChildText("prix"));
+                   String pict = c.getChildText("img");
+                   Product newT = new Napkin(typeS, nom, "serviette", prix, fluxC, description, marque, pict);
+                   productBean.addProduct(newT);
+                }
+             }
+        }
+    }
+    
     @GET
     @Path("/populate")
     @Produces(MediaType.APPLICATION_JSON)
-    public String populate(@Context final HttpServletRequest request, @Context final HttpServletResponse response, @QueryParam("size") int size) {
-        final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
+
+
+    public String populate(@QueryParam("size") int size) {
+       /* final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
 
         if(size == 0) {
             size = 500;
@@ -94,9 +188,12 @@ public class ProductFacade {
             if (new Integer(rand.nextInt(2)) == 1) {
                typeProduit  = "Tampon"; 
             }
+            
             productBean.addProduct(builder.toString(), new Float(rand.nextInt(100)), typeProduit);
         }
         
+        return "populated";*/
+        readXML();
         return "populated";
     }
     
