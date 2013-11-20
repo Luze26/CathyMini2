@@ -2,6 +2,7 @@ package com.cathymini.cathymini2.services;
 
 import javax.ejb.*;
 import com.cathymini.cathymini2.model.Consumer;
+import com.cathymini.cathymini2.webservices.secure.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -31,6 +32,7 @@ public class ConsumerBean {
                 user.setUsername(usr);
                 user.setPwd(pwd);
                 user.setMail(mail);
+                user.setRole(Role.MEMBER);
 
                 manager.persist(user);
                 String message = "The user suscribe with success.";

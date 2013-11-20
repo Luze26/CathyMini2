@@ -5,19 +5,17 @@
 package com.cathymini.cathymini2.webservices.model;
 
 import com.cathymini.cathymini2.model.Consumer;
+import java.util.Random;
 
 /**
  *
  * @author Kraiss
  */
 public class ConsumerSession {
-    public String username;
-    public Long id;
-    
-    public static ConsumerSession getSession(Consumer consumer) {
-        ConsumerSession cs = new ConsumerSession();
-        cs.username = consumer.getUsername();
-        cs.id = consumer.getUserID();
-        return cs;
+    public Long sessionID;
+
+    public ConsumerSession(Long l) {
+        sessionID = l;
     }
+    
 }

@@ -6,6 +6,7 @@ import com.cathymini.cathymini2.webservices.model.ConsumerSession;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
 import java.io.IOException;
 import com.cathymini.cathymini2.webservices.model.form.Suscribe;
+import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
 import javax.ejb.EJB;
@@ -29,6 +30,7 @@ import org.apache.log4j.Logger;
 public class ConsumerFacade{
     private static final String USER_ATTR = "_USER_ATTR";
     private static final Logger logger = Logger.getLogger(com.cathymini.cathymini2.webservices.ProductFacade.class);
+    private static final ConsumerSessionSecuring sessionSecuring = ConsumerSessionSecuring.getInstance();
     
     @EJB
     private ConsumerBean consumerBean;
@@ -41,67 +43,63 @@ public class ConsumerFacade{
     public String suscribe(Suscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         HttpSession session = request.getSession(true);
 
-        if (session.getAttribute(USER_ATTR) == null) {
+        try {
+            logger.debug("Create user = " + form.username +" :: "+ form.pwd +" :: " + form.mail);
+            Consumer user = consumerBean.suscribeUser(form.username, form.pwd, form.mail);
+            session.setAttribute(USER_ATTR, sessionSecuring.openSession(user));
+            return "You suscribe !";
+        } catch (Exception ex) {
             try {
-                logger.debug("Create user = " + form.username +" :: "+ form.pwd +" :: " + form.mail);
-                Consumer user = consumerBean.suscribeUser(form.username, form.pwd, form.mail);
-                session.setAttribute(USER_ATTR, ConsumerSession.getSession(user));
-                return "You are suscribed!";
-            } catch (Exception ex) {
-                try {
-                    response.sendError(400, ex.getMessage());
-                    return ex.getMessage();
-                } catch (IOException ex1) {
-                }
+                response.sendError(400, ex.getMessage());
+                return ex.getMessage();
+            } catch (IOException ex1) {
+                return ex1.getMessage();
             }
         }
-        return "You are already connected";
     }
     
     @POST
     @Path("/connect")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.ANONYM)
     public String connect(Connect form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         HttpSession session = request.getSession(true);
 
-        if (session.getAttribute(USER_ATTR) == null) {
-            logger.debug("Connect user " + form.user);
+        logger.debug("Connect user " + form.user);
+        try {
+            Consumer user = consumerBean.connectUser(form.user, form.pwd);
+            session.setAttribute(USER_ATTR, sessionSecuring.openSession(user));
+            return "You are connected!";
+        } catch (Exception ex) {
             try {
-                Consumer user = consumerBean.connectUser(form.user, form.pwd);
-                session.setAttribute(USER_ATTR, ConsumerSession.getSession(user));
-                return "You are connected!";
-            } catch (Exception ex) {
-                try {
-                    response.sendError(400, ex.getMessage());
-                    return ex.getMessage();
-                } catch (IOException ex1) {
-                }
+                response.sendError(400, ex.getMessage());
+                return ex.getMessage();
+            } catch (IOException ex1) {
+                return ex1.getMessage();
             }
         }
-        return "You are already connected";
     }
     
     @POST
     @Path("/logout")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
     public String logout(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         HttpSession session = request.getSession(true);
         
-        if (session.getAttribute(USER_ATTR) != null) {
-            consumerBean.logout();
-            session.setAttribute(USER_ATTR, null);
-            return "You logout.";
-        } else {
-            return "You are not connected.";
-        }
+        sessionSecuring.closeSession((ConsumerSession) session.getAttribute(USER_ATTR));
+        consumerBean.logout();
+        session.setAttribute(USER_ATTR, null);
+        return "You logout.";
     }
     
     @POST
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
     public String delete(Connect form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         HttpSession session = request.getSession(true);
         
@@ -109,23 +107,22 @@ public class ConsumerFacade{
         try {
             consumerBean.deleteUser(form.user, form.pwd);
             
-            if (session.getAttribute(USER_ATTR) != null) {
-                ConsumerSession cs = (ConsumerSession) session.getAttribute(USER_ATTR);
-                if (cs.username.equals(form.user)) {
-                    session.setAttribute(USER_ATTR, null);
-                }
+            Consumer user = sessionSecuring.getConsumer((ConsumerSession) session.getAttribute(USER_ATTR));
+            if (user.getUsername().equals(form.user)) {
+                sessionSecuring.closeSession((ConsumerSession) session.getAttribute(USER_ATTR));
+                session.setAttribute(USER_ATTR, null);
+                return "You delete your account.";
+            } else {
+                return "You delete the account of '"+form.user+"'.";
             }
-            
-            return "You delete your account.";
         } catch (Exception ex) {
             try {
                 response.sendError(400, ex.getMessage());
                 return ex.getMessage();
             } catch (IOException ex1) {
+                return ex1.getMessage();
             }
         }
-        
-        return "";
     }
     
     @GET
@@ -135,8 +132,8 @@ public class ConsumerFacade{
         HttpSession session = request.getSession(true);
         
         if (session.getAttribute(USER_ATTR) != null) {
-            ConsumerSession cs = (ConsumerSession) session.getAttribute(USER_ATTR);
-            return cs.username;
+            Consumer user = sessionSecuring.getConsumer((ConsumerSession) session.getAttribute(USER_ATTR));
+            return user.getUsername();
         } else {
             return "";
         }

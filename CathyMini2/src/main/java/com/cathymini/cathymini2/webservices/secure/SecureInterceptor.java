@@ -33,8 +33,8 @@ public class SecureInterceptor {
 
         if (req != null) {
             HttpSession session = req.getSession();
-            if (Role.ANONYM.equals(role)) { //The requester must be anonym
-                
+            if (Role.ANONYM.equals(role) && isAnonym(session)) { //The requester must be anonym
+                    invocationContext.proceed();
             } else if (role == Role.MEMBER || role == Role.ADMIN) {
                 //TODO ADMIN AND REAL AUTHENTIFICATION
                 if (!isAnonym(session)) {
