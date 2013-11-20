@@ -5,17 +5,23 @@
       xmlns:h="http://java.sun.com/jsf/html">
     <ui:composition>
         <!-- Modal -->
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h3>#{modalTitle}</h3>
-        </div>
-        <div class="modal-body">
-            <ui:insert name="modalContent">
-            </ui:insert>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn" ng-click="#{empty closeAction ? 'dismiss()' : closeAction}">#{empty closeLabel ? 'Close' : closeLabel}</button>
-          <button class="btn btn-primary" ng-disabled="#{empty ngDisabled ? 'false' : ngDisabled}" ng-click="#{empty okAction ? 'dismiss()' : okAction}">#{empty okLabel ? 'Ok' : okLabel}</button>
+        <div class="modal fade" id="#{modalId}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="label">#{modalTitle}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <ui:insert name="modalContent">
+                        </ui:insert>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal" ng-click="#{empty closeAction ? '' : closeAction}">#{empty closeLabel ? 'Close' : closeLabel}</button>
+                        <button class="btn btn-primary" ng-disabled="#{empty ngDisabled ? 'false' : ngDisabled}" ng-click="#{empty okAction ? '' : okAction}">#{empty okLabel ? 'Ok' : okLabel}</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </ui:composition>
 </html>

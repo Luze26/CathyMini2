@@ -26,19 +26,76 @@ import javax.persistence.Table;
 })
 public abstract class Product implements Serializable {
 
+    public Product() {
+    }
+
+    public Product(String name, String type, Float price, Float flux, String description, String marque, String pict) {
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.flux = flux;
+        this.description = description;
+        this.marque = marque;
+        this.pictureUrl = pict;
+    }
+
     @Id
     @GeneratedValue
     @Column(name="ID")
-    private Long id;
+    protected Long id;
 
-    @Column(name="name")
-    private String name;
+    @Column(name="name",columnDefinition="LONG VARCHAR")
+    protected String name;
     
     @Column(name="type")
-    private String type;
+    protected String type;
+    
+    @Column(name="marque")
+    protected String marque;
+    
+    @Column(name="pictureUrl")
+    protected String pictureUrl;
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
+    public String getMarque() {
+        return marque;
+    }
+
+    public void setMarque(String marque) {
+        this.marque = marque;
+    }
+
+    public Float getFlux() {
+        return flux;
+    }
+
+    public void setFlux(Float flux) {
+        this.flux = flux;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     
     @Column(name="price")
-    private Float price;  
+    protected Float price;
+    
+    @Column(name="flux")
+    protected Float flux;
+    
+    @Column(name="description",columnDefinition="LONG VARCHAR")
+    protected String description;
 
     public Long getId() {
         return id;
