@@ -54,7 +54,7 @@ public class ProductFacade {
     @Produces(MediaType.APPLICATION_JSON)
     public Product create(AddProduct form, @Context final HttpServletResponse response) {
         if(form != null && form.validate()) {
-            Product product = productBean.addProduct(form.name, form.price, form.type);
+            Product product = productBean.addProduct(form.name, form.marque, form.flux, form.price, form.type, form.description);
             return product;
         }
         else {

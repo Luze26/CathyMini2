@@ -96,10 +96,11 @@ angular.module('products').
        * Create the product
        */
       $scope.addProduct = function(dismiss) {
+        console.log($scope.addModal.product);
         $scope.displayConnectionError = false;
         $http.post("http://localhost:8080//webresources/product/create", $scope.addModal.product)
           .success(function(data) {
-            $scope.addModal.product = {type: "Serviette"/*, selectedItem: "1"*/};
+            $scope.addModal.product = {type: "Serviette", selectedItem: "1"};
             $scope.products.push(data);
             $scope.feedbackOk.display = true;
             $scope.feedbackOk.text = "You have correctly added the product : " + data.name;
@@ -157,8 +158,11 @@ angular.module('products').
         $scope.editedProduct = product;
         $scope.editModal.product.id = product.id;
         $scope.editModal.product.name = product.name;
+        $scope.editModal.product.marque = product.marque;
+        $scope.editModal.product.flux = product.flux;
         $scope.editModal.product.price = product.price;
         $scope.editModal.product.type = product.type;
+        $scope.editModal.product.description = product.description;
         $scope.modal = $scope.editModal;
       };
 
@@ -186,7 +190,7 @@ angular.module('products').
        */
 
       /** Modal information for add product */
-      $scope.addModal = {title: "Add product", okAction: $scope.addProduct, product: {type: "Serviette"/*, selectedItem: "1"*/}};
+      $scope.addModal = {title: "Add product", okAction: $scope.addProduct, product: {type: "Serviette", flux: "1"}};
 
       /** Modal information for edit product */
       $scope.editModal = {title: "Edit product", okAction: $scope.editProduct, product: {}};
