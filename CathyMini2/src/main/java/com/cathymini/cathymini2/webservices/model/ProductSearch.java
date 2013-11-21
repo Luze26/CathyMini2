@@ -33,6 +33,11 @@ public class ProductSearch {
             DecimalFormat maxdf = new DecimalFormat("##.##");
             maxPrice =  new Float(maxdf.format(maxPrice.doubleValue()));
 
+            if(minPrice < 0)
+                minPrice = 0.00f;
+            if (maxPrice < 0)
+                maxPrice = 0.00f;
+            
             if (minPrice > maxPrice){
                 Float tmp = minPrice;
                 minPrice = maxPrice;

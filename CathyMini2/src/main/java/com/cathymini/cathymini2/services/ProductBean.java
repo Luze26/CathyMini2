@@ -102,19 +102,19 @@ public class ProductBean {
         if (searchQuery.input != null) {
             query += " LIKE '%" + searchQuery.input + "%'";
         }
-        if(searchQuery.tampon && searchQuery.napkin){
-            
-        } else {
-            if (searchQuery.tampon) {
-                query += " AND p.type = \"Tampon\"";
-            } else if (searchQuery.napkin) {
-                query += " AND p.type = \"Serviette\"";
-            } else {
-                query = "SELECT p FROM Product p WHERE p.name = \"Rien\"";
-                return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
+        if (searchQuery.tampon) {
+            query += " AND p.type = \"Tampon\"";
+            if(searchQuery.napkin) {
+                query += " OR p.type = \"Serviette\"";
             }
-        
+        } else if (searchQuery.napkin) {
+            query += " AND p.type = \"Serviette\"";
+        } else {
+            query = "SELECT p FROM Product p WHERE p.name = \"Rien\"";
+            return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
         }
+        
+        
         if (searchQuery.minPrice != null) {
             query += " AND p.price >= " + searchQuery.minPrice;
         }
