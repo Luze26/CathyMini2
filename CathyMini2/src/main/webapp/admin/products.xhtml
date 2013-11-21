@@ -78,22 +78,36 @@
                 </div>
                 <form name="form" novalidate="novalidate">
                 <fieldset>
-                <label>Name*</label>
-                <input name="pName" ng-model="modal.product.name" type="text" placeholder="Product name…" autofocus="autofocus" required="required" />
-                <div class="control-group">
-                <label>Type*</label>
-                <div class="btn-group" ng-model="modal.product.type" bs-buttons-radio="/assets/js/controllers/admin/productsCtrls.js" required="required">
-                <button type="button" class="btn" value="Serviette">Serviette</button>
-                <button type="button" class="btn" value="Tampon" >Tampon</button>
-                </div>
-                </div>
-                <div class="control-group">
-                <label for="pPrice">Price*</label>
-                <div class="controls input-prepend">
-                <span class="add-on">€</span>
-                <input name="pPrice" ng-model="modal.product.price" type="text" min="0" smart-float="smart-float" class="form-control" autofocus="autofocus" required="required" />
-                </div>
-                </div>
+                
+                    <label>Name*</label>
+                    <input name="pName" ng-model="modal.product.name" type="text" placeholder="Product name…" autofocus="autofocus" required="required" />
+                    
+                    <div class="control-group">
+                        <label>Type*</label>
+                        <div class="btn-group" ng-model="modal.product.type" bs-buttons-radio="/assets/js/controllers/admin/productsCtrls.js" required="required">
+                            <button type="button" class="btn" value="Serviette">Serviette</button>
+                            <button type="button" class="btn" value="Tampon" >Tampon</button>
+                        </div>
+                    </div>
+
+                    <div class="selectFlux">
+                        <label>Flux*</label>
+                        <!--<select ng-model="modal.product.selectedItem" ng-options="value.id as value.print for (key, value) in selects" data-style="btn-primary" bs-select="bs-select"></select>-->
+                    </div>
+
+                    <div class="control-group">
+                        <label for="pPrice">Price*</label>
+                        <div class="controls input-prepend">
+                            <span class="add-on">€</span>
+                            <input name="pPrice" ng-model="modal.product.price" type="text" min="0" smart-float="smart-float" class="form-control" autofocus="autofocus" required="required" />
+                        </div>
+                    </div>
+
+
+                    <!--<div class="description">
+                        <textarea ng-model="modal.product.description"></textarea>
+                    </div>-->
+                    
                 </fieldset>
                 </form>
                 </ui:define>
@@ -106,6 +120,7 @@
             <script src="/assets/js/controllers/admin/productsCtrls.js"></script>
             <script src="/assets/js/modules/commonModule.js"></script>
             <script src="/assets/js/directives/form/formDirective.js"></script>
+            <script src="//mgcrea.github.com/angular-strap/vendor/bootstrap-select.js"></script> <!-- Script for appearance of "flux" selector -->
         </ui:define>
     </ui:composition>
 </html>
