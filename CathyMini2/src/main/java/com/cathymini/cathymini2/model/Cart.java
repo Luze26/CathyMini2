@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.cathymini.cathymini2.model;
 
 import java.io.Serializable;
@@ -17,8 +13,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * The class {@link Cart} is the EJB representing a cart, 
+ * The class {@link Cart} is the EJB Entity representing a cart, 
  *   a list of product that a user want to buy.
+ * It contains the named query '<code>CartByName</code>'
  * 
  * @author Kraiss
  */

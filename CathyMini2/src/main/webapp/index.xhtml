@@ -8,11 +8,15 @@
     <h:body>
  
     	<ui:composition template="template/commonLayout.xhtml">
+            <ui:param name="ngApp" value="index" />
             <ui:param name="title" value="CathyMini" />
             <ui:define name="content">
                 <h2> Hello </h2>
             </ui:define>
             
+            <ui:define name="scripts">
+                <script src="/assets/js/modules/indexModule.js"></script>
+            </ui:define>
     	</ui:composition>
  
     </h:body>

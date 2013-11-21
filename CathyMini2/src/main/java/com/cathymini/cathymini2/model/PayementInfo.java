@@ -5,16 +5,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * The class {@link Consumer} is an EJB entity representing an user.<br/>
- * It contains two named queries '<code>ConsumerByName</code>' and '<code>ConsumerByMail</code>'.
+ * The class {@link PayementInfo} is an EJB Entity representing a {@link Consumer} {@link PayementInfo}.
  * 
- * @see DeliveryAdress
- * @see PayementInfo
  * @author kraiss
  */
 @Entity(name="PayementInfo")
@@ -23,9 +19,11 @@ public class PayementInfo implements Serializable {
     @Id
     @GeneratedValue
     @Column(name="payementInfoID")
+    /** Integer primary key */
     private Long payementInfoID;
     
     @ManyToOne
+    /** Owner of the {@link PayementInfo} */
     private Consumer consumer;
     
     @Column(name="info")
