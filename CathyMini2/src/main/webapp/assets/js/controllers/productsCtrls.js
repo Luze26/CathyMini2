@@ -19,6 +19,14 @@ angular.module('products').
                     }
                 ];
 
+                    
+                $scope.selects = [
+                  {id: '1', name: '<i class="icon-star"></i>&nbsp;foo'},
+                  {id: '2', name: '<i class="icon-heart"></i>&nbsp;bar'},
+                  {id: '3', name: '<i class="icon-fire"></i>&nbsp;baz'}
+                ];
+                $scope.selectedItems = [];
+                
                 /** If we continue to requests the server or not */
                 $scope.loadMore = true;
                   
