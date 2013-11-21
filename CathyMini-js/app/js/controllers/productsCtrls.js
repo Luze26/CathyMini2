@@ -6,6 +6,18 @@ angular.module('products').
 
                 /** Products list */
                 $scope.products = [];
+                
+                /** Type list */
+                $scope.productsType = [
+                    {
+                        "selected": false,
+                        "affichage": "Tampon"
+                    },
+                    {
+                        "selected": false,
+                        "affichage": "Serviette"
+                    }
+                ];
 
                 /** If we continue to requests the server or not */
                 $scope.loadMore = true;

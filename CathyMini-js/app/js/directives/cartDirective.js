@@ -4,7 +4,7 @@ commonModule.directive('cartDirective', ['cartService', function(cartService) {
     replace: true,
     scope: {
     },
-    link: function(scope, elm, attrs, ctrl) {
+    link: function(scope, elm, attrs) {
         scope.nbProducts = cartService.nbProducts;
         
         scope.cartOpen = false;
