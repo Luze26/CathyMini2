@@ -18,8 +18,7 @@ import javax.servlet.http.HttpSession;
 @Secure
 @Interceptor
 public class SecureInterceptor {
-
-    private static final String USER_ATTR = "_USER_ATTR";
+    private static final ConsumerSessionSecuring sessionSecuring = ConsumerSessionSecuring.getInstance();
 
     public SecureInterceptor() {
     }
@@ -31,31 +30,24 @@ public class SecureInterceptor {
         HttpServletRequest req = getHttpRequest(invocationContext);
         HttpServletResponse res = getHttpResponse(invocationContext);
 
-        if (req != null) {
-            HttpSession session = req.getSession();
-            if (Role.ANONYM.equals(role) && isAnonym(session)) { //The requester must be anonym
-                    invocationContext.proceed();
-            } else if (role == Role.MEMBER || role == Role.ADMIN) {
-                //TODO ADMIN AND REAL AUTHENTIFICATION
-                if (!isAnonym(session)) {
-                    invocationContext.proceed();
-                } else {
-                    if (res != null) {
-                        res.sendRedirect("/");
-                    }
-                }
-            }
+        if (req == null) {
+            res.sendRedirect("/");
+            return null;
         }
-        return null;
         
-    }
+        if (role.equals(Role.ANONYM)) {
+            if (!sessionSecuring.isConnected(req)) {
+                invocationContext.proceed();
+            }
+        } else if (role.equals(Role.MEMBER)) {
+            if (sessionSecuring.isConnected(req)) {
+                invocationContext.proceed();
+            }
+        } else if (role.equals(Role.ADMIN)) {
 
-    private static boolean isAnonym(HttpSession session) {
-        if (session == null || session.getAttribute(USER_ATTR) == null) {
-            return true;
-        } else {
-            return false;
         }
+        
+        return null;
     }
 
     private static Role getRole(final InvocationContext invocationContext) {
