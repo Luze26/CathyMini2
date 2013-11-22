@@ -2,6 +2,7 @@ package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Product;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -17,6 +18,7 @@ import org.apache.log4j.Logger;
 @Path("/cart")
 public class CartFacade {
 
+    private static final String USER_ATTR = "_USER_ATTR";
     private static final Logger logger = Logger.getLogger(CartFacade.class);
 
     @POST
@@ -24,6 +26,10 @@ public class CartFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Product add(Long id, @Context HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+
+        if (session.getAttribute(USER_ATTR) == null) {
+        }
         return null;
     }
 }

@@ -4,10 +4,10 @@ import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.webservices.model.ConsumerSession;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
-import java.io.IOException;
 import com.cathymini.cathymini2.webservices.model.form.Suscribe;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
+import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -73,7 +73,7 @@ public class ConsumerFacade{
                 return "You are connected!";
             } catch (Exception ex) {
                 try {
-                    response.sendError(400, ex.getMessage());
+                    response.sendError(400);
                     return ex.getMessage();
                 } catch (IOException ex1) {
                 }

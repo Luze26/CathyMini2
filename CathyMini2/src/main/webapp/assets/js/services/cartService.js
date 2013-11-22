@@ -25,6 +25,18 @@ angular.module('common').factory('cartService', ['$http', function($http) {
             });
     };
     
+    service.changeQuantity = function(product) {
+        $http.post("http://localhost:8080//webresources/cart/changeQuantity", {"id": product.id, "quantity": quantity})
+                .success(function(data) {
+            });
+    };
+    
+    service.deleteProduct = function(product) {
+        $http.post("http://localhost:8080//webresources/cart/delete", product.id)
+            .success(function(data) {
+            });
+    };
+    
     return service;
 }]);
 
