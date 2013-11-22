@@ -5,12 +5,15 @@
 package com.cathymini.cathymini2.services;
 
 import com.cathymini.cathymini2.model.Cart;
+import com.cathymini.cathymini2.model.CartLine;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.Product;
+import java.util.Iterator;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 /**
@@ -26,18 +29,50 @@ public class CartSession {
 
     private static final Logger logger = Logger.getLogger(CartSession.class);
     
-    /**
-     * Add a product to the Cart
-     */
-    public String addProduct(Product p) throws Exception {
-        return "Not Implemented";
+    public void addProduct(Product prod, int qu){
+        CartLine cl = new CartLine(prod, qu);
+        cart.getCartLineCollection().add(cl);
+        manager.persist(cl);
+        manager.merge(cart);
     }
     
-    /**
-     * Remove a product from the cart
-     */
-    public String subProduct(Product p) throws Exception {
-        return "Not Implemented";
+    public void addProduct(Product prod){
+        addProduct(prod, 1);
+    }
+    
+    public void removeProduct(Product prod){
+        
+        Iterator<CartLine> it = cart.getCartLineCollection().iterator();
+        CartLine myCartLine;
+        while(it.hasNext()){
+            myCartLine = it.next();
+	// Manipulations avec l'élément actuel
+            if(myCartLine.getProduct() == prod){
+                cart.getCartLineCollection().remove(myCartLine);
+            }
+        }
+        
+    }
+    
+    public void subCartLine(CartLine cl){
+        cart.getCartLineCollection().remove(cl);
+    }
+    
+    public void subProduct(String nom, Float flux){
+        subCartLine(getCartLine(nom, flux));
+    }
+    
+    public CartLine getCartLine(String nom, Float flux){
+        CartLine cLine = null;
+        Iterator<CartLine> it = cart.getCartLineCollection().iterator();
+        CartLine myCartLine;
+        while(it.hasNext()){
+            myCartLine = it.next();
+            if(myCartLine.getProduct().getName().equals(nom) && myCartLine.getProduct().getFlux() == flux){
+                cLine = myCartLine;
+            }
+        }
+        return cLine;
     }
     
     /**
@@ -52,6 +87,17 @@ public class CartSession {
      */
     @Remove
     public String clear() {
-        return "Not Implemented";
+        cart.getCartLineCollection().clear();
+        return "Empty cart";
+    }
+    
+    private Cart findCartByConsumer(Consumer consumer) {
+        Query q = manager.createNamedQuery("CartByName", Cart.class); 
+        q.setParameter("consumer", consumer);
+        
+        if (q.getResultList().isEmpty())
+            return null; 
+        
+        return (Cart) q.getResultList().get(0);
     }
 }
