@@ -33,7 +33,8 @@
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.2/js/bootstrap.min.js"></script>
         <script src="/assets/js/modules/commonModule.js"></script>
-        <script src="/assets/js/controllers/consumerCtrls.js"></script>       
+        <script src="/assets/js/controllers/consumerCtrls.js"></script>
+        <script src="/assets/js/services/consumerService.js"></script>       
         <ui:insert name="scripts" >
         </ui:insert>
 
@@ -44,23 +45,20 @@
             <ui:param name="okAction" value="subscribe()" />
             <ui:param name="ngDisabled" value="form.$invalid" />
             <ui:define name="modalContent">
-                <div ng-show="modal.displayConnectionError" class="alert alert-dismissable alert-danger">
+                <div ng-show="displayError" class="alert alert-dismissable alert-danger">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Connection error!</strong> Verify your internet connection.
+                    <strong>{{error.title}}</strong> {{error.text}}
                 </div>
                 <form name="form" novalidate="novalidate">
                     <fieldset>
                         <label>Username</label>
-                        <input name="username" ng-model="suscriber.username" type="text" placeholder="Your username" autofocus="autofocus" required="required" />
+                        <input name="username" ng-model="subscriber.username" type="text" placeholder="Your username" autofocus="autofocus" required="required" />
                         <label>Mail</label>
-                        <input name="mail" ng-model="suscriber.mail" type="text" placeholder="Your mail address" autofocus="autofocus" required="required" />
+                        <input name="mail" ng-model="subscriber.mail" type="text" placeholder="Your mail address" autofocus="autofocus" required="required" />
                         <label>Password</label>
-                        <input name="password" ng-model="suscriber.pwd" type="text" placeholder="Your password" autofocus="autofocus" required="required" />                          
+                        <input name="password" ng-model="subscriber.pwd" type="text" placeholder="Your password" autofocus="autofocus" required="required" />                          
                     </fieldset>
                 </form>
-                <div ng-show="feedbackKo.display" class="alert alert-dismissable alert-danger">
-                    <strong>{{feedbackKo.text}}</strong>
-                </div>
             </ui:define>
         </ui:decorate>
         <ui:decorate template="modalLayout.xhtml">
@@ -70,9 +68,9 @@
             <ui:param name="okAction" value="connect()" />
             <ui:param name="ngDisabled" value="form.$invalid" />
             <ui:define name="modalContent">
-                <div ng-show="modal.displayConnectionError" class="alert alert-dismissable alert-danger">
+                <div ng-show="displayError" class="alert alert-dismissable alert-danger">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Connection error!</strong> Verify your internet connection.
+                    <strong>{{error.title}}</strong> {{error.text}}
                 </div>
                 <form name="form" novalidate="novalidate">
                     <fieldset>
@@ -82,9 +80,6 @@
                         <input name="password" ng-model="consumer.pwd" type="text" placeholder="Your password" autofocus="autofocus" required="required" />                          
                     </fieldset>
                 </form>
-                <div ng-show="feedbackKO.display" class="alert alert-dismissable alert-danger">
-                    <strong>{{feedbackKO.text}}</strong>
-                </div>
             </ui:define>
         </ui:decorate>
     </body>

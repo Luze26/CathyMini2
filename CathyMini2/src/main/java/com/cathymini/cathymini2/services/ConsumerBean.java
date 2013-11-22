@@ -2,6 +2,8 @@ package com.cathymini.cathymini2.services;
 
 import javax.ejb.*;
 import com.cathymini.cathymini2.model.Consumer;
+import com.cathymini.cathymini2.webservices.model.JSonErrorMsg;
+import com.cathymini.cathymini2.webservices.secure.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -25,12 +27,19 @@ public class ConsumerBean {
      * @param mail Mail Adress
      */
     public Consumer suscribeUser(String usr, String pwd, String mail) throws Exception {
+        if (usr == null || pwd == null || mail == null) {
+                String message = "One of the field is <code>null</code>.";
+                logger.error(message);
+                throw new JSonErrorMsg("mail", message);
+        }
+        
         if (findUserByName(usr) == null) {
             if (findUserByMail(mail) == null) {
                 Consumer user = new Consumer();
                 user.setUsername(usr);
                 user.setPwd(pwd);
                 user.setMail(mail);
+                user.setRole(Role.MEMBER);
 
                 manager.persist(user);
                 String message = "The user suscribe with success.";
@@ -39,12 +48,12 @@ public class ConsumerBean {
             } else {
                 String message = "This mail address is already used by another user.";
                 logger.error(message);
-                throw new Exception(message);
+                throw new JSonErrorMsg("mail", message);
             }
         } else {
                 String message = "This username already exist.";
                 logger.error(message);
-                throw new Exception(message);
+                throw new JSonErrorMsg("username", message);
         }
     }
     
@@ -70,14 +79,14 @@ public class ConsumerBean {
                 // Error : This user exists but the pwd is wrong
                 String message = "This user does not exist or the password is wrong.";
                 logger.error(message);
-                throw new Exception(message);
+                throw new JSonErrorMsg("pwd", message);
             }
             
         } else {
             // Error : This user does not exist
             String message = "This user does not exist or the password is wrong.";
             logger.error(message);
-            throw new Exception(message);
+            throw new JSonErrorMsg("pwd", message);
         }
     }
     
@@ -87,7 +96,7 @@ public class ConsumerBean {
     @Remove
     public void logout() {
         String message = "The user log out.";
-        logger.error(message);
+        logger.debug(message);
     }
     
     /**
@@ -112,14 +121,14 @@ public class ConsumerBean {
                 // Error : This user exists but the pwd is wrong
                 String message = "This user does not exist or the password is wrong.";
                 logger.error(message);
-                throw new Exception(message);
+                throw new JSonErrorMsg("pwd", message);
             }
             
         } else {
             // Error : This user does not exist
             String message = "This user does not exist or the password is wrong.";
             logger.error(message);
-            throw new Exception(message);
+            throw new JSonErrorMsg("pwd", message);
         }
     }
     

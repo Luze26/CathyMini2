@@ -1,5 +1,6 @@
 package com.cathymini.cathymini2.model;
 
+import com.cathymini.cathymini2.webservices.secure.Role;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Column;
@@ -49,6 +50,10 @@ public class Consumer implements Serializable {
     /** Consumer mail address */
     private String mail;
     
+    @Column(name="role")
+    /** Consumer role */
+    private Role role;
+    
     @OneToMany(mappedBy="consumer") 
     /** Consumer {@link DeliveryAddress} collection */
     private Collection<DeliveryAddress> deliveryCollection;
@@ -56,6 +61,22 @@ public class Consumer implements Serializable {
     @OneToMany(mappedBy="consumer")
     /** Consumer {@link PaymentInfo} collection */
     private Collection<PayementInfo> paymentInfoCollection;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Collection<PayementInfo> getPaymentInfoCollection() {
+        return paymentInfoCollection;
+    }
+
+    public void setPaymentInfoCollection(Collection<PayementInfo> paymentInfoCollection) {
+        this.paymentInfoCollection = paymentInfoCollection;
+    }
 
     public Collection<DeliveryAddress> getDeliveryCollection() {
         return deliveryCollection;
