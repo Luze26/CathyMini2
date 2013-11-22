@@ -27,6 +27,12 @@ public class ConsumerBean {
      * @param mail Mail Adress
      */
     public Consumer suscribeUser(String usr, String pwd, String mail) throws Exception {
+        if (usr == null || pwd == null || mail == null) {
+                String message = "One of the field is <code>null</code>.";
+                logger.error(message);
+                throw new JSonErrorMsg("mail", message);
+        }
+        
         if (findUserByName(usr) == null) {
             if (findUserByMail(mail) == null) {
                 Consumer user = new Consumer();

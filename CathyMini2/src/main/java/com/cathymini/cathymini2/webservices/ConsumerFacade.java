@@ -39,9 +39,9 @@ public class ConsumerFacade{
     public String suscribe(Suscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         
         try {
-            logger.debug("Create user = " + form.username +" :: "+ form.pwd +" :: " + form.mail);
             Consumer user = consumerBean.suscribeUser(form.username, form.pwd, form.mail);
             sessionSecuring.openSession(request, user);
+            logger.debug("Create user = " + form.username +" :: "+ form.pwd +" :: " + form.mail);
             return "You suscribe !";
         } catch (Exception ex) {
             response.setStatus(400);
