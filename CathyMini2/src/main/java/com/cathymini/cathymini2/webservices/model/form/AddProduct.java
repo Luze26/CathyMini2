@@ -13,8 +13,11 @@ import java.text.DecimalFormat;
 public class AddProduct {
 
     public String name;
+    public String marque;
+    public Float flux;
     public Float price;
     public String type;
+    public String description;
     
     public boolean validate() {
         if(name != null && price != null) {

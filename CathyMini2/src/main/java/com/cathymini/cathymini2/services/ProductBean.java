@@ -42,19 +42,25 @@ public class ProductBean {
      * Add a product to the database
      *
      * @param name
+     * @param marque
+     * @param flux
      * @param price
      * @param type
+     * @param description
      * @return the product
      */
-    public Product addProduct(String name, Float price, String type) {
+    public Product addProduct(String name, String marque, Float flux, Float price, String type, String description) {
         Product prod;
         if(type.equals(new String("Tampon")))
             prod = new Tampon();
         else
             prod = new Napkin();
         prod.setName(name);
+        prod.setMarque(marque);
+        prod.setFlux(flux);
         prod.setPrice(price);
         prod.setType(type);
+        prod.setDescription(description);
         manager.persist(prod);
         logger.info("New product : " + prod);
         return prod;
@@ -130,7 +136,7 @@ public class ProductBean {
         }
 
         query += " ORDER BY p." + searchQuery.orderBy + " " + (searchQuery.orderByASC ? "ASC" : "DESC");
-        System.out.println(query);
+
         return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
     }
 }

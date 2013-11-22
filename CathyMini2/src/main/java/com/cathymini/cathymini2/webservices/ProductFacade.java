@@ -19,7 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import com.cathymini.cathymini2.webservices.model.form.AddProduct;
 import com.cathymini.cathymini2.webservices.model.form.EditProduct;
-import java.io.File;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -54,7 +54,7 @@ public class ProductFacade {
     @Produces(MediaType.APPLICATION_JSON)
     public Product create(AddProduct form, @Context final HttpServletResponse response) {
         if(form != null && form.validate()) {
-            Product product = productBean.addProduct(form.name, form.price, form.type);
+            Product product = productBean.addProduct(form.name, form.marque, form.flux, form.price, form.type, form.description);
             return product;
         }
         else {
@@ -94,11 +94,12 @@ public class ProductFacade {
       {
          //On crée un nouveau document JDOM avec en argument le fichier XML
          //Le parsing est terminé ;)
-         document = sxb.build(new File("/home/anaelle/Documents/m2/ECOM/listeProduit.xml"));
+         document = sxb.build(new URL("http://localhost:8080/assets/product/listeProduit.xml"));
       }
       catch(Exception e){
+          System.out.println(e);
       }
-
+      
       //On initialise un nouvel élément racine avec l'élément racine du document.
       racine = document.getRootElement();
       afficheAll();

@@ -25,6 +25,10 @@ angular.module('common').directive('cartDirective', ['cartService', function(car
             
             elm.animate({"right": position}, 200);
         };
+        
+        scope.delete = function(product) {
+            cartService.deleteProduct(product);
+        };
     },
     template: '<div id="cart">' +
                 '<div id="cartTab" ng-click="toggleCart()">' +
@@ -34,7 +38,7 @@ angular.module('common').directive('cartDirective', ['cartService', function(car
                  '<div id="cartPanel">' +
                     '<ul>' +
                         '<li ng-repeat="prod in cart.products">' +
-                            '{{prod.name}} quantity : {{prod.quantity}}' +
+                            '{{prod.name}} quantity : {{prod.quantity}} <span ng-click="delete(prod)">X</span>' +
                         '</li>' +
                     '</ul>' +
                     'Price: {{cart.price}} €' +
