@@ -38,24 +38,35 @@ public class CartFacade {
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String add(Long id, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+    public String add(Long id, @Context HttpServletRequest request, @Context HttpServletResponse response){
         System.out.println("dans add :!!");
+        Consumer cons = null;
         try{
-            Consumer cons = sessionSecuring.getConsumer(request);
+            cons = sessionSecuring.getConsumer(request);
+        }catch(Exception ex){
+            cons = null;
+        }
+        try{
             if (cons != null) {
+                System.out.println("J'ai un consumer");
                 Cart cart  = cartBean.getUserCart(cons);
                 if(cart == null){
-                    cart = cartBean.newCart(cons);      
+                    System.out.println("Creation d'un caddie");
+                    cart = cartBean.newCart(cons);
+                    System.out.println("le caddie a etecreer");
                 }
                 Product prod = productBean.getProduct(id);
                 cartBean.addProduct(prod, cart);
                 return "The product has been added";
             }
-            
-            return null;
+            else{
+                return "merde!!";
+            }
         } catch (Exception ex) {
+            System.out.println("DANS EX "+ex.getMessage());
             response.setStatus(400);
             return ex.getMessage();
+            
         }
     }
 }
