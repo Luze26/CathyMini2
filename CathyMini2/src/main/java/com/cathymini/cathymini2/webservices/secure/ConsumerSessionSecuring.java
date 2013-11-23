@@ -1,24 +1,22 @@
 package com.cathymini.cathymini2.webservices.secure;
 
 import com.cathymini.cathymini2.model.Consumer;
+import com.cathymini.cathymini2.services.ConsumerBean;
 import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.HashMap;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Kraiss
  */
-public class ConsumerSessionSecuring {
-    @PersistenceContext(unitName="com.cathymini_CathyMini2_PU")
-    private EntityManager manager;
-    
+public class ConsumerSessionSecuring {    
     private static final String USER_ATTR = "_USER_ATTR";
+    private static final Logger logger = Logger.getLogger(com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring.class);
     private static ConsumerSessionSecuring instance; // Singleton
     
     private SecureRandom random;
@@ -75,30 +73,27 @@ public class ConsumerSessionSecuring {
     }
     
     public boolean isConnectedAsAdmin (HttpServletRequest request) {
-        return isConnected(request) && getConsumer(request).getRole().equals(Role.ADMIN);
+        //return isConnected(request) && CongetConsumer(request).getRole().equals(Role.ADMIN);
+        return false;
     }
     
-    public Consumer getConsumer (HttpServletRequest request) {
+    public Long getConsumerID (HttpServletRequest request) {
+        
         if (isConnected(request)) {
             SecureEntry entry = secureMap.get(getConsumerSession(request));
+            return entry.consumerID;
             
-            Query q = manager.createNamedQuery("ConsumerById", Consumer.class); 
-            q.setParameter("userID", entry.consumerID);
-
-            if (q.getResultList().isEmpty())
-                return null; 
-
-            return (Consumer) q.getResultList().get(0);
+        } else {
+            return null;
         }
-        
-        return null;
     }
     
     public void closeSession (HttpServletRequest request) {
         isConnected(request);
+        String consumerSession = getConsumerSession(request);
         
-        SecureEntry entry = secureMap.remove(getConsumerSession(request));
         request.getSession().invalidate();
+        secureMap.remove(consumerSession);
     }
     
     private String getConsumerSession(HttpServletRequest request) {
