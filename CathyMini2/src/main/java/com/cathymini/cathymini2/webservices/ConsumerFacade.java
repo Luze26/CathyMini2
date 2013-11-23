@@ -2,8 +2,9 @@ package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.services.ConsumerBean;
+import com.cathymini.cathymini2.webservices.model.JSonErrorMsg;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
-import com.cathymini.cathymini2.webservices.model.form.Suscribe;
+import com.cathymini.cathymini2.webservices.model.form.Subscribe;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
@@ -36,14 +37,23 @@ public class ConsumerFacade{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.ANONYM)
-    public String suscribe(Suscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+    /**
+     * Rest service to subscribe a new consumer
+     * @return A String containing the service termination message
+     */
+    public String suscribe(Subscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         
         try {
+            // Subscribe the new consumer
             Consumer user = consumerBean.suscribeUser(form.username, form.pwd, form.mail);
+            
+            // Automatically connect the consumer
             sessionSecuring.openSession(request, user);
+            
             logger.debug("Create user = " + form.username +" :: "+ form.pwd +" :: " + form.mail);
             return "You suscribe !";
-        } catch (Exception ex) {
+            
+        } catch (JSonErrorMsg ex) {
             response.setStatus(400);
             return ex.getMessage();
         }
@@ -54,12 +64,20 @@ public class ConsumerFacade{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.ANONYM)
+    /**
+     * Rest service to connect a consumer
+     * @return A String containing the service termination message
+     */
     public String connect(Connect form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         
         logger.debug("Connect user " + form.user);
         try {
+            // Check if the (usr,pwd) is correct
             Consumer user = consumerBean.connectUser(form.user, form.pwd);
+            
+            // Connect the consumer
             sessionSecuring.openSession(request, user);
+            
             return "You are connected!";
         } catch (Exception ex) {
             response.setStatus(400);
@@ -72,6 +90,10 @@ public class ConsumerFacade{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.MEMBER)
+    /**
+     * Rest service to logout a consumer
+     * @return A String containing the service termination message
+     */
     public String logout(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         sessionSecuring.closeSession(request);
         consumerBean.logout();
@@ -83,13 +105,19 @@ public class ConsumerFacade{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.MEMBER)
+    /**
+     * Rest service to delete a consumer
+     * @return A String containing the service termination message
+     */
     public String delete(Connect form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         
         logger.debug("Delete user " + form);
         try {
+            // Delete a consumer account from the data base
             consumerBean.deleteUser(form.user, form.pwd);
-            Consumer user = sessionSecuring.getConsumer(request);
             
+            // If the consumer which delete the account is the owner, he is disconnected
+            Consumer user = getConsumer(request);
             if (user.getUsername().equals(form.user)) {
                 sessionSecuring.closeSession(request);
                 return "You delete your account.";
@@ -105,8 +133,13 @@ public class ConsumerFacade{
     @GET
     @Path("/seeCurrent")
     @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Rest service to check if the client is connected
+     * @return The username if the consumer is connected, else an empty String
+     */
     public String seeCurrent(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-        Consumer user = sessionSecuring.getConsumer(request);
+        
+        Consumer user = getConsumer(request);
         
         if (user != null) {
             return user.getUsername();
@@ -114,4 +147,9 @@ public class ConsumerFacade{
             return "";
         }
     }
+    
+    public Consumer getConsumer(HttpServletRequest request) {
+        return consumerBean.findUserById(sessionSecuring.getConsumerID(request));
+    }
+            
 }

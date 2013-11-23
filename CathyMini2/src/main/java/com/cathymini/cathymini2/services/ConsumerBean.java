@@ -25,16 +25,20 @@ public class ConsumerBean {
      * @param usr Username
      * @param pwd Password
      * @param mail Mail Adress
+     * @throws JSonErrorMsg 
      */
-    public Consumer suscribeUser(String usr, String pwd, String mail) throws Exception {
+    public Consumer suscribeUser(String usr, String pwd, String mail) throws JSonErrorMsg {
+        // Check if one of the field is null 
         if (usr == null || pwd == null || mail == null) {
                 String message = "One of the field is <code>null</code>.";
                 logger.error(message);
                 throw new JSonErrorMsg("mail", message);
         }
         
+        // Check if the username or the mail is not already use
         if (findUserByName(usr) == null) {
             if (findUserByMail(mail) == null) {
+                // Add the new consumer in the data base
                 Consumer user = new Consumer();
                 user.setUsername(usr);
                 user.setPwd(pwd);
@@ -61,8 +65,9 @@ public class ConsumerBean {
      * Connect the user 'usr'
      * @param usr Username
      * @param pwd Password
+     * @throws JSonErrorMsg 
      */
-    public Consumer connectUser(String usr, String pwd) throws Exception {
+    public Consumer connectUser(String usr, String pwd) throws JSonErrorMsg {
         Consumer consumer;
         if (usr.contains("@")) { // Decide if 'usr' is a mail address or a username
             consumer = findUserByMail(usr);
@@ -93,7 +98,6 @@ public class ConsumerBean {
     /**
      * Log the current user out.
      */
-    @Remove
     public void logout() {
         String message = "The user log out.";
         logger.debug(message);
@@ -101,8 +105,11 @@ public class ConsumerBean {
     
     /**
      * Remove the user in parameter from the DB
+     * @param usr Username
+     * @param pwd Password
+     * @throws JSonErrorMsg 
      */
-    public void deleteUser(String usr, String pwd) throws Exception {
+    public void deleteUser(String usr, String pwd) throws JSonErrorMsg {
         Consumer consumer;
         if (usr.contains("@")) { // Decide if 'usr' is a mail address or a username
             consumer = findUserByMail(usr);
@@ -150,5 +157,15 @@ public class ConsumerBean {
             return null; 
         
         return (Consumer) q.getResultList().get(0);
+    }
+    
+    public Consumer findUserById(Long userID) {
+            Query q = manager.createNamedQuery("ConsumerById", Consumer.class);
+            q.setParameter("userID", userID);
+
+            if (q.getResultList().isEmpty())
+                return null; 
+
+            return (Consumer) q.getResultList().get(0);
     }
 }
