@@ -39,7 +39,7 @@ public class CartFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String add(Long id, @Context HttpServletRequest request, @Context HttpServletResponse response){
-        System.out.println("dans add :!!");
+        System.out.println("dans add :!! id :"+id);
         Consumer cons = null;
         try{
             cons = sessionSecuring.getConsumer(request);
@@ -60,10 +60,19 @@ public class CartFacade {
                 return "The product has been added";
             }
             else{
-                return "merde!!";
+                System.out.println("merde!!");
+                Product prod = productBean.getProduct(id);
+                System.out.println("recuperation produit");
+                Cart newCartTemp = new Cart();
+                System.out.println("apres creation vcart");
+                newCartTemp.setConsumer(null);
+                System.out.println("mise a jour consumer");
+                cartBean.addProduct(prod, newCartTemp);
+                System.out.println("ajout du produit au caddie");
+                return "The product have been added to temp cart";
             }
         } catch (Exception ex) {
-            System.out.println("DANS EX "+ex.getMessage());
+           // System.out.println("DANS EX "+ex.getMessage());
             response.setStatus(400);
             return ex.getMessage();
             

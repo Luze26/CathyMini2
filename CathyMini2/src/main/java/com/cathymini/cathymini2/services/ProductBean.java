@@ -105,12 +105,16 @@ public class ProductBean {
     }
     
     public Product getProduct(Long id){
+        System.out.println("id produit to add : "+id);
         Query query = manager.createNamedQuery("ProductById", Product.class);
         
         query.setParameter("id", id);
         
-        if (query.getResultList().isEmpty())
+        if (query.getResultList().isEmpty()){
+            System.out.println("dans productbean c'est vide");
             return null; 
+        }
+            
         return (Product) query.getResultList().get(0);
     }
     
