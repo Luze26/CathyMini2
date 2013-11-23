@@ -2,7 +2,11 @@ package com.cathymini.cathymini2.webservices.secure;
 
 import com.cathymini.cathymini2.model.Consumer;
 import java.security.SecureRandom;
+import java.util.Calendar;
 import java.util.HashMap;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,16 +15,20 @@ import javax.servlet.http.HttpSession;
  * @author Kraiss
  */
 public class ConsumerSessionSecuring {
+    @PersistenceContext(unitName="com.cathymini_CathyMini2_PU")
+    private EntityManager manager;
+    
     private static final String USER_ATTR = "_USER_ATTR";
-    private static final Integer sessionTimeOut = 300; // In minutes
     private static ConsumerSessionSecuring instance; // Singleton
     
     private SecureRandom random;
+    private Integer sessionTimeOut;
     private HashMap<String, SecureEntry> secureMap;
 
     private ConsumerSessionSecuring() {
         secureMap = new HashMap<String, SecureEntry>();
         random = new SecureRandom();
+        sessionTimeOut = 30 * 60 * 1000; // 30 min
     }
     
     public static ConsumerSessionSecuring getInstance() {
@@ -57,18 +65,30 @@ public class ConsumerSessionSecuring {
             return false;
         }
         
-        // TODO : test timeout !!!
-        if (entry != null) {
+        if (entry.timestamp < Calendar.getInstance().getTimeInMillis() + sessionTimeOut) {
             entry.updateTimer();
+            return true;
+        } else {
+            return false;
         }
         
-        return true;
+    }
+    
+    public boolean isConnectedAsAdmin (HttpServletRequest request) {
+        return isConnected(request) && getConsumer(request).getRole().equals(Role.ADMIN);
     }
     
     public Consumer getConsumer (HttpServletRequest request) {
         if (isConnected(request)) {
-        SecureEntry entry = secureMap.get(getConsumerSession(request));
+            SecureEntry entry = secureMap.get(getConsumerSession(request));
             
+            Query q = manager.createNamedQuery("ConsumerById", Consumer.class); 
+            q.setParameter("userID", entry.consumerID);
+
+            if (q.getResultList().isEmpty())
+                return null; 
+
+            return (Consumer) q.getResultList().get(0);
         }
         
         return null;

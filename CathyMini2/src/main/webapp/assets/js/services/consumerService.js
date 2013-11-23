@@ -9,9 +9,7 @@ angular.module('common').factory('consumerService', ['$http', '$q', function($ht
     /**
      * Logout a connected user
      */
-    service.disconnect = function() {
-        $scope.displayConnectionError = false;
-        
+    service.disconnect = function() {        
         $http.post("http://localhost:8080//webresources/consumer/logout")
             .success(function() { 
                 service.isConnected = false;

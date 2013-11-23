@@ -29,7 +29,9 @@ import javax.persistence.UniqueConstraint;
     @NamedQuery(name="ConsumerByName",
         query="select object(c) from Consumer c where c.username = :username"),
     @NamedQuery(name="ConsumerByMail",
-        query="select object(c) from Consumer c where c.mail = :mail")
+        query="select object(c) from Consumer c where c.mail = :mail"),
+    @NamedQuery(name="ConsumerById",
+        query="select object(c) from Consumer c where c.userID = :userID")
 })
 public class Consumer implements Serializable {
     @Id
