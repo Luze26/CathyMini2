@@ -29,15 +29,23 @@ public class CartSession {
 
     private static final Logger logger = Logger.getLogger(CartSession.class);
     
-    public void addProduct(Product prod, int qu){
+    public Cart newCart(Consumer cons){
+        Cart cart = new Cart();
+        cart.setConsumer(cons);
+        manager.persist(cart);
+        return cart;
+    } 
+    
+    public void addProduct(Product prod, int qu, Cart cart){
+        
         CartLine cl = new CartLine(prod, qu);
         cart.getCartLineCollection().add(cl);
         manager.persist(cl);
         manager.merge(cart);
     }
     
-    public void addProduct(Product prod){
-        addProduct(prod, 1);
+    public void addProduct(Product prod, Cart cart){
+        addProduct(prod, 1, cart);
     }
     
     public void removeProduct(Product prod){
@@ -78,8 +86,8 @@ public class CartSession {
     /**
      * Get a cart sessionBean of an user.
      */
-    public String getUserCart(Consumer consumer) throws Exception {
-        return "Not Implemented";
+    public Cart getUserCart(Consumer consumer) throws Exception {
+        return findCartByConsumer(consumer);
     }
     
     /**
