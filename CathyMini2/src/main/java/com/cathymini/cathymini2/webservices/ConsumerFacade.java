@@ -117,7 +117,7 @@ public class ConsumerFacade{
             consumerBean.deleteUser(form.user, form.pwd);
             
             // If the consumer which delete the account is the owner, he is disconnected
-            Consumer user = getConsumer(request);
+            Consumer user = sessionSecuring.getConsumer(request);
             if (user.getUsername().equals(form.user)) {
                 sessionSecuring.closeSession(request);
                 return "You delete your account.";
@@ -139,17 +139,13 @@ public class ConsumerFacade{
      */
     public String seeCurrent(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         
-        Consumer user = getConsumer(request);
+        Consumer user = sessionSecuring.getConsumer(request);
         
         if (user != null) {
             return user.getUsername();
         } else {
             return "";
         }
-    }
-    
-    public Consumer getConsumer(HttpServletRequest request) {
-        return consumerBean.findUserById(sessionSecuring.getConsumerID(request));
     }
             
 }

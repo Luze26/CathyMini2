@@ -47,7 +47,7 @@ public class ConsumerSessionSecuring {
             secureStr += (char) bytes[i];
         }
      
-        secureMap.put(secureStr , new SecureEntry(consumer.getUserID()));
+        secureMap.put(secureStr , new SecureEntry(consumer));
         setConsumerSession(request, secureStr);
     }
     
@@ -73,15 +73,14 @@ public class ConsumerSessionSecuring {
     }
     
     public boolean isConnectedAsAdmin (HttpServletRequest request) {
-        //return isConnected(request) && CongetConsumer(request).getRole().equals(Role.ADMIN);
-        return false;
+        return isConnected(request) && getConsumer(request).getRole().equals(Role.ADMIN);
     }
     
-    public Long getConsumerID (HttpServletRequest request) {
+    public Consumer getConsumer (HttpServletRequest request) {
         
         if (isConnected(request)) {
             SecureEntry entry = secureMap.get(getConsumerSession(request));
-            return entry.consumerID;
+            return entry.consumer;
             
         } else {
             return null;

@@ -13,10 +13,10 @@ import java.util.Calendar;
  */
 public class SecureEntry {
     public Long timestamp;
-    public Long consumerID;
+    public Consumer consumer;
 
-    public SecureEntry(Long consumerID) {
-        this.consumerID = consumerID;
+    public SecureEntry(Consumer consumer) {
+        this.consumer = consumer;
         updateTimer();
     }
     

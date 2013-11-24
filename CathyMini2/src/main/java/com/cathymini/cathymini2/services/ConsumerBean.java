@@ -159,7 +159,7 @@ public class ConsumerBean {
         return (Consumer) q.getResultList().get(0);
     }
     
-    public Consumer findUserById(Long userID) {
+    private Consumer findUserById(Long userID) {
             Query q = manager.createNamedQuery("ConsumerById", Consumer.class);
             q.setParameter("userID", userID);
 
