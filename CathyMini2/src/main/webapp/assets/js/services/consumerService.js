@@ -1,9 +1,4 @@
-
-/**
- * Service to manage connection and consumer information
- */
 angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q', function($http, $rootScope, $q) {
-
     
     var service = {};
     

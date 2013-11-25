@@ -63,7 +63,6 @@ public class CartLine implements Serializable {
         return quantity;
     }
 
-    
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
