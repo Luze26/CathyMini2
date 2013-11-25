@@ -1,9 +1,19 @@
+/**
+ * Service to manage connection and consumer information
+ */
 angular.module('common').factory('consumerService', ['$http', '$q', function($http, $q) {
     
     var service = {};
     
+    /**
+     * If the user is connected
+     * @type {Boolean}
+     */
     service.isConnected = false;
     
+    /**
+     * Consumer information
+     */
     service.consumer = {};
     
     /**
@@ -19,15 +29,20 @@ angular.module('common').factory('consumerService', ['$http', '$q', function($ht
             });
     };
     
+    /**
+     * Try to connect the user
+     * @param {type} consumer, username and password
+     * @returns {promise}
+     */
     service.connect = function(consumer) {     
         var deferred = $q.defer();
         $http.post("http://localhost:8080//webresources/consumer/connect", consumer)
-                .success(function() {
+                .success(function() { //success
                     service.consumer.username = consumer.user;
                     service.isConnected = true;
                     deferred.resolve();
                 })
-                .error(function(data, status, headers, config) { 
+                .error(function(data, status, headers, config) {  // error
                     if (status === 400) {
                         deferred.reject(data);
                     }
@@ -38,6 +53,11 @@ angular.module('common').factory('consumerService', ['$http', '$q', function($ht
         return deferred.promise;
     };
     
+    /**
+     * Used to subscribe an user
+     * @param {type} subscriber
+     * @returns {promise}
+     */
     service.subscribe = function(subscriber) {
         var deferred = $q.defer();
         $http.post("http://localhost:8080//webresources/consumer/suscribe", subscriber)
@@ -56,11 +76,11 @@ angular.module('common').factory('consumerService', ['$http', '$q', function($ht
     };
     
     /**
-     * Get user session infos if the user is connected
+     * Get current user information on the server
      */
     service.getCurrentUser = function() {
         $http.get("http://localhost:8080//webresources/consumer/seeCurrent")
-            .success(function(username) { 
+            .success(function(username) { // success
                 if (username === "") {
                     service.isConnected = false;
                 } else {
@@ -68,11 +88,14 @@ angular.module('common').factory('consumerService', ['$http', '$q', function($ht
                     service.consumer.username = username;
                 }
             })
-            .error(function(data, status, headers, config) { 
+            .error(function(data, status, headers, config) { // error
                 service.isConnected = false;
             });
     };
     
+    /**
+     * Request the server to get the user status
+     */
     service.getCurrentUser();
     
     return service;

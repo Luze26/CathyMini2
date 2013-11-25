@@ -132,27 +132,28 @@ angular.module('products').
 
       /**
        * Delete the product
-       * @param {type} product to delete
+       * @param {Product} product to delete
        */
       $scope.deleteProduct = function(product) {
         $http.delete("http://localhost:8080//webresources/product/delete?id=" + product.id)
           .success(function() {
             //We delete the product client side from the list if it is in
             var index = $scope.products.indexOf(product);
-            if (index > -1) {
+            if (index > -1) { //If the product is still displayed, we delete it from the list
               $scope.products.splice(index, 1);
             }
+            //Display success feedback
             $scope.feedbackOk.display = true;
             $scope.feedbackOk.text = "You have correctly deleted the product : " + product.name;
           })
           .error(function(data) {
-            $scope.displayConnectionError = true;
+            $scope.displayConnectionError = true; // display error feedback
           });
       };
 
       /**
        * Called when an edit modal is open, copy the product to edit in the modal
-       * @param {type} product to edit
+       * @param {Product} product to edit
        */
       $scope.initEditModal = function(product) {
         $scope.editedProduct = product;
@@ -165,29 +166,6 @@ angular.module('products').
         $scope.editModal.product.description = product.description;
         $scope.modal = $scope.editModal;
       };
-
-      /* Essai d'autocomplétion
-       // mock des cartes dans lesquelles rechercher
-       $scope.cardslist = [
-       {'name': 'Skylasher'},
-       {'name': 'Thrashing Mossdog'},
-       {'name': 'Zhur-Taa Druid'},
-       {'name': 'Feral Animist'},
-       {'name': 'Rubblebelt Maaka'},
-       {'name': 'Mending Touch'},
-       {'name': 'Weapon Surge'},
-       {'name': 'Woodlot Crawler'},
-       {'name': 'Phytoburst'},
-       {'name': 'Smelt-Ward Gatekeepers'},
-       {'name': 'Debt to the Deathless'},
-       {'name': 'Woodlot Crawler'},
-       {'name': 'Blaze Commando'},
-       {'name': 'Uncovered Clues'}
-       ];
-       
-       // saisie du nom de la carte
-       $scope.card = null;
-       */
 
       /** Modal information for add product */
       $scope.addModal = {title: "Add product", okAction: $scope.addProduct, product: {type: "Serviette", flux: "1"}};
