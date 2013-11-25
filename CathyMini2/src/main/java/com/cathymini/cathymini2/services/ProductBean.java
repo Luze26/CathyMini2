@@ -4,6 +4,7 @@
  */
 package com.cathymini.cathymini2.services;
 
+import com.cathymini.cathymini2.model.Cart;
 import com.cathymini.cathymini2.model.Napkin;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Tampon;
@@ -101,6 +102,21 @@ public class ProductBean {
         searchQuery.validate();
         Query query = constructQuery(searchQuery);
         return (Collection<Product>) query.getResultList();
+    }
+    
+    public Product getProduct(Long id){
+        System.out.println("Dans getProduct");
+        System.out.println("id produit to add : "+id);
+        Query query = manager.createNamedQuery("ProductById", Product.class);
+        
+        query.setParameter("id", id);
+        
+        if (query.getResultList().isEmpty()){
+            System.out.println("dans productbean c'est vide");
+            return null; 
+        }
+            
+        return (Product) query.getResultList().get(0);
     }
     
     public boolean delete(int id) {

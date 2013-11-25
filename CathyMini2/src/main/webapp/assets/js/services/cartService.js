@@ -1,7 +1,4 @@
-/**
- * Service to manage the cart
- */
-angular.module('common').factory('cartService', ['$http', function($http) {
+angular.module('common').factory('cartService', ['$http', '$rootScope', 'consumerService', function($http, $rootScope, consumerService) {
     
     var service = {};
     
@@ -17,6 +14,17 @@ angular.module('common').factory('cartService', ['$http', function($http) {
     service.nbProducts = function() {
         return service.cart.products.length;
     };
+
+    
+    
+    $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
+        console.log("Dnas bonne fonction");
+        $http.post("http://localhost:8080//webresources/cart/consumerIsConnected")
+        .success(function(data){
+        });
+    } );
+    
+
     
     /**
      * Add a product to the cart
