@@ -8,6 +8,7 @@ import com.cathymini.cathymini2.model.Cart;
 import com.cathymini.cathymini2.model.CartLine;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.Product;
+import java.util.ArrayList;
 import java.util.Iterator;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
@@ -32,20 +33,24 @@ public class CartSession {
     public Cart newCart(Consumer cons){
         Cart cart = new Cart();
         cart.setConsumer(cons);
+        cart.setCartLineCollection(new ArrayList<CartLine>());
         manager.persist(cart);
         return cart;
     } 
     
     public void addProduct(Product prod, int qu, Cart cart){
-        
         CartLine cl = new CartLine(prod, qu);
-        cart.getCartLineCollection().add(cl);
         manager.persist(cl);
-        manager.merge(cart);
+        addProduct(cl, cart);
     }
     
     public void addProduct(Product prod, Cart cart){
         addProduct(prod, 1, cart);
+    }
+    
+    public void addProduct(CartLine cl, Cart cart){
+        cart.getCartLineCollection().add(cl);
+        manager.merge(cart);
     }
     
     public void removeProduct(Product prod){
@@ -62,8 +67,11 @@ public class CartSession {
         
     }
     
-    public void subCartLine(CartLine cl){
+    public boolean subCartLine(CartLine cl){
         cart.getCartLineCollection().remove(cl);
+        Query query = manager.createNamedQuery("DeleteCartLineById", CartLine.class); 
+        query.setParameter("id", cl.getCartLineID());
+        return query.executeUpdate() == 1;
     }
     
     public void subProduct(String nom, Float flux){
@@ -107,5 +115,42 @@ public class CartSession {
             return null; 
         
         return (Cart) q.getResultList().get(0);
+    }
+    
+    public Cart findCartByID(Long id){
+        Query q = manager.createNamedQuery("CartByID", Cart.class); 
+        q.setParameter("id", id);
+        
+        if (q.getResultList().isEmpty())
+            return null; 
+        
+        return (Cart) q.getResultList().get(0);
+    }
+    
+    public void addCartToConsumer(Consumer cons, Cart cart){
+        cart.setConsumer(cons);
+    }
+    
+    public String mergeCart(Consumer cons, Cart cartTemp){
+        Cart cartCons = findCartByConsumer(cons);
+        if(cartCons.getCartLineCollection().isEmpty()){
+            addCartToConsumer(cons, cartTemp);
+        }
+        else {
+            for(CartLine cl : cartCons.getCartLineCollection()){
+                for(CartLine clTemp : cartTemp.getCartLineCollection())
+                {
+                    if(cl.getProduct() == clTemp.getProduct()){
+                        //change the quantity is it's the same product
+                        cl.setQuantity(cl.getQuantity()+clTemp.getQuantity());
+                    }
+                    else{
+                        //add the product
+                        addProduct(clTemp, cartCons);
+                    }
+                }
+            }
+        }
+        return "";
     }
 }

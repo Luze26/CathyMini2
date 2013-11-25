@@ -105,6 +105,7 @@ public class ProductBean {
     }
     
     public Product getProduct(Long id){
+        System.out.println("Dans getProduct");
         System.out.println("id produit to add : "+id);
         Query query = manager.createNamedQuery("ProductById", Product.class);
         

@@ -104,4 +104,5 @@ public class ConsumerSessionSecuring {
         HttpSession session = request.getSession(true);
         session.setAttribute(USER_ATTR, consumerSession);
     }
+    
 }

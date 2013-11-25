@@ -27,12 +27,15 @@ import org.apache.log4j.Logger;
 public class CartFacade {
 
     private static final String USER_ATTR = "_USER_ATTR";
+    private static final String CART_ATTR = "_CART_ATTR";
     private static final Logger logger = Logger.getLogger(CartFacade.class);
     private static final ConsumerSessionSecuring sessionSecuring = ConsumerSessionSecuring.getInstance();
 
     @EJB
     private CartSession cartBean;
+    @EJB
     private ProductBean productBean;
+
     
     @POST
     @Path("/add")
@@ -43,10 +46,12 @@ public class CartFacade {
         Consumer cons = null;
         try{
             cons = sessionSecuring.getConsumer(request);
+            System.out.println("nom cons : "+cons.getUsername());
         }catch(Exception ex){
             cons = null;
         }
         try{
+            System.out.println(cons != null);
             if (cons != null) {
                 System.out.println("J'ai un consumer");
                 Cart cart  = cartBean.getUserCart(cons);
@@ -55,27 +60,52 @@ public class CartFacade {
                     cart = cartBean.newCart(cons);
                     System.out.println("le caddie a etecreer");
                 }
+                System.out.println("Ajout du produit");
                 Product prod = productBean.getProduct(id);
                 cartBean.addProduct(prod, cart);
                 return "The product has been added";
             }
             else{
-                System.out.println("merde!!");
+                System.out.println("Pas de consumer");
                 Product prod = productBean.getProduct(id);
-                System.out.println("recuperation produit");
-                Cart newCartTemp = new Cart();
-                System.out.println("apres creation vcart");
-                newCartTemp.setConsumer(null);
-                System.out.println("mise a jour consumer");
+                Cart newCartTemp;
+               try{
+                    newCartTemp = cartBean.findCartByID(getCartID(request));
+               }
+               catch(Exception ex){
+                    newCartTemp = cartBean.newCart(null);
+                    setCartID(request, newCartTemp.getCartID());
+               }
                 cartBean.addProduct(prod, newCartTemp);
-                System.out.println("ajout du produit au caddie");
                 return "The product have been added to temp cart";
             }
         } catch (Exception ex) {
-           // System.out.println("DANS EX "+ex.getMessage());
+            System.out.println("DANS EX "+ex.getMessage());
             response.setStatus(400);
             return ex.getMessage();
             
         }
     }
+    
+    private Long getCartID(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        return (Long) session.getAttribute(CART_ATTR);
+    }
+    
+    private void setCartID(HttpServletRequest request, Long cartID) {
+        HttpSession session = request.getSession(true);
+        session.setAttribute(CART_ATTR, cartID);
+    }
+    
+    @POST
+    @Path("/consumerIsConnected")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String consumerIsConnected(){
+        
+        System.out.println("Lien marche");
+        return "";
+    }
+
+    
 }

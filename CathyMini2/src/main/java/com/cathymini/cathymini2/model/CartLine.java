@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -18,6 +20,7 @@ import javax.persistence.Table;
  */
 @Entity(name="CartLine")
 @Table(name="CartLine")
+
 public class CartLine implements Serializable {
     @Id
     @GeneratedValue

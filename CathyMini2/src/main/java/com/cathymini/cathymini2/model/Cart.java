@@ -25,6 +25,10 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name="CartByName",
         query="select object(c) from Cart c where c.consumer = :consumer"),
+    @NamedQuery(name="DeleteCartById",
+        query="DELETE FROM Cart c WHERE c.cartID = :id"),
+    @NamedQuery(name="CartByID",
+        query="select object(c) from Cart c where c.cartID=:id")
 })
 public class Cart implements Serializable {
     @Id
