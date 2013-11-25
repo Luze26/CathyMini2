@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <body>
+        <ui:composition>
+            <ui:decorate template="/template/modalLayout.xhtml">
+                <ui:param name="modalId" value="connectModal" />
+                <ui:param name="modalTitle" value="Se connecter" />
+                <ui:param name="ngCtrl" value="connectionModalCtrl" />
+                <ui:param name="okAction" value="connect()" />
+                <ui:param name="ngDisabled" value="form.$invalid" />
+                <ui:define name="modalContent">
+                    <div ng-show="displayError" class="alert alert-dismissable alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{error.title}}</strong> {{error.text}}
+                    </div>
+                    <form name="form" novalidate="novalidate">
+                        <fieldset>
+                            <label>Username or Mail</label>
+                            <input name="username" ng-model="consumer.user" type="text" placeholder="Your username" autofocus="autofocus" required="required" />
+                            <label>Password</label>
+                            <input name="password" ng-model="consumer.pwd" type="text" placeholder="Your password" autofocus="autofocus" required="required" />                          
+                        </fieldset>
+                    </form>
+                </ui:define>
+            </ui:decorate>
+        </ui:composition>
+    </body>
+</html>
