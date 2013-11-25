@@ -48,7 +48,7 @@ public class ProductSearch {
                 maxPrice = tmp;
             }
         }
-        for(String s : flux){
+/*        for(String s : flux){
             switch(Integer.parseInt(s)){
                 case(1): s="1.0";
                 case(2): s="2.0";
@@ -59,7 +59,7 @@ public class ProductSearch {
                 default: s="0.0";
             }
         }
-        System.out.println(flux);
+        System.out.println(flux); */
         if(length == 0) {
             length = 10;
         }

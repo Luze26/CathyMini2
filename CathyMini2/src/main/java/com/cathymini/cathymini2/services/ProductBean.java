@@ -148,11 +148,11 @@ public class ProductBean {
             query = "SELECT p FROM Product p WHERE p.name = \"Rien\"";
             return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
         }
-        for(String s : searchQuery.flux){
+/*        for(String s : searchQuery.flux){
             if(Float.parseFloat(s) != 0.0) {
                 query += " AND p.flux = "+s;
             }
-        }
+        }*/
         if (searchQuery.brand != null) {
             query += " AND p.marque LIKE '%" + searchQuery.brand + "%'";
         }
