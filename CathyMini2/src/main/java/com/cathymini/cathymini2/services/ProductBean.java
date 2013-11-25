@@ -109,23 +109,39 @@ public class ProductBean {
             query += " LIKE '%" + searchQuery.input + "%'";
         }
         if (searchQuery.tampon) {
-            query += " AND p.type = \"Tampon\"";
+            System.out.println("TAMPON");
+            query += " AND ( p.type = \"tampon\"";
             if(searchQuery.napkin) {
-                query += " OR p.type = \"Serviette\"";
+                System.out.println("SERVIETTE2");
+                query += " OR p.type = \"serviette\" )";
+            }
+            else {
+                query += " )";
             }
         } else if (searchQuery.napkin) {
-            query += " AND p.type = \"Serviette\"";
+            System.out.println("SERVIETTE");
+            query += " AND p.type = \"serviette\"";
         } else {
+            System.out.println("RIEN");
             query = "SELECT p FROM Product p WHERE p.name = \"Rien\"";
             return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
         }
-        
+        for(String s : searchQuery.flux){
+            if(Float.parseFloat(s) != 0.0) {
+                query += " AND p.flux = "+s;
+            }
+        }
+        if (searchQuery.brand != null) {
+            query += " AND p.marque LIKE '%" + searchQuery.brand + "%'";
+        }
         
         if (searchQuery.minPrice != null) {
+            System.out.println("MINPRIX");
             query += " AND p.price >= " + searchQuery.minPrice;
         }
 
         if (searchQuery.maxPrice != null) {
+            System.out.println("MAXPRIX");
             query += " AND p.price <= " + searchQuery.maxPrice;
         }
 

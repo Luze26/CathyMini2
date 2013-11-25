@@ -1,8 +1,10 @@
 angular.module('products').
         controller('productsCtrl', ['$scope', '$http', 'cartService', function($scope, $http, cartService) {
 
+                $scope.selectedItem = [];
+
                 /** Search query */
-                $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true, napkin: true, minPrice: 0, maxPrice: 100};
+                $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true, napkin: true, minPrice: 0, maxPrice: 100, brand: ""};
 
                 /** Products list */
                 $scope.products = [];
@@ -20,13 +22,55 @@ angular.module('products').
                 ];
 
                     
-                $scope.selects = [
-                  {id: '1', name: '<i class="icon-star"></i>&nbsp;foo'},
-                  {id: '2', name: '<i class="icon-heart"></i>&nbsp;bar'},
-                  {id: '3', name: '<i class="icon-fire"></i>&nbsp;baz'}
-                ];
-                $scope.selectedItems = [];
-                
+                      /** Description of flux **/
+                    $scope.selects = [
+                      {
+                        "id": "1",
+                        "print": "Mini",
+                        "check": true
+                      },
+                      {
+                        "id": "2",
+                        "print": "Normal",
+                        "check": true
+                      },
+                      {
+                        "id": "3",
+                        "print": "Normal+",
+                        "check": true
+                      },
+                      {
+                        "id": "4",
+                        "print": "Super",
+                        "check": true
+                      },
+                      {
+                        "id": "5",
+                        "print": "Super+",
+                        "check": true
+                      },
+                      {
+                        "id": "6",
+                        "print": "Extra",
+                        "check": true
+                      }
+                    ];
+                    
+                    
+                    
+                $scope.brands = [
+                      {
+                        "id": "1",
+                        "print": "Vania",
+                        "check": true
+                      },
+                      {
+                        "id": "2",
+                        "print": "Nana",
+                        "check": true
+                      }
+                    ];
+  
                 /** If we continue to requests the server or not */
                 $scope.loadMore = true;
                   
@@ -52,9 +96,23 @@ angular.module('products').
                     $scope.search.offset = 0;
                     $scope.search.length = 20;
                     $scope.loadMore = true;
+                   $scope.majFlux();
                     $scope.loadProducts();
                 };
 
+                /**
+                 * 
+                 * Refresh list of selected flux
+                 */
+                $scope.majFlux = function() {
+                    selectedItem = [];
+                    for(select in $scope.selects) {
+                        if(select.check) {
+                            selectedItem.add(select.id);
+                        }
+                    }                    
+                };
+                
                 /**
                  * Load products
                  * @returns {undefined}
@@ -81,4 +139,4 @@ angular.module('products').
                 $scope.addProductToCart = function(product) {
                     cartService.addProduct(product);
                 };
-            }]);
+            }]);    

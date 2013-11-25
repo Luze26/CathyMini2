@@ -6,23 +6,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       >
     
-    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet"/>
-    <link href="//mgcrea.github.com/angular-strap/css/prettify.css" rel="stylesheet"/>
-    <link href="//mgcrea.github.com/angular-strap/vendor/bootstrap-select.css" rel="stylesheet"/>
     
-    <!-- required libraries -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-    <script src="//mgcrea.github.com/angular-strap/js/angular-strap.js"></script>
-    <script src="//mgcrea.github.com/angular-strap/vendor/bootstrap-select.js"></script>
-    <script src="C:\Users\Flo\Desktop\bootstrap-select.js"></script>
-    <!-- optional libraries -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.0/fastclick.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.js"></script>
+
     
     <h:body>
  
@@ -40,38 +25,54 @@
                                 <td>
                                         <div>
                                             <label>Rechecher par nom </label>
-                                            <input type="text" class="searchTable" ng-model="search.input" placeholder="Search a product" ng-change="refreshSearch()" />
+                                            <input type="text" ng-model="search.input" placeholder="Search a product" ng-change="refreshSearch()" />
                                         </div>
                                         <div>
-                                            <label>Type du produit </label>
-                                               <div class="btn-group" bs-buttons-checkbox="bs-buttons-checkbox">
+                                             <label>Type du produit </label>
                                       <!--     <div ng-repeat="type in productsType" class="btn-group" bs-buttons-checkbox="bs-buttons-checkbox">
                                                     <button type="button" value="true" class="btn" ng-model="type.selected" ng-change="refreshSearch()">type.affichage</button>
                                                 </div>    -->
-                                               <button type="button" value="true" class="btn" ng-model="search.napkin" ng-change="refreshSearch()">Serviette</button>
-                                                <button type="button" value="true" class="btn" ng-model="search.tampon" ng-change="refreshSearch()">Tampon</button>
-                                            </div>
+                                                <div>
+                                                 <label>
+                                                       <input type="checkbox" ng-model="search.napkin" ng-change="refreshSearch()">Serviette</input>
+                                                 </label>
+                                                 <label>
+                                                       <input type="checkbox" ng-model="search.tampon" ng-change="refreshSearch()">Tampon </input>
+                                                 </label>
+                                               </div>
                                        </div>
                                 </td>
-                                <td>
-                                        <div>
-                                            <label>Rechecher par flux </label>
-                                             <select class="span4" ng-model="selectedItems" title="Choose one of the following..." ng-options="value.id as value.name for value in selects" data-style="btn-primary" bs-select="bs-select"></select>
-                                        </div>
-                                        <div>
+                                <td>                                   
+                                    <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                      <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                            Recherche par Flux
+                                          </a>
+                                        </h4>
+                                      </div>
+                                      <div id="collapseOne" class="panel-collapse collapse in">
+                                         <div data-toggle="buttons" ng-repeat="select in selects">
+                                           <input type="checkbox" ng-model="select.check" ng-change="refreshSearch()">{{select.print}}</input>
+                                         </div>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <div>
                                             <label>Rechecher par marque </label>
-                                             <select class="span4" ng-model="selectedItems" title="Choose one of the following..." ng-options="value.id as value.name for value in selects" data-style="btn-primary" bs-select="bs-select"></select>
-                                        </div>
+                                            <input type="text" ng-model="search.brand" placeholder="Search a brand" ng-change="refreshSearch()" />
+                                    </div>
                                 </td>
                                 <td>
                                         <div>
                                             <label for="pPrice">Rechecher par prix </label>
                                             <div class="controls input-prepend">
-                                                <input type="text" ng-model="search.minPrice" min="0" placeholder="Minimum price" smart-float="smart-float" class="searchTable" ng-change="refreshSearch()" />
+                                                <input type="text" ng-model="search.minPrice" placeholder="Minimum price" ng-change="refreshSearch()" />
                                                 <span class="add-on">€</span>
                                             </div>
                                             <div class="controls input-prepend">
-                                                <input type="text" ng-model="search.maxPrice" min="0" placeholder="Maximum price" smart-float="smart-float" class="searchTable" ng-change="refreshSearch()" />
+                                                <input type="text" ng-model="search.maxPrice" placeholder="Maximum price" ng-change="refreshSearch()"/>
                                                 <span class="add-on">€</span>
                                             </div>
                                         </div>                                
@@ -85,8 +86,8 @@
                     <div class="row col-md-8" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
                         <div ng-repeat="prod in products" class="product col-xs-12 col-sm-6 col-md-6">
                             <div>
-                                <img class="imgGallery" ng-src="{{prod.pictureUrl}}{{hash}}"/>       
-                                {{prod.name}} <br /> {{prod.type}} <br /> {{prod.flux}}<br /> {{prod.price}}€</div>
+                               <!-- <img class="imgGallery" ng-src="{{prod.pictureUrl}}{{hash}}"/>     -->  
+                                {{prod.name}} <br /> {{prod.type}} <br /> {{prod.marque}} <br /> {{prod.flux}}<br /> {{prod.price}}€</div>
                             <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
                         </div>
                     </div>
