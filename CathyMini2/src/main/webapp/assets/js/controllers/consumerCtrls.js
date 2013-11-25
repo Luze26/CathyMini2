@@ -1,6 +1,15 @@
  angular.module('common').
   controller('consumerCtrl', ['$scope', 'consumerService', function($scope, consumerService) {
     
+    /**
+     * Consumer information
+     */
+    $scope.consumer = consumerService.consumer;
+    
+    /**
+     * Return if the user is conencted
+     * @returns {Boolean}
+     */
     $scope.isConnected = function() {
         return consumerService.isConnected;
     };
@@ -32,10 +41,10 @@
     $scope.subscribe = function() {
         $scope.displayError = false;
         consumerService.subscribe($scope.subscriber)
-            .then(function() {
-                modal.modal('hide');
+            .then(function() { //success
+                modal.modal('hide'); //hide the modal
             },
-            function(error) {
+            function(error) { //error
                 $scope.error.message = error;
             });
     };
@@ -51,16 +60,19 @@
     /** Consuler information **/
     $scope.consumer = {user: "", pwd: ""};
     
+    /** Popup element **/
+    var modal = angular.element("#connectModal");
+    
     /**
      * Connect a user
      */
     $scope.connect = function() {   
         $scope.displayError = false;
         consumerService.connect($scope.consumer)
-            .then(function() {
-                
+            .then(function() { //success
+                modal.modal('hide'); //hide the modal
             },
-            function(error) {
+            function(error) { //error
                 $scope.error.message = error;
             });
     };
