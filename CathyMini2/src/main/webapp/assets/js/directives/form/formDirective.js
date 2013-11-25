@@ -1,4 +1,12 @@
+/**
+ * Directives for form validation
+ */
+
+
 var INTEGER_REGEXP = /^\-?\d*$/;
+/**
+ * Check if the input field value is an integer.
+ */
 angular.module('common').directive('integer', function() {
   return {
     require: 'ngModel',
@@ -19,6 +27,10 @@ angular.module('common').directive('integer', function() {
 });
 
 var FLOAT_REGEXP = /^\-?\d+((\.|\,)\d{1,2})?$/;
+/**
+ * Check if the input field value is a float with 2 digits after the comma and 
+ * is greater than 0
+ */
 angular.module('common').directive('smartFloat', function() {
   return {
     require: 'ngModel',

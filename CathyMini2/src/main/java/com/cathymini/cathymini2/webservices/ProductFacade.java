@@ -9,31 +9,29 @@ import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Tampon;
 import com.cathymini.cathymini2.services.ProductBean;
 import com.cathymini.cathymini2.webservices.model.ProductSearch;
+import com.cathymini.cathymini2.webservices.model.form.AddProduct;
+import com.cathymini.cathymini2.webservices.model.form.EditProduct;
+import java.net.URL;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import com.cathymini.cathymini2.webservices.model.form.AddProduct;
-import com.cathymini.cathymini2.webservices.model.form.EditProduct;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import org.apache.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
-
-
-import javax.ws.rs.core.MediaType;
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -54,7 +52,7 @@ public class ProductFacade {
     @Produces(MediaType.APPLICATION_JSON)
     public Product create(AddProduct form, @Context final HttpServletResponse response) {
         if(form != null && form.validate()) {
-            Product product = productBean.addProduct(form.name, form.price, form.type);
+            Product product = productBean.addProduct(form.name, form.marque, form.flux, form.price, form.type, form.description);
             return product;
         }
         else {
@@ -170,8 +168,6 @@ public class ProductFacade {
     @GET
     @Path("/populate")
     @Produces(MediaType.APPLICATION_JSON)
-
-
     public String populate(@QueryParam("size") int size) {
        /* final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
 

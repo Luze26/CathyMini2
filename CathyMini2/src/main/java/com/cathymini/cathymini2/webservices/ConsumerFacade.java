@@ -2,16 +2,15 @@ package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.services.ConsumerBean;
-import com.cathymini.cathymini2.webservices.model.ConsumerSession;
+import com.cathymini.cathymini2.webservices.model.JSonErrorMsg;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
-import java.io.IOException;
-import com.cathymini.cathymini2.webservices.model.form.Suscribe;
+import com.cathymini.cathymini2.webservices.model.form.Subscribe;
+import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,8 +26,8 @@ import org.apache.log4j.Logger;
  */
 @Path("/consumer")
 public class ConsumerFacade{
-    private static final String USER_ATTR = "_USER_ATTR";
     private static final Logger logger = Logger.getLogger(com.cathymini.cathymini2.webservices.ProductFacade.class);
+    private static final ConsumerSessionSecuring sessionSecuring = ConsumerSessionSecuring.getInstance();
     
     @EJB
     private ConsumerBean consumerBean;
@@ -38,107 +37,115 @@ public class ConsumerFacade{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.ANONYM)
-    public String suscribe(Suscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
-        HttpSession session = request.getSession(true);
-
-        if (session.getAttribute(USER_ATTR) == null) {
-            try {
-                logger.debug("Create user = " + form.username +" :: "+ form.pwd +" :: " + form.mail);
-                Consumer user = consumerBean.suscribeUser(form.username, form.pwd, form.mail);
-                session.setAttribute(USER_ATTR, ConsumerSession.getSession(user));
-                return "You are suscribed!";
-            } catch (Exception ex) {
-                try {
-                    response.sendError(400, ex.getMessage());
-                    return ex.getMessage();
-                } catch (IOException ex1) {
-                }
-            }
+    /**
+     * Rest service to subscribe a new consumer
+     * @return A String containing the service termination message
+     */
+    public String suscribe(Subscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+        
+        try {
+            // Subscribe the new consumer
+            Consumer user = consumerBean.suscribeUser(form.username, form.pwd, form.mail);
+            
+            // Automatically connect the consumer
+            sessionSecuring.openSession(request, user);
+            
+            logger.debug("Create user = " + form.username +" :: "+ form.pwd +" :: " + form.mail);
+            return "You suscribe !";
+            
+        } catch (JSonErrorMsg ex) {
+            response.setStatus(400);
+            return ex.getMessage();
         }
-        return "You are already connected";
     }
     
     @POST
     @Path("/connect")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.ANONYM)
+    /**
+     * Rest service to connect a consumer
+     * @return A String containing the service termination message
+     */
     public String connect(Connect form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
-        HttpSession session = request.getSession(true);
-
-        if (session.getAttribute(USER_ATTR) == null) {
-            logger.debug("Connect user " + form.user);
-            try {
-                Consumer user = consumerBean.connectUser(form.user, form.pwd);
-                session.setAttribute(USER_ATTR, ConsumerSession.getSession(user));
-                return "You are connected!";
-            } catch (Exception ex) {
-                try {
-                    response.sendError(400, ex.getMessage());
-                    return ex.getMessage();
-                } catch (IOException ex1) {
-                }
-            }
+        
+        logger.debug("Connect user " + form.user);
+        try {
+            // Check if the (usr,pwd) is correct
+            Consumer user = consumerBean.connectUser(form.user, form.pwd);
+            
+            // Connect the consumer
+            sessionSecuring.openSession(request, user);
+            
+            return "You are connected!";
+        } catch (Exception ex) {
+            response.setStatus(400);
+            return ex.getMessage();
         }
-        return "You are already connected";
     }
     
     @POST
     @Path("/logout")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    /**
+     * Rest service to logout a consumer
+     * @return A String containing the service termination message
+     */
     public String logout(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-        HttpSession session = request.getSession(true);
-        
-        if (session.getAttribute(USER_ATTR) != null) {
-            consumerBean.logout();
-            session.setAttribute(USER_ATTR, null);
-            return "You logout.";
-        } else {
-            return "You are not connected.";
-        }
+        sessionSecuring.closeSession(request);
+        consumerBean.logout();
+        return "You logout.";
     }
     
     @POST
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    /**
+     * Rest service to delete a consumer
+     * @return A String containing the service termination message
+     */
     public String delete(Connect form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
-        HttpSession session = request.getSession(true);
         
         logger.debug("Delete user " + form);
         try {
+            // Delete a consumer account from the data base
             consumerBean.deleteUser(form.user, form.pwd);
             
-            if (session.getAttribute(USER_ATTR) != null) {
-                ConsumerSession cs = (ConsumerSession) session.getAttribute(USER_ATTR);
-                if (cs.username.equals(form.user)) {
-                    session.setAttribute(USER_ATTR, null);
-                }
+            // If the consumer which delete the account is the owner, he is disconnected
+            Consumer user = sessionSecuring.getConsumer(request);
+            if (user.getUsername().equals(form.user)) {
+                sessionSecuring.closeSession(request);
+                return "You delete your account.";
+            } else {
+                return "You delete the account of '"+form.user+"'.";
             }
-            
-            return "You delete your account.";
         } catch (Exception ex) {
-            try {
-                response.sendError(400, ex.getMessage());
-                return ex.getMessage();
-            } catch (IOException ex1) {
-            }
+            response.setStatus(400);
+            return ex.getMessage();
         }
-        
-        return "";
     }
     
     @GET
     @Path("/seeCurrent")
     @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * Rest service to check if the client is connected
+     * @return The username if the consumer is connected, else an empty String
+     */
     public String seeCurrent(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-        HttpSession session = request.getSession(true);
         
-        if (session.getAttribute(USER_ATTR) != null) {
-            ConsumerSession cs = (ConsumerSession) session.getAttribute(USER_ATTR);
-            return cs.username;
+        Consumer user = sessionSecuring.getConsumer(request);
+        
+        if (user != null) {
+            return user.getUsername();
         } else {
             return "";
         }
     }
+            
 }

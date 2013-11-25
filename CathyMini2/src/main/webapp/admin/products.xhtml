@@ -33,8 +33,11 @@
                               <tr>
                                 <th class="clickable unselectable" ng-click="orderBy('id')">ID <b class="unselectable" ng-class="search.orderBy=='id' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
                                 <th class="clickable unselectable" ng-click="orderBy('name')">Name <b class="unselectable" ng-class="search.orderBy=='name' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
+                                <th class="clickable unselectable" ng-click="orderBy('marque')">Marque <b class="unselectable" ng-class="search.orderBy=='marque' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
+                                <th class="clickable unselectable" ng-click="orderBy('flux')">Flux <b class="unselectable" ng-class="search.orderBy=='flux' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
                                 <th class="clickable unselectable" ng-click="orderBy('type')">Type <b class="unselectable" ng-class="search.orderBy=='type' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
                                 <th class="clickable unselectable" ng-click="orderBy('price')">Price <b class="unselectable" ng-class="search.orderBy=='price' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
+                                <th class="clickable unselectable" ng-click="orderBy('description')">Description <b class="unselectable" ng-class="search.orderBy=='description' ? (search.orderByASC ? 'caret' : 'caret-up') : ''"></b></th>
                                 <th>Actions</th>
                               </tr>
                             </thead>
@@ -42,8 +45,11 @@
                                 <tr ng-repeat="prod in products">
                                     <td>{{prod.id}}</td>
                                     <td>{{prod.name}}</td>
+                                    <td>{{prod.marque}}</td>
+                                    <td>{{prod.flux}}</td>
                                     <td>{{prod.type}}</td>
                                     <td>{{prod.price}}</td>
+                                    <td>{{prod.description}}</td>
                                     <td class="td-actions">
                                         <a bs-tooltip="'Edit product'" ng-click="initEditModal(prod)" bs-modal="'addEditModal.html'" class="btn btn-small"><i class="btn-icon-only icon-pencil"></i></a>
                                         <a bs-tooltip="'Delete product'" data-unique="1" data-placement="bottom" data-container="body"  bs-popover="'deletePopover.html'" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"></i></a>
@@ -89,6 +95,11 @@
                             <button type="button" class="btn" value="Tampon" >Tampon</button>
                         </div>
                     </div>
+                    
+                    <div class="selectMarque">
+                        <label name="pMarque">Marque</label>
+                        <input name="pMarque" type="text" ng-model="modal.product.marque"/>
+                    </div>
 
                     <div class="selectFlux">
                         <label>Flux*</label>
@@ -104,9 +115,10 @@
                     </div>
 
 
-                    <!--<div class="description">
-                        <textarea ng-model="modal.product.description"></textarea>
-                    </div>-->
+                    <div class="description">
+                        <label for="pDescription">Description</label>
+                        <textarea name="pDescription" ng-model="modal.product.description"></textarea>
+                    </div>
                     
                 </fieldset>
                 </form>

@@ -4,7 +4,9 @@ angular.module('products').
                 $scope.selectedItem = [];
 
                 /** Search query */
-                $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true, napkin: true, minPrice: 0, maxPrice: 100, brand: ""};
+                $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true, 
+                    napkin: true, minPrice: 0, maxPrice: 100, brand: ""};
+
 
                 /** Products list */
                 $scope.products = [];
@@ -76,10 +78,10 @@ angular.module('products').
                   
                 /**
                  * Order by the product's list
-                 * @param {type} property
+                 * @param {type} property, property on which the sort is done
                  */
                 $scope.orderBy = function(property) {
-                    if (property === $scope.search.orderBy) {
+                    if (property === $scope.search.orderBy) { //If the property is unchanged, we change the direction of the sort
                         $scope.search.orderByASC = !$scope.search.orderByASC;
                     }
                     else {
@@ -115,27 +117,29 @@ angular.module('products').
                 
                 /**
                  * Load products
-                 * @returns {undefined}
                  */
                 $scope.loadProducts = function() {
                     if ($scope.loadMore) {
                         $http.post("http://localhost:8080//webresources/product/all", $scope.search)
                                 .success(function(data) {
-                                    if (data.length < $scope.search.length) {
+                                    if (data.length < $scope.search.length) { //If there is no more product to load, end of the list
                                         $scope.loadMore = false;
                                     }
 
-                                    if ($scope.search.offset === 0) {
+                                    if ($scope.search.offset === 0) { //If it's a new search, we reset the list
                                         $scope.products = [];
                                     }
 
-                                    $scope.search.offset += $scope.search.length;
-
-                                    $scope.products = $scope.products.concat(data);
+                                    $scope.search.offset += $scope.search.length; //Increment the offset
+                                    $scope.products = $scope.products.concat(data); //Add last loaded products
                                 });
                     }
                 };
                 
+                /**
+                 * Add a product to the cart
+                 * @param {Product} product
+                 */
                 $scope.addProductToCart = function(product) {
                     cartService.addProduct(product);
                 };
