@@ -42,7 +42,8 @@ angular.module('common').factory('consumerService', ['$http', '$q', function($ht
         var deferred = $q.defer();
         $http.post("http://localhost:8080//webresources/consumer/suscribe", subscriber)
             .success(function() { 
-                service.consumer.login = subscriber.username;
+                service.consumer.username = subscriber.username;
+                service.isConnected = true;
                 deferred.resolve();})
             .error(function(data, status, headers, config) {
                 if (status === 400) {
@@ -59,12 +60,12 @@ angular.module('common').factory('consumerService', ['$http', '$q', function($ht
      */
     service.getCurrentUser = function() {
         $http.get("http://localhost:8080//webresources/consumer/seeCurrent")
-            .success(function(user) { 
-                if (user === "") {
+            .success(function(username) { 
+                if (username === "") {
                     service.isConnected = false;
                 } else {
                     service.isConnected = true;
-                    service.consumer = user;
+                    service.consumer.username = username;
                 }
             })
             .error(function(data, status, headers, config) { 

@@ -1,6 +1,8 @@
  angular.module('common').
   controller('consumerCtrl', ['$scope', 'consumerService', function($scope, consumerService) {
     
+    $scope.consumer = consumerService.consumer;
+    
     $scope.isConnected = function() {
         return consumerService.isConnected;
     };
@@ -51,6 +53,9 @@
     /** Consuler information **/
     $scope.consumer = {user: "", pwd: ""};
     
+    /** Popup element **/
+    var modal = angular.element("#connectModal");
+    
     /**
      * Connect a user
      */
@@ -58,7 +63,7 @@
         $scope.displayError = false;
         consumerService.connect($scope.consumer)
             .then(function() {
-                
+                modal.modal('hide');
             },
             function(error) {
                 $scope.error.message = error;
