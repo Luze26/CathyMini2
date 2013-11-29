@@ -166,7 +166,6 @@ angular.module('products').
         $scope.modal = $scope.editModal;
       };
 
-<<<<<<< HEAD
       /* Essai d'autocomplétion
        // mock des cartes dans lesquelles rechercher
        $scope.cardslist = [
@@ -192,10 +191,6 @@ angular.module('products').
 
       /** Modal information for add product **/
       $scope.addModal = {title: "Add product", okAction: $scope.addProduct, product: {type: "Serviette", flux: 1}, add: true};
-=======
-      /** Modal information for add product */
-      $scope.addModal = {title: "Add product", okAction: $scope.addProduct, product: {type: "Serviette", flux: "1"}};
->>>>>>> 0e06043457f7fbf0acc0c4de74dfc151c7f53c7f
 
       /** Modal information for edit product */
       $scope.editModal = {title: "Edit product", okAction: $scope.editProduct, product: {}, add: false};
