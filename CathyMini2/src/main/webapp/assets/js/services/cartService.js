@@ -1,4 +1,4 @@
-angular.module('common').factory('cartService', ['$http', '$rootScope', 'consumerService', function($http, $rootScope, consumerService) {
+angular.module('common').factory('cartService', ['$http', '$rootScope', 'consumerService', function($http, $rootScope, $consumerService) {
     
     var service = {};
     
@@ -17,7 +17,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
 
     
     
-    $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
+    $rootScope.$on('consumerConnect',function (){
         console.log("Dnas bonne fonction");
         $http.post("http://localhost:8080//webresources/cart/consumerIsConnected")
         .success(function(data){
@@ -52,6 +52,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     service.changeQuantity = function(product) {
         $http.post("http://localhost:8080//webresources/cart/changeQuantity", {"id": product.id, "quantity": quantity})
                 .success(function(data) {
+                console.log("succes change quantity");
             });
     };
     
@@ -62,6 +63,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     service.deleteProduct = function(product) {
         $http.post("http://localhost:8080//webresources/cart/delete", product.id)
             .success(function(data) {
+        console.log("succes delete product from cart")
             });
     };
     

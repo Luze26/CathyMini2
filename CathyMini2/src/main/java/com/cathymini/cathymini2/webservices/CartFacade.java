@@ -1,6 +1,7 @@
 package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Cart;
+import com.cathymini.cathymini2.model.CartLine;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.services.CartSession;
@@ -26,7 +27,6 @@ import org.apache.log4j.Logger;
 @Path("/cart")
 public class CartFacade {
 
-    private static final String USER_ATTR = "_USER_ATTR";
     private static final String CART_ATTR = "_CART_ATTR";
     private static final Logger logger = Logger.getLogger(CartFacade.class);
     private static final ConsumerSessionSecuring sessionSecuring = ConsumerSessionSecuring.getInstance();
@@ -41,71 +41,135 @@ public class CartFacade {
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String add(Long id, @Context HttpServletRequest request, @Context HttpServletResponse response){
-        System.out.println("dans add :!! id :"+id);
+    public Boolean add(Long id, @Context HttpServletRequest request, @Context HttpServletResponse response){
         Consumer cons = null;
         try{
             cons = sessionSecuring.getConsumer(request);
-            System.out.println("nom cons : "+cons.getUsername());
         }catch(Exception ex){
             cons = null;
         }
         try{
             System.out.println(cons != null);
             if (cons != null) {
-                System.out.println("J'ai un consumer");
                 Cart cart  = cartBean.getUserCart(cons);
                 if(cart == null){
-                    System.out.println("Creation d'un caddie");
                     cart = cartBean.newCart(cons);
-                    System.out.println("le caddie a etecreer");
                 }
-                System.out.println("Ajout du produit");
                 Product prod = productBean.getProduct(id);
                 cartBean.addProduct(prod, cart);
-                return "The product has been added";
+                return true;
             }
             else{
-                System.out.println("Pas de consumer");
                 Product prod = productBean.getProduct(id);
-                Cart newCartTemp;
+                Cart newCartTemp = null;
+                Boolean noCart = false;
                try{
-                    newCartTemp = cartBean.findCartByID(getCartID(request));
+                    newCartTemp = getCartSession(request);
+                    if(newCartTemp == null)
+                        noCart = true;
                }
                catch(Exception ex){
+                   noCart = true;
+                   return false;
+               }
+               
+               if(noCart){
                     newCartTemp = cartBean.newCart(null);
-                    setCartID(request, newCartTemp.getCartID());
+                    setCartSession(request, newCartTemp);
                }
                 cartBean.addProduct(prod, newCartTemp);
-                return "The product have been added to temp cart";
+                return true;
             }
         } catch (Exception ex) {
-            System.out.println("DANS EX "+ex.getMessage());
             response.setStatus(400);
-            return ex.getMessage();
+            return false;
             
         }
     }
     
-    private Long getCartID(HttpServletRequest request) {
+    private Cart getCartSession(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
-        return (Long) session.getAttribute(CART_ATTR);
+        return (Cart) session.getAttribute(CART_ATTR);
     }
     
-    private void setCartID(HttpServletRequest request, Long cartID) {
+    private void setCartSession(HttpServletRequest request, Cart cart) {
         HttpSession session = request.getSession(true);
-        session.setAttribute(CART_ATTR, cartID);
+        session.setAttribute(CART_ATTR, cart);
     }
     
     @POST
     @Path("/consumerIsConnected")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String consumerIsConnected(){
-        
+    public Cart consumerIsConnected(@Context HttpServletRequest request, @Context HttpServletResponse response){
         System.out.println("Lien marche");
-        return "";
-    }
+        Cart oldCart = getCartSession(request);
+        Consumer cons  = sessionSecuring.getConsumer(request);
+        if(oldCart != null){
+            logger.debug("cartSession have been finded");
+            cartBean.mergeCart(cons, oldCart);
+        }
+        try{
+                Cart cartToSend = cartBean.getUserCart(cons);
+                return cartToSend;
+        }
+        catch(Exception ex){
+            return null;
+        }
 
+    }
+    
+    /*
+    @POST
+    @Path("/changeQuantity")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String changeQuantity(Long id, int quantity, @Context HttpServletRequest request, @Context HttpServletResponse response){
+        Consumer cons  = sessionSecuring.getConsumer(request);
+        if(cons != null){
+            try{
+                Cart cart = cartBean.getUserCart(cons);
+                CartLine cl = cartBean.getCartLineByID(id, cart);
+                cartBean.changeQuantityCartLine(cl, quantity);
+            }
+            catch(Exception ex){
+                return "the quantity haven't been changed";
+            }
+        }
+        else{
+            Cart cart = getCartSession(request);
+            if(cart != null){
+                CartLine cl = cartBean.getCartLineByID(id, cart);
+                cartBean.changeQuantityCartLine(cl, quantity);
+            }
+            else{
+                return "the cart doesn't exist, the quantity haven't been changed";
+            }
+        }
+        return "the quantity have been changed";
+    }*/
+    
+    @POST
+    @Path("/delete")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Cart delete(Long id, @Context HttpServletRequest request, @Context HttpServletResponse response){
+        Product prod = productBean.getProduct(id);
+        Consumer cons  = sessionSecuring.getConsumer(request);
+        Cart cart = null;
+        if(cons != null){
+            try{
+                cart = cartBean.getUserCart(cons);
+            }
+            catch(Exception ex){
+                return null;
+            }
+        }
+        else{
+            cart = getCartSession(request);
+        }
+        cartBean.removeProduct(prod, cart);
+        return cart;
+    }
     
 }

@@ -49,11 +49,14 @@ public class CartSession {
     }
     
     public void addProduct(CartLine cl, Cart cart){
-        cart.getCartLineCollection().add(cl);
-        manager.merge(cart);
+         if(cart.getCartLineCollection() == null){
+             cart.setCartLineCollection(new ArrayList<CartLine>());
+         }
+         cart.getCartLineCollection().add(cl);
+         manager.merge(cart);
     }
     
-    public void removeProduct(Product prod){
+    public void removeProduct(Product prod, Cart cart){
         
         Iterator<CartLine> it = cart.getCartLineCollection().iterator();
         CartLine myCartLine;
@@ -64,27 +67,41 @@ public class CartSession {
                 cart.getCartLineCollection().remove(myCartLine);
             }
         }
+        manager.merge(cart);
         
     }
     
-    public boolean subCartLine(CartLine cl){
+    public boolean subCartLine(CartLine cl, Cart cart){
         cart.getCartLineCollection().remove(cl);
         Query query = manager.createNamedQuery("DeleteCartLineById", CartLine.class); 
         query.setParameter("id", cl.getCartLineID());
         return query.executeUpdate() == 1;
     }
     
-    public void subProduct(String nom, Float flux){
-        subCartLine(getCartLine(nom, flux));
+    public void subProduct(String nom, Float flux, Cart cart){
+        subCartLine(getCartLine(nom, flux, cart), cart);
     }
     
-    public CartLine getCartLine(String nom, Float flux){
+    public CartLine getCartLine(String nom, Float flux, Cart cart){
         CartLine cLine = null;
         Iterator<CartLine> it = cart.getCartLineCollection().iterator();
         CartLine myCartLine;
         while(it.hasNext()){
             myCartLine = it.next();
             if(myCartLine.getProduct().getName().equals(nom) && myCartLine.getProduct().getFlux() == flux){
+                cLine = myCartLine;
+            }
+        }
+        return cLine;
+    }
+    
+    public CartLine getCartLineByID(Long id, Cart cart){
+        CartLine cLine = null;
+        Iterator<CartLine> it = cart.getCartLineCollection().iterator();
+        CartLine myCartLine;
+        while(it.hasNext()){
+            myCartLine = it.next();
+            if(myCartLine.getCartLineID() == id){
                 cLine = myCartLine;
             }
         }
@@ -129,6 +146,16 @@ public class CartSession {
     
     public void addCartToConsumer(Consumer cons, Cart cart){
         cart.setConsumer(cons);
+    }
+    
+    public void addItemToCartLine(CartLine cl){
+        cl.setQuantity(cl.getQuantity()+1);
+        manager.merge(cl);
+    }
+    
+    public void changeQuantityCartLine(CartLine cl, int quantity){
+        cl.setQuantity(quantity);
+        manager.merge(cl);
     }
     
     public String mergeCart(Consumer cons, Cart cartTemp){
