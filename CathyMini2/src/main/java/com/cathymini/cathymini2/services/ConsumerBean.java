@@ -160,12 +160,12 @@ public class ConsumerBean {
     }
     
     private Consumer findUserById(Long userID) {
-            Query q = manager.createNamedQuery("ConsumerById", Consumer.class);
-            q.setParameter("userID", userID);
+        Query q = manager.createNamedQuery("ConsumerById", Consumer.class);
+        q.setParameter("userID", userID);
 
-            if (q.getResultList().isEmpty())
-                return null; 
+        if (q.getResultList().isEmpty())
+            return null; 
 
-            return (Consumer) q.getResultList().get(0);
+        return (Consumer) q.getResultList().get(0);
     }
 }

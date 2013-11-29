@@ -55,6 +55,15 @@ public abstract class Product implements Serializable {
     
     @Column(name="pictureUrl")
     protected String pictureUrl;
+    
+    @Column(name="price")
+    protected Float price;
+    
+    @Column(name="flux")
+    protected Float flux;
+    
+    @Column(name="description",columnDefinition="LONG VARCHAR")
+    protected String description;
 
     public String getPictureUrl() {
         return pictureUrl;
@@ -87,15 +96,6 @@ public abstract class Product implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    @Column(name="price")
-    protected Float price;
-    
-    @Column(name="flux")
-    protected Float flux;
-    
-    @Column(name="description",columnDefinition="LONG VARCHAR")
-    protected String description;
 
     public Long getId() {
         return id;
