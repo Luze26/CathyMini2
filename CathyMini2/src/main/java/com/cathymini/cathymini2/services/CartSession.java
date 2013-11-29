@@ -23,7 +23,6 @@ import org.apache.log4j.Logger;
  */
 @Stateless
 public class CartSession {
-    private Cart cart;
 
     @PersistenceContext(unitName = "com.cathymini_CathyMini2_PU")
     private EntityManager manager;
@@ -41,8 +40,6 @@ public class CartSession {
     
     public void addProduct(Product prod, int qu, Cart cart, boolean persist){
         CartLine cl = new CartLine(prod, qu);
-        if(persist)
-            manager.persist(cl);
         addProduct(cl, cart, persist);
     }
     
@@ -56,8 +53,10 @@ public class CartSession {
              cart.setCartLineCollection(new ArrayList<CartLine>());
          }
          cart.getCartLineCollection().add(cl);
-         if(persist)
+         if(persist){
+            manager.persist(cl);
             manager.merge(cart);
+         }
     }
     
     public void removeProduct(Product prod, Cart cart){
@@ -123,7 +122,7 @@ public class CartSession {
      * Empty the cart.
      */
     @Remove
-    public String clear() {
+    public String clear(Cart cart) {
         cart.getCartLineCollection().clear();
         return "Empty cart";
     }
@@ -170,22 +169,27 @@ public class CartSession {
         if(cartCons != null){
             if(cartCons.getCartLineCollection().isEmpty()){
                 addCartToConsumer(cons, cartTemp);
-                logger.debug("cartSession have been finded");
+                
             }
             else {
-                for(CartLine cl : cartCons.getCartLineCollection()){
-                    for(CartLine clTemp : cartTemp.getCartLineCollection())
+                for(CartLine clTemp : cartTemp.getCartLineCollection()){
+                    boolean find = false;
+                    for(CartLine cl : cartCons.getCartLineCollection())
                     {
-                        if(cl.getProduct() == clTemp.getProduct()){
+                        if(cl.getProduct().getId() == clTemp.getProduct().getId()){
                             //change the quantity is it's the same product
+                            logger.debug("change quantity to a product");
                             cl.setQuantity(cl.getQuantity()+clTemp.getQuantity());
-                        }
-                        else{
-                            //add the product
-                            addProduct(clTemp, cartCons, true);
+                            find = true;
                         }
                     }
+                    if(!find){
+                        logger.debug("product not found so add to cart cartLIne");
+                            //add the product
+                            addProduct(clTemp, cartCons, true);
+                    }
                 }
+                logger.debug("merge finish");
             }
         }
         else{
