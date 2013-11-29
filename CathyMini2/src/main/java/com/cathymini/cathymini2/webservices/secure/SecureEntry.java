@@ -8,7 +8,7 @@ import com.cathymini.cathymini2.model.Consumer;
 import java.util.Calendar;
 
 /**
- *
+ * The class {@link SecureEntry} is a model representing a consumer connexion
  * @author Kraiss
  */
 public class SecureEntry {

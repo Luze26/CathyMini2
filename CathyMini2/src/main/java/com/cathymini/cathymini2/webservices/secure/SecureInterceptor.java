@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @Secure
 @Interceptor
+/**
+ * The class {@link SecureInterceptor} implements a JEE Interceptor to manage security access to CathyMini ressources
+ */
 public class SecureInterceptor {
     private static final ConsumerSessionSecuring sessionSecuring = ConsumerSessionSecuring.getInstance();
 
@@ -23,6 +26,10 @@ public class SecureInterceptor {
     }
 
     @AroundInvoke
+    /**
+     * Worker called when a ressource is accessed. 
+     * The worker check if the premission level is high enough to access the ressource
+     */
     public Object secure(InvocationContext invocationContext)
             throws Exception {
         Role role = getRole(invocationContext);
@@ -50,6 +57,11 @@ public class SecureInterceptor {
         return null;
     }
 
+    /**
+     * Return the {@link Role} associate to the annotation of the {@link InvocationContext}
+     * @param invocationContext Context of the invocation
+     * @return The {@link Role} associate to the annotation of the {@link InvocationContext}
+     */
     private static Role getRole(final InvocationContext invocationContext) {
         final Secure annotation = invocationContext.getMethod().getAnnotation(Secure.class);
         if (annotation != null) {
@@ -58,6 +70,11 @@ public class SecureInterceptor {
         return null;
     }
 
+    /**
+     * Return the HTTP request of the {@link InvocationContext}
+     * @param invocationContext Context of the invocation
+     * @return The HTTP request of the {@link InvocationContext}
+     */
     private static HttpServletRequest getHttpRequest(final InvocationContext invocationContext) {
         final List<Class<?>> paramsTypes = Arrays.asList(invocationContext.getMethod().getParameterTypes());
 
@@ -71,6 +88,11 @@ public class SecureInterceptor {
         return null;
     }
 
+    /**
+     * Return the HTTP response of the {@link InvocationContext}
+     * @param invocationContext Context of the invocation
+     * @return The HTTP response of the {@link InvocationContext}
+     */
     private static HttpServletResponse getHttpResponse(final InvocationContext invocationContext) {
         final List<Class<?>> paramsTypes = Arrays.asList(invocationContext.getMethod().getParameterTypes());
 

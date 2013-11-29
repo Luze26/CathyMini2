@@ -1,7 +1,7 @@
 /**
  * Service to manage connection and consumer information
  */
-angular.module('common').factory('consumerService', ['$rootScope', '$http', '$q', function($rootScope, $http, $q) {
+angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q', function($http, $rootScope, $q) {
     
     var service = {};
     
@@ -50,6 +50,7 @@ angular.module('common').factory('consumerService', ['$rootScope', '$http', '$q'
                 .success(function(user) { //success
                     connectUser(user);
                     deferred.resolve();
+                    $rootScope.$broadcast('consumerConnect');
                 })
                 .error(function(data, status, headers, config) {  // error
                     if (status === 400) {

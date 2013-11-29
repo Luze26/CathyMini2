@@ -22,8 +22,11 @@ import javax.persistence.Table;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="productType", discriminatorType=DiscriminatorType.STRING)
 @NamedQueries({
-    @NamedQuery(name="deleteById", query="DELETE FROM Product p WHERE p.id=:id")
+    @NamedQuery(name="deleteById", query="DELETE FROM Product p WHERE p.id=:id"),
+    @NamedQuery(name="ProductById",
+        query="select object(p) from Product p where p.id = :id")
 })
+
 public abstract class Product implements Serializable {
 
     public Product() {

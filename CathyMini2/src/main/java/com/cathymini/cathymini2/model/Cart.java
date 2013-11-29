@@ -2,6 +2,7 @@ package com.cathymini.cathymini2.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Iterator;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +25,10 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name="CartByName",
         query="select object(c) from Cart c where c.consumer = :consumer"),
+    @NamedQuery(name="DeleteCartById",
+        query="DELETE FROM Cart c WHERE c.cartID = :id"),
+    @NamedQuery(name="CartByID",
+        query="select object(c) from Cart c where c.cartID=:id")
 })
 public class Cart implements Serializable {
     @Id
@@ -37,15 +42,15 @@ public class Cart implements Serializable {
     private Consumer consumer;
     
     @OneToMany
-    /** Cart {@link Product} collection */
-    private Collection<Product> productCollection;
+    /** Cart {@link CartLine} collection */
+    private Collection<CartLine> cartLineCollection;
 
-    public Collection<Product> getProductCollection() {
-        return productCollection;
+    public Collection<CartLine> getCartLineCollection() {
+        return cartLineCollection;
     }
 
-    public void setProductCollection(Collection<Product> productCollection) {
-        this.productCollection = productCollection;
+    public void setCartLineCollection(Collection<CartLine> cartLineCollection) {
+        this.cartLineCollection = cartLineCollection;
     }
 
     public Long getCartID() {
