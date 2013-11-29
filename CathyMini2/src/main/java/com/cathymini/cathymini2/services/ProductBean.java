@@ -4,6 +4,7 @@
  */
 package com.cathymini.cathymini2.services;
 
+import com.cathymini.cathymini2.model.Cart;
 import com.cathymini.cathymini2.model.Napkin;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Tampon;
@@ -35,7 +36,7 @@ public class ProductBean {
      * Properties of a product (used to order by)
      */
     public enum ProductKeys {
-        ID, NAME, TYPE, PRICE
+        ID, NAME, MARQUE, FLUX, TYPE, PRICE
     }
 
     /**
@@ -77,10 +78,13 @@ public class ProductBean {
      *
      * @param id
      * @param name
+     * @param marque
+     * @param flux
      * @param price
+     * @param description
      * @return the product edited or null if the product doesn't exists
      */
-    public Product editProduct(Long id, String name, Float price) {
+    public Product editProduct(Long id, String name, String marque, Float flux, Float price, String description) {
         Product prod;
         try {
             prod = manager.find(Product.class, id);
@@ -91,7 +95,10 @@ public class ProductBean {
 
         if (prod != null) {
             prod.setName(name);
+            prod.setMarque(marque);
+            prod.setFlux(flux);
             prod.setPrice(price);
+            prod.setDescription(description);
             return prod;
         }
         return null;
@@ -101,6 +108,21 @@ public class ProductBean {
         searchQuery.validate();
         Query query = constructQuery(searchQuery);
         return (Collection<Product>) query.getResultList();
+    }
+    
+    public Product getProduct(Long id){
+        System.out.println("Dans getProduct");
+        System.out.println("id produit to add : "+id);
+        Query query = manager.createNamedQuery("ProductById", Product.class);
+        
+        query.setParameter("id", id);
+        
+        if (query.getResultList().isEmpty()){
+            System.out.println("dans productbean c'est vide");
+            return null; 
+        }
+            
+        return (Product) query.getResultList().get(0);
     }
     
     public boolean delete(int id) {
@@ -114,24 +136,40 @@ public class ProductBean {
         if (searchQuery.input != null) {
             query += " LIKE '%" + searchQuery.input + "%'";
         }
-        if(searchQuery.tampon && searchQuery.napkin){
-            
-        } else {
-            if (searchQuery.tampon) {
-                query += " AND p.type = \"Tampon\"";
-            } else if (searchQuery.napkin) {
-                query += " AND p.type = \"Serviette\"";
-            } else {
-                query = "SELECT p FROM Product p WHERE p.name = \"Rien\"";
-                return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
+        if (searchQuery.tampon) {
+            System.out.println("TAMPON");
+            query += " AND ( p.type = \"tampon\"";
+            if(searchQuery.napkin) {
+                System.out.println("SERVIETTE2");
+                query += " OR p.type = \"serviette\" )";
             }
-        
+            else {
+                query += " )";
+            }
+        } else if (searchQuery.napkin) {
+            System.out.println("SERVIETTE");
+            query += " AND p.type = \"serviette\"";
+        } else {
+            System.out.println("RIEN");
+            query = "SELECT p FROM Product p WHERE p.name = \"Rien\"";
+            return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
         }
+/*        for(String s : searchQuery.flux){
+            if(Float.parseFloat(s) != 0.0) {
+                query += " AND p.flux = "+s;
+            }
+        }*/
+        if (searchQuery.brand != null) {
+            query += " AND p.marque LIKE '%" + searchQuery.brand + "%'";
+        }
+        
         if (searchQuery.minPrice != null) {
+            System.out.println("MINPRIX");
             query += " AND p.price >= " + searchQuery.minPrice;
         }
 
         if (searchQuery.maxPrice != null) {
+            System.out.println("MAXPRIX");
             query += " AND p.price <= " + searchQuery.maxPrice;
         }
 

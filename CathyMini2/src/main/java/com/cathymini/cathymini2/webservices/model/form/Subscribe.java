@@ -7,5 +7,6 @@ package com.cathymini.cathymini2.webservices.model.form;
 public class Subscribe {
     public String username;
     public String pwd;
+    public String confirmPwd;
     public String mail;
 }

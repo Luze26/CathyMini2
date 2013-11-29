@@ -5,6 +5,10 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       >
+    
+    
+
+    
     <h:body>
  
         <ui:composition template="template/commonLayout.xhtml">
@@ -13,39 +17,77 @@
             <ui:param name="title" value="CathyMini - Catalogue" />
             <ui:define name="content">
                 <div class="row">
-                    <div class="col-md-4">
-                        Search panel
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Search panel</div>
                         <form action="#" id="search-form">
-                            <div>
-                                <label>Rechecher par nom </label>
-                                <input type="text" class="searchTable" ng-model="search.input" placeholder="Search a product" ng-change="refreshSearch()" />
-                            </div>
-                            <div>
-                                <label>Type du produit </label>
-                                <div class="btn-group" bs-buttons-checkbox="bs-buttons-checkbox">
-                                    <button type="button" value="true" class="btn" ng-model="search.napkin" ng-change="refreshSearch()">Serviette</button>
-                                    <button type="button" value="true" class="btn" ng-model="search.tampon" ng-change="refreshSearch()">Tampon</button>
-                                </div>
-                           </div>
-                            <div>
-                                <label for="pPrice">Rechecher par prix </label>
-                                <div class="controls input-prepend">
-                                    <input type="text" ng-model="search.minPrice" min="0" placeholder="Minimum price" smart-float="smart-float" class="searchTable" ng-change="refreshSearch()" />
-                                    <span class="add-on">€</span>
-                                </div>
-                                <div class="controls input-prepend">
-                                    <input type="text" ng-model="search.maxPrice" min="0" placeholder="Maximum price" smart-float="smart-float" class="searchTable" ng-change="refreshSearch()" />
-                                    <span class="add-on">€</span>
-                                </div>
-                            </div>
+                        <table class="table">                       
+                            <tr>
+                                <td>
+                                        <div>
+                                            <label>Rechecher par nom </label>
+                                            <input type="text" ng-model="search.input" placeholder="Search a product" ng-change="refreshSearch()" />
+                                        </div>
+                                        <div>
+                                             <label>Type du produit </label>
+                                      <!--     <div ng-repeat="type in productsType" class="btn-group" bs-buttons-checkbox="bs-buttons-checkbox">
+                                                    <button type="button" value="true" class="btn" ng-model="type.selected" ng-change="refreshSearch()">type.affichage</button>
+                                                </div>    -->
+                                                <div>
+                                                 <label>
+                                                       <input type="checkbox" ng-model="search.napkin" ng-change="refreshSearch()">Serviette</input>
+                                                 </label>
+                                                 <label>
+                                                       <input type="checkbox" ng-model="search.tampon" ng-change="refreshSearch()">Tampon </input>
+                                                 </label>
+                                               </div>
+                                       </div>
+                                </td>
+                                <td>                                   
+                                    <div class="panel-group" id="accordion">
+                                    <div class="panel panel-default">
+                                      <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                            Recherche par Flux
+                                          </a>
+                                        </h4>
+                                      </div>
+                                      <div id="collapseOne" class="panel-collapse collapse in">
+                                         <div data-toggle="buttons" ng-repeat="select in selects">
+                                           <input type="checkbox" ng-model="select.check" ng-change="refreshSearch()">{{select.print}}</input>
+                                         </div>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <div>
+                                        <label>Rechecher par marque </label>
+                                        <input type="text" ng-model="search.brand" placeholder="Search a brand" ng-change="refreshSearch()" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <label for="pPrice">Rechecher par prix </label>
+                                        <div class="controls input-prepend">
+                                            <input type="text" ng-model="search.minPrice" placeholder="Minimum price" ng-change="refreshSearch()" />
+                                            <span class="add-on">€</span>
+                                        </div>
+                                        <div class="controls input-prepend">
+                                            <input type="text" ng-model="search.maxPrice" placeholder="Maximum price" ng-change="refreshSearch()"/>
+                                            <span class="add-on">€</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                         </form>
+                        <!-- <search-directive productslist="products"></search-directive> -->
                         <cart-directive></cart-directive>
                     </div>
                     <div class="row col-md-8" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
                         <div ng-repeat="prod in products" class="product col-xs-12 col-sm-6 col-md-6">
                             <div>
-                                <img class="imgGallery" ng-src="{{prod.pictureUrl}}{{hash}}"/>       
-                                {{prod.name}} <br /> {{prod.type}} <br /> {{prod.flux}}<br /> {{prod.price}}€</div>
+                               <!-- <img class="imgGallery" ng-src="{{prod.pictureUrl}}{{hash}}"/>     -->  
+                                {{prod.name}} <br /> {{prod.type}} <br /> {{prod.marque}} <br /> {{prod.flux}}<br /> {{prod.price}}€</div>
                             <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
                         </div>
                     </div>
