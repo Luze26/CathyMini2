@@ -1,137 +1,79 @@
  angular.module('common').
-  controller('consumerCtrl', ['$scope', '$http', function($scope, $http) {
-  
-    /** Initialize consumer form's attributes */
-    $scope.suscriber = {};
-    $scope.consumer = {};
-
-    /** Connected user info */
-    $scope.isConnected = {display: false, text: ""};
-    $scope.user = "";
+  controller('consumerCtrl', ['$scope', 'consumerService', function($scope, consumerService) {
+    
+    /**
+     * Consumer information
+     */
+    $scope.consumer = consumerService.consumer;
+    
+    /**
+     * Return if the user is conencted
+     * @returns {Boolean}
+     */
+    $scope.isConnected = function() {
+        return consumerService.isConnected;
+    };
     
     /**
      * Logout a connected user
      */
     $scope.disconnect = function() {
-        $scope.displayConnectionError = false;
-        
-        $http.post("http://localhost:8080//webresources/consumer/logout", null)
-            .success(function() { 
-                $scope.isConnected.display = false;  
-                $scope.isConnected.text = "You logout";
-                $scope.getCurrentUser();
-            })
-            .error(function(data, status, headers, config) { 
-                if (status === 400) {
-                    var sliceAfter = data.indexOf("<b>message</b>") + 14;
-                    var sliceBefore = data.indexOf("</p><p><b>description</b>");
-                    $scope.feedbackKo.display = true;
-                    $scope.feedbackKo.text = data.slice(sliceAfter, sliceBefore);
-                } else {
-                    $scope.displayConnectionError = true;
-                }
-            });
+        consumerService.disconnect();
     };
-    
-    /**
-     * Get user session infos if the user is connected
-     */
-    $scope.getCurrentUser = function() {
-        $scope.displayConnectionError = false;
-        $scope.feedbackKo.display = false;
-        
-        $http.get("http://localhost:8080//webresources/consumer/seeCurrent", null)
-            .success(function(user) { 
-                if (user === "") {
-                    console.log("You are not connected.");
-                    $scope.isConnected.display = false;  
-                    $scope.isConnected.text = "";
-                    $scope.user = "";
-                } else {
-                    console.log("You are connected as "+user);
-                    $scope.isConnected.display = true;
-                    $scope.isConnected.text = "You are connected";
-                    $scope.user = user;
-                }
-            })
-            .error(function(data, status, headers, config) { 
-                if (status === 400) {
-                    var sliceAfter = data.indexOf("<b>message</b>") + 14;
-                    var sliceBefore = data.indexOf("</p><p><b>description</b>");
-                    $scope.feedbackKo.display = true;
-                    $scope.feedbackKo.text = data.slice(sliceAfter, sliceBefore);
-                } else {
-                    $scope.displayConnectionError = true;
-                }
-            });
-    };
-    
-    $scope.getCurrentUser();
   }])
-    .controller('subscribeModalCtrl', ['$scope', '$http', function($scope, $http) {
+    .controller('subscribeModalCtrl', ['$scope', 'consumerService', function($scope, consumerService) {
             
-    /** Failure feedback */
-    $scope.feedbackKo = {display: false, text: ""};
+   /** Display error message */
+    $scope.displayError = false;
     
-    /** Connection error on modals */
-    $scope.displayConnectionError = false;
+    /** Error message to display **/
+    $scope.error = {title: "", message: ""};
+    
+    /** Form information **/
+    $scope.subscriber = {};
+    
+    /** Popup element **/
+    var modal = angular.element("#subscribeModal");
     
     /**
      * Subscribe a new user
-     * @param {type} dismiss function for the modal
      */
     $scope.subscribe = function() {
-        $scope.displayConnectionError = false;
-        $scope.feedbackKo.display = false;
-        
-        $http.post("http://localhost:8080//webresources/consumer/suscribe", $scope.suscriber)
-            .success(function() { 
-                $scope.isConnected.display = true;  
-                $scope.isConnected.text = "You correctly suscribe to CathyMini";
-                $scope.getCurrentUser();})
-            .error(function(data, status, headers, config) {
-                if (status === 400) {
-                    var sliceAfter = data.indexOf("<b>message</b>") + 14;
-                    var sliceBefore = data.indexOf("</p><p><b>description</b>");
-                    $scope.feedbackKo.display = true;
-                    $scope.feedbackKo.text = data.slice(sliceAfter, sliceBefore);
-                } else {
-                    $scope.displayConnectionError = true;
-                }
+        $scope.displayError = false;
+        consumerService.subscribe($scope.subscriber)
+            .then(function() { //success
+                modal.modal('hide'); //hide the modal
+            },
+            function(error) { //error
+                $scope.error.message = error;
             });
     };
   }])
-  .controller('connectionModalCtrl', ['$scope', '$http', function($scope, $http) {
+  .controller('connectionModalCtrl', ['$scope', 'consumerService',  function($scope, consumerService) {
           
-    /** Failure feedback */
-    $scope.feedbackKo = {display: false, text: ""};
+    /** Display error message */
+    $scope.displayError = false;
     
-    /** Connection error on modals */
-    $scope.displayConnectionError = false;
+    /** Error message to display **/
+    $scope.error = {title: "", message: ""};
+    
+    /** Consuler information **/
+    $scope.consumer = {user: "", pwd: ""};
+    
+    /** Popup element **/
+    var modal = angular.element("#connectModal");
     
     /**
      * Connect a user
-     * @param {type} dismiss function for the modal
      */
-    $scope.connect = function(dismiss) {
-        $scope.displayConnectionError = false;
-        $scope.feedbackKo.display = false;
-        
-        $http.post("http://localhost:8080//webresources/consumer/connect", $scope.consumer)
-            .success(function() { 
-                $scope.isConnected.display = true;  
-                $scope.isConnected.text = "You connect to CathyMini";
-                $scope.getCurrentUser();
-                dismiss();})
-            .error(function(data, status, headers, config) { 
-                if (status === 400) {
-                    var sliceAfter = data.indexOf("<b>message</b>") + 14;
-                    var sliceBefore = data.indexOf("</p><p><b>description</b>");
-                    $scope.feedbackKo.display = true;
-                    $scope.feedbackKo.text = data.slice(sliceAfter, sliceBefore);
-                } else {
-                    $scope.displayConnectionError = true;
-                }
+    $scope.connect = function() {   
+        $scope.displayError = false;
+        consumerService.connect($scope.consumer)
+            .then(function() { //success
+                modal.modal('hide'); //hide the modal
+            },
+            function(error) { //error
+                $scope.error.message = error;
             });
     };
   }]);
