@@ -76,7 +76,7 @@ angular.module('products').
        */
       $scope.loadProducts = function() {
         if ($scope.loadMore) {
-          $http.post("http://localhost:8080//webresources/product/all", $scope.search)
+          $http.post("/webresources/product/all", $scope.search)
             .success(function(data) {
               if (data.length < $scope.search.length) {
                 $scope.loadMore = false;
@@ -98,7 +98,7 @@ angular.module('products').
        */
       $scope.addProduct = function(dismiss) {
         $scope.displayConnectionError = false;
-        $http.post("http://localhost:8080//webresources/product/create", $scope.addModal.product)
+        $http.post("/webresources/product/create", $scope.addModal.product)
           .success(function(data) {
             $scope.addModal.product = {type: "Serviette", selectedItem: "1"};
             $scope.products.push(data);
@@ -117,7 +117,7 @@ angular.module('products').
       $scope.editProduct = function(dismiss) {
         var editedProduct = $scope.editedProduct;
         $scope.displayConnectionError = false;
-        $http.post("http://localhost:8080//webresources/product/edit", $scope.editModal.product)
+        $http.post("/webresources/product/edit", $scope.editModal.product)
           .success(function(data) {
             editedProduct.name = data.name;
             editedProduct.price = data.price;
@@ -135,7 +135,7 @@ angular.module('products').
        * @param {Product} product to delete
        */
       $scope.deleteProduct = function(product) {
-        $http.delete("http://localhost:8080//webresources/product/delete?id=" + product.id)
+        $http.delete("/webresources/product/delete?id=" + product.id)
           .success(function() {
             //We delete the product client side from the list if it is in
             var index = $scope.products.indexOf(product);

@@ -28,7 +28,7 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
      * Logout a connected user
      */
     service.disconnect = function() {        
-        $http.post("http://localhost:8080//webresources/consumer/logout")
+        $http.post("/webresources/consumer/logout")
             .success(function() { 
                 service.isConnected = false;
                 $rootScope.$broadcast('consumerDisconnect');
@@ -46,7 +46,7 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
      */
     service.connect = function(consumer) {     
         var deferred = $q.defer();
-        $http.post("http://localhost:8080//webresources/consumer/connect", consumer)
+        $http.post("/webresources/consumer/connect", consumer)
                 .success(function(user) { //success
                     connectUser(user);
                     deferred.resolve();
@@ -70,7 +70,7 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
      */
     service.subscribe = function(subscriber) {
         var deferred = $q.defer();
-        $http.post("http://localhost:8080//webresources/consumer/subscribe", subscriber)
+        $http.post("/webresources/consumer/subscribe", subscriber)
             .success(function(user) { 
                 connectUser(user);
                 deferred.resolve();})
@@ -88,7 +88,7 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
      * Get current user information on the server
      */
     service.getCurrentUser = function() {
-        $http.get("http://localhost:8080//webresources/consumer/seeCurrent")
+        $http.get("/webresources/consumer/seeCurrent")
             .success(function(user) { // success
                 if(user) {
                     connectUser(user);

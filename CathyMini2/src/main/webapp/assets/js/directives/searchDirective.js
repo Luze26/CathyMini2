@@ -59,7 +59,7 @@ commonModule.directive('searchDirective', ['searchService', '$http', function(se
        */
        scope.loadProducts = function() {
             if (scope.loadMore) {
-                $http.post("http://localhost:8080//webresources/product/all", scope.search).success(function(data) {
+                $http.post("/webresources/product/all", scope.search).success(function(data) {
                     if (data.length < scope.search.length) {
                         scope.loadMore = false;
                     }
