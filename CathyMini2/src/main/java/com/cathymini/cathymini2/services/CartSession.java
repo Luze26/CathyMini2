@@ -52,7 +52,16 @@ public class CartSession {
          if(cart.getCartLineCollection() == null){
              cart.setCartLineCollection(new ArrayList<CartLine>());
          }
-         cart.getCartLineCollection().add(cl);
+         Boolean find = false;
+         for(CartLine clTemp : cart.getCartLineCollection()){
+             if(clTemp.getProduct().getId() == cl.getProduct().getId()){
+                 int q = clTemp.getQuantity() + cl.getQuantity();
+                 changeQuantityCartLine(clTemp, q, persist);
+                 find = true;
+             }
+         }
+         if(!find)
+            cart.getCartLineCollection().add(cl);
          if(persist){
             manager.persist(cl);
             manager.merge(cart);
@@ -168,14 +177,14 @@ public class CartSession {
         Cart cartCons = findCartByConsumer(cons);
         if(cartCons != null){
             if(cartCons.getCartLineCollection().isEmpty()){
-                addCartToConsumer(cons, cartTemp);
-                
+                addCartToConsumer(cons, cartTemp);       
             }
             else {
                 for(CartLine clTemp : cartTemp.getCartLineCollection()){
                     boolean find = false;
                     for(CartLine cl : cartCons.getCartLineCollection())
                     {
+                        logger.debug("id cl : "+cl.getProduct().getId()+ "// id clTemp : "+ clTemp.getProduct().getId());
                         if(cl.getProduct().getId() == clTemp.getProduct().getId()){
                             //change the quantity is it's the same product
                             logger.debug("change quantity to a product");
@@ -196,7 +205,6 @@ public class CartSession {
             addCartToConsumer(cons, cartTemp);
             logger.debug("pas de cart pour le consumer donc mis a jour");
         }
-        
         return "";
     }
 }

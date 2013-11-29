@@ -49,7 +49,6 @@ public class CartFacade {
             cons = null;
         }
         try{
-            System.out.println(cons != null);
             if (cons != null) {
                 Cart cart  = cartBean.getUserCart(cons);
                 if(cart == null){
@@ -102,22 +101,17 @@ public class CartFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Cart consumerIsConnected(@Context HttpServletRequest request, @Context HttpServletResponse response){
-        System.out.println("Lien marche");
         Cart oldCart = getCartSession(request);
         Consumer cons  = sessionSecuring.getConsumer(request);
         if(oldCart != null){
-            logger.debug("cartSession have been finded");
             cartBean.mergeCart(cons, oldCart);
             setCartSession(request, null);
-            logger.debug("apres merge");
         }
         try{
                 Cart cartToSend = cartBean.getUserCart(cons);
-                logger.debug("on a un cart a envoyer");
                 return cartToSend;
         }
         catch(Exception ex){
-            logger.debug("retourne un cart null");
             return null;
         }
 

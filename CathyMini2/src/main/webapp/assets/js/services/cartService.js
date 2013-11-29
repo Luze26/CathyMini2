@@ -18,9 +18,19 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     
     
     $rootScope.$on('consumerConnect',function (){
-        console.log("Dnas bonne fonction");
         $http.post("http://localhost:8080//webresources/cart/consumerIsConnected")
         .success(function(data){
+            service.cart.price = 0;
+            if(data != null){
+                service.cart.products = [];
+                var prodColl = data.cartLineCollection;
+                for( var i = 0;i<prodColl.length; i++){
+                    var prod = prodColl[i].product;
+                    prod.quantity = prodColl[i].quantity;
+                    service.cart.products.push(prod);
+                    service.cart.price += prodColl[i].product.price;
+                }
+            }
         });
     } );
     
