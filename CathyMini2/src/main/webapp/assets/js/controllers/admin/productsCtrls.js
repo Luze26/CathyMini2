@@ -19,27 +19,27 @@ angular.module('products').
       /** Description of flux **/
       $scope.selects = [
         {
-          "id": "1",
+          "id": 1,
           "print": "<div class=\"drops-c drops-c-6 drops-active-1\"><div class=\"drops-inner\"></div></div><span>Mini</span>"
         },
         {
-          "id": "2",
+          "id": 2,
           "print": "<div class=\"drops-c drops-c-6 drops-active-2\"><div class=\"drops-inner\"></div></div><span>Normal</span>"
         },
         {
-          "id": "3",
+          "id": 3,
           "print": "<div class=\"drops-c drops-c-6 drops-active-3\"><div class=\"drops-inner\"></div></div><span>Normal+</span>"
         },
         {
-          "id": "4",
+          "id": 4,
           "print": "<div class=\"drops-c drops-c-6 drops-active-4\"><div class=\"drops-inner\"></div></div><span>Super</span>"
         },
         {
-          "id": "5",
+          "id": 5,
           "print": "<div class=\"drops-c drops-c-6 drops-active-5\"><div class=\"drops-inner\"></div></div><span>Super+</span>"
         },
         {
-          "id": "6",
+          "id": 6,
           "print": "<div class=\"drops-c drops-c-6 drops-active-6\"><div class=\"drops-inner\"></div></div><span>Extra</span>"
         }
       ];
@@ -56,6 +56,7 @@ angular.module('products').
           $scope.search.orderBy = property;
           $scope.search.orderByASC = true;
         }
+        
         $scope.refreshSearch();
       };
 
@@ -96,7 +97,6 @@ angular.module('products').
        * Create the product
        */
       $scope.addProduct = function(dismiss) {
-        console.log($scope.addModal.product);
         $scope.displayConnectionError = false;
         $http.post("http://localhost:8080//webresources/product/create", $scope.addModal.product)
           .success(function(data) {
@@ -161,7 +161,6 @@ angular.module('products').
         $scope.editModal.product.marque = product.marque;
         $scope.editModal.product.flux = product.flux;
         $scope.editModal.product.price = product.price;
-        $scope.editModal.product.type = product.type;
         $scope.editModal.product.description = product.description;
         $scope.modal = $scope.editModal;
       };
@@ -189,9 +188,9 @@ angular.module('products').
        $scope.card = null;
        */
 
-      /** Modal information for add product */
-      $scope.addModal = {title: "Add product", okAction: $scope.addProduct, product: {type: "Serviette", flux: "1"}};
+      /** Modal information for add product **/
+      $scope.addModal = {title: "Add product", okAction: $scope.addProduct, product: {type: "Serviette", flux: 1}, add: true};
 
       /** Modal information for edit product */
-      $scope.editModal = {title: "Edit product", okAction: $scope.editProduct, product: {}};
+      $scope.editModal = {title: "Edit product", okAction: $scope.editProduct, product: {}, add: false};
     }]);

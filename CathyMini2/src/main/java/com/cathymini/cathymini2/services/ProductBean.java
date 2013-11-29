@@ -35,7 +35,7 @@ public class ProductBean {
      * Properties of a product (used to order by)
      */
     public enum ProductKeys {
-        ID, NAME, TYPE, PRICE
+        ID, NAME, MARQUE, FLUX, TYPE, PRICE
     }
 
     /**
@@ -77,10 +77,13 @@ public class ProductBean {
      *
      * @param id
      * @param name
+     * @param marque
+     * @param flux
      * @param price
+     * @param description
      * @return the product edited or null if the product doesn't exists
      */
-    public Product editProduct(Long id, String name, Float price) {
+    public Product editProduct(Long id, String name, String marque, Float flux, Float price, String description) {
         Product prod;
         try {
             prod = manager.find(Product.class, id);
@@ -91,7 +94,10 @@ public class ProductBean {
 
         if (prod != null) {
             prod.setName(name);
+            prod.setMarque(marque);
+            prod.setFlux(flux);
             prod.setPrice(price);
+            prod.setDescription(description);
             return prod;
         }
         return null;
