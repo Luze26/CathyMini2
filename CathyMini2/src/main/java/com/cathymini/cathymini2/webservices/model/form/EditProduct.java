@@ -9,7 +9,10 @@ import java.text.DecimalFormat;
 public class EditProduct {
     public Long id;
     public String name;
+    public String marque;
+    public Float flux;
     public Float price;
+    public String description;
     
     public boolean validate() {
         if(id != null && id >= 0) {

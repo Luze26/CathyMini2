@@ -60,25 +60,25 @@
                                     </div>
                                     </div>
                                     <div>
-                                            <label>Rechecher par marque </label>
-                                            <input type="text" ng-model="search.brand" placeholder="Search a brand" ng-change="refreshSearch()" />
+                                        <label>Rechecher par marque </label>
+                                        <input type="text" ng-model="search.brand" placeholder="Search a brand" ng-change="refreshSearch()" />
                                     </div>
                                 </td>
                                 <td>
-                                        <div>
-                                            <label for="pPrice">Rechecher par prix </label>
-                                            <div class="controls input-prepend">
-                                                <input type="text" ng-model="search.minPrice" placeholder="Minimum price" ng-change="refreshSearch()" />
-                                                <span class="add-on">€</span>
-                                            </div>
-                                            <div class="controls input-prepend">
-                                                <input type="text" ng-model="search.maxPrice" placeholder="Maximum price" ng-change="refreshSearch()"/>
-                                                <span class="add-on">€</span>
-                                            </div>
-                                        </div>                                
+                                    <div>
+                                        <label for="pPrice">Rechecher par prix </label>
+                                        <div class="controls input-prepend">
+                                            <input type="text" ng-model="search.minPrice" placeholder="Minimum price" ng-change="refreshSearch()" />
+                                            <span class="add-on">€</span>
+                                        </div>
+                                        <div class="controls input-prepend">
+                                            <input type="text" ng-model="search.maxPrice" placeholder="Maximum price" ng-change="refreshSearch()"/>
+                                            <span class="add-on">€</span>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
-                        </table>    
+                        </table>
                         </form>
                         <!-- <search-directive productslist="products"></search-directive> -->
                         <cart-directive></cart-directive>

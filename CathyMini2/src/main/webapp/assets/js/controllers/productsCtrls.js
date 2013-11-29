@@ -120,7 +120,7 @@ angular.module('products').
                  */
                 $scope.loadProducts = function() {
                     if ($scope.loadMore) {
-                        $http.post("http://localhost:8080//webresources/product/all", $scope.search)
+                        $http.post("/webresources/product/all", $scope.search)
                                 .success(function(data) {
                                     if (data.length < $scope.search.length) { //If there is no more product to load, end of the list
                                         $scope.loadMore = false;

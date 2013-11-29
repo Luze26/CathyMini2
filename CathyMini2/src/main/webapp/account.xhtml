@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:body>
+
+        <ui:composition template="template/commonLayout.xhtml">
+            <ui:param name="ngApp" value="account" />
+            <ui:param name="ngController" value="accountSettingsCtrl" />
+            <ui:param name="title" value="CathyMini" />
+            <ui:define name="content">
+                <fieldset>
+                    <legend>Vos paramètres</legend>
+                    Nom: {{consumer.name}} <span class="account-edit" ng-click="editName()">Edit</span>
+                    Prénom: {{consumer.firstname}} <span class="account-edit" ng-click="editFirstname()">Edit</span>
+                    Email: {{consumer.email}} <span class="account-edit" ng-click="editEmail()">Edit</span>
+                </fieldset>
+            </ui:define>
+
+            <ui:define name="scripts">
+                <script src="/assets/js/modules/accountModule.js"></script>
+                <script src="/assets/js/controllers/accountCtrls.js"></script>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+
+</html>
