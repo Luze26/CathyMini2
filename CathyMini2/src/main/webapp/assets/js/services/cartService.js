@@ -34,7 +34,10 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
         });
     } );
     
-
+     $rootScope.$on('consumerDisconnect',function (){
+                service.cart.products = [];
+                service.cart.price = 0;
+        });
     
     /**
      * Add a product to the cart

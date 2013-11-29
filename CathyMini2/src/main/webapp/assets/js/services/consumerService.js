@@ -20,6 +20,7 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
         $http.post("http://localhost:8080//webresources/consumer/logout")
             .success(function() { 
                 service.isConnected = false;
+                $rootScope.$broadcast('consumerDisconnect');
             })
             .error(function(data, status, headers, config) { 
                 service.isConnected = false;
