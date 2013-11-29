@@ -34,26 +34,30 @@ public class CartSession {
         Cart cart = new Cart();
         cart.setConsumer(cons);
         cart.setCartLineCollection(new ArrayList<CartLine>());
-        manager.persist(cart);
+        if(cons != null)
+            manager.persist(cart);
         return cart;
-    } 
+    }
     
-    public void addProduct(Product prod, int qu, Cart cart){
+    public void addProduct(Product prod, int qu, Cart cart, boolean persist){
         CartLine cl = new CartLine(prod, qu);
-        manager.persist(cl);
-        addProduct(cl, cart);
+        if(persist)
+            manager.persist(cl);
+        addProduct(cl, cart, persist);
     }
     
-    public void addProduct(Product prod, Cart cart){
-        addProduct(prod, 1, cart);
+    public void addProduct(Product prod, Cart cart, Boolean persist){
+        addProduct(prod, 1, cart, persist);
     }
     
-    public void addProduct(CartLine cl, Cart cart){
+     
+    public void addProduct(CartLine cl, Cart cart, boolean persist){
          if(cart.getCartLineCollection() == null){
              cart.setCartLineCollection(new ArrayList<CartLine>());
          }
          cart.getCartLineCollection().add(cl);
-         manager.merge(cart);
+         if(persist)
+            manager.merge(cart);
     }
     
     public void removeProduct(Product prod, Cart cart){
@@ -146,38 +150,49 @@ public class CartSession {
     
     public void addCartToConsumer(Consumer cons, Cart cart){
         cart.setConsumer(cons);
+        manager.merge(cart);
     }
     
-    public void addItemToCartLine(CartLine cl){
+    public void addItemToCartLine(CartLine cl, Boolean persist){
         cl.setQuantity(cl.getQuantity()+1);
-        manager.merge(cl);
+        if(persist)
+            manager.merge(cl);
     }
     
-    public void changeQuantityCartLine(CartLine cl, int quantity){
+    public void changeQuantityCartLine(CartLine cl, int quantity, Boolean persist){
         cl.setQuantity(quantity);
-        manager.merge(cl);
+        if(persist)
+            manager.merge(cl);
     }
     
     public String mergeCart(Consumer cons, Cart cartTemp){
         Cart cartCons = findCartByConsumer(cons);
-        if(cartCons.getCartLineCollection().isEmpty()){
-            addCartToConsumer(cons, cartTemp);
-        }
-        else {
-            for(CartLine cl : cartCons.getCartLineCollection()){
-                for(CartLine clTemp : cartTemp.getCartLineCollection())
-                {
-                    if(cl.getProduct() == clTemp.getProduct()){
-                        //change the quantity is it's the same product
-                        cl.setQuantity(cl.getQuantity()+clTemp.getQuantity());
-                    }
-                    else{
-                        //add the product
-                        addProduct(clTemp, cartCons);
+        if(cartCons != null){
+            if(cartCons.getCartLineCollection().isEmpty()){
+                addCartToConsumer(cons, cartTemp);
+                logger.debug("cartSession have been finded");
+            }
+            else {
+                for(CartLine cl : cartCons.getCartLineCollection()){
+                    for(CartLine clTemp : cartTemp.getCartLineCollection())
+                    {
+                        if(cl.getProduct() == clTemp.getProduct()){
+                            //change the quantity is it's the same product
+                            cl.setQuantity(cl.getQuantity()+clTemp.getQuantity());
+                        }
+                        else{
+                            //add the product
+                            addProduct(clTemp, cartCons, true);
+                        }
                     }
                 }
             }
         }
+        else{
+            addCartToConsumer(cons, cartTemp);
+            logger.debug("pas de cart pour le consumer donc mis a jour");
+        }
+        
         return "";
     }
 }

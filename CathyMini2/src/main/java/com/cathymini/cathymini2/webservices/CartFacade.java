@@ -42,7 +42,7 @@ public class CartFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Boolean add(Long id, @Context HttpServletRequest request, @Context HttpServletResponse response){
-        Consumer cons = null;
+        Consumer cons;
         try{
             cons = sessionSecuring.getConsumer(request);
         }catch(Exception ex){
@@ -56,7 +56,7 @@ public class CartFacade {
                     cart = cartBean.newCart(cons);
                 }
                 Product prod = productBean.getProduct(id);
-                cartBean.addProduct(prod, cart);
+                cartBean.addProduct(prod, cart, true);
                 return true;
             }
             else{
@@ -77,7 +77,7 @@ public class CartFacade {
                     newCartTemp = cartBean.newCart(null);
                     setCartSession(request, newCartTemp);
                }
-                cartBean.addProduct(prod, newCartTemp);
+                cartBean.addProduct(prod, newCartTemp, false);
                 return true;
             }
         } catch (Exception ex) {
@@ -108,12 +108,16 @@ public class CartFacade {
         if(oldCart != null){
             logger.debug("cartSession have been finded");
             cartBean.mergeCart(cons, oldCart);
+            setCartSession(request, null);
+            logger.debug("apres merge");
         }
         try{
                 Cart cartToSend = cartBean.getUserCart(cons);
+                logger.debug("on a un cart a envoyer");
                 return cartToSend;
         }
         catch(Exception ex){
+            logger.debug("retourne un cart null");
             return null;
         }
 

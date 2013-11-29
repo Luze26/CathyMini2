@@ -62,7 +62,9 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
             .success(function() { 
                 service.consumer.username = subscriber.username;
                 service.isConnected = true;
-                deferred.resolve();})
+                deferred.resolve();
+                $rootScope.$broadcast('consumerConnect');
+            })
             .error(function(data, status, headers, config) {
                 if (status === 400) {
                     deferred.reject(data);
