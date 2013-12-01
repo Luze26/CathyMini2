@@ -1,13 +1,17 @@
 package com.cathymini.cathymini2.webservices.model;
 
 import com.cathymini.cathymini2.model.Consumer;
-import java.io.Serializable;
+import static com.cathymini.cathymini2.webservices.model.UtilsFormatter.checkMail;
+import static com.cathymini.cathymini2.webservices.model.UtilsFormatter.checkString;
 
 /**
  *
  * @author yuzel
  */
-public class ConsumerApi implements Serializable {
+public class ConsumerApi {
+
+    public ConsumerApi() {
+    }
 
     public ConsumerApi(Consumer user) {
         this.username = user.getUsername();
@@ -20,4 +24,8 @@ public class ConsumerApi implements Serializable {
      * Consumer mail address
      */
     public String mail;
+
+    public boolean validate() {
+        return checkString(username) && checkMail(mail);
+    }
 }

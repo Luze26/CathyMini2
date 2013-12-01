@@ -165,5 +165,24 @@ public class ConsumerFacade{
             return null;
         }
     }
-            
+
+    /**
+     * Upade consumer
+     *
+     * @return The username if the consumer is connected, else an empty String
+     */
+    @POST
+    @Path("/update")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public ConsumerApi updateConsumer(ConsumerApi consumer, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+        if (consumer.validate()) {
+            Consumer user = sessionSecuring.getConsumer(request);
+            return new ConsumerApi(user);
+        } else {
+            response.setStatus(400);
+            return null;
+        }
+    }
 }

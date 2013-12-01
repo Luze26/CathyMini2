@@ -20,7 +20,7 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
         if(!service.isConnected) {
             service.consumer.username = user.username;
             service.isConnected = true;
-            $rootScope.$broadcast('consumerConnect');
+            $rootScope.$broadcast('consumerConnect', user);
         }        
     };
     
@@ -50,7 +50,6 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
                 .success(function(user) { //success
                     connectUser(user);
                     deferred.resolve();
-                    $rootScope.$broadcast('consumerConnect');
                 })
                 .error(function(data, status, headers, config) {  // error
                     if (status === 400) {

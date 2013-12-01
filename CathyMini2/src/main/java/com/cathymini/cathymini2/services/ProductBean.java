@@ -4,7 +4,6 @@
  */
 package com.cathymini.cathymini2.services;
 
-import com.cathymini.cathymini2.model.Cart;
 import com.cathymini.cathymini2.model.Napkin;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Tampon;
