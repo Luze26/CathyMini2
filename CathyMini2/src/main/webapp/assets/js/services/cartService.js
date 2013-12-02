@@ -67,7 +67,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
         $http.post("/webresources/cart/changeQuantity", {"id": product.id, "quantity": quantity})
                 .success(function(data) {
                 product.quantity = data;
-                console.log("quantity have been change");
+                alert("quantity have been change");
             });
     };
     
