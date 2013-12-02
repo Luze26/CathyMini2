@@ -62,11 +62,11 @@ public class Purchase implements Serializable {
     
     /** List of payement dates for the purchase (unique for Purchase, multiple for Subscription) */
     @Column(name="payementDate")
-    private Collection<Long> PayementDate;
+    private Long PayementDate;
     
     /** List of delivery dates for the purchase (unique for Purchase, multiple for Subscription) */
     @Column(name="deliveryDate")
-    private Collection<Long> DeliveryDate;
+    private Long DeliveryDate;
 
     public DeliveryAddress getDeliveryAddress() {
         return deliveryAddress;
@@ -108,19 +108,19 @@ public class Purchase implements Serializable {
         this.purchaseLineCollection = purchaseLineCollection;
     }
 
-    public Collection<Long> getPayementDate() {
+    public Long getPayementDate() {
         return PayementDate;
     }
 
-    public void setPayementDate(Collection<Long> PayementDate) {
+    public void setPayementDate(Long PayementDate) {
         this.PayementDate = PayementDate;
     }
 
-    public Collection<Long> getDeliveryDate() {
+    public Long getDeliveryDate() {
         return DeliveryDate;
     }
 
-    public void setDeliveryDate(Collection<Long> DeliveryDate) {
+    public void setDeliveryDate(Long DeliveryDate) {
         this.DeliveryDate = DeliveryDate;
     }
 }
