@@ -1,6 +1,5 @@
 package com.cathymini.cathymini2.webservices.model;
 
-import com.cathymini.cathymini2.model.Product;
 
 /**
  *
@@ -8,6 +7,22 @@ import com.cathymini.cathymini2.model.Product;
  */
 public class CartProduct {
 
-    public Product product;
+    public Long productId;
     public int quantity;
+    
+        public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }

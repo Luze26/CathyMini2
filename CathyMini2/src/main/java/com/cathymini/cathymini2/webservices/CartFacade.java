@@ -7,6 +7,7 @@ import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.services.CartSession;
 import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.services.ProductBean;
+import com.cathymini.cathymini2.webservices.model.CartProduct;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -112,40 +113,43 @@ public class CartFacade {
                 return cartToSend;
         }
         catch(Exception ex){
+            response.setStatus(400);
             return null;
         }
 
     }
     
-    
-   /* @POST
+    @POST
     @Path("/changeQuantity")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String changeQuantity(Long id, int quantity, @Context HttpServletRequest request, @Context HttpServletResponse response){
+    public int changeQuantity(CartProduct clTemp, @Context HttpServletRequest request, @Context HttpServletResponse response){
+        logger.debug("changeQuantity work :)");
         Consumer cons  = sessionSecuring.getConsumer(request);
         if(cons != null){
             try{
                 Cart cart = cartBean.getUserCart(cons);
-                CartLine cl = cartBean.getCartLineByID(id, cart);
-                cartBean.changeQuantityCartLine(cl, quantity, true);
+                CartLine cl = cartBean.getCartLineByID(Long.parseLong(String.valueOf(clTemp.getProductId())), cart);
+                cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), true);
             }
             catch(Exception ex){
-                return "the quantity haven't been changed";
+                response.setStatus(400);
+                return -1;
             }
         }
         else{
             Cart cart = getCartSession(request);
             if(cart != null){
-                CartLine cl = cartBean.getCartLineByID(id, cart);
-                cartBean.changeQuantityCartLine(cl, quantity, false);
+                CartLine cl = cartBean.getCartLineByID(Long.parseLong(String.valueOf(clTemp.getProductId())), cart);
+                cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), false);
             }
             else{
-                return "the cart doesn't exist, the quantity haven't been changed";
+                response.setStatus(400);
+                return -1;
             }
         }
-        return "the quantity have been changed";
-    }*/
+        return clTemp.getQuantity();
+    }
     
     @POST
     @Path("/delete")
@@ -161,6 +165,7 @@ public class CartFacade {
                 cart = cartBean.getUserCart(cons);
             }
             catch(Exception ex){
+                response.setStatus(400);
                 return -1;
             }
         }

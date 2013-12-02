@@ -62,13 +62,14 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
      * Change the quantity for a product already in the cart
      * @param {Product} product
      */
-    service.changeQuantity = function(product) {
-        alert("Dans change quantity");
-        $http.post("/webresources/cart/changeQuantity", {"id": product.id, "quantity": quantity})
+    service.changeQuantity = function(product) {        
+        $http.post("/webresources/cart/changeQuantity", {"productId": product.id, "quantity": product.quantity})
                 .success(function(data) {
                 product.quantity = data;
-                alert("quantity have been change");
-            });
+            })
+                .error(function(data) {
+                    alert("Un problème lors du changement de quantité a été déclenché!");
+                })
     };
     
     /**

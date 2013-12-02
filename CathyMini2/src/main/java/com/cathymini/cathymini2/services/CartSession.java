@@ -112,11 +112,8 @@ public class CartSession {
     
     public CartLine getCartLineByID(Long id, Cart cart){
         CartLine cLine = null;
-        Iterator<CartLine> it = cart.getCartLineCollection().iterator();
-        CartLine myCartLine;
-        while(it.hasNext()){
-            myCartLine = it.next();
-            if(myCartLine.getCartLineID() == id){
+        for(CartLine myCartLine : cart.getCartLineCollection()){
+            if(myCartLine.getProduct().getId() == id){
                 cLine = myCartLine;
             }
         }
@@ -171,9 +168,12 @@ public class CartSession {
     }
     
     public void changeQuantityCartLine(CartLine cl, int quantity, Boolean persist){
+        logger.debug("quantity : "+quantity);
         cl.setQuantity(quantity);
+        logger.debug("apres setQuantity");
         if(persist)
             manager.merge(cl);
+        logger.debug("fin fonction");
     }
     
     public String mergeCart(Consumer cons, Cart cartTemp){
