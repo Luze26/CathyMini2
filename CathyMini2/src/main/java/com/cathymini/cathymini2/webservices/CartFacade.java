@@ -151,23 +151,24 @@ public class CartFacade {
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Cart delete(Long id, @Context HttpServletRequest request, @Context HttpServletResponse response){
+    public int delete(Long id, @Context HttpServletRequest request, @Context HttpServletResponse response){
         Product prod = productBean.getProduct(id);
         Consumer cons  = sessionSecuring.getConsumer(request);
         Cart cart = null;
+        int place = -1;
         if(cons != null){
             try{
                 cart = cartBean.getUserCart(cons);
             }
             catch(Exception ex){
-                return null;
+                return -1;
             }
         }
         else{
             cart = getCartSession(request);
         }
-        cartBean.removeProduct(prod, cart);
-        return cart;
+        place = cartBean.removeProduct(prod, cart);
+        return place;
     }
     
 }
