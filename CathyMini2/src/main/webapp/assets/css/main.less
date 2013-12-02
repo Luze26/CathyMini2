@@ -40,9 +40,9 @@
 }
 
 #searchTab {
-   // -webkit-transform: rotate(90deg); 
-   // -moz-transform: rotate(90deg); //Rotate for mozilla
-   // filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); //Rotate for IE
+    // -webkit-transform: rotate(90deg); 
+    // -moz-transform: rotate(90deg); //Rotate for mozilla
+    // filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); //Rotate for IE
     background-color: @mainColor;
     width: 50px;
     color: #fff;
@@ -65,10 +65,40 @@
     float: right;
 }
 
+@galleryProductSize: 200px;
 .product {
-    height: 200px;
-    background-color: #ccc;
+    min-height: @galleryProductSize;
+    background-color: #fff;
     border: 1px solid #ddd;
+    .image {
+        min-height: @galleryProductSize;
+        img {
+            width: 140px;
+            height: 140px;
+        }
+        button {
+            position: absolute;
+            bottom: 5px;
+        }
+    }
+    .infos {
+        min-height: @galleryProductSize;
+        font-weight: bold;
+        .type {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+        .mid {
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+        .price {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+        }
+    }
 }
 
 #footer {
@@ -76,10 +106,6 @@
     border-top: 5px solid #cccccc;
     margin-top: 20px;
     height: 50px;
-}
-
-img{
-    width: 25px;
 }
 
 @buttonSize: 250px;
