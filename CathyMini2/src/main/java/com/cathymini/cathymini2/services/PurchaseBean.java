@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.cathymini.cathymini2.services;
 
 import com.cathymini.cathymini2.model.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,65 +21,75 @@ public class PurchaseBean {
 
     private static final Logger logger = Logger.getLogger(PurchaseBean.class);
 
-    public void finalizePurchase(Cart cart, Consumer consumer, 
-                DeliveryAddress da, PayementInfo pi) {
-        // TODO : for each cartline, create a purchaseline and add to purchaseline collection
+    public void finalizePurchase(Cart cart, DeliveryAddress da, PayementInfo pi) {
         Purchase purchase = new Purchase();
-        purchase.setConsumer(consumer);
+        purchase.setConsumer(cart.getConsumer());
+        purchase.setPurchaseLineCollection(cartLineToPurchaseLine(
+                cart.getCartLineCollection()));
         purchase.setPayementInfo(pi);
         purchase.setDeliveryAddress(da);
         
         manager.persist(purchase);
         
-        String message = consumer.getUsername() + "finalize a purchase.";
+        String message = cart.getConsumer().getUsername() + "finalize a purchase.";
         logger.debug(message);
     }
     
-    public void finalizeSubscription(Cart cart, Consumer consumer, 
-                DeliveryAddress da, PayementInfo pi) {
-        // TODO : for each cartline, create a purchaseline and add to purchaseline collection
+    public void finalizeSubscription(Cart cart, Long startDate, DeliveryAddress da, PayementInfo pi) {
         PurchaseSubscription purchase = new PurchaseSubscription();
-        purchase.setConsumer(consumer);
+        purchase.setConsumer(cart.getConsumer());
+        purchase.setPurchaseLineCollection(cartLineToPurchaseLine(
+                cart.getCartLineCollection()));
+        purchase.setStartDate(startDate);
         purchase.setPayementInfo(pi);
         purchase.setDeliveryAddress(da);
         
         manager.persist(purchase);
         
-        String message = consumer.getUsername() + "finalize a subscription.";
+        String message = cart.getConsumer().getUsername() + "finalize a subscription.";
         logger.debug(message);
     }
     
-    public void editSubscription(Long subscriptionID, Cart cart, Consumer consumer, 
+    public void editSubscription(Long subscriptionID, Cart cart,  Long startDate,
                 DeliveryAddress da, PayementInfo pi) {
+        
         PurchaseSubscription purchase = getSubscriptionById(subscriptionID);
-        // TODO : empty the purchase lines collection (and delete it from DB)
-        //     for each cartline, create a purchaseline and add to purchaseline collection
-        purchase.setConsumer(consumer);
+        
+        purchase.setConsumer(cart.getConsumer());
+        purchase.setPurchaseLineCollection(cartLineToPurchaseLine(
+                cart.getCartLineCollection()));
+        purchase.setStartDate(startDate);
         purchase.setPayementInfo(pi);
         purchase.setDeliveryAddress(da);
         
         manager.persist(purchase);
         
-        String message = consumer.getUsername() + "finalize a subscription.";
+        String message = cart.getConsumer().getUsername() + "finalize a subscription.";
         logger.debug(message);
     }
     
     public void stopSubscription(Long subscriptionID, Cart cart, Consumer consumer, 
                 DeliveryAddress da, PayementInfo pi) {
         PurchaseSubscription purchase = getSubscriptionById(subscriptionID);
-        // TODO : empty the purchase lines collection (and delete it from DB)
-        //     for each cartline, create a purchaseline and add to purchaseline collection
-        purchase.setConsumer(consumer);
-        purchase.setPayementInfo(pi);
-        purchase.setDeliveryAddress(da);
         
-        manager.persist(purchase);
+        manager.remove(purchase);
         
         String message = consumer.getUsername() + "finalize a subscription.";
         logger.debug(message);
     }
     
-    public Collection<Purchase> getConsumerPurchases(Consumer consumer) {
+    private Collection<PurchaseLine> cartLineToPurchaseLine(Collection<CartLine> cartLines) {
+        Collection<PurchaseLine> purchase = new ArrayList<PurchaseLine>();
+        for (CartLine cartline : cartLines){
+            PurchaseLine purchaseline = new PurchaseLine();
+            purchaseline.setProduct(cartline.getProduct());
+            purchaseline.setQuantity(cartline.getQuantity());
+            purchase.add(purchaseline);
+        }
+        return purchase;
+    }
+    
+    private Collection<Purchase> getConsumerPurchases(Consumer consumer) {
         Query q = manager.createNamedQuery("PurchaseByConsumer", Purchase.class);
         q.setParameter("consumer", consumer);
 
@@ -92,7 +99,7 @@ public class PurchaseBean {
         return q.getResultList();
     }
     
-    public PurchaseSubscription getSubscriptionById(Long id) {
+    private PurchaseSubscription getSubscriptionById(Long id) {
         Query q = manager.createNamedQuery("SubscriptionById", PurchaseSubscription.class);
         q.setParameter("transactionID", id);
 
@@ -102,7 +109,7 @@ public class PurchaseBean {
         return (PurchaseSubscription) q.getResultList().get(0);
     }
     
-    public Collection<PurchaseSubscription> getConsumerSubscriptions(Consumer consumer) {
+    private Collection<PurchaseSubscription> getConsumerSubscriptions(Consumer consumer) {
         Query q = manager.createNamedQuery("SubscriptionByConsumer", PurchaseSubscription.class);
         q.setParameter("consumer", consumer);
 

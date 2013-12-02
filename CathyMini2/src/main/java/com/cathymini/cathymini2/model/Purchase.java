@@ -6,7 +6,6 @@ package com.cathymini.cathymini2.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -62,14 +61,13 @@ public class Purchase implements Serializable {
     private PayementInfo payementInfo;
     
     /** List of payement dates for the purchase (unique for Purchase, multiple for Subscription) */
-    //@Temporal(javax.persistence.TemporalType.DATE)
     @Column(name="payementDate")
-    private Collection<Date> PayementDate;
+    private Long PayementDate;
     
     /** List of delivery dates for the purchase (unique for Purchase, multiple for Subscription) */
-    //@Temporal(javax.persistence.TemporalType.DATE)
+
     @Column(name="deliveryDate")
-    private Collection<Date> DeliveryDate;
+    private Long DeliveryDate;
 
     public DeliveryAddress getDeliveryAddress() {
         return deliveryAddress;
@@ -111,19 +109,19 @@ public class Purchase implements Serializable {
         this.purchaseLineCollection = purchaseLineCollection;
     }
 
-    public Collection<Date> getPayementDate() {
+    public Long getPayementDate() {
         return PayementDate;
     }
 
-    public void setPayementDate(Collection<Date> PayementDate) {
+    public void setPayementDate(Long PayementDate) {
         this.PayementDate = PayementDate;
     }
 
-    public Collection<Date> getDeliveryDate() {
+    public Long getDeliveryDate() {
         return DeliveryDate;
     }
 
-    public void setDeliveryDate(Collection<Date> DeliveryDate) {
+    public void setDeliveryDate(Long DeliveryDate) {
         this.DeliveryDate = DeliveryDate;
     }
 }

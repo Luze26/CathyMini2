@@ -3,7 +3,6 @@ package com.cathymini.cathymini2.webservices;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
-import com.cathymini.cathymini2.webservices.model.JSonErrorMsg;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
 import com.cathymini.cathymini2.webservices.model.form.Subscribe;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
@@ -54,7 +53,7 @@ public class ConsumerFacade{
             sessionSecuring.openSession(request, user);
             logger.debug("Create user = " + form.username + " :: " + form.pwd + " :: " + form.mail);
             return new ConsumerApi(user);
-        } catch (JSonErrorMsg ex) {
+        } catch (Exception ex) {
             try {
                 response.sendError(400, ex.getMessage());
             } catch (IOException ex1) {
