@@ -111,18 +111,12 @@ public class ProductBean {
     }
     
     public Product getProduct(Long id){
-        System.out.println("Dans getProduct");
-        System.out.println("id produit to add : "+id);
         Query query = manager.createNamedQuery("ProductById", Product.class);
-        System.out.println("apres manager");
         query.setParameter("id", id);
-        System.out.println("apres setParam");
         if (query.getResultList().isEmpty()){
-            System.out.println("dans productbean c'est vide");
             return null; 
         }
           Product pr =  (Product) query.getResultList().get(0);
-          System.out.println(pr.getPictureUrl());
           return pr;
         //return (Product) query.getResultList().get(0);
     }

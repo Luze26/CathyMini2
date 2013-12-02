@@ -18,7 +18,6 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     
     
     $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
-        console.log("Dans bonne fonction");
         $http.post("/webresources/cart/consumerIsConnected")
         .success(function(data){
             service.cart.price = 0;
@@ -64,9 +63,11 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
      * @param {Product} product
      */
     service.changeQuantity = function(product) {
+        console.log("Dans change quantity");
         $http.post("/webresources/cart/changeQuantity", {"id": product.id, "quantity": quantity})
                 .success(function(data) {
-                console.log("succes change quantity");
+                product.quantity = data;
+                console.log("quantity have been change");
             });
     };
     
@@ -75,6 +76,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
      * @param {Product} product
      */
     service.deleteProduct = function(product) {
+        console.log("Dans bonne fonction delete");
         $http.post("/webresources/cart/delete", product.id)
             .success(function(data) {
         console.log("succes delete product from cart")

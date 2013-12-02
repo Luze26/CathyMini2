@@ -62,12 +62,12 @@ public class Purchase implements Serializable {
     private PayementInfo payementInfo;
     
     /** List of payement dates for the purchase (unique for Purchase, multiple for Subscription) */
-    @Temporal(javax.persistence.TemporalType.DATE)
+    //@Temporal(javax.persistence.TemporalType.DATE)
     @Column(name="payementDate")
     private Collection<Date> PayementDate;
     
     /** List of delivery dates for the purchase (unique for Purchase, multiple for Subscription) */
-    @Temporal(javax.persistence.TemporalType.DATE)
+    //@Temporal(javax.persistence.TemporalType.DATE)
     @Column(name="deliveryDate")
     private Collection<Date> DeliveryDate;
 
