@@ -65,7 +65,6 @@ public class Purchase implements Serializable {
     private Long PayementDate;
     
     /** List of delivery dates for the purchase (unique for Purchase, multiple for Subscription) */
-
     @Column(name="deliveryDate")
     private Long DeliveryDate;
 
