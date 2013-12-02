@@ -79,6 +79,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
         $http.post("/webresources/cart/delete", product.id)
             .success(function(data) {
                 service.cart.products.splice(data,1);
+                service.cart.price += -product.price;
             });
     };
     
