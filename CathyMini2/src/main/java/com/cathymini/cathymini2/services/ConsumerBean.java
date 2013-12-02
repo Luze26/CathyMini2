@@ -1,6 +1,7 @@
 package com.cathymini.cathymini2.services;
 
 import com.cathymini.cathymini2.model.Consumer;
+import com.cathymini.cathymini2.webservices.model.ConsumerApi;
 import com.cathymini.cathymini2.webservices.model.JSonErrorMsg;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import javax.ejb.Stateless;
@@ -102,7 +103,20 @@ public class ConsumerBean {
         String message = "The user log out.";
         logger.debug(message);
     }
-    
+
+    public void updateUser(Consumer user, ConsumerApi newUser) throws JSonErrorMsg {
+        if (user != null && newUser != null) {
+            if (!user.getUsername().equals(newUser.username) && findUserByName(newUser.username) != null) {
+                throw new JSonErrorMsg("username", "already exist");
+            }
+            if (!user.getMail().equals(newUser.mail) && findUserByMail(newUser.mail) != null) {
+                throw new JSonErrorMsg("mail", "already exist");
+            }
+            user.setUsername(newUser.username);
+            user.setMail(newUser.mail);
+        }
+    }
+
     /**
      * Remove the user in parameter from the DB
      * @param usr Username

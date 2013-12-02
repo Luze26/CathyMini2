@@ -15,7 +15,7 @@
                 <fieldset>
                     <legend>Vos paramètres</legend>
                     <div class="form-group" ng-repeat="field in fields">
-                        {{field.label}}: {{$parent.consumer.username}}
+                        {{field.label}}: {{$parent.consumer[field.key]}}
                         <span class="account-edit" ng-show="field.editable" ng-click="showEdit(field)">Edit</span>
                         <img ng-show="field.loading" src="/assets/image/loading.gif" alt="loading" />
                         <img ng-show="field.success" src="/assets/image/ok.png" alt="success" />

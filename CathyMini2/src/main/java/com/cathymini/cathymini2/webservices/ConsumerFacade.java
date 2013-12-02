@@ -47,6 +47,9 @@ public class ConsumerFacade{
     @Secure(Role.ANONYM)
     public ConsumerApi subscribe(Subscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         try {
+            if (!form.validate()) {
+                throw new JSonErrorMsg("form", "error");
+            }
             // Subscribe the new consumer
             Consumer user = consumerBean.subscribeUser(form.username, form.pwd, form.mail);
             
@@ -176,10 +179,15 @@ public class ConsumerFacade{
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Secure(Role.MEMBER)
-    public ConsumerApi updateConsumer(ConsumerApi consumer, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+    public ConsumerApi updateConsumer(ConsumerApi consumer, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
         if (consumer.validate()) {
             Consumer user = sessionSecuring.getConsumer(request);
-            return new ConsumerApi(user);
+            try {
+                consumerBean.updateUser(user, consumer);
+                return new ConsumerApi(user);
+            } catch (JSonErrorMsg ex) {
+                throw new Exception("error");
+            }
         } else {
             response.setStatus(400);
             return null;

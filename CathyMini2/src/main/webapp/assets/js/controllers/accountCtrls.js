@@ -26,9 +26,14 @@ angular.module('account')
         field.editable = true;
         $http.post("/webresources/consumer/update", $scope.editConsumer).success(function(consumer) {
             field.loading = false;
-            field.success = true;
-            $scope.editConsumer[field.key] = $scope.consumer[field.key];
-            $scope.consumer[field.key] = consumer[field.key];
+            if(consumer) {
+                field.success = true;
+                $scope.consumer = consumer;
+                $scope.editConsumer[field.key] = $scope.consumer[field.key];
+                $scope.consumer[field.key] = consumer[field.key];
+            }
+        }).error(function() {
+            field.loading = false;
         });
     };
     
