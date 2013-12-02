@@ -39,6 +39,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.cathymini.cathymini2.webservices.CartFacade.class);
         resources.add(com.cathymini.cathymini2.webservices.ConsumerFacade.class);
         resources.add(com.cathymini.cathymini2.webservices.ProductFacade.class);
+        resources.add(com.cathymini.cathymini2.webservices.PurchaseFacade.class);
     }
     
 }

@@ -29,18 +29,6 @@ public class PurchaseSubscription extends Purchase {
      */
     @Column(name="startDate")
     private Long startDate;
-    
-    /** <code>true</code> if the subscription is currently active, else <code>false</code> */
-    @Column(name="enabled")
-    private boolean enabled;
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 
     public Long getStartDate() {
         return startDate;

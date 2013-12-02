@@ -1,7 +1,6 @@
 package com.cathymini.cathymini2.services;
 
 import com.cathymini.cathymini2.model.Consumer;
-import com.cathymini.cathymini2.webservices.model.JSonErrorMsg;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,12 +26,12 @@ public class ConsumerBean {
      * @param mail Mail Adress
      * @throws JSonErrorMsg 
      */
-    public Consumer subscribeUser(String usr, String pwd, String mail) throws JSonErrorMsg {
+    public Consumer subscribeUser(String usr, String pwd, String mail) throws Exception {
         // Check if one of the field is null 
         if (usr == null || pwd == null || mail == null) {
                 String message = "One of the field is <code>null</code>.";
                 logger.error(message);
-                throw new JSonErrorMsg("mail", message);
+                throw new Exception(message);
         }
         
         // Check if the username or the mail is not already use
@@ -52,12 +51,12 @@ public class ConsumerBean {
             } else {
                 String message = "This mail address is already used by another user.";
                 logger.error(message);
-                throw new JSonErrorMsg("mail", message);
+                throw new Exception(message);
             }
         } else {
                 String message = "This username already exist.";
                 logger.error(message);
-                throw new JSonErrorMsg("username", message);
+                throw new Exception(message);
         }
     }
     
@@ -67,7 +66,7 @@ public class ConsumerBean {
      * @param pwd Password
      * @throws JSonErrorMsg 
      */
-    public Consumer connectUser(String usr, String pwd) throws JSonErrorMsg {
+    public Consumer connectUser(String usr, String pwd) throws Exception {
         Consumer consumer;
         if (usr.contains("@")) { // Decide if 'usr' is a mail address or a username
             consumer = findUserByMail(usr);
@@ -84,14 +83,14 @@ public class ConsumerBean {
                 // Error : This user exists but the pwd is wrong
                 String message = "This user does not exist or the password is wrong.";
                 logger.error(message);
-                throw new JSonErrorMsg("pwd", message);
+                throw new Exception(message);
             }
             
         } else {
             // Error : This user does not exist
             String message = "This user does not exist or the password is wrong.";
             logger.error(message);
-            throw new JSonErrorMsg("pwd", message);
+            throw new Exception(message);
         }
     }
     
@@ -109,7 +108,7 @@ public class ConsumerBean {
      * @param pwd Password
      * @throws JSonErrorMsg 
      */
-    public void deleteUser(String usr, String pwd) throws JSonErrorMsg {
+    public void deleteUser(String usr, String pwd) throws Exception {
         Consumer consumer;
         if (usr.contains("@")) { // Decide if 'usr' is a mail address or a username
             consumer = findUserByMail(usr);
@@ -128,14 +127,14 @@ public class ConsumerBean {
                 // Error : This user exists but the pwd is wrong
                 String message = "This user does not exist or the password is wrong.";
                 logger.error(message);
-                throw new JSonErrorMsg("pwd", message);
+                throw new Exception(message);
             }
             
         } else {
             // Error : This user does not exist
             String message = "This user does not exist or the password is wrong.";
             logger.error(message);
-            throw new JSonErrorMsg("pwd", message);
+            throw new Exception(message);
         }
     }
     
