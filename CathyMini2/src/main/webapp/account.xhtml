@@ -14,9 +14,18 @@
             <ui:define name="content">
                 <fieldset>
                     <legend>Vos paramètres</legend>
-                    Nom: {{consumer.name}} <span class="account-edit" ng-click="editName()">Edit</span>
-                    Prénom: {{consumer.firstname}} <span class="account-edit" ng-click="editFirstname()">Edit</span>
-                    Email: {{consumer.email}} <span class="account-edit" ng-click="editEmail()">Edit</span>
+                    <div class="form-group" ng-repeat="field in fields">
+                        {{field.label}}: {{$parent.consumer[field.key]}}
+                        <span class="account-edit" ng-show="field.editable" ng-click="showEdit(field)">Edit</span>
+                        <img ng-show="field.loading" src="/assets/image/loading.gif" alt="loading" />
+                        <img ng-show="field.success" src="/assets/image/ok.png" alt="success" />
+                        <p ng-show="field.error">{{field.error}}</p>
+                        <div ng-hide="field.editable">
+                            <input type="text" class="form-control" ng-model="$parent.editConsumer[field.key]" />
+                            <button type="button" class="btn btn-success" ng-click="edit(field)">Edit</button>
+                            <button type="button" class="btn" ng-click="cancelEdit(field)">Annuler</button>
+                        </div>
+                    </div>
                 </fieldset>
             </ui:define>
 
