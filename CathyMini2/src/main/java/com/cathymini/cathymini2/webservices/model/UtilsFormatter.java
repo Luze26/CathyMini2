@@ -20,4 +20,9 @@ public class UtilsFormatter {
     public static boolean checkMail(String mail) {
         return mail != null && pattern.matcher(mail).matches();
     }
+
+    public static boolean checkZipCode(String zipCode) {
+        Integer code = Integer.valueOf(zipCode);
+        return code != null && code >= 1000 && code <= 99999;
+    }
 }

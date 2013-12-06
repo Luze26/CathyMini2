@@ -3,6 +3,7 @@ package com.cathymini.cathymini2.webservices;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
+import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
 import com.cathymini.cathymini2.webservices.model.form.Subscribe;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
@@ -193,6 +194,26 @@ public class ConsumerFacade{
         } else {
             ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
             builder.entity("Missing idLanguage parameter on request");
+            Response res = builder.build();
+            throw new WebApplicationException(res);
+        }
+    }
+
+    /**
+     * Add address
+     */
+    @POST
+    @Path("/addAddress")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public void addAddress(Address address, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        if (address.validate()) {
+            Consumer user = sessionSecuring.getConsumer(request);
+            consumerBean.addAddress(user, address);
+        } else {
+            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+            builder.entity("address error");
             Response res = builder.build();
             throw new WebApplicationException(res);
         }

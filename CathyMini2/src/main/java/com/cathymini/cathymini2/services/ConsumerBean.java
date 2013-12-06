@@ -1,7 +1,9 @@
 package com.cathymini.cathymini2.services;
 
 import com.cathymini.cathymini2.model.Consumer;
+import com.cathymini.cathymini2.model.DeliveryAddress;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
+import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -113,6 +115,13 @@ public class ConsumerBean {
             }
             user.setUsername(newUser.username);
             user.setMail(newUser.mail);
+        }
+    }
+
+    public void addAddress(Consumer user, Address address) throws Exception {
+        if (user != null && address != null) {
+            DeliveryAddress delivery = new DeliveryAddress(user.getUsername(), user.getUsername(), address.address, address.zipCode, address.city);
+            user.addDelivery(delivery);
         }
     }
 
