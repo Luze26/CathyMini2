@@ -23,6 +23,7 @@ angular.module('account')
     $scope.edit = function(field) {
         field.visible = false;
         field.loading = true;
+        field.error = null;
         field.editable = true;
         $http.post("/webresources/consumer/update", $scope.editConsumer).success(function(consumer) {
             field.loading = false;
@@ -32,8 +33,10 @@ angular.module('account')
                 $scope.editConsumer[field.key] = $scope.consumer[field.key];
                 $scope.consumer[field.key] = consumer[field.key];
             }
-        }).error(function() {
+        }).error(function(error ,status) {
+            $scope.editConsumer[field.key] = $scope.consumer[field.key];
             field.loading = false;
+            field.error = error;
         });
     };
     
