@@ -1,4 +1,4 @@
- angular.module('common').
+angular.module('common').
   controller('consumerCtrl', ['$scope', 'consumerService', function($scope, consumerService) {
     
     /**

@@ -3,6 +3,7 @@ package com.cathymini.cathymini2.webservices;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
+import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
 import com.cathymini.cathymini2.webservices.model.form.Subscribe;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
@@ -18,8 +19,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.log4j.Logger;
 
 /**
@@ -46,6 +50,9 @@ public class ConsumerFacade{
     @Secure(Role.ANONYM)
     public ConsumerApi subscribe(Subscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         try {
+            if (!form.validate()) {
+                throw new Exception("form error");
+            }
             // Subscribe the new consumer
             Consumer user = consumerBean.subscribeUser(form.username, form.pwd, form.mail);
             
@@ -164,5 +171,51 @@ public class ConsumerFacade{
             return null;
         }
     }
-            
+
+    /**
+     * Upade consumer
+     *
+     * @return The username if the consumer is connected, else an empty String
+     */
+    @POST
+    @Path("/update")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public ConsumerApi updateConsumer(ConsumerApi consumer, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        if (consumer.validate()) {
+            Consumer user = sessionSecuring.getConsumer(request);
+            try {
+                consumerBean.updateUser(user, consumer);
+                return new ConsumerApi(user);
+            } catch (Exception ex) {
+                throw new Exception("error");
+            }
+        } else {
+            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+            builder.entity("Missing idLanguage parameter on request");
+            Response res = builder.build();
+            throw new WebApplicationException(res);
+        }
+    }
+
+    /**
+     * Add address
+     */
+    @POST
+    @Path("/addAddress")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public void addAddress(Address address, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        if (address.validate()) {
+            Consumer user = sessionSecuring.getConsumer(request);
+            consumerBean.addAddress(user, address);
+        } else {
+            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+            builder.entity("address error");
+            Response res = builder.build();
+            throw new WebApplicationException(res);
+        }
+    }
 }

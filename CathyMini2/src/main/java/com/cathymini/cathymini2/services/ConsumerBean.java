@@ -1,6 +1,9 @@
 package com.cathymini.cathymini2.services;
 
 import com.cathymini.cathymini2.model.Consumer;
+import com.cathymini.cathymini2.model.DeliveryAddress;
+import com.cathymini.cathymini2.webservices.model.ConsumerApi;
+import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,7 +27,7 @@ public class ConsumerBean {
      * @param usr Username
      * @param pwd Password
      * @param mail Mail Adress
-     * @throws JSonErrorMsg 
+     * @throws Exception
      */
     public Consumer subscribeUser(String usr, String pwd, String mail) throws Exception {
         // Check if one of the field is null 
@@ -64,7 +67,7 @@ public class ConsumerBean {
      * Connect the user 'usr'
      * @param usr Username
      * @param pwd Password
-     * @throws JSonErrorMsg 
+     * @throws Exception
      */
     public Consumer connectUser(String usr, String pwd) throws Exception {
         Consumer consumer;
@@ -101,12 +104,32 @@ public class ConsumerBean {
         String message = "The user log out.";
         logger.debug(message);
     }
-    
+
+    public void updateUser(Consumer user, ConsumerApi newUser) throws Exception {
+        if (user != null && newUser != null) {
+            if (!user.getUsername().equals(newUser.username) && findUserByName(newUser.username) != null) {
+                throw new Exception("username already exist");
+            }
+            if (!user.getMail().equals(newUser.mail) && findUserByMail(newUser.mail) != null) {
+                throw new Exception("mail already exist");
+            }
+            user.setUsername(newUser.username);
+            user.setMail(newUser.mail);
+        }
+    }
+
+    public void addAddress(Consumer user, Address address) throws Exception {
+        if (user != null && address != null) {
+            DeliveryAddress delivery = new DeliveryAddress(user.getUsername(), user.getUsername(), address.address, address.zipCode, address.city);
+            user.addDelivery(delivery);
+        }
+    }
+
     /**
      * Remove the user in parameter from the DB
      * @param usr Username
      * @param pwd Password
-     * @throws JSonErrorMsg 
+     * @throws Exception
      */
     public void deleteUser(String usr, String pwd) throws Exception {
         Consumer consumer;
