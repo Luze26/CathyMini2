@@ -4,6 +4,8 @@ angular.module('account')
     $scope.fields = [{label: "Name", key: "username", placeholder: "", success: false, loading: false, editable: true},
         {label: "Email", key: "mail", placeholder: "", success: false, loading: false, editable: true}];
     
+    $scope.address = [];
+    
     var copyConsumer = function() {
         $scope.editConsumer = {"username": $scope.consumer.username, "mail": $scope.consumer.mail};
     };
