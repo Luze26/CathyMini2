@@ -68,19 +68,22 @@ public class CartSession {
          }
     }
     
-    public void removeProduct(Product prod, Cart cart){
+    public int removeProduct(Product prod, Cart cart){
         
+        int place = -1;
         Iterator<CartLine> it = cart.getCartLineCollection().iterator();
-        CartLine myCartLine;
-        while(it.hasNext()){
-            myCartLine = it.next();
+        int i = 0;
+        for(CartLine myCartLine : cart.getCartLineCollection()){
 	// Manipulations avec l'élément actuel
-            if(myCartLine.getProduct() == prod){
+            if(myCartLine.getProduct().getId() == prod.getId()){
                 cart.getCartLineCollection().remove(myCartLine);
+                manager.merge(cart);
+                return i;
             }
+            i++;
         }
         manager.merge(cart);
-        
+        return place;
     }
     
     public boolean subCartLine(CartLine cl, Cart cart){
