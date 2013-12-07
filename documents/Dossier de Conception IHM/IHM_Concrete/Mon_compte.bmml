@@ -1,0 +1,109 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1404" measuredH="604" mockupW="1288" mockupH="598">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="116" y="6" w="800" h="598" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>CathyMini%0Ahttp%3A//www.cathymini.fr/</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::ButtonBar" x="119" y="79" w="795" h="27" measuredW="531" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hrefs>Accueil%26bm%3BAccueil.bmml%26bm%3BAccueil.bmml%26bm%3BAccueil.bmml%2CProduits%26bm%3BProduits.bmml%26bm%3BProduits.bmml%26bm%3BProduits.bmml%2C%2C%2C%2CMon_compte%26bm%3BMon_compte.bmml%26bm%3BMon_compte.bmml%26bm%3BMon_compte.bmml%2CAccueil%26bm%3BAccueil.bmml%26bm%3BAccueil.bmml%26bm%3BAccueil.bmml</hrefs>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%223%2C73%2C103%2C100%22%20href%3D%22Accueil.bmml%22%20alt%3D%22Accueil%22%20id%3D%221%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22103%2C73%2C212%2C100%22%20href%3D%22Produits.bmml%22%20alt%3D%22Produits%22%20id%3D%221%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22501%2C73%2C646%2C100%22%20href%3D%22Mon_compte.bmml%22%20alt%3D%22Mon_compte%22%20id%3D%221%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22646%2C73%2C795%2C100%22%20href%3D%22Accueil.bmml%22%20alt%3D%22Accueil%22%20id%3D%221%22/%3E%0A</map>
+        <selectedIndex>5</selectedIndex>
+        <text>Accueil%2C%20Produits%2C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2C%20FAQ%2C%20Blog%2C%20Mon%20compte%2C%20D%E9connexion</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::TabBar" x="131" y="121" w="770" h="447" measuredW="435" measuredH="100" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>0</selectedIndex>
+        <tabVPosition>top</tabVPosition>
+        <text>Mes%20informations%2C%20Mon%20historique%20d%27achat%2C%20Mes%20abonnements</text>
+        <verticalScrollbar>true</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::Label" x="1089" y="117" w="39" h="-1" measuredW="39" measuredH="21" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Email%20%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="21" controlTypeID="com.balsamiq.mockups::Label" x="1210" y="117" w="49" h="-1" measuredW="49" measuredH="21" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%3Cemail%3E</text>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::Button" x="1358" y="144" w="46" h="27" measuredW="40" measuredH="27" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Ok</text>
+      </controlProperties>
+    </control>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::TextInput" x="1089" y="144" w="269" h="-1" measuredW="174" measuredH="27" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Entrer%20votre%20nouvel%20email%20...</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::Title" x="948" y="63" w="-1" h="-1" measuredW="362" measuredH="43" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Edition%20d%27un%20champ%20%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="37" controlTypeID="__group__" x="153" y="159" w="336" h="124" measuredW="336" measuredH="124" zOrder="8" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Label" x="21" y="30" w="-1" h="-1" measuredW="106" measuredH="21" zOrder="0" locked="false" isInGroup="37">
+          <controlProperties>
+            <text>Nom%20d%27utilisateur%20%3A</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="142" y="30" w="-1" h="-1" measuredW="77" measuredH="21" zOrder="1" locked="false" isInGroup="37">
+          <controlProperties>
+            <text>%3Cusername%3E</text>
+          </controlProperties>
+        </control>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Button" x="290" y="27" w="-1" h="-1" measuredW="46" measuredH="27" zOrder="2" locked="false" isInGroup="37">
+          <controlProperties>
+            <text>Edit</text>
+          </controlProperties>
+        </control>
+        <control controlID="3" controlTypeID="com.balsamiq.mockups::Label" x="21" y="66" w="-1" h="-1" measuredW="39" measuredH="21" zOrder="3" locked="false" isInGroup="37">
+          <controlProperties>
+            <text>Email%20%3A</text>
+          </controlProperties>
+        </control>
+        <control controlID="4" controlTypeID="com.balsamiq.mockups::Label" x="142" y="66" w="-1" h="-1" measuredW="49" measuredH="21" zOrder="4" locked="false" isInGroup="37">
+          <controlProperties>
+            <text>%3Cemail%3E</text>
+          </controlProperties>
+        </control>
+        <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="19" y="100" w="-1" h="-1" measuredW="88" measuredH="21" zOrder="5" locked="false" isInGroup="37">
+          <controlProperties>
+            <text>Mot%20de%20passe%20%3A</text>
+          </controlProperties>
+        </control>
+        <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="142" y="100" w="-1" h="-1" measuredW="49" measuredH="21" zOrder="6" locked="false" isInGroup="37">
+          <controlProperties>
+            <text>%3C*****%3E</text>
+          </controlProperties>
+        </control>
+        <control controlID="7" controlTypeID="com.balsamiq.mockups::Button" x="290" y="63" w="-1" h="-1" measuredW="46" measuredH="27" zOrder="7" locked="false" isInGroup="37">
+          <controlProperties>
+            <text>Edit</text>
+          </controlProperties>
+        </control>
+        <control controlID="8" controlTypeID="com.balsamiq.mockups::Button" x="290" y="97" w="-1" h="-1" measuredW="46" measuredH="27" zOrder="8" locked="false" isInGroup="37">
+          <controlProperties>
+            <text>Edit</text>
+          </controlProperties>
+        </control>
+        <control controlID="9" controlTypeID="com.balsamiq.mockups::SubTitle" x="0" y="0" w="-1" h="-1" measuredW="171" measuredH="27" zOrder="9" locked="false" isInGroup="37">
+          <controlProperties>
+            <text>Vos%20param%EAtres</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::SubTitle" x="153" y="298" w="-1" h="-1" measuredW="149" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Vos%20adresses</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

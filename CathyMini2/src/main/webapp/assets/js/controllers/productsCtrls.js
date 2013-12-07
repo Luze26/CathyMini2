@@ -1,12 +1,12 @@
 angular.module('products').
   controller('productsCtrl', ['$scope', '$http', 'cartService', function($scope, $http, cartService) {
 
-      $scope.selectedItem = [];
-
       /** Search query */
       $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true,
-        napkin: true, minPrice: 0, maxPrice: 100, brand: ""};
+        napkin: true, minPrice: 0, maxPrice: 100, brand: "", flux: [1, 2, 3, 4, 5, 6]};
 
+        /** Path where product's image are stock */
+        $scope.cheminImageProduit = "/assets/product/"
 
       /** Products list */
       $scope.products = [];
@@ -58,7 +58,7 @@ angular.module('products').
         }
       ];
 
-
+      $scope.tmp = true;
 
       $scope.brands = [
         {
@@ -98,21 +98,42 @@ angular.module('products').
         $scope.search.offset = 0;
         $scope.search.length = 20;
         $scope.loadMore = true;
-        $scope.majFlux();
         $scope.loadProducts();
+      };
+
+      /**
+       * Call when we change value of "$scope.search.tampon"
+       */
+      $scope.changeTampon = function() {
+        if($scope.search.tampon === false && $scope.search.napkin === false) {
+          $scope.search.napkin = true;
+        }
+        $scope.refreshSearch();
+      };
+
+      /**
+       * Call when we change value of "$scope.search.napkin"
+       */
+      $scope.changeNapkin = function() {
+        if($scope.search.napkin === false && $scope.search.tampon === false) {
+          $scope.search.tampon = true;
+        }
+        $scope.refreshSearch();
       };
 
       /**
        * 
        * Refresh list of selected flux
        */
-      $scope.majFlux = function() {
-        selectedItem = [];
-        for (select in $scope.selects) {
-          if (select.check) {
-            selectedItem.add(select.id);
+      $scope.refreshFlux = function() {
+        $scope.search.flux = [];
+        for (var i = 0; i < $scope.selects.length; i++) {
+          if ($scope.selects[i].check) {
+            $scope.search.flux.push($scope.selects[i].id);
           }
         }
+        
+        $scope.refreshSearch();
       };
 
       /**
