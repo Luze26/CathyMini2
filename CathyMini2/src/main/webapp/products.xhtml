@@ -63,35 +63,41 @@
                                     </div>
                                     </div>
                                     <div>
-                                            <label>Rechecher par marque </label>
-                                            <input type="text" ng-model="search.brand" placeholder="Search a brand" ng-change="refreshSearch()" />
+                                        <label>Rechecher par marque </label>
+                                        <input type="text" ng-model="search.brand" placeholder="Search a brand" ng-change="refreshSearch()" />
                                     </div>
                                 </td>
                                 <td>
-                                        <div>
-                                            <label for="pPrice">Rechecher par prix </label>
-                                            <div class="controls input-prepend">
-                                                <input type="text" ng-model="search.minPrice" placeholder="Minimum price" ng-change="refreshSearch()" />
-                                                <span class="add-on">€</span>
-                                            </div>
-                                            <div class="controls input-prepend">
-                                                <input type="text" ng-model="search.maxPrice" placeholder="Maximum price" ng-change="refreshSearch()"/>
-                                                <span class="add-on">€</span>
-                                            </div>
-                                        </div>                                
+                                    <div>
+                                        <label for="pPrice">Rechecher par prix </label>
+                                        <div class="controls input-prepend">
+                                            <input type="text" ng-model="search.minPrice" placeholder="Minimum price" ng-change="refreshSearch()" />
+                                            <span class="add-on">€</span>
+                                        </div>
+                                        <div class="controls input-prepend">
+                                            <input type="text" ng-model="search.maxPrice" placeholder="Maximum price" ng-change="refreshSearch()"/>
+                                            <span class="add-on">€</span>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
-                        </table>    
+                        </table>
                         </form>
                         <!-- <search-directive productslist="products"></search-directive> -->
                         <cart-directive></cart-directive>
                     </div>
-                    <div class="row col-md-8" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
-                        <div ng-repeat="prod in products" class="product col-xs-12 col-sm-6 col-md-6">
-                            <div>
-                               <!-- <img class="imgGallery" ng-src="{{prod.pictureUrl}}{{hash}}"/>     -->  
-                                {{prod.name}} <br /> {{prod.type}} <br /> {{prod.marque}} <br /> {{prod.flux}}<br /> {{prod.price}}€</div>
-                            <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
+                    <div class="col-xs-12" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
+                        <div ng-repeat="prod in products" class="product col-xs-12 col-sm-6 col-md-4">
+                            <div class="col-md-4 image">
+                               <img class="imgGallery img-thumbnail" ng-src="{{prod.pictureUrl}}"/>
+                               <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
+                            </div>
+                            <div class="col-md-7 col-md-offset-1 infos">
+                                <div class="type">{{prod.type}}</div>
+                                <div class="mid">{{prod.name}} <br /> {{prod.marque}}</div>
+                                <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>
+                                <div class="price">{{prod.price}}€</div>
+                            </div>
                         </div>
                     </div>
                 </div>

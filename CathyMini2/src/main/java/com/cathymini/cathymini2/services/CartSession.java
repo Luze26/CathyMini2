@@ -23,7 +23,6 @@ import org.apache.log4j.Logger;
  */
 @Stateless
 public class CartSession {
-    private Cart cart;
 
     @PersistenceContext(unitName = "com.cathymini_CathyMini2_PU")
     private EntityManager manager;
@@ -34,57 +33,87 @@ public class CartSession {
         Cart cart = new Cart();
         cart.setConsumer(cons);
         cart.setCartLineCollection(new ArrayList<CartLine>());
-        manager.persist(cart);
+        if(cons != null)
+            manager.persist(cart);
         return cart;
-    } 
+    }
     
-    public void addProduct(Product prod, int qu, Cart cart){
+    public void addProduct(Product prod, int qu, Cart cart, boolean persist){
         CartLine cl = new CartLine(prod, qu);
-        manager.persist(cl);
-        addProduct(cl, cart);
+        addProduct(cl, cart, persist);
     }
     
-    public void addProduct(Product prod, Cart cart){
-        addProduct(prod, 1, cart);
+    public void addProduct(Product prod, Cart cart, Boolean persist){
+        addProduct(prod, 1, cart, persist);
     }
     
-    public void addProduct(CartLine cl, Cart cart){
-        cart.getCartLineCollection().add(cl);
-        manager.merge(cart);
+     
+    public void addProduct(CartLine cl, Cart cart, boolean persist){
+         if(cart.getCartLineCollection() == null){
+             cart.setCartLineCollection(new ArrayList<CartLine>());
+         }
+         Boolean find = false;
+         for(CartLine clTemp : cart.getCartLineCollection()){
+             if(clTemp.getProduct().getId() == cl.getProduct().getId()){
+                 int q = clTemp.getQuantity() + cl.getQuantity();
+                 changeQuantityCartLine(clTemp, q, persist);
+                 find = true;
+             }
+         }
+         if(!find)
+            cart.getCartLineCollection().add(cl);
+         if(persist){
+            manager.persist(cl);
+            manager.merge(cart);
+         }
     }
     
-    public void removeProduct(Product prod){
+    public int removeProduct(Product prod, Cart cart){
         
+        int place = -1;
         Iterator<CartLine> it = cart.getCartLineCollection().iterator();
-        CartLine myCartLine;
-        while(it.hasNext()){
-            myCartLine = it.next();
+        int i = 0;
+        for(CartLine myCartLine : cart.getCartLineCollection()){
 	// Manipulations avec l'élément actuel
-            if(myCartLine.getProduct() == prod){
+            if(myCartLine.getProduct().getId() == prod.getId()){
                 cart.getCartLineCollection().remove(myCartLine);
+                manager.merge(cart);
+                return i;
             }
+            i++;
         }
-        
+        manager.merge(cart);
+        return place;
     }
     
-    public boolean subCartLine(CartLine cl){
+    public boolean subCartLine(CartLine cl, Cart cart){
         cart.getCartLineCollection().remove(cl);
         Query query = manager.createNamedQuery("DeleteCartLineById", CartLine.class); 
         query.setParameter("id", cl.getCartLineID());
         return query.executeUpdate() == 1;
     }
     
-    public void subProduct(String nom, Float flux){
-        subCartLine(getCartLine(nom, flux));
+    public void subProduct(String nom, Float flux, Cart cart){
+        subCartLine(getCartLine(nom, flux, cart), cart);
     }
     
-    public CartLine getCartLine(String nom, Float flux){
+    public CartLine getCartLine(String nom, Float flux, Cart cart){
         CartLine cLine = null;
         Iterator<CartLine> it = cart.getCartLineCollection().iterator();
         CartLine myCartLine;
         while(it.hasNext()){
             myCartLine = it.next();
             if(myCartLine.getProduct().getName().equals(nom) && myCartLine.getProduct().getFlux() == flux){
+                cLine = myCartLine;
+            }
+        }
+        return cLine;
+    }
+    
+    public CartLine getCartLineByID(Long id, Cart cart){
+        CartLine cLine = null;
+        for(CartLine myCartLine : cart.getCartLineCollection()){
+            if(myCartLine.getProduct().getId() == id){
                 cLine = myCartLine;
             }
         }
@@ -102,7 +131,7 @@ public class CartSession {
      * Empty the cart.
      */
     @Remove
-    public String clear() {
+    public String clear(Cart cart) {
         cart.getCartLineCollection().clear();
         return "Empty cart";
     }
@@ -129,27 +158,55 @@ public class CartSession {
     
     public void addCartToConsumer(Consumer cons, Cart cart){
         cart.setConsumer(cons);
+        manager.merge(cart);
+    }
+    
+    public void addItemToCartLine(CartLine cl, Boolean persist){
+        cl.setQuantity(cl.getQuantity()+1);
+        if(persist)
+            manager.merge(cl);
+    }
+    
+    public void changeQuantityCartLine(CartLine cl, int quantity, Boolean persist){
+        logger.debug("quantity : "+quantity);
+        cl.setQuantity(quantity);
+        logger.debug("apres setQuantity");
+        if(persist)
+            manager.merge(cl);
+        logger.debug("fin fonction");
     }
     
     public String mergeCart(Consumer cons, Cart cartTemp){
         Cart cartCons = findCartByConsumer(cons);
-        if(cartCons.getCartLineCollection().isEmpty()){
-            addCartToConsumer(cons, cartTemp);
-        }
-        else {
-            for(CartLine cl : cartCons.getCartLineCollection()){
-                for(CartLine clTemp : cartTemp.getCartLineCollection())
-                {
-                    if(cl.getProduct() == clTemp.getProduct()){
-                        //change the quantity is it's the same product
-                        cl.setQuantity(cl.getQuantity()+clTemp.getQuantity());
+        if(cartCons != null){
+            if(cartCons.getCartLineCollection().isEmpty()){
+                addCartToConsumer(cons, cartTemp);       
+            }
+            else {
+                for(CartLine clTemp : cartTemp.getCartLineCollection()){
+                    boolean find = false;
+                    for(CartLine cl : cartCons.getCartLineCollection())
+                    {
+                        logger.debug("id cl : "+cl.getProduct().getId()+ "// id clTemp : "+ clTemp.getProduct().getId());
+                        if(cl.getProduct().getId() == clTemp.getProduct().getId()){
+                            //change the quantity is it's the same product
+                            logger.debug("change quantity to a product");
+                            cl.setQuantity(cl.getQuantity()+clTemp.getQuantity());
+                            find = true;
+                        }
                     }
-                    else{
-                        //add the product
-                        addProduct(clTemp, cartCons);
+                    if(!find){
+                        logger.debug("product not found so add to cart cartLIne");
+                            //add the product
+                            addProduct(clTemp, cartCons, true);
                     }
                 }
+                logger.debug("merge finish");
             }
+        }
+        else{
+            addCartToConsumer(cons, cartTemp);
+            logger.debug("pas de cart pour le consumer donc mis a jour");
         }
         return "";
     }

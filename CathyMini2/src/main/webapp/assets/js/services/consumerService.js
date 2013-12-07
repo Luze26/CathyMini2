@@ -1,3 +1,6 @@
+/**
+ * Service to manage connection and consumer information
+ */
 angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q', function($http, $rootScope, $q) {
     
     var service = {};
@@ -13,16 +16,26 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
      */
     service.consumer = {};
     
+    var connectUser = function(user) {
+        if(!service.isConnected) {
+            service.consumer.username = user.username;
+            service.isConnected = true;
+            $rootScope.$broadcast('consumerConnect', user);
+        }        
+    };
+    
     /**
      * Logout a connected user
      */
     service.disconnect = function() {        
-        $http.post("http://localhost:8080//webresources/consumer/logout")
+        $http.post("/webresources/consumer/logout")
             .success(function() { 
                 service.isConnected = false;
+                $rootScope.$broadcast('consumerDisconnect');
             })
             .error(function(data, status, headers, config) { 
                 service.isConnected = false;
+                $rootScope.$broadcast('consumerDisconnect');
             });
     };
     
@@ -33,12 +46,10 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
      */
     service.connect = function(consumer) {     
         var deferred = $q.defer();
-        $http.post("http://localhost:8080//webresources/consumer/connect", consumer)
-                .success(function() { //success
-                    service.consumer.username = consumer.user;
-                    service.isConnected = true;
+        $http.post("/webresources/consumer/connect", consumer)
+                .success(function(user) { //success
+                    connectUser(user);
                     deferred.resolve();
-                    $rootScope.$broadcast('consumerConnect');
                 })
                 .error(function(data, status, headers, config) {  // error
                     if (status === 400) {
@@ -58,10 +69,9 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
      */
     service.subscribe = function(subscriber) {
         var deferred = $q.defer();
-        $http.post("http://localhost:8080//webresources/consumer/suscribe", subscriber)
-            .success(function() { 
-                service.consumer.username = subscriber.username;
-                service.isConnected = true;
+        $http.post("/webresources/consumer/subscribe", subscriber)
+            .success(function(user) { 
+                connectUser(user);
                 deferred.resolve();})
             .error(function(data, status, headers, config) {
                 if (status === 400) {
@@ -77,13 +87,10 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
      * Get current user information on the server
      */
     service.getCurrentUser = function() {
-        $http.get("http://localhost:8080//webresources/consumer/seeCurrent")
-            .success(function(username) { // success
-                if (username === "") {
-                    service.isConnected = false;
-                } else {
-                    service.isConnected = true;
-                    service.consumer.username = username;
+        $http.get("/webresources/consumer/seeCurrent")
+            .success(function(user) { // success
+                if(user) {
+                    connectUser(user);
                 }
             })
             .error(function(data, status, headers, config) { // error

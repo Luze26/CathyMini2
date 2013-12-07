@@ -16,12 +16,15 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
- * The class {@link Purchase} is an EJB Entity representing a list of {@link Product} buy by a {@link Consumer}.
+ * The class {@link Purchase} is an EJB Entity representing a list of {@link PurchaseLine} buy by a {@link Consumer}.
  * @see PurchaseSubscription
  * @author Kraiss
  */
@@ -30,6 +33,10 @@ import javax.persistence.Table;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="purchaseType", discriminatorType=DiscriminatorType.STRING)
 @DiscriminatorValue("Purchase")
+@NamedQueries({
+    @NamedQuery(name="PurchaseById", query="select object(p) from Purchase p where p.transactionID = :transactionID"),
+    @NamedQuery(name="PurchaseByConsumer", query="select object(p) from Purchase p where p.consumer = :consumer")
+})
 public class Purchase implements Serializable {
     @Id
     @GeneratedValue
@@ -38,8 +45,8 @@ public class Purchase implements Serializable {
     private Long transactionID;
     
     @OneToMany
-    /** Purchase {@link Product} collection */
-    private Collection<Product> productCollection;
+    /** Purchase {@link PurchaseLine} collection */
+    private Collection<PurchaseLine> purchaseLineCollection;
     
     @ManyToOne
     /* Purchase owner */
@@ -52,6 +59,14 @@ public class Purchase implements Serializable {
     @OneToOne
     /** Consumer {@link PaymentInfo} for the purchase */
     private PayementInfo payementInfo;
+    
+    /** List of payement dates for the purchase (unique for Purchase, multiple for Subscription) */
+    @Column(name="payementDate")
+    private Long PayementDate;
+    
+    /** List of delivery dates for the purchase (unique for Purchase, multiple for Subscription) */
+    @Column(name="deliveryDate")
+    private Long DeliveryDate;
 
     public DeliveryAddress getDeliveryAddress() {
         return deliveryAddress;
@@ -85,12 +100,27 @@ public class Purchase implements Serializable {
         this.consumer = consumer;
     }
 
-    public Collection<Product> getProductCollection() {
-        return productCollection;
+    public Collection<PurchaseLine> getPurchaseLineCollection() {
+        return purchaseLineCollection;
     }
 
-    public void setProductCollection(Collection<Product> productCollection) {
-        this.productCollection = productCollection;
+    public void setPurchaseLineCollection(Collection<PurchaseLine> purchaseLineCollection) {
+        this.purchaseLineCollection = purchaseLineCollection;
     }
-    
+
+    public Long getPayementDate() {
+        return PayementDate;
+    }
+
+    public void setPayementDate(Long PayementDate) {
+        this.PayementDate = PayementDate;
+    }
+
+    public Long getDeliveryDate() {
+        return DeliveryDate;
+    }
+
+    public void setDeliveryDate(Long DeliveryDate) {
+        this.DeliveryDate = DeliveryDate;
+    }
 }

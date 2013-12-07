@@ -1,13 +1,19 @@
 package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Consumer;
+import com.cathymini.cathymini2.model.DeliveryAddress;
 import com.cathymini.cathymini2.services.ConsumerBean;
-import com.cathymini.cathymini2.webservices.model.JSonErrorMsg;
+import com.cathymini.cathymini2.webservices.model.ConsumerApi;
+import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
 import com.cathymini.cathymini2.webservices.model.form.Subscribe;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.logging.Level;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,8 +22,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.log4j.Logger;
 
 /**
@@ -31,44 +40,53 @@ public class ConsumerFacade{
     
     @EJB
     private ConsumerBean consumerBean;
-    
+
+    /**
+     * Rest service to subscribe a new consumer
+     *
+     * @return A String containing the service termination message
+     */
     @POST
-    @Path("/suscribe")
+    @Path("/subscribe")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.ANONYM)
-    /**
-     * Rest service to subscribe a new consumer
-     * @return A String containing the service termination message
-     */
-    public String suscribe(Subscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
-        
+    public ConsumerApi subscribe(Subscribe form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         try {
+            if (!form.validate()) {
+                throw new Exception("form error");
+            }
             // Subscribe the new consumer
-            Consumer user = consumerBean.suscribeUser(form.username, form.pwd, form.mail);
+            Consumer user = consumerBean.subscribeUser(form.username, form.pwd, form.mail);
             
             // Automatically connect the consumer
             sessionSecuring.openSession(request, user);
-            
-            logger.debug("Create user = " + form.username +" :: "+ form.pwd +" :: " + form.mail);
-            return "You suscribe !";
-            
-        } catch (JSonErrorMsg ex) {
-            response.setStatus(400);
-            return ex.getMessage();
+            logger.debug("Create user = " + form.username + " :: " + form.pwd + " :: " + form.mail);
+            return new ConsumerApi(user);
+        } catch (Exception ex) {
+            try {
+                response.sendError(400, ex.getMessage());
+            } catch (IOException ex1) {
+                logger.debug("Failed to send error after user creation");
+            }
+            return null;
         }
     }
-    
+
+    /**
+     * Rest service to connect a consumer
+     *
+     * @param form Connection form
+     * @param request
+     * @param response
+     * @return A String containing the service termination message
+     */
     @POST
     @Path("/connect")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.ANONYM)
-    /**
-     * Rest service to connect a consumer
-     * @return A String containing the service termination message
-     */
-    public String connect(Connect form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+    public ConsumerApi connect(Connect form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         
         logger.debug("Connect user " + form.user);
         try {
@@ -78,37 +96,45 @@ public class ConsumerFacade{
             // Connect the consumer
             sessionSecuring.openSession(request, user);
             
-            return "You are connected!";
+            return new ConsumerApi(user);
         } catch (Exception ex) {
-            response.setStatus(400);
-            return ex.getMessage();
+            try {
+                response.sendError(400, ex.getMessage());
+            } catch (IOException ex1) {
+                java.util.logging.Logger.getLogger(ConsumerFacade.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            return null;
         }
     }
-    
+
+    /**
+     * Rest service to logout a consumer
+     *
+     * @param request
+     * @param response
+     * @return A String containing the service termination message
+     */
     @POST
     @Path("/logout")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.MEMBER)
-    /**
-     * Rest service to logout a consumer
-     * @return A String containing the service termination message
-     */
     public String logout(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         sessionSecuring.closeSession(request);
         consumerBean.logout();
         return "You logout.";
     }
-    
+
+    /**
+     * Rest service to delete a consumer
+     *
+     * @return A String containing the service termination message
+     */
     @POST
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.MEMBER)
-    /**
-     * Rest service to delete a consumer
-     * @return A String containing the service termination message
-     */
     public String delete(Connect form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         
         logger.debug("Delete user " + form);
@@ -129,23 +155,88 @@ public class ConsumerFacade{
             return ex.getMessage();
         }
     }
-    
+
+    /**
+     * Rest service to check if the client is connected
+     *
+     * @return The username if the consumer is connected, else an empty String
+     */
     @GET
     @Path("/seeCurrent")
     @Produces(MediaType.APPLICATION_JSON)
-    /**
-     * Rest service to check if the client is connected
-     * @return The username if the consumer is connected, else an empty String
-     */
-    public String seeCurrent(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+    public ConsumerApi seeCurrent(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         
         Consumer user = sessionSecuring.getConsumer(request);
         
         if (user != null) {
-            return user.getUsername();
+            return new ConsumerApi(user);
         } else {
-            return "";
+            return null;
         }
     }
-            
+
+    /**
+     * Upade consumer
+     *
+     * @return The username if the consumer is connected, else an empty String
+     */
+    @POST
+    @Path("/update")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public ConsumerApi updateConsumer(ConsumerApi consumer, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        if (consumer.validate()) {
+            Consumer user = sessionSecuring.getConsumer(request);
+            try {
+                consumerBean.updateUser(user, consumer);
+                return new ConsumerApi(user);
+            } catch (Exception ex) {
+                throw new Exception("error");
+            }
+        } else {
+            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+            builder.entity("Missing idLanguage parameter on request");
+            Response res = builder.build();
+            throw new WebApplicationException(res);
+        }
+    }
+
+    /**
+     * Add address
+     */
+    @POST
+    @Path("/addAddress")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public void addAddress(Address address, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        if (address.validate()) {
+            Consumer user = sessionSecuring.getConsumer(request);
+            consumerBean.addAddress(user, address);
+        } else {
+            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+            builder.entity("address error");
+            Response res = builder.build();
+            throw new WebApplicationException(res);
+        }
+    }
+
+    /**
+     * Get address
+     */
+    @GET
+    @Path("/address")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public Collection<Address> address(@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        Consumer user = sessionSecuring.getConsumer(request);
+        Collection<DeliveryAddress> deliveryAddress = user.getDeliveryCollection();
+        Collection<Address> address = new ArrayList<Address>();
+        for (DeliveryAddress addr : deliveryAddress) {
+            address.add(new Address(addr));
+        }
+        return address;
+    }
 }

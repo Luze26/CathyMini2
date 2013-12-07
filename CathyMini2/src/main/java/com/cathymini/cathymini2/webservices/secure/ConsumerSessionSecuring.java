@@ -58,7 +58,7 @@ public class ConsumerSessionSecuring {
                 Thread.sleep(sessionTimeOut);
             } catch (InterruptedException ex) {
             }
-            execute();
+            //execute();
         }
         
         /**

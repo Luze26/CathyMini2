@@ -78,7 +78,7 @@ public class ProductFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Product edit(EditProduct form, @Context final HttpServletResponse response) {
-        return productBean.editProduct(form.id, form.name, form.price);
+        return productBean.editProduct(form.id, form.name, form.marque, form.flux, form.price, form.description);
     }
     
     
