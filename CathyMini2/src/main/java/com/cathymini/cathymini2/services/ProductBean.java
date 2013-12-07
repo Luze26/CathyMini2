@@ -127,9 +127,9 @@ public class ProductBean {
     }
 
     private Query constructQuery(ProductSearch searchQuery) {
-        String query = "SELECT p FROM Product p WHERE p.name";
+        String query = "SELECT p FROM Product p WHERE";
         if (searchQuery.input != null) {
-            query += " LIKE '%" + searchQuery.input + "%'";
+            query += " p.name LIKE '%" + searchQuery.input.toUpperCase() + "%'";
         }
         if (searchQuery.tampon) {
             System.out.println("TAMPON");
@@ -146,8 +146,7 @@ public class ProductBean {
             query += " AND p.type = \"serviette\"";
         } else {
             System.out.println("RIEN");
-            query = "SELECT p FROM Product p WHERE p.name = \"Rien\"";
-            return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
+            query += " AND p.type = \"rien\"";
         }
         boolean first = true;
         for(Float s : searchQuery.flux){
@@ -158,7 +157,11 @@ public class ProductBean {
                  query += " OR  p.flux = "+s;
             }
         }
-        query += " )";
+        if(!first) {
+            query += " )";
+        } else {
+            query += " AND p.flux = " + -1.0;
+        }
         if (searchQuery.brand != null) {
             query += " AND p.marque LIKE '%" + searchQuery.brand + "%'";
         }
