@@ -90,7 +90,10 @@
                                <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
                             </div>
                             <div class="col-md-7 col-md-offset-1 infos">
-                                <div class="type">{{prod.type}}</div>
+                                <div class="type">
+                                    <img ng-if="prod.type==='serviette'" src="assets/image/serviette.png"/>
+                                    <img ng-if="prod.type==='tampon'" src="assets/image/tampon.gif"/>
+                                </div>
                                 <div class="mid">{{prod.name}} <br /> {{prod.marque}}</div>
                                 <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>
                                 <div class="price">{{prod.price}}€</div>
