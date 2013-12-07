@@ -9,9 +9,51 @@
  
     	<ui:composition template="template/commonLayout.xhtml">
             <ui:param name="ngApp" value="index" />
+         <!--   <ui:param name="ngController" value="indexCtrl" /> -->
             <ui:param name="title" value="CathyMini" />
             <ui:define name="content">
-                <h2> Hello </h2>
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                          <li data-target="carousel-example-generic" data-slide-to="0" class="active"></li>
+                          <li data-target="carousel-example-generic" data-slide-to="1"></li>
+                          <li data-target="carousel-example-generic" data-slide-to="2"></li>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                          <div class="item active" align="center"><img src="/assets/image/bootstrap-mdo-sfmoma-01.jpg" alt="Photo de montagne"   /></div>
+                          <div class="item" align="center"><img src="/assets/image/bootstrap-mdo-sfmoma-02.jpg" alt="Photo de montagne" align="center" /></div>
+                          <div class="item" align="center"><img src="/assets/image/bootstrap-mdo-sfmoma-03.jpg" alt="Photo de montagne" align="center" /></div>
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                          <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                          <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>              
+                  </div>
+                <div align="left">
+                    <ul id="navigation">
+                        <li><a href="#" title="aller à la section 5">Présentation de CathyMini</a></li>
+                        <li><a href="#" title="aller à la section 4">Les avantages de CathyMini</a></li>
+                        <li><a href="#" title="aller à la section 1">Comment utiliser le site</a></li>
+                        <li><a href="#" title="aller à la section 2">Notre histoire</a></li>
+                        <li><a href="#" title="aller à la section 3">Nous contacter</a></li>                      
+                    </ul>
+                </div>
+                <div align="right">
+                    test
+                       <!-- <div ng-repeat="art in listArticle" class="product col-xs-12 col-sm-6 col-md-6">
+
+                                test <br />
+                                {{art}} <br /> 
+                                test <br />
+                           
+                        </div> -->
+                </div>
             </ui:define>
             
             <ui:define name="scripts">

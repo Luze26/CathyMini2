@@ -1,11 +1,11 @@
 angular.module('products').
   controller('productsCtrl', ['$scope', '$http', 'cartService', function($scope, $http, cartService) {
 
-      $scope.selectedItem = [];
+                $scope.selectedItem = [ 1, 2, 3, 4, 5, 6];
 
-      /** Search query */
-      $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true,
-        napkin: true, minPrice: 0, maxPrice: 100, brand: ""};
+                /** Search query */
+                $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true, 
+                    napkin: true, minPrice: 0, maxPrice: 100, brand: "", flux: $scope.selectedItem};
 
 
       /** Products list */

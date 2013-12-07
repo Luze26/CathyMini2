@@ -149,11 +149,16 @@ public class ProductBean {
             query = "SELECT p FROM Product p WHERE p.name = \"Rien\"";
             return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
         }
-/*        for(String s : searchQuery.flux){
-            if(Float.parseFloat(s) != 0.0) {
-                query += " AND p.flux = "+s;
+        boolean first = true;
+        for(Float s : searchQuery.flux){
+            if(s != 0.0 && first) {
+                query += " AND ( p.flux = "+s;
+                first = false;
+            } else if (s!= 0.0){
+                 query += " OR  p.flux = "+s;
             }
-        }*/
+        }
+        query += " )";
         if (searchQuery.brand != null) {
             query += " AND p.marque LIKE '%" + searchQuery.brand + "%'";
         }
@@ -167,7 +172,7 @@ public class ProductBean {
             System.out.println("MAXPRIX");
             query += " AND p.price <= " + searchQuery.maxPrice;
         }
-
+        System.out.println(query);
         query += " ORDER BY p." + searchQuery.orderBy + " " + (searchQuery.orderByASC ? "ASC" : "DESC");
 
         return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);

@@ -1,14 +1,18 @@
 package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Consumer;
+import com.cathymini.cathymini2.model.DeliveryAddress;
 import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
+import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
 import com.cathymini.cathymini2.webservices.model.form.Subscribe;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.logging.Level;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -196,5 +200,43 @@ public class ConsumerFacade{
             Response res = builder.build();
             throw new WebApplicationException(res);
         }
+    }
+
+    /**
+     * Add address
+     */
+    @POST
+    @Path("/addAddress")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public void addAddress(Address address, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        if (address.validate()) {
+            Consumer user = sessionSecuring.getConsumer(request);
+            consumerBean.addAddress(user, address);
+        } else {
+            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+            builder.entity("address error");
+            Response res = builder.build();
+            throw new WebApplicationException(res);
+        }
+    }
+
+    /**
+     * Get address
+     */
+    @GET
+    @Path("/address")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public Collection<Address> address(@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        Consumer user = sessionSecuring.getConsumer(request);
+        Collection<DeliveryAddress> deliveryAddress = user.getDeliveryCollection();
+        Collection<Address> address = new ArrayList<Address>();
+        for (DeliveryAddress addr : deliveryAddress) {
+            address.add(new Address(addr));
+        }
+        return address;
     }
 }
