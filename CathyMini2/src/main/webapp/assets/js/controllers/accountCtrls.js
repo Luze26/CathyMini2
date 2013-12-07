@@ -1,6 +1,8 @@
 angular.module('account')
 .controller('accountSettingsCtrl', ['$scope', '$http', 'consumerService', function($scope, $http, consumerService) {
 
+    $scope.newAddress = {};
+    
     $scope.fields = [{label: "Name", key: "username", placeholder: "", success: false, loading: false, editable: true},
         {label: "Email", key: "mail", placeholder: "", success: false, loading: false, editable: true}];
     
@@ -47,4 +49,19 @@ angular.module('account')
         field.editable = true;
     };
   
+    /** Popup element **/
+    var modal = angular.element("#addAddressModal");
+    
+    $scope.addAddress = function() {
+        var newAddress = $scope.newAddress;
+        consumerService.addAddress(newAddress).success(function() {
+            $scope.address.push(newAddress);
+            modal.modal('hide');
+        });
+    };
+    
+    consumerService.getAddress().success(
+            function(data) {
+                $scope.address = data;
+            });
 }]);

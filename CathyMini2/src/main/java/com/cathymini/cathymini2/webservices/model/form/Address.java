@@ -13,6 +13,9 @@ public class Address {
     public String zipCode;
     public String city;
 
+    public Address() {
+    }
+
     public Address(DeliveryAddress addr) {
         address = addr.getAddress();
         zipCode = addr.getZipCode();
