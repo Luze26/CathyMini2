@@ -1,18 +1,24 @@
 angular.module('index').
         controller('indexCtrl', ['$scope', '$http',  function($scope) {
 
-        $scope.listArticle = [];
+        $scope.articles = [];
         
-        $scope.getArticle = function() {      
-        /*    var xmlDoc = xmlParse(new URL("http://localhost:8080/assets/product/listeProduit.xml"));
-            var markers = xmlDoc.documentElement.getElementsByTagName("article");
+         $scope.loadArticles = function() {
+        if ($scope.loadMore) {
+          $http.post("/webresources/article/all", $scope.search)
+            .success(function(data) {
+              if (data.length < $scope.search.length) { //If there is no more product to load, end of the list
+                $scope.loadMore = false;
+              }
 
-            for (var i = 0; i < markers.length; i++) {
-                            var x = markers[i].textContent;
-                            $scope.listArticle = $scope.listArticle.concat(x);
-                            alert(x);
-             }*/
-            alert(test);
-        };
+              if ($scope.search.offset === 0) { //If it's a new search, we reset the list
+                $scope.articles = [];
+              }
+
+              $scope.search.offset += $scope.search.length; //Increment the offset
+              $scope.articles = $scope.articles.concat(data); //Add last loaded products
+            });
+        }
+      };
  
 }]);    

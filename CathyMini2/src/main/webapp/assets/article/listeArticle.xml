@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+
+<liste>
+	<article typeA="news">
+		<titre> Presentation de CathyMini</titre>
+                <type>presentation</type>
+		<description>NETT</description>
+		<detail>false</detail>
+		<image> null</image>
+	</article>
+        <article typeA="news">
+		<titre> About Us</titre>
+                <type>about</type>
+		<description>NETT</description>
+		<detail>false</detail>
+		<image> null</image>
+	</article>
+        <article typeA="news">
+		<titre> Contactez nous</titre>
+                <type>contact</type>
+		<description>NETT</description>
+		<detail>false</detail>
+		<image> null</image>
+	</article>
+        <article typeA="promo">
+		<titre> -20% sur les tampons </titre>
+                <type>promo</type>
+		<description>NETT</description>
+		<detail>false</detail>
+		<image> null</image>
+	</article>
+</liste>
