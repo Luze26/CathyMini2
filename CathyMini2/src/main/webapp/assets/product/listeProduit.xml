@@ -122,22 +122,22 @@
 		  <flux>
 			  <name>1</name>
 			  <prix>7</prix>
-			  <img>tampax_pearl_1.jpg</img>
+			  <img>tampax_pearl_1.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
-			  <img>tampax_pearl_2.jpg</img>
+			  <img>tampax_pearl_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
-			  <img>tampax_pearl_4.jpg</img>
+			  <img>tampax_pearl_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
-			  <img>tampax_pearl_5.jpg</img>
+			  <img>tampax_pearl_5.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -157,22 +157,22 @@
 			<flux>
 			  <name>1</name>
 			  <prix>7</prix>
-			  <img>tampax_compak_1.jpg</img>
+			  <img>tampax_compak_1.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
-			   <img>tampax_compak_2.jpg</img>
+			   <img>tampax_compak_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
-			   <img>tampax_compak_4.jpg</img>
+			   <img>tampax_compak_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
-			   <img>tampax_compak_5.jpg</img>
+			   <img>tampax_compak_5.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -190,12 +190,12 @@
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
-			  <img>tampax_compak_fresh_2.jpg</img>
+			  <img>tampax_compak_fresh_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
-			  <img>tampax_compak_fresh_4.jpg</img>
+			  <img>tampax_compak_fresh_4.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -213,22 +213,22 @@
 			<flux>
 			  <name>1</name>
 			  <prix>12</prix>
-			  <img>tampax_classique_1.jpg</img>
+			  <img>tampax_classique_1.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
 			  <prix>7</prix>
-			  <img>tampax_classique_2.jpg</img>
+			  <img>tampax_classique_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
-			  <img>tampax_classique_4.jpg</img>
+			  <img>tampax_classique_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
 			  <prix>7</prix>
-			  <img>tampax_classique_5.jpg</img>
+			  <img>tampax_classique_5.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
