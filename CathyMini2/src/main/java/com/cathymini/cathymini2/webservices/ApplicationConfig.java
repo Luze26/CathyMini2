@@ -36,6 +36,7 @@ public class ApplicationConfig extends Application {
      * given list with all resources defined in the project.
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.cathymini.cathymini2.webservices.ArticleFacade.class);
         resources.add(com.cathymini.cathymini2.webservices.CartFacade.class);
         resources.add(com.cathymini.cathymini2.webservices.ConsumerFacade.class);
         resources.add(com.cathymini.cathymini2.webservices.ProductFacade.class);

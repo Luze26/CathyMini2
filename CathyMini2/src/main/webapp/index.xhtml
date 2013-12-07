@@ -35,7 +35,8 @@
                           <span class="glyphicon glyphicon-chevron-right"></span>
                         </a>              
                   </div>
-                <div align="left">
+                <div class="row">
+                <div class="col-md-2">
                     <ul id="navigation">
                         <li><a href="#" title="aller à la section 5">Présentation de CathyMini</a></li>
                         <li><a href="#" title="aller à la section 4">Les avantages de CathyMini</a></li>
@@ -44,16 +45,34 @@
                         <li><a href="#" title="aller à la section 3">Nous contacter</a></li>                      
                     </ul>
                 </div>
-                <div align="right">
-                    test
-                       <!-- <div ng-repeat="art in listArticle" class="product col-xs-12 col-sm-6 col-md-6">
-
-                                test <br />
-                                {{art}} <br /> 
-                                test <br />
-                           
+                    <div class="col-md-10" infinite-scroll="loadArticles()" infinite-scroll-distance="2">
+                        <div ng-repeat="art in articles">
+                            <div class="col-md-3 image">
+                               <img class="imgGallery img-thumbnail" ng-src="{{art.pictureUrl}}"/>
+                            </div>
+                            <div class="col-md-7">
+                                <h3 class="type">{{art.titre}}</h3>
+                                <h4 class="mid">{{art.description}}</h4>
+                                <div>{{art.detail}}</div>
+                                 <a class="btn" href="#carousel-example-generic" >haut2page</a>
+                            </div>
+                        </div>
+                    </div>
+          <!--     <div class="col-md-10">
+                            <div class="col-md-3 image">
+                               <img class="imgGallery img-thumbnail" ng-src="/assets/image/bootstrap-mdo-sfmoma-01.jpg"/>
+                            </div>
+                            <div class="col-md-7">
+                                <h3 class="type">Titre article</h3>
+                                <h4 class="mid">qzjsqdiuqsdlcbqljhx gYUSFjlqhsdfvl QSsgfqljhsdfbqlhr gqlh fqsdf qsugf qkjsfgyqflhjzef</h4>
+                                <div> ghshfgmhsp gsdfhgmjsfhgjsfhghsmfdgmsguhsdflghshgslfguhhqljgqghqjdfgnlhcgmsruthfsg slugqhfghjsbgs lus 
+                                    dhiugfqlghbqolhqdsfkq shfkquzhefl uqgsljfgq jdhfbqsdhf q gdflqfgqmsduyqflhsfuqsbgfpaufj gqsldfgq lugr 
+                                    mqhrgq dhfg dfbqdfbqmjdfgqdhfqnjgflqudgqydsgfnkqjh dfgqgfhqsdgfiuq vfhgq puhq lsfqlh bfqygf hjqgfqglm 
+                                q siufhglqghq dghalbgflqj</div>
+                                <a class="btn" href="#carousel-example-generic" >haut2page</a>
+                            </div>
                         </div> -->
-                </div>
+            </div>
             </ui:define>
             
             <ui:define name="scripts">
