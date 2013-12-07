@@ -19,7 +19,7 @@ public class ProductSearch {
     public Float minPrice;
     public Float maxPrice;
     public String brand;
-    public List<String> flux;
+    public List<Float> flux;
     
 
     public void validate() {
@@ -48,18 +48,12 @@ public class ProductSearch {
                 maxPrice = tmp;
             }
         }
-/*        for(String s : flux){
-            switch(Integer.parseInt(s)){
-                case(1): s="1.0";
-                case(2): s="2.0";
-                case(3): s="3.0";
-                case(4): s="4.0";
-                case(5): s="5.0";
-                case(6): s="6.0";
-                default: s="0.0";
-            }
+        System.out.println("test :" +flux); 
+        for(Float s : flux){
+            DecimalFormat df = new DecimalFormat("##.##");
+            s =  new Float(df.format(s.doubleValue()));
         }
-        System.out.println(flux); */
+        System.out.println("java :" +flux); 
         if(length == 0) {
             length = 10;
         }

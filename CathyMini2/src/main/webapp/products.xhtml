@@ -53,8 +53,11 @@
                                         </h4>
                                       </div>
                                       <div id="collapseOne" class="panel-collapse collapse in">
-                                         <div data-toggle="buttons" ng-repeat="select in selects">
-                                           <input type="checkbox" ng-model="select.check" ng-change="refreshSearch()">{{select.print}}</input>
+                                         <div  class="btn-group" data-toggle="buttons" ng-repeat="select in selects" >
+                                             <label class="btn btn-primary">
+                                                <input type="checkbox" ng-model="select.check" ng-change="refreshFlux()"> {{select.print}} </input>
+                                                {{select.check}}
+                                              </label>
                                          </div>
                                       </div>
                                     </div>

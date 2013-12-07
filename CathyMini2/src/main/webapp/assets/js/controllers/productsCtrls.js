@@ -1,11 +1,11 @@
 angular.module('products').
         controller('productsCtrl', ['$scope', '$http', 'cartService', function($scope, $http, cartService) {
 
-                $scope.selectedItem = [];
+                $scope.selectedItem = [ 1, 2, 3, 4, 5, 6];
 
                 /** Search query */
                 $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true, 
-                    napkin: true, minPrice: 0, maxPrice: 100, brand: ""};
+                    napkin: true, minPrice: 0, maxPrice: 100, brand: "", flux: $scope.selectedItem};
 
 
                 /** Products list */
@@ -27,32 +27,32 @@ angular.module('products').
                       /** Description of flux **/
                     $scope.selects = [
                       {
-                        "id": "1",
+                        "id": 1,
                         "print": "Mini",
                         "check": true
                       },
                       {
-                        "id": "2",
+                        "id": 2,
                         "print": "Normal",
                         "check": true
                       },
                       {
-                        "id": "3",
+                        "id": 3,
                         "print": "Normal+",
                         "check": true
                       },
                       {
-                        "id": "4",
+                        "id": 4,
                         "print": "Super",
                         "check": true
                       },
                       {
-                        "id": "5",
+                        "id": 5,
                         "print": "Super+",
                         "check": true
                       },
                       {
-                        "id": "6",
+                        "id": 6,
                         "print": "Extra",
                         "check": true
                       }
@@ -98,7 +98,6 @@ angular.module('products').
                     $scope.search.offset = 0;
                     $scope.search.length = 20;
                     $scope.loadMore = true;
-                   $scope.majFlux();
                     $scope.loadProducts();
                 };
 
@@ -106,13 +105,17 @@ angular.module('products').
                  * 
                  * Refresh list of selected flux
                  */
-                $scope.majFlux = function() {
-                    selectedItem = [];
-                    for(select in $scope.selects) {
-                        if(select.check) {
-                            selectedItem.add(select.id);
+                $scope.refreshFlux = function() {
+                    console.log("flux");
+                    $scope.selectedItem = [];
+                    for(var x =0; x < $scope.selects.length; x++) {
+                        console.log("test");
+                        if($scope.selects[x].check) {
+                            $scope.selectedItem.push($scope.selects[x].id);
+                            alert($scope.selects[x].id);
                         }
-                    }                    
+                    }    
+                    $scope.refreshSearch();
                 };
                 
                 /**
@@ -135,6 +138,26 @@ angular.module('products').
                                 });
                     }
                 };
+                
+                
+                
+                
+                 $scope.listArticle = [];
+        
+        $scope.getArticle = function() {      
+        /*    var xmlDoc = xmlParse(new URL("http://localhost:8080/assets/product/listeProduit.xml"));
+            var markers = xmlDoc.documentElement.getElementsByTagName("article");
+
+            for (var i = 0; i < markers.length; i++) {
+                            var x = markers[i].textContent;
+                            $scope.listArticle = $scope.listArticle.concat(x);
+                            alert(x);
+             }*/
+            alert(test);
+        };
+                
+                
+                
                 
                 /**
                  * Add a product to the cart
