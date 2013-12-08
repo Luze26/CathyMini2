@@ -33,6 +33,36 @@
     float: right;
 }
 
+#sub {
+    position: fixed;
+    z-index: 500;
+    right: -350px;
+}
+
+#subTab {
+    background-color: @mainColor;
+    width: 200px;
+    color: #fff;
+    border: solid 2px @mainColor;
+    font-weight: bold;
+    text-align: center;
+    height: 100px;
+    display: inline-block;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+#subPanel {
+    width: 350px;
+    height: 400px;
+    display: inline-block;
+    background-color: #fff;
+    border: solid 1px @mainColor;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    float: right;
+}
+
+
 #search {
     position: fixed;
     z-index: 1500;
@@ -63,6 +93,11 @@
     border: solid 1px @mainColor;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     float: right;
+}
+
+#imgDelete{
+    width: 15px;
+    height: 15px;
 }
 
 @galleryProductSize: 200px;

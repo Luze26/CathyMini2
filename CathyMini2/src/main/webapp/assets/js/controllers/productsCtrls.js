@@ -1,5 +1,5 @@
 angular.module('products').
-  controller('productsCtrl', ['$scope', '$http', 'cartService', function($scope, $http, cartService) {
+  controller('productsCtrl', ['$scope', '$http', 'cartService', 'subscriptionService', function($scope, $http, cartService, subscriptionService) {
 
       $scope.selectedItem = [];
 
@@ -142,5 +142,13 @@ angular.module('products').
        */
       $scope.addProductToCart = function(product) {
         cartService.addProduct(product);
+      };
+      
+      /**
+       * Add a product to the cart
+       * @param {Product} product
+       */
+      $scope.addProductToSub = function(product) {
+        subscriptionService.addProduct(product);
       };
     }]);

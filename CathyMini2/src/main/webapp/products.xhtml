@@ -82,12 +82,14 @@
                         </form>
                         <!-- <search-directive productslist="products"></search-directive> -->
                         <cart-directive></cart-directive>
+                        <subscription-directive></subscription-directive>
                     </div>
                     <div class="col-xs-12" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
                         <div ng-repeat="prod in products" class="product col-xs-12 col-sm-6 col-md-4">
                             <div class="col-md-4 image">
                                <img class="imgGallery img-thumbnail" ng-src="{{prod.pictureUrl}}"/>
                                <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
+                               <button class="btn" ng-click="addProductToSub(prod)">Add to sub</button>
                             </div>
                             <div class="col-md-7 col-md-offset-1 infos">
                                 <div class="type">{{prod.type}}</div>
@@ -106,6 +108,8 @@
                 <script src="/assets/js/controllers/productsCtrls.js"></script>
                 <script src="/assets/js/services/cartService.js"></script>
                 <script src="/assets/js/directives/cartDirective.js"></script>
+                <script src="/assets/js/services/subscriptionService.js"></script>
+                <script src="/assets/js/directives/subscriptionDirective.js"></script>
                 <script src="/assets/js/directives/form/formDirective.js"></script>
             </ui:define>
         </ui:composition>

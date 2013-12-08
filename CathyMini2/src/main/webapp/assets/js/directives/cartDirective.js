@@ -39,7 +39,7 @@ angular.module('common').directive('cartDirective', ['cartService', function(car
                             '{{prod.name}} quantity : \n\
                         <input type="text" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
                 <span>\n\
-                                <img class="imgGallery" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
+                                <img class="imgDelete" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
 </span>' +
                         '</li>' +
                     '</ul>' +
