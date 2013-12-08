@@ -125,6 +125,19 @@ public class ConsumerBean {
         }
     }
 
+    public void editAddress(Consumer user, Address address) throws Exception {
+        if (user != null && address != null) {
+            for (DeliveryAddress addr : user.getDeliveryCollection()) {
+                if (addr.getDeliveryAddresID().equals(address.id)) {
+                    addr.setAddress(address.address);
+                    addr.setZipCode(address.zipCode);
+                    addr.setCity(address.city);
+                }
+                break;
+            }
+        }
+    }
+
     /**
      * Remove the user in parameter from the DB
      * @param usr Username

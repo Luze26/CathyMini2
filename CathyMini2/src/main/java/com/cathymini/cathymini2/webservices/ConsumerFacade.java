@@ -223,6 +223,26 @@ public class ConsumerFacade{
     }
 
     /**
+     * Edit address
+     */
+    @POST
+    @Path("/editAddress")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public void editAddress(Address address, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        if (address.validate()) {
+            Consumer user = sessionSecuring.getConsumer(request);
+            consumerBean.editAddress(user, address);
+        } else {
+            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+            builder.entity("address error");
+            Response res = builder.build();
+            throw new WebApplicationException(res);
+        }
+    }
+
+    /**
      * Get address
      */
     @GET

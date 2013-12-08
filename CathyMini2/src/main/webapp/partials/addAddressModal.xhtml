@@ -21,14 +21,14 @@
                                 <label class="col-md-4">Adresse</label>
                                 <div>
                                     <input class="col-md-7" name="address" ng-model="newAddress.address" type="text"
-                                           autofocus="autofocus" required="required" />
+                                           autofocus="autofocus" required="required"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4">Code postal</label>
                                 <div>
-                                    <input class="col-md-7" name="zipCode" ng-model="newAddress.zipCode" type="text"
-                                           autofocus="autofocus" required="required" />   
+                                    <input class="col-md-7" name="zipCode" ng-model="newAddress.zipCode" type="number"
+                                           autofocus="autofocus" required="required" ng-minlength="5" ng-maxlength="5"/>   
                                 </div>
                             </div>
                             <div class="form-group">
