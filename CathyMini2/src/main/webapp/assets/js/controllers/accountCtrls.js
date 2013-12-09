@@ -16,6 +16,10 @@ angular.module('account')
         clearConnectWatcher();
     });
     
+    $scope.$on('consumerDisconnect', function() {
+        window.location = "/index.xhtml";
+    });
+    
     $scope.showEdit = function(field) {
         field.visible = false;
         field.loading = false;    

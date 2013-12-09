@@ -1,5 +1,5 @@
 angular.module('index').
-        controller('indexCtrls', ['$scope', '$http', function($scope, $http) {
+        controller('indexCtrl', ['$scope', '$http', function($scope, $http) {
 
                 $scope.articles = [];
 
@@ -7,7 +7,6 @@ angular.module('index').
                 $scope.loadMore = true;
 
                 $scope.loadArticles = function() {
-                    console.log("ici");
                     if ($scope.loadMore) {
                         $http.post("/webresources/article/all", $scope.search)
                                 .success(function(data) {
