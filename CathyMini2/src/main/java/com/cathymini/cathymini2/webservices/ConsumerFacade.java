@@ -257,9 +257,14 @@ public class ConsumerFacade{
         Consumer user = sessionSecuring.getConsumer(request);
         Collection<DeliveryAddress> deliveryAddress = user.getDeliveryCollection();
         Collection<Address> address = new ArrayList<Address>();
-        for (DeliveryAddress addr : deliveryAddress) {
-            address.add(new Address(addr));
+        
+        if (deliveryAddress != null) {
+            // If the user has no delivery addr, getDeliveryCollection() return null
+            for (DeliveryAddress addr : deliveryAddress) {
+                address.add(new Address(addr));
+            }
         }
+        
         return address;
     }
     
