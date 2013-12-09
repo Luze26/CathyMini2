@@ -2,8 +2,10 @@ package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.DeliveryAddress;
+import com.cathymini.cathymini2.model.PayementInfo;
 import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
+import com.cathymini.cathymini2.webservices.model.Payment;
 import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
 import com.cathymini.cathymini2.webservices.model.form.Subscribe;
@@ -258,5 +260,23 @@ public class ConsumerFacade{
             address.add(new Address(addr));
         }
         return address;
+    }
+
+    /**
+     * Get purchases
+     */
+    @GET
+    @Path("/purchases")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public Collection<Payment> purchases(@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        Consumer user = sessionSecuring.getConsumer(request);
+        Collection<PayementInfo> purchases = user.getPaymentInfoCollection();
+        Collection<Payment> payments = new ArrayList<Payment>();
+        for (PayementInfo purchase : purchases) {
+            payments.add(new Payment(purchase));
+        }
+        return payments;
     }
 }

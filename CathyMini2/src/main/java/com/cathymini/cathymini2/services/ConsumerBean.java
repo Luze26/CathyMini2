@@ -122,6 +122,8 @@ public class ConsumerBean {
         if (user != null && address != null) {
             DeliveryAddress delivery = new DeliveryAddress(user.getUsername(), user.getUsername(), address.address, address.zipCode, address.city);
             user.addDelivery(delivery);
+            manager.merge(user);
+            manager.persist(delivery);
         }
     }
 
