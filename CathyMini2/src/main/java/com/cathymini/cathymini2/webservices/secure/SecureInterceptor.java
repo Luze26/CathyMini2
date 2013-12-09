@@ -47,6 +47,7 @@ public class SecureInterceptor {
                 return invocationContext.proceed();
             }
         } else if (role.equals(Role.MEMBER)) {
+            System.out.println(sessionSecuring.isConnected(req));
             if (sessionSecuring.isConnected(req)) {
                 return invocationContext.proceed();
             }

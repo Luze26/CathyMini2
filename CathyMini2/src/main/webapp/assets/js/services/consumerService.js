@@ -20,7 +20,7 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
         if(!service.isConnected) {
             service.consumer.username = user.username;
             service.isConnected = true;
-            $rootScope.$broadcast('consumerConnect');
+            $rootScope.$broadcast('consumerConnect', user);
         }        
     };
     
@@ -50,7 +50,6 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
                 .success(function(user) { //success
                     connectUser(user);
                     deferred.resolve();
-                    $rootScope.$broadcast('consumerConnect');
                 })
                 .error(function(data, status, headers, config) {  // error
                     if (status === 400) {
@@ -103,6 +102,14 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
      * Request the server to get the user status
      */
     service.getCurrentUser();
+    
+    service.addAddress = function(address) {
+        return $http.post("/webresources/consumer/addAddress", address);
+    };
+    
+    service.getAddress = function() {
+        return $http.get("/webresources/consumer/address");
+    };
     
     return service;
 }]);

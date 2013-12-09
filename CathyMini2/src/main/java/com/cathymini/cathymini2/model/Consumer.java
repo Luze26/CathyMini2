@@ -2,6 +2,7 @@ package com.cathymini.cathymini2.model;
 
 import com.cathymini.cathymini2.webservices.secure.Role;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -86,6 +87,13 @@ public class Consumer implements Serializable {
 
     public void setDeliveryCollection(Collection<DeliveryAddress> deliveryCollection) {
         this.deliveryCollection = deliveryCollection;
+    }
+
+    public void addDelivery(DeliveryAddress address) {
+        if (deliveryCollection == null) {
+            deliveryCollection = new ArrayList<DeliveryAddress>();
+        }
+        deliveryCollection.add(address);
     }
 
     public Collection<PayementInfo> getPaymentenInfoCollection() {

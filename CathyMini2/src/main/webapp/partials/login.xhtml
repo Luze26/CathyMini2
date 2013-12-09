@@ -9,11 +9,12 @@
            <div ng-controller="consumerCtrl" class="login-zone">
                <div ng-show="isConnected()">
                    Hello, {{consumer.username}} !
-                    <button type="button" class="btn btn-info" ng-click="disconnect()">Logout</button>
+                   <a class="btn btn-info" href="/account.xhtml">Mon compte</a>
+                   <button type="button" class="btn btn-info" ng-click="disconnect()">Logout</button>
                 </div>
                <div ng-show="!isConnected()">
                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#connectModal">Login</button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#subscribeModal">Subscribe</button>
+                   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#subscribeModal">Subscribe</button>
                 </div>
             </div>
         </ui:composition>

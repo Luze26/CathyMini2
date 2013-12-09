@@ -4,7 +4,6 @@
  */
 package com.cathymini.cathymini2.services;
 
-import com.cathymini.cathymini2.model.Cart;
 import com.cathymini.cathymini2.model.Napkin;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Tampon;
@@ -128,9 +127,9 @@ public class ProductBean {
     }
 
     private Query constructQuery(ProductSearch searchQuery) {
-        String query = "SELECT p FROM Product p WHERE p.name";
+        String query = "SELECT p FROM Product p WHERE";
         if (searchQuery.input != null) {
-            query += " LIKE '%" + searchQuery.input + "%'";
+            query += " p.name LIKE '%" + searchQuery.input.toUpperCase() + "%'";
         }
         if (searchQuery.tampon) {
             System.out.println("TAMPON");
@@ -147,14 +146,22 @@ public class ProductBean {
             query += " AND p.type = \"serviette\"";
         } else {
             System.out.println("RIEN");
-            query = "SELECT p FROM Product p WHERE p.name = \"Rien\"";
-            return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
+            query += " AND p.type = \"rien\"";
         }
-/*        for(String s : searchQuery.flux){
-            if(Float.parseFloat(s) != 0.0) {
-                query += " AND p.flux = "+s;
+        boolean first = true;
+        for(Float s : searchQuery.flux){
+            if(s != 0.0 && first) {
+                query += " AND ( p.flux = "+s;
+                first = false;
+            } else if (s!= 0.0){
+                 query += " OR  p.flux = "+s;
             }
-        }*/
+        }
+        if(!first) {
+            query += " )";
+        } else {
+            query += " AND p.flux = " + -1.0;
+        }
         if (searchQuery.brand != null) {
             query += " AND p.marque LIKE '%" + searchQuery.brand + "%'";
         }
@@ -168,7 +175,7 @@ public class ProductBean {
             System.out.println("MAXPRIX");
             query += " AND p.price <= " + searchQuery.maxPrice;
         }
-
+        System.out.println(query);
         query += " ORDER BY p." + searchQuery.orderBy + " " + (searchQuery.orderByASC ? "ASC" : "DESC");
 
         return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);

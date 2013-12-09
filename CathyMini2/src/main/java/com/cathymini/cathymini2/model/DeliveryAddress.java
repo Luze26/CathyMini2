@@ -40,6 +40,17 @@ public class DeliveryAddress implements Serializable {
     @Column(name="country")
     private String country;
 
+    public DeliveryAddress() {
+    }
+
+    public DeliveryAddress(String firstname, String lastname, String address, String zipCode, String city) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
+        this.zipCode = zipCode;
+        this.city = city;
+    }
+
     public Long getDeliveryAddresID() {
         return deliveryAddresID;
     }
