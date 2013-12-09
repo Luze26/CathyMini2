@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       >
-    
-    
-
-    
     <h:body>
- 
+
         <ui:composition template="template/commonLayout.xhtml">
             <ui:param name="ngApp" value="products" />
             <ui:param name="ngController" value="productsCtrl" />
@@ -20,65 +16,68 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">Search panel</div>
                         <form action="#" id="search-form">
-                        <table class="table">                       
-                            <tr>
-                                <td>
+                            <table class="table">                       
+                                <tr>
+                                    <td>
                                         <div>
                                             <label>Rechecher par nom </label>
                                             <input type="text" ng-model="search.input" placeholder="Search a product" ng-change="refreshSearch()" />
                                         </div>
                                         <div>
-                                             <label>Type du produit </label>
-                                      <!--     <div ng-repeat="type in productsType" class="btn-group" bs-buttons-checkbox="bs-buttons-checkbox">
-                                                    <button type="button" value="true" class="btn" ng-model="type.selected" ng-change="refreshSearch()">type.affichage</button>
-                                                </div>    -->
-                                                <div>
-                                                 <label>
-                                                       <input type="checkbox" ng-model="search.napkin" ng-change="refreshSearch()">Serviette</input>
-                                                 </label>
-                                                 <label>
-                                                       <input type="checkbox" ng-model="search.tampon" ng-change="refreshSearch()">Tampon </input>
-                                                 </label>
-                                               </div>
-                                       </div>
-                                </td>
-                                <td>                                   
-                                    <div class="panel-group" id="accordion">
-                                    <div class="panel panel-default">
-                                      <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                            Recherche par Flux
-                                          </a>
-                                        </h4>
-                                      </div>
-                                      <div id="collapseOne" class="panel-collapse collapse in">
-                                         <div data-toggle="buttons" ng-repeat="select in selects">
-                                           <input type="checkbox" ng-model="select.check" ng-change="refreshSearch()">{{select.print}}</input>
-                                         </div>
-                                      </div>
-                                    </div>
-                                    </div>
-                                    <div>
-                                        <label>Rechecher par marque </label>
-                                        <input type="text" ng-model="search.brand" placeholder="Search a brand" ng-change="refreshSearch()" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        <label for="pPrice">Rechecher par prix </label>
-                                        <div class="controls input-prepend">
-                                            <input type="text" ng-model="search.minPrice" placeholder="Minimum price" ng-change="refreshSearch()" />
-                                            <span class="add-on">€</span>
+                                            <label>Type du produit </label>
+                                            <!--     <div ng-repeat="type in productsType" class="btn-group" bs-buttons-checkbox="bs-buttons-checkbox">
+                                                          <button type="button" value="true" class="btn" ng-model="type.selected" ng-change="refreshSearch()">type.affichage</button>
+                                                      </div>    -->
+                                            <div class="btn-group">
+                                                <label class="btn btn-default">
+                                                    <input type="checkbox" ng-model="search.napkin" ng-change="changeNapkin()">Serviette</input>
+                                                </label>
+                                                <label class="btn btn-default">
+                                                    <input type="checkbox" ng-model="search.tampon" ng-change="changeTampon()">Tampon </input>
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div class="controls input-prepend">
-                                            <input type="text" ng-model="search.maxPrice" placeholder="Maximum price" ng-change="refreshSearch()"/>
-                                            <span class="add-on">€</span>
+                                    </td>
+                                    <td>                                   
+                                        <div class="panel-group group-flux" id="accordion">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                                            Recherche par Flux
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseOne" class="panel-collapse collapse in">
+                                                    <div class="btn-group" ng-repeat="select in selects" >
+                                                        <label class="btn btn-default">
+                                                            <input type="checkbox" ng-model="select.check" ng-change="refreshFlux()" /> 
+                                                            {{select.print}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                                        <div>
+                                            <label>Rechecher par marque </label>
+                                            <input type="text" ng-model="search.brand" placeholder="Search a brand" ng-change="refreshSearch()" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <label for="pPrice">Rechecher par prix </label>
+                                            <div class="controls input-prepend">
+                                                <input type="text" ng-model="search.minPrice" placeholder="Minimum price" ng-change="refreshSearch()" />
+                                                <span class="add-on">€</span>
+                                            </div>
+                                            <div class="controls input-prepend">
+                                                <input type="text" ng-model="search.maxPrice" placeholder="Maximum price" ng-change="refreshSearch()"/>
+                                                <span class="add-on">€</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </form>
                         <!-- <search-directive productslist="products"></search-directive> -->
                         <cart-directive></cart-directive>
@@ -86,11 +85,15 @@
                     <div class="col-xs-12" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
                         <div ng-repeat="prod in products" class="product col-xs-12 col-sm-6 col-md-4">
                             <div class="col-md-4 image">
-                               <img class="imgGallery img-thumbnail" ng-src="{{prod.pictureUrl}}"/>
-                               <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
+                                <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
+                                <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
                             </div>
-                            <div class="col-md-7 col-md-offset-1 infos">
-                                <div class="type">{{prod.type}}</div>
+                            <div class="col-md-8 infos">
+                                <div class="coin"></div>
+                                <div class="type">
+                                    <img ng-if="prod.type==='serviette'" src="assets/image/serviette.png"/>
+                                    <img ng-if="prod.type==='tampon'" src="assets/image/tampon.png"/>
+                                </div>
                                 <div class="mid">{{prod.name}} <br /> {{prod.marque}}</div>
                                 <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>
                                 <div class="price">{{prod.price}}€</div>
@@ -109,7 +112,7 @@
                 <script src="/assets/js/directives/form/formDirective.js"></script>
             </ui:define>
         </ui:composition>
- 
+
     </h:body>
- 
+
 </html>

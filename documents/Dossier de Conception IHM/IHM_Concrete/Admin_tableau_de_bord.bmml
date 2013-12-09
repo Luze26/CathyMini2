@@ -1,0 +1,17 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="950" measuredH="626" mockupW="800" mockupH="598">
+  <controls>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="150" y="28" w="800" h="598" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>CathyMini%0Ahttp%3A//www.cathymini.fr/admin</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::ButtonBar" x="150" y="103" w="800" h="27" measuredW="767" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hrefs>Admin_tableau_de_bord%26bm%3BAdmin_tableau_de_bord.bmml%26bm%3BAdmin_tableau_de_bord.bmml%26bm%3BAdmin_tableau_de_bord.bmml%2CAdmin_produits%26bm%3BAdmin_produits.bmml%26bm%3BAdmin_produits.bmml%26bm%3BAdmin_produits.bmml%2CAdmin_clients%26bm%3BAdmin_clients.bmml%26bm%3BAdmin_clients.bmml%26bm%3BAdmin_clients.bmml%2C</hrefs>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%220%2C75%2C123%2C102%22%20href%3D%22Admin_tableau_de_bord.bmml%22%20alt%3D%22Admin_tableau_de_bord%22%20id%3D%2211%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22123%2C75%2C199%2C102%22%20href%3D%22Admin_produits.bmml%22%20alt%3D%22Admin_produits%22%20id%3D%2211%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22199%2C75%2C324%2C102%22%20href%3D%22Admin_clients.bmml%22%20alt%3D%22Admin_clients%22%20id%3D%2211%22/%3E%0A</map>
+        <selectedIndex>0</selectedIndex>
+        <text>Tableau%20de%20bord%2C%20Produits%2C%20Comptes%20clients%2C%20%09%09%09%09%09%09%09%09%09</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

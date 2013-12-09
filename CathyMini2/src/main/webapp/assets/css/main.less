@@ -65,6 +65,10 @@
     float: right;
 }
 
+.group-flux {
+    width: 500px;
+}
+
 @galleryProductSize: 200px;
 .product {
     min-height: @galleryProductSize;
@@ -73,8 +77,9 @@
     .image {
         min-height: @galleryProductSize;
         img {
+            margin-top: 5px;
             width: 140px;
-            height: 140px;
+            height: 95px;
         }
         button {
             position: absolute;
@@ -87,11 +92,12 @@
         .type {
             position: absolute;
             top: 5px;
-            right: 5px;
+            right: -10px;
         }
         .mid {
             margin-top: 20px;
             margin-bottom: 5px;
+            padding-right: 10px;
         }
         .price {
             position: absolute;
@@ -99,6 +105,18 @@
             right: 5px;
         }
     }
+}
+
+.coin {
+    position: absolute;
+    top: 0px;
+    right: -15px;
+    height: 0px;
+    width: 0px;
+    border-top: 35px solid #ccc;
+    border-right: 35px solid #ccc;
+    border-bottom: 35px solid transparent;
+    border-left: 35px solid transparent;
 }
 
 #footer {
