@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -45,18 +46,34 @@ public class PurchaseFacade {
     }
     
     @POST
-    @Path("/editPurchase")
+    @Path("/editSubscription")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String editPurchase(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+    public String editSubscription(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         return "Not Implemented";
     }
     
     @POST
-    @Path("/stopPurchase")
+    @Path("/stopSubscription")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String stopPurchase(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+    public String stopSubscription(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+        return "Not Implemented";
+    }
+    
+    @GET
+    @Path("/getSubscriptions")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getSubscription(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+        return "Not Implemented";
+    }
+    
+    @GET
+    @Path("/getPurchases")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getPurchases(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         return "Not Implemented";
     }
 }

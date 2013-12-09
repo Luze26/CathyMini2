@@ -83,37 +83,30 @@ public class ProductFacade {
     
     
     @GET
-    @Path("/readXML")
+    @Path("/populate")
     @Produces(MediaType.APPLICATION_JSON)
-    public void readXML(){
-            SAXBuilder sxb = new SAXBuilder();
-            Document document = null;
-      try
-      {
-         //On crée un nouveau document JDOM avec en argument le fichier XML
-         //Le parsing est terminé ;)
-         document = sxb.build(new URL("http://localhost:8080/assets/product/listeProduit.xml"));
-      }
-      catch(Exception e){
-          System.out.println(e);
-      }
+    public void populate(){
+        Element racine;
+        SAXBuilder sxb = new SAXBuilder();
+        Document document = null;
+        try {
+           //On crée un nouveau document JDOM avec en argument le fichier XML
+           //Le parsing est terminé ;)
+           document = sxb.build(new URL("http://localhost:8080/assets/product/listeProduit.xml"));
+        } catch(Exception e){
+            System.out.println(e);
+        }
       
-      //On initialise un nouvel élément racine avec l'élément racine du document.
-      racine = document.getRootElement();
-      afficheAll();
-      
-    }
-     Element racine;
-    
-    
-    @GET
-    @Path("/afficheAll")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void afficheAll(){
+        /*
+         * Lecture du fichier XML
+         */
         
-        List listEtudiants = racine.getChildren("product");
+        //On initialise un nouvel élément racine avec l'élément racine du document.
+        racine = document.getRootElement();
+        
+        List productList = racine.getChildren("product");
         //On crée un Iterator sur notre liste
-        Iterator i = listEtudiants.iterator();
+        Iterator i = productList.iterator();
         while(i.hasNext())
         {
            //On recrée l'Element courant à chaque tour de boucle afin de
@@ -163,35 +156,8 @@ public class ProductFacade {
                 }
              }
         }
-    }
-    
-    @GET
-    @Path("/populate")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String populate(@QueryParam("size") int size) {
-       /* final String lexicon = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz12345674890abcdefghijklmnopqrstuvwxyz";
-
-        if(size == 0) {
-            size = 500;
-        }
         
-        final java.util.Random rand = new java.util.Random();
-        for(int j = 0; j < size; j++) {
-            StringBuilder builder = new StringBuilder();
-            for(int i = 0; i < 6; i++) {
-                builder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
-            }
-            String typeProduit = "Serviette";
-            if (new Integer(rand.nextInt(2)) == 1) {
-               typeProduit  = "Tampon"; 
-            }
-            
-            productBean.addProduct(builder.toString(), new Float(rand.nextInt(100)), typeProduit);
-        }
         
-        return "populated";*/
-        readXML();
-        return "populated";
     }
     
     /**
