@@ -9,7 +9,7 @@
  
     	<ui:composition template="template/commonLayout.xhtml">
             <ui:param name="ngApp" value="index" />
-         <!--   <ui:param name="ngController" value="indexCtrl" /> -->
+            <ui:param name="ngController" value="indexCtrls" />
             <ui:param name="title" value="CathyMini" />
             <ui:define name="content">
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -58,25 +58,13 @@
                             </div>
                         </div>
                     </div>
-          <!--     <div class="col-md-10">
-                            <div class="col-md-3 image">
-                               <img class="imgGallery img-thumbnail" ng-src="/assets/image/bootstrap-mdo-sfmoma-01.jpg"/>
-                            </div>
-                            <div class="col-md-7">
-                                <h3 class="type">Titre article</h3>
-                                <h4 class="mid">qzjsqdiuqsdlcbqljhx gYUSFjlqhsdfvl QSsgfqljhsdfbqlhr gqlh fqsdf qsugf qkjsfgyqflhjzef</h4>
-                                <div> ghshfgmhsp gsdfhgmjsfhgjsfhghsmfdgmsguhsdflghshgslfguhhqljgqghqjdfgnlhcgmsruthfsg slugqhfghjsbgs lus 
-                                    dhiugfqlghbqolhqdsfkq shfkquzhefl uqgsljfgq jdhfbqsdhf q gdflqfgqmsduyqflhsfuqsbgfpaufj gqsldfgq lugr 
-                                    mqhrgq dhfg dfbqdfbqmjdfgqdhfqnjgflqudgqydsgfnkqjh dfgqgfhqsdgfiuq vfhgq puhq lsfqlh bfqygf hjqgfqglm 
-                                q siufhglqghq dghalbgflqj</div>
-                                <a class="btn" href="#carousel-example-generic" >haut2page</a>
-                            </div>
-                        </div> -->
             </div>
             </ui:define>
             
             <ui:define name="scripts">
+                <script src="/assets/js/lib/ng-infinite-scroll.min.js"></script>
                 <script src="/assets/js/modules/indexModule.js"></script>
+                <script src="/assets/js/controllers/indexCtrls.js"></script>
             </ui:define>
     	</ui:composition>
  
