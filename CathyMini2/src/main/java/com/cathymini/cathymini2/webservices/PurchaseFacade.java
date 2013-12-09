@@ -1,8 +1,16 @@
 package com.cathymini.cathymini2.webservices;
 
+import com.cathymini.cathymini2.model.Consumer;
+import com.cathymini.cathymini2.model.PayementInfo;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.services.ProductBean;
+import com.cathymini.cathymini2.webservices.model.Payment;
 import com.cathymini.cathymini2.webservices.model.form.AddProduct;
+import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
+import com.cathymini.cathymini2.webservices.secure.Role;
+import com.cathymini.cathymini2.webservices.secure.Secure;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +33,7 @@ import org.apache.log4j.Logger;
 public class PurchaseFacade {
     
     private static final Logger logger = Logger.getLogger(PurchaseFacade.class);
+    private static final ConsumerSessionSecuring sessionSecuring = ConsumerSessionSecuring.getInstance();
     
     @EJB
     private ProductBean productBean;
@@ -62,18 +71,30 @@ public class PurchaseFacade {
     }
     
     @GET
-    @Path("/getSubscriptions")
+    @Path("/subscriptions")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSubscription(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+    public String subscriptions(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         return "Not Implemented";
     }
     
+    
+
+    /**
+     * Get purchases
+     */
     @GET
-    @Path("/getPurchases")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/purchases")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getPurchases(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-        return "Not Implemented";
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public Collection<Payment> purchases(@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        Consumer user = sessionSecuring.getConsumer(request);
+        Collection<PayementInfo> purchases = user.getPaymentInfoCollection();
+        Collection<Payment> payments = new ArrayList<Payment>();
+        for (PayementInfo purchase : purchases) {
+            payments.add(new Payment(purchase));
+        }
+        return payments;
     }
 }
