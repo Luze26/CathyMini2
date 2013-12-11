@@ -19,7 +19,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
     
     
     $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
-        $http.post("/webresources/sub/consumerIsConnected")
+        $http.post("/webresources/cart/getSub")
         .success(function(data){
             service.sub.price = 0;
             if(data != null){
@@ -45,7 +45,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * @param {Product} product
      */
     service.addProduct = function(product) {
-        $http.post("/webresources/sub/add", product.id)
+        $http.post("/webresources/cart/addProductToSub", product.id)
             .success(function(data) {
                 //If the product is already in the sub, we increase its quantity
                 if(service.sub.products.indexOf(product) !== -1) { 
@@ -64,7 +64,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * @param {Product} product
      */
     service.changeQuantity = function(product) {        
-        $http.post("/webresources/sub/changeQuantity", {"productId": product.id, "quantity": product.quantity})
+        $http.post("/webresources/cart/changeQuantityToSub", {"productId": product.id, "quantity": product.quantity})
                 .success(function(data) {
                 product.quantity = data;
             })
@@ -78,7 +78,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * @param {Product} product
      */
     service.deleteProduct = function(product) {
-        $http.post("/webresources/sub/delete", product.id)
+        $http.post("/webresources/sub/deleteToSub", product.id)
             .success(function(data) {
                 service.sub.products.splice(data,1);
                 service.sub.price += -product.price;
@@ -90,7 +90,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * @param {Product} product
      */
     service.changeNbJ = function(nbJ) {
-        $http.post("/webresources/sub/changeNbJ", nbJ)
+        $http.post("/webresources/cart/changeNbJ", nbJ)
             .success(function(data) {
             service.nbJ = data;
             });
