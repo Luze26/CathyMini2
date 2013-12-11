@@ -42,6 +42,7 @@
                                         <th>Adresse</th>
                                         <th>Code postal</th>
                                         <th>Ville</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -49,9 +50,12 @@
                                         <td>{{addr.address}}</td>
                                         <td>{{addr.zipCode}}</td>
                                         <td>{{addr.city}}</td>
+                                        <td><span ng-click="initEditAddress(addr)" class="btn btn-info" data-toggle="modal" data-target="#addressModal">Edit</span></td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <button type="button" ng-click="modal = newModal" class="btn btn-info" data-toggle="modal" data-target="#addressModal">Ajouter une adresse</button>
+                            <ui:include src="/partials/addressModal.xhtml" />
                         </fieldset>
                     </div>
                     <div id="achats" class="tab-pane"></div>

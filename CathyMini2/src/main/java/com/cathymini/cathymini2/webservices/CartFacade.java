@@ -5,7 +5,6 @@ import com.cathymini.cathymini2.model.CartLine;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.services.CartSession;
-import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.services.ProductBean;
 import com.cathymini.cathymini2.webservices.model.CartProduct;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
@@ -98,7 +97,7 @@ public class CartFacade {
     }
     
     @POST
-    @Path("/consumerIsConnected")
+    @Path("/get")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Cart consumerIsConnected(@Context HttpServletRequest request, @Context HttpServletResponse response){

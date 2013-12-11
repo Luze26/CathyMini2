@@ -9,11 +9,17 @@ import static com.cathymini.cathymini2.webservices.model.UtilsFormatter.checkZip
  * @author yuzel
  */
 public class Address {
+
+    public Long id;
     public String address;
     public String zipCode;
     public String city;
 
+    public Address() {
+    }
+
     public Address(DeliveryAddress addr) {
+        id = addr.getDeliveryAddresID();
         address = addr.getAddress();
         zipCode = addr.getZipCode();
         city = addr.getCity();

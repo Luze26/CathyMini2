@@ -18,7 +18,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     
     
     $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
-        $http.post("/webresources/cart/consumerIsConnected")
+        $http.post("/webresources/cart/get")
         .success(function(data){
             service.cart.price = 0;
             if(data != null){

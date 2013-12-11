@@ -122,6 +122,21 @@ public class ConsumerBean {
         if (user != null && address != null) {
             DeliveryAddress delivery = new DeliveryAddress(user.getUsername(), user.getUsername(), address.address, address.zipCode, address.city);
             user.addDelivery(delivery);
+            manager.merge(user);
+            manager.persist(delivery);
+        }
+    }
+
+    public void editAddress(Consumer user, Address address) throws Exception {
+        if (user != null && address != null) {
+            for (DeliveryAddress addr : user.getDeliveryCollection()) {
+                if (addr.getDeliveryAddresID().equals(address.id)) {
+                    addr.setAddress(address.address);
+                    addr.setZipCode(address.zipCode);
+                    addr.setCity(address.city);
+                }
+                break;
+            }
         }
     }
 

@@ -5,8 +5,8 @@ angular.module('products').
       $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true,
         napkin: true, minPrice: 0, maxPrice: 100, brand: "", flux: [1, 2, 3, 4, 5, 6]};
 
-        /** Path where product's image are stock */
-        $scope.cheminImageProduit = "/assets/product/"
+      /** Path where product's image are stock */
+      $scope.cheminImageProduit = "/assets/product/"
 
       /** Products list */
       $scope.products = [];
@@ -161,7 +161,14 @@ angular.module('products').
        * Add a product to the cart
        * @param {Product} product
        */
-      $scope.addProductToCart = function(product) {
+      $scope.addProductToCart = function(event, product) {
+        if(event) {
+            event.stopPropagation();
+        }
         cartService.addProduct(product);
+      };
+      
+      $scope.showProduct = function(product) {
+        $scope.productOverlay = product;
       };
     }]);

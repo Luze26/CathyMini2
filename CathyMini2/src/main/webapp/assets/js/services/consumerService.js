@@ -103,5 +103,17 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
      */
     service.getCurrentUser();
     
+    service.addAddress = function(address) {
+        return $http.post("/webresources/consumer/addAddress", address);
+    };
+    
+    service.editAddress = function(address) {
+        return $http.post("/webresources/consumer/editAddress", address);
+    };
+    
+    service.getAddress = function() {
+        return $http.get("/webresources/consumer/address");
+    };
+    
     return service;
 }]);
