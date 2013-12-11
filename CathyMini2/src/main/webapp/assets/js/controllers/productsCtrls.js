@@ -161,7 +161,14 @@ angular.module('products').
        * Add a product to the cart
        * @param {Product} product
        */
-      $scope.addProductToCart = function(product) {
+      $scope.addProductToCart = function(event, product) {
+        if(event) {
+            event.stopPropagation();
+        }
         cartService.addProduct(product);
+      };
+      
+      $scope.showProduct = function(product) {
+        $scope.productOverlay = product;
       };
     }]);
