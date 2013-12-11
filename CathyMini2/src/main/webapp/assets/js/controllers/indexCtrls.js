@@ -3,6 +3,8 @@ angular.module('index').
 
                 $scope.articles = [];
 
+                $scope.search = {offset: 0, length: 20};
+    
                 /** If we continue to requests the server or not */
                 $scope.loadMore = true;
 
@@ -12,9 +14,6 @@ angular.module('index').
                                 .success(function(data) {
                                     if (data.length < $scope.search.length) { //If there is no more product to load, end of the list
                                         $scope.loadMore = false;
-                                    }
-                                    if ($scope.search.offset === 0) { //If it's a new search, we reset the list
-                                        $scope.articles = [];
                                     }
 
                                     $scope.search.offset += $scope.search.length; //Increment the offset

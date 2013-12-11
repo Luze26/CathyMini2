@@ -7,6 +7,8 @@ package com.cathymini.cathymini2.webservices;
 import com.cathymini.cathymini2.model.Article;
 import com.cathymini.cathymini2.services.ArticleBean;
 import com.cathymini.cathymini2.webservices.model.ArticleSearch;
+import com.cathymini.cathymini2.webservices.model.form.AddArticle;
+//import com.cathymini.cathymini2.webservices.model.form.EditProduct;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
@@ -43,20 +45,21 @@ public class ArticleFacade {
     
     @EJB
     private ArticleBean articleBean;
-  /*  @POST
+    @POST
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Product create(AddProduct form, @Context final HttpServletResponse response) {
+    public Article create(AddArticle form, @Context final HttpServletResponse response) {
         if(form != null && form.validate()) {
-            Product product = productBean.addProduct(form.name, form.marque, form.flux, form.price, form.type, form.description);
-            return product;
+            Article article;
+            article = articleBean.addArticle(form.titre, form.description, form.type, form.detail, form.image);
+            return article;
         }
         else {
             response.setStatus(400);
             return null;
         }
-    }*/
+    }
     
     @POST
     @Path("/all")
@@ -68,6 +71,7 @@ public class ArticleFacade {
             return null;    
         }
         return articleBean.getArticle(query);
+
     }
     
  /*   @POST
@@ -95,14 +99,31 @@ public class ArticleFacade {
           System.out.println(e);
       }
       
-      //On initialise un nouvel élément racine avec l'élément racine du document.
-      racine = document.getRootElement();
-      afficheAll();
+       //On initialise un nouvel élément racine avec l'élément racine du document.
+       Element racine = document.getRootElement();
+       List listEtudiants = racine.getChildren("article");
+        //On crée un Iterator sur notre liste
+        Iterator i = listEtudiants.iterator();
+        while(i.hasNext())
+        {
+           //On recrée l'Element courant à chaque tour de boucle afin de
+           //pouvoir utiliser les méthodes propres aux Element comme :
+           //sélectionner un nœud fils, modifier du texte, etc...
+           Element courant = (Element)i.next();
+           //récupérer information sur les produits
+           String titre = courant.getChild("titre").getText();
+           String type = courant.getChild("type").getText();
+           String description = courant.getChild("description").getText();
+           String detail = courant.getChild("detail").getText();
+           String image = courant.getChild("image").getText();
+           Article a = new Article(titre, description, detail, type, image);
+           articleBean.addArticle(a);
+        }
       
     }
-     Element racine;
+
     
-    @GET
+ /*   @GET
     @Path("/afficheAll")
     @Produces(MediaType.APPLICATION_JSON)
     public void afficheAll(){
@@ -125,7 +146,7 @@ public class ArticleFacade {
            Article a = new Article(titre, description, detail, type, image);
            articleBean.addArticle(a);
         }
-    }
+    }*/
     
     @GET
     @Path("/populate")
@@ -137,6 +158,7 @@ public class ArticleFacade {
     /**
      *
      * @param id
+     * @param response
      * @return
      */
     @DELETE
