@@ -15,27 +15,27 @@
                     <div class="col-lg-12" style="text-align:center">
                         <ul class="nav nav-tab">
                             <li class="col-lg-2" id="cart-payementBtn">
-                                <a href="#cart-payementTab" ng-click="selectTab(0)">
+                                <a href="#cart-payementTab" ng-click="selectTab('#cart-payementBtn')">
                                     Récaputulatif de la commande
                                 </a>
                             </li>
-                            <li class="col-lg-2" id="login-payementBtn">
-                                <a href="#login-payementTab" ng-click="selectTab(1)">
+                            <li class="col-lg-2 disabled" id="login-payementBtn">
+                                <a href="#login-payementTab" ng-click="selectTab('#login-payementBtn')">
                                     Identification du client
                                 </a>
                             </li>
-                            <li class="col-lg-2" id="address-payementBtn">
-                                <a href="#address-payementTab" ng-click="selectTab(2)">
+                            <li class="col-lg-2 disabled" id="address-payementBtn">
+                                <a href="#address-payementTab" ng-click="selectTab('#address-payementBtn')">
                                     Adresse de livraison
                                 </a>
                             </li>
-                            <li class="col-lg-2" id="shipping-payementBtn">
-                                <a href="#shipping-payementTab" ng-click="selectTab(3)">
+                            <li class="col-lg-2 disabled" id="shipping-payementBtn">
+                                <a href="#shipping-payementTab" ng-click="selectTab('#shipping-payementBtn')">
                                     Calcul des frais de port
                                 </a>
                             </li>
-                            <li class="col-lg-2" id="payment-payementBtn">
-                                <a href="#payment-payementTab" ng-click="selectTab(4)">
+                            <li class="col-lg-2 disabled" id="payment-payementBtn">
+                                <a href="#payment-payementTab" ng-click="selectTab('#payment-payementBtn')">
                                     Choix du mode de paiement
                                 </a>
                             </li>
@@ -46,16 +46,16 @@
                         <div class="" id="cart-payementTab">
                           <p>cart</p>
                         </div>
-                        <div class="" id="login-payementTab">
+                        <div class="hidden" id="login-payementTab">
                           <p>login</p>
                         </div>
-                        <div class="" id="address-payementTab">
+                        <div class="hidden" id="address-payementTab">
                           <p>address</p>
                         </div>
-                        <div class="" id="shipping-payementTab">
+                        <div class="hidden" id="shipping-payementTab">
                           <p>shipping</p>
                         </div>
-                        <div class="" id="payment-payementTab">
+                        <div class="hidden" id="payment-payementTab">
                           <p>payment</p>
                         </div>
                     </div>
@@ -63,8 +63,8 @@
                 <div class="row">
                     <div class="col-lg-10">
                         <ul class="pager">
-                            <li class="previous" id="payment-lastBtn"><a href="#lastTab" ng-click="lastTab()">&larr; Précédent</a></li>
-                            <li class="next" id="payment-nextBtn"><a href="#nextTab" ng-click="nextTab()">Suivant &rarr;</a></li>
+                            <li class="previous"><a href="#lastTab" ng-click="lastTab()">&larr; Précédent</a></li>
+                            <li class="next"><a href="#nextTab" ng-click="nextTab()">Suivant &rarr;</a></li>
                         </ul>
                     </div>
                 </div>
