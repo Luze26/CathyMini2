@@ -132,20 +132,16 @@ public class ProductBean {
             query += " p.name LIKE '%" + searchQuery.input.toUpperCase() + "%'";
         }
         if (searchQuery.tampon) {
-            System.out.println("TAMPON");
             query += " AND ( p.type = \"tampon\"";
             if(searchQuery.napkin) {
-                System.out.println("SERVIETTE2");
                 query += " OR p.type = \"serviette\" )";
             }
             else {
                 query += " )";
             }
         } else if (searchQuery.napkin) {
-            System.out.println("SERVIETTE");
             query += " AND p.type = \"serviette\"";
         } else {
-            System.out.println("RIEN");
             query += " AND p.type = \"rien\"";
         }
         boolean first = true;
@@ -167,15 +163,12 @@ public class ProductBean {
         }
         
         if (searchQuery.minPrice != null) {
-            System.out.println("MINPRIX");
             query += " AND p.price >= " + searchQuery.minPrice;
         }
 
         if (searchQuery.maxPrice != null) {
-            System.out.println("MAXPRIX");
             query += " AND p.price <= " + searchQuery.maxPrice;
         }
-        System.out.println(query);
         query += " ORDER BY p." + searchQuery.orderBy + " " + (searchQuery.orderByASC ? "ASC" : "DESC");
 
         return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);

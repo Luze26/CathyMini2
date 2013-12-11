@@ -6,35 +6,35 @@
     <body>
         <ui:composition>
             <ui:decorate template="/template/modalLayout.xhtml">
-                <ui:param name="modalId" value="addAddressModal" />
-                <ui:param name="modalTitle" value="Ajouter une adresse" />
-                <ui:param name="okAction" value="addAddress()" />
+                <ui:param name="modalId" value="addressModal" />
+                <ui:param name="modalTitle" value="{{modal.title}}" />
+                <ui:param name="okAction" value="modal.action()" />
                 <ui:param name="ngDisabled" value="form.$invalid" />
                 <ui:define name="modalContent">
-                    <div ng-show="displayError" class="alert alert-dismissable alert-danger">
+                    <div ng-show="modal.displayError" class="alert alert-dismissable alert-danger">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{{error.title}}</strong> {{error.text}}
+                        <strong>{{modal.error.title}}</strong> {{modal.error.text}}
                     </div>
                     <form name="form" class="form-horizontal" novalidate="novalidate">
                         <fieldset>
                             <div class="form-group">
                                 <label class="col-md-4">Adresse</label>
                                 <div>
-                                    <input class="col-md-7" name="address" ng-model="newAddress.address" type="text"
+                                    <input class="col-md-7" name="address" ng-model="modal.address.address" type="text"
                                            autofocus="autofocus" required="required"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4">Code postal</label>
                                 <div>
-                                    <input class="col-md-7" name="zipCode" ng-model="newAddress.zipCode" type="number"
+                                    <input class="col-md-7" name="zipCode" ng-model="modal.address.zipCode" type="number"
                                            autofocus="autofocus" required="required" ng-minlength="5" ng-maxlength="5"/>   
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4">Ville</label>
                                 <div>
-                                    <input class="col-md-7" name="city" ng-model="newAddress.city" type="text"
+                                    <input class="col-md-7" name="city" ng-model="modal.address.city" type="text"
                                            autofocus="autofocus" required="required" />   
                                 </div>
                             </div>

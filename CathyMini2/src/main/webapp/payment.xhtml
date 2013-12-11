@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:body>
+ 
+        <ui:composition template="template/commonLayout.xhtml">
+            <ui:param name="ngApp" value="payment" />
+            <ui:param name="ngController" value="paymentCtrl" />
+            <ui:param name="title" value="CathyMini - Paiement" />
+            <ui:define name="content">
+                <div class="row">
+                    <div class="col-lg-12" style="text-align:center">
+                        <ul class="nav nav-tab">
+                            <li class="col-lg-2" id="cart-payementBtn">
+                                <a href="#cart-payementTab" ng-click="selectTab('#cart-payementBtn')">
+                                    Récaputulatif de la commande
+                                </a>
+                            </li>
+                            <li class="col-lg-2 disabled" id="login-payementBtn">
+                                <a href="#login-payementTab" ng-click="selectTab('#login-payementBtn')">
+                                    Identification du client
+                                </a>
+                            </li>
+                            <li class="col-lg-2 disabled" id="address-payementBtn">
+                                <a href="#address-payementTab" ng-click="selectTab('#address-payementBtn')">
+                                    Adresse de livraison
+                                </a>
+                            </li>
+                            <li class="col-lg-2 disabled" id="shipping-payementBtn">
+                                <a href="#shipping-payementTab" ng-click="selectTab('#shipping-payementBtn')">
+                                    Calcul des frais de port
+                                </a>
+                            </li>
+                            <li class="col-lg-2 disabled" id="payment-payementBtn">
+                                <a href="#payment-payementTab" ng-click="selectTab('#payment-payementBtn')">
+                                    Choix du mode de paiement
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="list-group-item" id="paymentTab">
+                        <div class="" id="cart-payementTab">
+                          <p>cart</p>
+                        </div>
+                        <div class="hidden" id="login-payementTab">
+                          <p>login</p>
+                        </div>
+                        <div class="hidden" id="address-payementTab">
+                          <p>address</p>
+                        </div>
+                        <div class="hidden" id="shipping-payementTab">
+                          <p>shipping</p>
+                        </div>
+                        <div class="hidden" id="payment-payementTab">
+                          <p>payment</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10">
+                        <ul class="pager">
+                            <li class="previous"><a href="#lastTab" ng-click="lastTab()">&larr; Précédent</a></li>
+                            <li class="next"><a href="#nextTab" ng-click="nextTab()">Suivant &rarr;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </ui:define>
+
+            <ui:define name="scripts">
+                <script src="/assets/js/lib/jquery.min.js"></script>
+                <script src="/assets/js/modules/paymentModule.js"></script>
+                <script src="/assets/js/controllers/paymentCtrl.js"></script>
+                <script src="/assets/js/services/cartService.js"></script>
+                <script src="/assets/js/directives/cartDirective.js"></script>
+            </ui:define>
+        </ui:composition>
+ 
+    </h:body>
+</html>

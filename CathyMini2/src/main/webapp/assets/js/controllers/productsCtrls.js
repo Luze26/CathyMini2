@@ -161,10 +161,13 @@ angular.module('products')
        * Add a product to the cart
        * @param {Product} product
        */
-      $scope.addProductToCart = function(product) {
+      $scope.addProductToCart = function(event, product) {
+        if(event) {
+            event.stopPropagation();
+        }
         cartService.addProduct(product);
       };
-      
+
       /**
        * Add a product to the sub
        * @param {Product} product
@@ -181,5 +184,10 @@ angular.module('products')
        */
       $scope.addProduct = function(product){
           console.log("Dans addProduct");
+
+      }
+      
+      $scope.showProduct = function(product) {
+        $scope.productOverlay = product;
       };
     }]);

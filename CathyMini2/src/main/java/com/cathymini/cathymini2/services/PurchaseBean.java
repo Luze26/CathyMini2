@@ -78,6 +78,26 @@ public class PurchaseBean {
         logger.debug(message);
     }
     
+    public Collection<Purchase> getConsumerPurchases(Consumer consumer) {
+        Query q = manager.createNamedQuery("PurchaseByConsumer", Purchase.class);
+        q.setParameter("consumer", consumer);
+
+        if (q.getResultList().isEmpty())
+            return null; 
+
+        return q.getResultList();
+    }
+    
+    public Collection<PurchaseSubscription> getConsumerSubscriptions(Consumer consumer) {
+        Query q = manager.createNamedQuery("SubscriptionByConsumer", PurchaseSubscription.class);
+        q.setParameter("consumer", consumer);
+
+        if (q.getResultList().isEmpty())
+            return null; 
+
+        return q.getResultList();
+    }
+    
     private Collection<PurchaseLine> cartLineToPurchaseLine(Collection<CartLine> cartLines) {
         Collection<PurchaseLine> purchase = new ArrayList<PurchaseLine>();
         for (CartLine cartline : cartLines){
@@ -89,16 +109,6 @@ public class PurchaseBean {
         return purchase;
     }
     
-    private Collection<Purchase> getConsumerPurchases(Consumer consumer) {
-        Query q = manager.createNamedQuery("PurchaseByConsumer", Purchase.class);
-        q.setParameter("consumer", consumer);
-
-        if (q.getResultList().isEmpty())
-            return null; 
-
-        return q.getResultList();
-    }
-    
     private PurchaseSubscription getSubscriptionById(Long id) {
         Query q = manager.createNamedQuery("SubscriptionById", PurchaseSubscription.class);
         q.setParameter("transactionID", id);
@@ -107,15 +117,5 @@ public class PurchaseBean {
             return null; 
 
         return (PurchaseSubscription) q.getResultList().get(0);
-    }
-    
-    private Collection<PurchaseSubscription> getConsumerSubscriptions(Consumer consumer) {
-        Query q = manager.createNamedQuery("SubscriptionByConsumer", PurchaseSubscription.class);
-        q.setParameter("consumer", consumer);
-
-        if (q.getResultList().isEmpty())
-            return null; 
-
-        return q.getResultList();
     }
 }

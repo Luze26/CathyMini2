@@ -38,7 +38,6 @@ public class ArticleBean {
     }
 
     public Collection<Article> getArticle(ArticleSearch searchQuery) {
-//        searchQuery.validate();
         Query query = constructQuery(searchQuery);
         return (Collection<Article>) query.getResultList();
     }
@@ -51,5 +50,12 @@ public class ArticleBean {
     private Query constructQuery(ArticleSearch searchQuery) {
         String query = "SELECT a FROM Article a";
         return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
+    }
+
+    public Article addArticle(String titre, String descritpion, String type, String detail, String image) {
+        Article article = new Article(titre, descritpion, detail, type, image);
+        manager.persist(article);
+        logger.info("New article : " + article);
+        return article;
     }
 }

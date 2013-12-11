@@ -42,12 +42,12 @@ public class SecureInterceptor {
         }
         
         if (role.equals(Role.ANONYM)) {
-            System.out.println(sessionSecuring.isConnected(req));
+            //System.out.println(sessionSecuring.isConnected(req));
             if (!sessionSecuring.isConnected(req)) {
                 return invocationContext.proceed();
             }
         } else if (role.equals(Role.MEMBER)) {
-            System.out.println(sessionSecuring.isConnected(req));
+            //System.out.println(sessionSecuring.isConnected(req));
             if (sessionSecuring.isConnected(req)) {
                 return invocationContext.proceed();
             }

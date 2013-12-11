@@ -1,13 +1,11 @@
 package com.cathymini.cathymini2.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
 
 
 /**
@@ -35,10 +33,6 @@ public class Article implements Serializable {
     @Column(name="type")
     private String type;
     
-    @Column(name="datepost")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date datepost;
-    
     @Column(name="image")
     private String image;
 
@@ -60,7 +54,56 @@ public class Article implements Serializable {
         this.type = type;
         this.image = null;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getImage() {
+        return image;
+    }
     
+    @Override
     public String toString(){
         return "Article "+ titre;
     }

@@ -190,6 +190,7 @@ public class ConsumerFacade{
             Consumer user = sessionSecuring.getConsumer(request);
             try {
                 consumerBean.updateUser(user, consumer);
+                updateSession(request);
                 return new ConsumerApi(user);
             } catch (Exception ex) {
                 throw new Exception("error");
@@ -214,6 +215,7 @@ public class ConsumerFacade{
         if (address.validate()) {
             Consumer user = sessionSecuring.getConsumer(request);
             consumerBean.addAddress(user, address);
+            updateSession(request);
         } else {
             ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
             builder.entity("address error");
@@ -234,6 +236,7 @@ public class ConsumerFacade{
         if (address.validate()) {
             Consumer user = sessionSecuring.getConsumer(request);
             consumerBean.editAddress(user, address);
+            updateSession(request);
         } else {
             ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
             builder.entity("address error");
@@ -254,9 +257,32 @@ public class ConsumerFacade{
         Consumer user = sessionSecuring.getConsumer(request);
         Collection<DeliveryAddress> deliveryAddress = user.getDeliveryCollection();
         Collection<Address> address = new ArrayList<Address>();
-        for (DeliveryAddress addr : deliveryAddress) {
-            address.add(new Address(addr));
+        
+        if (deliveryAddress != null) {
+            // If the user has no delivery addr, getDeliveryCollection() return null
+            for (DeliveryAddress addr : deliveryAddress) {
+                address.add(new Address(addr));
+            }
         }
+        
         return address;
+    }
+    
+    /**
+     * Regenerate the consumer session. This method should be used when the consumer infos are modified
+     * @param request
+     * @throws Exception 
+     */
+    public void updateSession(HttpServletRequest request) throws Exception {
+        // Get session informations
+        Consumer user = sessionSecuring.getConsumer(request);
+        
+        // Close current session
+        sessionSecuring.closeSession(request);
+        consumerBean.logout();
+        
+        // Open new session
+        user = consumerBean.connectUser(user.getUsername(), user.getPwd());
+        sessionSecuring.openSession(request, user);
     }
 }

@@ -4,8 +4,10 @@ import com.cathymini.cathymini2.webservices.secure.Role;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -57,11 +59,13 @@ public class Consumer implements Serializable {
     /** Consumer role */
     private Role role;
     
-    @OneToMany(mappedBy="consumer") 
+    @OneToMany(mappedBy = "consumer")
+    @Basic(fetch = FetchType.EAGER)
     /** Consumer {@link DeliveryAddress} collection */
     private Collection<DeliveryAddress> deliveryCollection;
     
-    @OneToMany(mappedBy="consumer")
+    @OneToMany(mappedBy = "consumer")
+    @Basic(fetch = FetchType.EAGER)
     /** Consumer {@link PaymentInfo} collection */
     private Collection<PayementInfo> paymentInfoCollection;
 
@@ -94,14 +98,6 @@ public class Consumer implements Serializable {
             deliveryCollection = new ArrayList<DeliveryAddress>();
         }
         deliveryCollection.add(address);
-    }
-
-    public Collection<PayementInfo> getPaymentenInfoCollection() {
-        return  paymentInfoCollection;
-    }
-
-    public void setPaymentenInfoCollection(Collection<PayementInfo>  paymentInfoCollection) {
-        this. paymentInfoCollection =  paymentInfoCollection;
     }
 
     public Long getUserID() {

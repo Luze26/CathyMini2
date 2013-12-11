@@ -33,7 +33,6 @@ public class ProductSearch {
         if( minPrice != null && maxPrice != null) {
             DecimalFormat mindf = new DecimalFormat("##.##");
             minPrice =  new Float(mindf.format(minPrice.doubleValue()));
-
             DecimalFormat maxdf = new DecimalFormat("##.##");
             maxPrice =  new Float(maxdf.format(maxPrice.doubleValue()));
 
@@ -41,22 +40,19 @@ public class ProductSearch {
                 minPrice = 0.00f;
             if (maxPrice < 0)
                 maxPrice = 0.00f;
-            
             if (minPrice > maxPrice){
                 Float tmp = minPrice;
                 minPrice = maxPrice;
                 maxPrice = tmp;
             }
         }
-        System.out.println("test :" +flux); 
         for(Float s : flux){
             DecimalFormat df = new DecimalFormat("##.##");
             s =  new Float(df.format(s.doubleValue()));
         }
-        System.out.println("java :" +flux); 
+        System.out.println("mlkmllm");
         if(length == 0) {
             length = 10;
         }
-     
     }
 }
