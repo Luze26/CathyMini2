@@ -171,7 +171,7 @@ public class ProductFacade {
                     Product newT = new Napkin(typeS, nom, "serviette", prix, fluxC, description, marque, pict);
                     productBean.addProduct(newT);
                 }
-            }
+             }
         }
         
         
