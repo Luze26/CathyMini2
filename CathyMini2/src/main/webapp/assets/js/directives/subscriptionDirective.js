@@ -30,20 +30,23 @@ angular.module('common').directive('subscriptionDirective', ['subscriptionServic
     },
     template: '<div id="sub">' +
                 '<div id="subTab" ng-click="toggleSub()">' +
-                    '<i class="fa fa-shopping-cart fa-4x"></i>' +
+                    '<i class="fa fa-shopping-sub fa-4x"></i>' +
                     '<div>{{subscriptionService.nbProducts()}} products</div>' +
                  '</div>' +
                  '<div id="subPanel">' +
                     '<ul>' +
-                        '<li ng-repeat="prod in subscriptionService.cart.products">' +
+                        '<li ng-repeat="prod in subscriptionService.sub.products">' +
                             '{{prod.name}} quantity : \n\
                         <input type="text" name="lname" ng-model="prod.quantity" ng-change="subscriptionService.changeQuantity(prod)"/> \n\
                 <span>\n\
-                                <img class="imgGallery" ng-click="subscriptionService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
+                                <img class="imgDelete" ng-click="subscriptionService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
 </span>' +
                         '</li>' +
                     '</ul>' +
-                    'Price: {{subscriptionService.cart.price}} €' +
+                    'Price: {{subscriptionService.sub.price}} € </br>' +
+                   'fréquence commande : \n\
+                        <input type="text" name="lname" ng-model="nbJ" ng-change="subscriptionService.changeNbJ(nbJ)"/> '+
+
                  '</div>' +
               '</div>'
   };

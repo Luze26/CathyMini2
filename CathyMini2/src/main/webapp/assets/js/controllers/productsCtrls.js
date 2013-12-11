@@ -1,5 +1,5 @@
-angular.module('products').
-  controller('productsCtrl', ['$scope', '$http', 'cartService', 'subscriptionService', function($scope, $http, cartService, subscriptionService) {
+angular.module('products')
+        .controller('productsCtrl', ['$scope', '$http', 'cartService', 'subscriptionService', function($scope, $http, cartService, subscriptionService) {
 
       /** Search query */
       $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true,
@@ -156,8 +156,8 @@ angular.module('products').
             });
         }
       };
-
-      /**
+      
+       /**
        * Add a product to the cart
        * @param {Product} product
        */
@@ -166,10 +166,20 @@ angular.module('products').
       };
       
       /**
-       * Add a product to the cart
+       * Add a product to the sub
        * @param {Product} product
        */
       $scope.addProductToSub = function(product) {
+        console.log("gfhfg");
         subscriptionService.addProduct(product);
+      };
+
+      
+      /**
+       * Add a product to the cart or the subscription
+       * * @param {Product} product
+       */
+      $scope.addProduct = function(product){
+          console.log("Dans addProduct");
       };
     }]);

@@ -31,28 +31,33 @@ public class SubscriptionBean {
     private static final Logger logger = Logger.getLogger(SubscriptionBean.class);
     
     public Subscription newSubscription(Consumer cons){
+        logger.debug("1");
         Subscription sub = new Subscription();
+        logger.debug("2");
         sub.setConsumer(cons);
+        logger.debug("3");
         sub.setNbJ(21);
+        logger.debug("4");
         sub.setCartLineCollection(new ArrayList<CartLine>());
+        logger.debug("5");
         if(cons != null)
             manager.persist(sub);
-        return sub;
-        
+        logger.debug("6");
+        return sub; 
     }
     
 
-    public void addProduct(Product prod, int qu, Subscription sub, boolean persist){
+    public void addProductToSub(Product prod, int qu, Subscription sub, boolean persist){
         CartLine cl = new CartLine(prod, qu);
-        addProduct(cl, sub, persist);
+        addProductToSub(cl, sub, persist);
     }
     
-    public void addProduct(Product prod, Subscription sub, Boolean persist){
-        addProduct(prod, 1, sub, persist);
+    public void addProductToSub(Product prod, Subscription sub, Boolean persist){
+        addProductToSub(prod, 1, sub, persist);
     }
     
      
-    public void addProduct(CartLine cl, Subscription sub, boolean persist){
+    public void addProductToSub(CartLine cl, Subscription sub, boolean persist){
          if(sub.getCartLineCollection() == null){
              sub.setCartLineCollection(new ArrayList<CartLine>());
          }
@@ -72,7 +77,7 @@ public class SubscriptionBean {
          }
     }
     
-    public int removeProduct(Product prod, Subscription sub){
+    public int removeProductToSub(Product prod, Subscription sub){
         
         int place = -1;
         Iterator<CartLine> it = sub.getCartLineCollection().iterator();
@@ -90,20 +95,20 @@ public class SubscriptionBean {
         return place;
     }
     
-    public boolean subCartLine(CartLine cl, Cart cart){
-        cart.getCartLineCollection().remove(cl);
+    public boolean subCartLineToSub(CartLine cl, Subscription sub){
+        sub.getCartLineCollection().remove(cl);
         Query query = manager.createNamedQuery("DeleteCartLineById", CartLine.class); 
         query.setParameter("id", cl.getCartLineID());
         return query.executeUpdate() == 1;
     }
     
-    public void subProduct(String nom, Float flux, Cart cart){
-        subCartLine(getCartLine(nom, flux, cart), cart);
+    public void subCartLineToSub(String nom, Float flux, Subscription sub){
+        subCartLineToSub(getCartLine(nom, flux, sub), sub);
     }
     
-    public CartLine getCartLine(String nom, Float flux, Cart cart){
+    public CartLine getCartLine(String nom, Float flux, Subscription sub){
         CartLine cLine = null;
-        Iterator<CartLine> it = cart.getCartLineCollection().iterator();
+        Iterator<CartLine> it = sub.getCartLineCollection().iterator();
         CartLine myCartLine;
         while(it.hasNext()){
             myCartLine = it.next();
@@ -114,7 +119,7 @@ public class SubscriptionBean {
         return cLine;
     }
     
-    public CartLine getCartLineByID(Long id, Subscription sub){
+    public CartLine getCartLineSubByID(Long id, Subscription sub){
         CartLine cLine = null;
         for(CartLine myCartLine : sub.getCartLineCollection()){
             if(myCartLine.getProduct().getId() == id){
@@ -129,17 +134,19 @@ public class SubscriptionBean {
      * Empty the cart.
      */
     @Remove
-    public String clear(Cart cart) {
-        cart.getCartLineCollection().clear();
+    public String clearSub(Subscription sub) {
+        sub.getCartLineCollection().clear();
         return "Empty cart";
     }
     
     private Subscription findSubByConsumer(Consumer consumer) {
         Query q = manager.createNamedQuery("SubscriptionByName", Subscription.class); 
+        logger.debug("dans findSubByConsumer");
         q.setParameter("consumer", consumer);
         
         if (q.getResultList().isEmpty())
             return null; 
+        logger.debug("nombre de sub pour ce consumer : "+q.getResultList().size());
         
         return (Subscription) q.getResultList().get(0);
     }
@@ -155,7 +162,7 @@ public class SubscriptionBean {
     }
     
     public void addSubscriptionToConsumer(Consumer cons, Subscription sub){
-        sub.setCartID(sub.getCartID());
+        sub.setConsumer(cons);
         manager.merge(sub);
     }
     
@@ -174,7 +181,7 @@ public class SubscriptionBean {
         logger.debug("fin fonction");
     }
     
-    public String mergeCart(Consumer cons, Subscription subTemp){
+    public String mergeSub(Consumer cons, Subscription subTemp){
         Subscription subCons = null;//TOdofindCartByConsumer(cons);
         if(subCons != null){
             if(subCons.getCartLineCollection().isEmpty()){
@@ -196,7 +203,7 @@ public class SubscriptionBean {
                     if(!find){
                         logger.debug("product not found so add to cart cartLIne");
                             //add the product
-                            addProduct(clTemp, subCons, true);
+                            addProductToSub(clTemp, subCons, true);
                     }
                 }
                 logger.debug("merge finish");
@@ -214,6 +221,13 @@ public class SubscriptionBean {
      */
     public Subscription getUserSubscription(Consumer consumer) throws Exception {
         return findSubByConsumer(consumer);
+    }
+    
+    public int changeNbJ(Subscription sub, int nbJ, boolean persist){
+        sub.setNbJ(nbJ);
+        if(persist)
+            manager.merge(sub);
+        return sub.getNbJ();
     }
     
 }

@@ -87,9 +87,20 @@
                     <div class="col-xs-12" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
                         <div ng-repeat="prod in products" class="product col-xs-12 col-sm-6 col-md-4">
                             <div class="col-md-4 image">
-                               <img class="imgGallery img-thumbnail" ng-src="{{prod.pictureUrl}}"/>
-                               <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
-                               <button class="btn" ng-click="addProductToSub(prod)">Add to sub</button>
+                               <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
+                              <!-- <button class="btn" ng-click="addProductToCart(prod)">Add to cart</button>
+                               <button class="btn" ng-click="addProductToSub(prod)">Add Product t sub</button>
+                               <button type="button" class="btn btn-info" data-toggle="modal" data-target="#chooseTargetAddProduct">Add Product</button>
+                               
+                               <ui:include src="/partials/chooseTargetAddProduct.xhtml" />-->
+                              <div class="dropdown">
+                                <a data-toggle="dropdown" href="#">Add Product</a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <li><a class="btn" ng-click="addProductToCart(prod)">Add to cart</a></li>
+                                    <li><a class="btn" ng-click="addProductToSub(prod)">Add Product t sub</a></li>
+                                </ul>
+                              </div>
+
                             </div>
                             <div class="col-md-8 infos">
                                 <div class="coin"></div>

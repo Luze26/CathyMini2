@@ -38,17 +38,17 @@ public class CartSession {
         return cart;
     }
     
-    public void addProduct(Product prod, int qu, Cart cart, boolean persist){
+    public void addProductToCart(Product prod, int qu, Cart cart, boolean persist){
         CartLine cl = new CartLine(prod, qu);
-        addProduct(cl, cart, persist);
+        addProductToCart(cl, cart, persist);
     }
     
-    public void addProduct(Product prod, Cart cart, Boolean persist){
-        addProduct(prod, 1, cart, persist);
+    public void addProductToCart(Product prod, Cart cart, Boolean persist){
+        addProductToCart(prod, 1, cart, persist);
     }
     
      
-    public void addProduct(CartLine cl, Cart cart, boolean persist){
+    public void addProductToCart(CartLine cl, Cart cart, boolean persist){
          if(cart.getCartLineCollection() == null){
              cart.setCartLineCollection(new ArrayList<CartLine>());
          }
@@ -68,7 +68,7 @@ public class CartSession {
          }
     }
     
-    public int removeProduct(Product prod, Cart cart){
+    public int removeProductToCart(Product prod, Cart cart){
         
         int place = -1;
         Iterator<CartLine> it = cart.getCartLineCollection().iterator();
@@ -86,18 +86,18 @@ public class CartSession {
         return place;
     }
     
-    public boolean subCartLine(CartLine cl, Cart cart){
+    public boolean subCartLineToCart(CartLine cl, Cart cart){
         cart.getCartLineCollection().remove(cl);
         Query query = manager.createNamedQuery("DeleteCartLineById", CartLine.class); 
         query.setParameter("id", cl.getCartLineID());
         return query.executeUpdate() == 1;
     }
     
-    public void subProduct(String nom, Float flux, Cart cart){
-        subCartLine(getCartLine(nom, flux, cart), cart);
+    public void subProductToCart(String nom, Float flux, Cart cart){
+        subCartLineToCart(getCartLineToCart(nom, flux, cart), cart);
     }
     
-    public CartLine getCartLine(String nom, Float flux, Cart cart){
+    public CartLine getCartLineToCart(String nom, Float flux, Cart cart){
         CartLine cLine = null;
         Iterator<CartLine> it = cart.getCartLineCollection().iterator();
         CartLine myCartLine;
@@ -110,7 +110,7 @@ public class CartSession {
         return cLine;
     }
     
-    public CartLine getCartLineByID(Long id, Cart cart){
+    public CartLine getCartLineCartByID(Long id, Cart cart){
         CartLine cLine = null;
         for(CartLine myCartLine : cart.getCartLineCollection()){
             if(myCartLine.getProduct().getId() == id){
@@ -131,19 +131,22 @@ public class CartSession {
      * Empty the cart.
      */
     @Remove
-    public String clear(Cart cart) {
+    public String clearCart(Cart cart) {
         cart.getCartLineCollection().clear();
         return "Empty cart";
     }
     
     private Cart findCartByConsumer(Consumer consumer) {
+        logger.debug("avant create query");
         Query q = manager.createNamedQuery("CartByName", Cart.class); 
         q.setParameter("consumer", consumer);
-        
+        logger.debug("dans findCartByConsumer");
         if (q.getResultList().isEmpty())
             return null; 
-        
+        logger.debug("liste : r"+q.getResultList().size());
+
         return (Cart) q.getResultList().get(0);
+        
     }
     
     public Cart findCartByID(Long id){
@@ -198,7 +201,7 @@ public class CartSession {
                     if(!find){
                         logger.debug("product not found so add to cart cartLIne");
                             //add the product
-                            addProduct(clTemp, cartCons, true);
+                            addProductToCart(clTemp, cartCons, true);
                     }
                 }
                 logger.debug("merge finish");
@@ -210,4 +213,5 @@ public class CartSession {
         }
         return "";
     }
+    
 }

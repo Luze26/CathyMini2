@@ -62,10 +62,13 @@ public class SubscriptionFacade {
                 if(sub == null){
                  //   logger.debug("creation new sub");
                     sub = subBean.newSubscription(cons);
+                    logger.debug("7");
                 }
                 Product prod = productBean.getProduct(id);
+                logger.debug("8");
                 //logger.debug("prod récupéré");
-                subBean.addProduct(prod, sub, true);
+                subBean.addProductToSub(prod, sub, true);
+                logger.debug("9");
                 //logger.debug("produit ajouté!!");
                 return true;
             }
@@ -92,7 +95,7 @@ public class SubscriptionFacade {
                     setSubSession(request, newSubTemp);
                     //logger.debug("mise deans session");
                }
-                subBean.addProduct(prod, newSubTemp, false);
+                subBean.addProductToSub(prod, newSubTemp, false);
                 return true;
             }
         } catch (Exception ex) {
@@ -120,7 +123,9 @@ public class SubscriptionFacade {
         Subscription sub = getSubSession(request);
         Consumer cons  = sessionSecuring.getConsumer(request);
         if(sub != null){
-            subBean.mergeCart(cons, sub);
+            logger.debug("sub session n'est pas nul");
+            subBean.mergeSub(cons, sub);
+            logger.debug("apres merge");
             setSubSession(request, null);
         }
         try{
@@ -144,7 +149,7 @@ public class SubscriptionFacade {
         if(cons != null){
             try{
                 Subscription sub = subBean.getUserSubscription(cons);
-                CartLine cl = subBean.getCartLineByID(Long.parseLong(String.valueOf(clTemp.getProductId())), sub);
+                CartLine cl = subBean.getCartLineSubByID(Long.parseLong(String.valueOf(clTemp.getProductId())), sub);
                 subBean.changeQuantityCartLine(cl, clTemp.getQuantity(), true);
             }
             catch(Exception ex){
@@ -155,7 +160,7 @@ public class SubscriptionFacade {
         else{
             Subscription sub = getSubSession(request);
             if(sub != null){
-                CartLine cl = subBean.getCartLineByID(Long.parseLong(String.valueOf(clTemp.getProductId())), sub);
+                CartLine cl = subBean.getCartLineSubByID(Long.parseLong(String.valueOf(clTemp.getProductId())), sub);
                 subBean.changeQuantityCartLine(cl, clTemp.getQuantity(), false);
             }
             else{
@@ -187,7 +192,38 @@ public class SubscriptionFacade {
         else{
             sub = getSubSession(request);
         }
-        place = subBean.removeProduct(prod, sub);
+        place = subBean.removeProductToSub(prod, sub);
         return place;
+    }
+    
+     @POST
+    @Path("/changeNbJ")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public int changeNbJ(int nbJ, @Context HttpServletRequest request, @Context HttpServletResponse response){
+        logger.debug("changeQuantity work :)");
+        Consumer cons  = sessionSecuring.getConsumer(request);
+        Subscription sub = null;
+        if(cons != null){
+            try{
+                sub = subBean.getUserSubscription(cons);
+                subBean.changeNbJ(sub, nbJ, true);
+            }
+            catch(Exception ex){
+                response.setStatus(400);
+                return -1;
+            }
+        }
+        else{
+            sub = getSubSession(request);
+            if(sub != null){
+                subBean.changeNbJ(sub, nbJ, false);
+            }
+            else{
+                response.setStatus(400);
+                return -1;
+            }
+        }
+        return sub.getNbJ();
     }
 }

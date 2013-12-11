@@ -56,7 +56,7 @@ public class CartFacade {
                     cart = cartBean.newCart(cons);
                 }
                 Product prod = productBean.getProduct(id);
-                cartBean.addProduct(prod, cart, true);
+                cartBean.addProductToCart(prod, cart, true);
                 return true;
             }
             else{
@@ -77,7 +77,7 @@ public class CartFacade {
                     newCartTemp = cartBean.newCart(null);
                     setCartSession(request, newCartTemp);
                }
-                cartBean.addProduct(prod, newCartTemp, false);
+                cartBean.addProductToCart(prod, newCartTemp, false);
                 return true;
             }
         } catch (Exception ex) {
@@ -129,7 +129,7 @@ public class CartFacade {
         if(cons != null){
             try{
                 Cart cart = cartBean.getUserCart(cons);
-                CartLine cl = cartBean.getCartLineByID(Long.parseLong(String.valueOf(clTemp.getProductId())), cart);
+                CartLine cl = cartBean.getCartLineCartByID(Long.parseLong(String.valueOf(clTemp.getProductId())), cart);
                 cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), true);
             }
             catch(Exception ex){
@@ -140,7 +140,7 @@ public class CartFacade {
         else{
             Cart cart = getCartSession(request);
             if(cart != null){
-                CartLine cl = cartBean.getCartLineByID(Long.parseLong(String.valueOf(clTemp.getProductId())), cart);
+                CartLine cl = cartBean.getCartLineCartByID(Long.parseLong(String.valueOf(clTemp.getProductId())), cart);
                 cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), false);
             }
             else{
@@ -172,7 +172,7 @@ public class CartFacade {
         else{
             cart = getCartSession(request);
         }
-        place = cartBean.removeProduct(prod, cart);
+        place = cartBean.removeProductToCart(prod, cart);
         return place;
     }
     

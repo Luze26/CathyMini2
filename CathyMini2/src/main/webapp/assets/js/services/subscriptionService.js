@@ -18,7 +18,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
 
     
     
-   /* $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
+    $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
         $http.post("/webresources/sub/consumerIsConnected")
         .success(function(data){
             service.sub.price = 0;
@@ -33,7 +33,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                 }
             }
         });
-    } );*/
+    } );
     
      $rootScope.$on('consumerDisconnect',function (){
                 service.sub.products = [];
@@ -92,7 +92,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
     service.changeNbJ = function(nbJ) {
         $http.post("/webresources/sub/changeNbJ", nbJ)
             .success(function(data) {
-            service.nbJ = nbJ;
+            service.nbJ = data;
             });
     };
     
