@@ -87,6 +87,34 @@
                 
                     <label>Name*</label>
                     <input name="pName" ng-model="modal.product.name" type="text" placeholder="Product name…" autofocus="autofocus" required="required" />
+
+                    <div class="selectFile">
+                        <input type="file" id="file" ng-file-select="onFileSelect($files)" />
+                        <div ng-show="selectedFiles != null">
+                            <div class="sel-file" ng-repeat="f in selectedFiles">
+                                <img ng-show="dataUrls[$index]" ng-src="{{dataUrls[$index]}}"/>
+                                <span class="progress" ng-show="progress[$index] >= 0">						
+                                        <div style="width:{{progress[$index]}}%">{{progress[$index]}}%</div>
+                                </span>				
+                                {{f.name}} - size: {{f.size}}B - type: {{f.type}}
+                            </div>
+                        </div>
+                        <div class="response" ng-show="uploadResult.length > 0">
+                            Server Response:
+                            <ul>
+                                <li ng-repeat="result in uploadResult">
+                                    <ul>
+                                        <li ng-repeat="item in result">
+                                            <div data-ng-show="item.name">file name: {{item.name}}</div>
+                                            <div data-ng-show="item.fieldName">name: {{item.fieldName}}</div>
+                                            <div data-ng-show="item.size">size on the serve: {{item.size}}</div>
+                                            <div data-ng-show="item.value">value: {{item.value}}</div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     
                     <div ng-show="modal.add" class="control-group">
                         <label>Type*</label>
@@ -95,14 +123,9 @@
                             <button type="button" class="btn" value="Tampon" >Tampon</button>
                         </div>
                     </div>
-                    
-                    <div class="selectMarque">
-                        <label name="pMarque">Marque</label>
-                        <input name="pMarque" type="text" ng-model="modal.product.marque" required="required"/>
-                    </div>
 
                     <div class="selectFlux">
-                        <label>Flux</label>
+                        <label>Flux*</label>
                         <select ng-model="modal.product.flux" ng-options="value.id as value.print for (key, value) in selects" data-style="btn-primary" bs-select="bs-select" required="required"></select>
                     </div>
 
@@ -113,8 +136,12 @@
                             <input name="pPrice" ng-model="modal.product.price" type="text" min="0" smart-float="smart-float" class="form-control" autofocus="autofocus" required="required" />
                         </div>
                     </div>
-
-
+                    
+                    <div class="selectMarque">
+                        <label name="pMarque">Marque*</label>
+                        <input name="pMarque" type="text" ng-model="modal.product.marque" required="required"/>
+                    </div>
+                    
                     <div class="description">
                         <label for="pDescription">Description</label>
                         <textarea name="pDescription" ng-model="modal.product.description"></textarea>
@@ -122,6 +149,7 @@
                     
                 </fieldset>
                 </form>
+                * : champs requis
                 </ui:define>
                 </ui:decorate>
             </script>
@@ -132,7 +160,8 @@
             <script src="/assets/js/controllers/admin/productsCtrls.js"></script>
             <script src="/assets/js/modules/commonModule.js"></script>
             <script src="/assets/js/directives/form/formDirective.js"></script>
-            <script src="//mgcrea.github.com/angular-strap/vendor/bootstrap-select.js"></script> <!-- Script for appearance of "flux" selector -->
+            <script src="//mgcrea.github.com/angular-strap/vendor/bootstrap-select.js"></script> <!-- Script for appearance of "flux" selector --> 
+            <script src="/assets/js/lib/angular-file-upload.min.js"></script> 
         </ui:define>
     </ui:composition>
 </html>

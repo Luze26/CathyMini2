@@ -15,9 +15,9 @@
     </control>
     <control controlID="7" controlTypeID="__group__" x="241" y="124" w="900" h="453" measuredW="900" measuredH="453" zOrder="2" locked="false" isInGroup="-1">
       <groupChildrenDescriptors>
-        <control controlID="0" controlTypeID="com.balsamiq.mockups::TextInput" x="1" y="0" w="726" h="-1" measuredW="88" measuredH="27" zOrder="0" locked="false" isInGroup="7">
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::TextInput" x="1" y="0" w="726" h="-1" measuredW="70" measuredH="27" zOrder="0" locked="false" isInGroup="7">
           <controlProperties>
-            <text>Products%20list</text>
+            <text>Client%20list</text>
           </controlProperties>
         </control>
         <control controlID="1" controlTypeID="com.balsamiq.mockups::SearchBox" x="607" y="1" w="120" h="-1" measuredW="120" measuredH="25" zOrder="1" locked="false" isInGroup="7">
@@ -25,15 +25,15 @@
             <text>search</text>
           </controlProperties>
         </control>
-        <control controlID="2" controlTypeID="com.balsamiq.mockups::ButtonBar" x="1" y="31" w="727" h="31" measuredW="723" measuredH="27" zOrder="2" locked="false" isInGroup="7">
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::ButtonBar" x="1" y="31" w="727" h="31" measuredW="679" measuredH="27" zOrder="2" locked="false" isInGroup="7">
           <controlProperties>
             <selectedIndex>-1</selectedIndex>
-            <text>ID%2C%20PHOTO%2C%20NAME%2C%20MARQUE%2C%20FLUX%2C%20TYPE%2C%20PRICE%2C%20DESCRIPTION%09%09%09%2C%20ACTIONS</text>
+            <text>ID%2C%20NAME%2C%20FIRSTNAME%2C%20EMAIL%2C%20ADRESSES%09%09%2C%20ABONNEMENTS%09%2C%20ACTIONS</text>
           </controlProperties>
         </control>
         <control controlID="3" controlTypeID="com.balsamiq.mockups::TextArea" x="0" y="63" w="727" h="390" measuredW="200" measuredH="140" zOrder="3" locked="false" isInGroup="7">
           <controlProperties>
-            <text>Affichage%20des%20comptes%20clients%20sous%20forme%20de%20liste.%0ALa%20colonne%20ACTIONS%20contient%20deux%20boutons%20%3A%201%20pour%20%E9diter%20les%20informations%20d%27un%20compte%20client%2C%0Al%27autre%20pour%20le%20supprimer%20de%20la%20base%20de%20donn%E9e.</text>
+            <text>Affichage%20des%20comptes%20clients%20sous%20forme%20de%20liste.%0ALa%20colonne%20ACTIONS%20contient%20trois%20boutons%20%3A%20%0A%09-%201%20pour%20%E9diter%20les%20informations%20d%27un%20compte%20client%0A%09-%201%20pour%20le%20supprimer%20de%20la%20base%20de%20donn%E9e%0A%09-%201%20pour%20afficher%20les%20d%E9tails%20d%27un%20client%2C%20c%27est%20%E0%20dire%20affich%E9%20tout%20ses%20abonnements%20avec%20les%20produits%20qu%27il%20contient%20ainsi%20que%20toutes%20ses%20adresses.%20Lorsque%20ce%20n%27est%20pas%20d%E9ploy%E9%2C%20la%20partie%20%22Abonnements%22%20contient%20simplement%20le%20nombre%20d%27abonnements%20du%20client%20ainsi%20que%20le%20prix%20total.%20La%20partie%20%22Adresse%22%20contient%20le%20nombre%20d%27adresses%20lorsque%20ce%20n%27est%20pas%20d%E9ploy%E9.</text>
           </controlProperties>
         </control>
         <control controlID="4" controlTypeID="__group__" x="689" y="101" w="211" h="120" measuredW="211" measuredH="120" zOrder="4" locked="false" isInGroup="7">
