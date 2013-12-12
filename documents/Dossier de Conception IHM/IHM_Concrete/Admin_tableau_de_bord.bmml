@@ -13,5 +13,17 @@
         <text>Tableau%20de%20bord%2C%20Produits%2C%20Comptes%20clients%2C%20%09%09%09%09%09%09%09%09%09</text>
       </controlProperties>
     </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::LineChart" x="173" y="396" w="349" h="164" measuredW="187" measuredH="175" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::SubTitle" x="200" y="567" w="-1" h="-1" measuredW="294" measuredH="27" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Statistics%20on%20website%20visits</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::PieChart" x="668" y="159" w="221" h="172" measuredW="180" measuredH="180" zOrder="4" locked="false" isInGroup="-1"/>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::SubTitle" x="617" y="346" w="-1" h="-1" measuredW="323" measuredH="27" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Statistics%20on%20products%20bought</text>
+      </controlProperties>
+    </control>
   </controls>
 </mockup>

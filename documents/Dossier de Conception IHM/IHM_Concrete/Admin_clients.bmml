@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1141" measuredH="607" mockupW="936" mockupH="598">
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1617" measuredH="715" mockupW="1412" mockupH="706">
   <controls>
     <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="205" y="9" w="800" h="598" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
@@ -75,6 +75,65 @@
           </controlProperties>
         </control>
       </groupChildrenDescriptors>
+    </control>
+    <control controlID="8" controlTypeID="__group__" x="1173" y="24" w="444" h="691" measuredW="444" measuredH="691" zOrder="3" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="0" y="0" w="443" h="691" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="8"/>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::SubTitle" x="25" y="15" w="-1" h="-1" measuredW="108" measuredH="27" zOrder="1" locked="false" isInGroup="8">
+          <controlProperties>
+            <text>Edit%20client</text>
+          </controlProperties>
+        </control>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::HRule" x="0" y="42" w="443" h="-1" measuredW="100" measuredH="10" zOrder="2" locked="false" isInGroup="8"/>
+        <control controlID="3" controlTypeID="com.balsamiq.mockups::Label" x="25" y="67" w="-1" h="-1" measuredW="35" measuredH="21" zOrder="3" locked="false" isInGroup="8">
+          <controlProperties>
+            <text>Name</text>
+          </controlProperties>
+        </control>
+        <control controlID="4" controlTypeID="com.balsamiq.mockups::TextInput" x="25" y="88" w="224" h="-1" measuredW="153" measuredH="27" zOrder="4" locked="false" isInGroup="8">
+          <controlProperties>
+            <text>%3CNom%20actuel%20du%20client%3E</text>
+          </controlProperties>
+        </control>
+        <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="25" y="130" w="-1" h="-1" measuredW="59" measuredH="21" zOrder="5" locked="false" isInGroup="8">
+          <controlProperties>
+            <text>Firstname</text>
+          </controlProperties>
+        </control>
+        <control controlID="8" controlTypeID="com.balsamiq.mockups::Label" x="23" y="186" w="-1" h="-1" measuredW="32" measuredH="21" zOrder="6" locked="false" isInGroup="8">
+          <controlProperties>
+            <text>Email</text>
+          </controlProperties>
+        </control>
+        <control controlID="9" controlTypeID="com.balsamiq.mockups::TextInput" x="25" y="215" w="224" h="-1" measuredW="158" measuredH="27" zOrder="7" locked="false" isInGroup="8">
+          <controlProperties>
+            <text>%3CEmail%20actuel%20du%20client%3E</text>
+          </controlProperties>
+        </control>
+        <control controlID="16" controlTypeID="com.balsamiq.mockups::HRule" x="0" y="636" w="443" h="-1" measuredW="100" measuredH="10" zOrder="8" locked="false" isInGroup="8"/>
+        <control controlID="17" controlTypeID="com.balsamiq.mockups::Button" x="388" y="651" w="-1" h="-1" measuredW="40" measuredH="27" zOrder="9" locked="false" isInGroup="8">
+          <controlProperties>
+            <text>Ok</text>
+          </controlProperties>
+        </control>
+        <control controlID="18" controlTypeID="com.balsamiq.mockups::Button" x="317" y="651" w="-1" h="-1" measuredW="56" measuredH="27" zOrder="10" locked="false" isInGroup="8">
+          <controlProperties>
+            <text>Close</text>
+          </controlProperties>
+        </control>
+        <control controlID="19" controlTypeID="com.balsamiq.mockups::VerticalScrollBar" x="428" y="53" w="-1" h="585" measuredW="16" measuredH="100" zOrder="11" locked="false" isInGroup="8"/>
+        <control controlID="20" controlTypeID="com.balsamiq.mockups::TextInput" x="25" y="151" w="224" h="-1" measuredW="171" measuredH="27" zOrder="12" locked="false" isInGroup="8">
+          <controlProperties>
+            <text>%3CPr%E9nom%20actuel%20du%20client%3E</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Arrow" x="913" y="35" w="260" h="167" measuredW="150" measuredH="100" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>bottom</direction>
+        <text>Appear%20when%20click%20on%20button</text>
+      </controlProperties>
     </control>
   </controls>
 </mockup>

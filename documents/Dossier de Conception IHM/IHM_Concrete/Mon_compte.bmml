@@ -15,6 +15,8 @@
     </control>
     <control controlID="2" controlTypeID="com.balsamiq.mockups::TabBar" x="131" y="121" w="770" h="447" measuredW="435" measuredH="100" zOrder="2" locked="false" isInGroup="-1">
       <controlProperties>
+        <hrefs>Mon_compte%26bm%3BMon_compte.bmml%26bm%3BMon_compte.bmml%26bm%3BMon_compte.bmml%2CMon_compte_achat%26bm%3BMon_compte_achat.bmml%26bm%3BMon_compte_achat.bmml%26bm%3BMon_compte_achat.bmml%2CMon_compte_abonnements%26bm%3BMon_compte_abonnements.bmml%26bm%3BMon_compte_abonnements.bmml%26bm%3BMon_compte_abonnements.bmml</hrefs>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2235%2C115%2C147%2C142%22%20href%3D%22Mon_compte.bmml%22%20alt%3D%22Mon_compte%22%20id%3D%222%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22147%2C115%2C291%2C142%22%20href%3D%22Mon_compte_achat.bmml%22%20alt%3D%22Mon_compte_achat%22%20id%3D%222%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22291%2C115%2C412%2C142%22%20href%3D%22Mon_compte_abonnements.bmml%22%20alt%3D%22Mon_compte_abonnements%22%20id%3D%222%22/%3E%0A</map>
         <selectedIndex>0</selectedIndex>
         <tabVPosition>top</tabVPosition>
         <text>Mes%20informations%2C%20Mon%20historique%20d%27achat%2C%20Mes%20abonnements</text>
@@ -103,6 +105,17 @@
     <control controlID="38" controlTypeID="com.balsamiq.mockups::SubTitle" x="153" y="298" w="-1" h="-1" measuredW="149" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Vos%20adresses</text>
+      </controlProperties>
+    </control>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::ButtonBar" x="153" y="331" w="726" h="27" measuredW="514" measuredH="27" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>-1</selectedIndex>
+        <text>Num%E9ro%2C%20Adresse%09%09%2C%20Code%20postal%2C%20Ville%09%09%2C%20Action</text>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::TextArea" x="153" y="358" w="726" h="210" measuredW="200" measuredH="140" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Affichage%20des%20adresses%20sous%20forme%20de%20liste.%0ALes%20actions%20possibles%20sont%20%3A%20l%27%E9dition%20et%20la%20suppression.%0AL%27%E9dition%20se%20fera%20dans%20une%20popup%20ou%20directement%20dans%20la%20liste%20en%20rendant%20les%20champs%20%E9ditables%20%3D%3E%20%E0%20voir%20lors%20de%20l%27impl%E9mentation.%0ALa%20suppression%20demandera%20une%20confirmation%20via%20une%20popup.</text>
       </controlProperties>
     </control>
   </controls>
