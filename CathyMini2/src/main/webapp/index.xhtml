@@ -45,8 +45,9 @@
                 </div>
                     <div class="col-md-10" infinite-scroll="loadArticles()" infinite-scroll-distance="2">
                         <div ng-repeat="art in articles">
+                            <div class="col-md-10">
                                 <div class="col-md-3 image">
-                                   <img class="imgGallery img-thumbnail" ng-src="{{art.image}}"/>
+                                    <img class="imgGallery img-thumbnail" width="500" height="500" ng-src="{{art.image}}"/>
                                 </div>
                                 <div id="{{art.type}}" class="col-md-7">
                                     <h3 class="type">{{art.titre}}</h3>
@@ -54,6 +55,7 @@
                                     <div>Detail : {{art.detail}}</div>
                                     <a class="btn" href="#carousel" >haut2page</a>
                                 </div>
+                            </div>
                         </div>
                     </div>
             </div>
