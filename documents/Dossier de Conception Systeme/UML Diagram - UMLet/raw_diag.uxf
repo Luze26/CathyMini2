@@ -92,7 +92,7 @@
       <x>512</x>
       <y>128</y>
       <w>192</w>
-      <h>152</h>
+      <h>72</h>
     </coordinates>
     <panel_attributes>Cart
 --
@@ -184,11 +184,12 @@
       <x>312</x>
       <y>400</y>
       <w>168</w>
-      <h>56</h>
+      <h>64</h>
     </coordinates>
     <panel_attributes>PurchaseSubscription
 --
 - startDate : Date
+- nbDays : Integer
 - enabled : boolean
 </panel_attributes>
     <additional_attributes/>
@@ -240,7 +241,7 @@ m1= 1</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>456</x>
-      <y>176</y>
+      <y>144</y>
       <w>72</w>
       <h>40</h>
     </coordinates>
@@ -345,5 +346,29 @@ m1=1</panel_attributes>
     <panel_attributes>lt=&lt;-
 m1= 1</panel_attributes>
     <additional_attributes>464;24;464;48;24;48;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>512</x>
+      <y>232</y>
+      <w>192</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>Subscription
+--
+- nbDays : Integer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>584</x>
+      <y>176</y>
+      <w>40</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>24;24;24;56</additional_attributes>
   </element>
 </diagram>
