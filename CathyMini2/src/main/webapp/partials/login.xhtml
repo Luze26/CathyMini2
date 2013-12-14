@@ -9,15 +9,19 @@
             <ul class="nav navbar-nav navbar-right login-zone" ng-controller="consumerCtrl">
                 <li ng-show="isConnected()">
                     Hello, {{consumer.username}} !
-                   <a class="btn btn-info" href="/account.xhtml">Mon compte</a>
-                   <button type="button" class="btn btn-info" ng-click="disconnect()">Logout</button>
-               </li>
-               <li ng-show="!isConnected()">
-                   <a href="#connect" title="Connexion" type="button" data-toggle="modal" data-target="#connectModal">Login</a>
-               </li>
-               <li ng-show="!isConnected()">
-                   <a href="#subscribe" title="Inscription" type="button" data-toggle="modal" data-target="#subscribeModal">Subscribe</a>
-               </li>
+                </li>
+                <li ng-show="isConnected()">
+                    <a type="button" href="/account.xhtml">Mon compte</a>
+                </li>
+                <li ng-show="isConnected()">
+                    <a href="#" type="button" ng-click="disconnect()">Logout</a>
+                </li>
+                <li ng-show="!isConnected()">
+                    <a href="#connect" title="Connexion" type="button" data-toggle="modal" data-target="#connectModal">Login</a>
+                </li>
+                <li ng-show="!isConnected()">
+                    <a href="#subscribe" title="Inscription" type="button" data-toggle="modal" data-target="#subscribeModal">Subscribe</a>
+                </li>
             </ul>
         </ui:composition>
     </body>
