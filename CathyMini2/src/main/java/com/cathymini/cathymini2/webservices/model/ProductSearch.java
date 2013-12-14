@@ -50,7 +50,6 @@ public class ProductSearch {
             DecimalFormat df = new DecimalFormat("##.##");
             s =  new Float(df.format(s.doubleValue()));
         }
-        System.out.println("mlkmllm");
         if(length == 0) {
             length = 10;
         }
