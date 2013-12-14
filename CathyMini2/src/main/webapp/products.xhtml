@@ -12,14 +12,10 @@
             <ui:param name="ngController" value="productsCtrl" />
             <ui:param name="title" value="CathyMini - Catalogue" />
             <ui:define name="content">
-                <div class="row">
-                    <div class="panel panel-default">
+                <div class="row row-search">
+                    <div class="panel panel-default col-sm-12">
                         <div class="panel-heading">Search panel</div>
                         <form action="#" id="search-form">
-                                                <!--        <label class="btn-default">
-                                                            <input type="checkbox" ng-change="test()" /> 
-                                                            test
-                                                        </label> -->
                             <table class="table">                       
                                 <tr>
                                     <td>
@@ -82,22 +78,26 @@
                         </form>
                         <cart-directive></cart-directive>
                     </div>
+                </div>
+                <div class="row row-products">
                     <div class="col-xs-12" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
-                        <div type="button" ng-repeat="prod in products" data-toggle="modal" data-target="#productOverlay"
-                             ng-click="showProduct(prod)" class="product col-xs-12 col-sm-6 col-md-4">
-                            <div class="col-md-4 image">
-                                <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
-                                <button class="btn" ng-click="addProductToCart($event, prod)">Add to cart</button>
-                            </div>
-                            <div class="col-md-8 infos">
-                                <div class="coin"></div>
-                                <div class="type">
-                                    <img ng-if="prod.type==='serviette'" src="assets/image/serviette.png"/>
-                                    <img ng-if="prod.type==='tampon'" src="assets/image/tampon.png"/>
+                        <div class="col-xs-12 col-sm-6 col-md-4 product-container" ng-repeat="prod in products">
+                            <div type="button" data-toggle="modal" data-target="#productOverlay"
+                                 ng-click="showProduct(prod)" class="product">
+                                <div class="col-md-4 image">
+                                    <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
+                                    <button class="btn btn-primary" ng-click="addProductToCart($event, prod)">Add to cart</button>
                                 </div>
-                                <div class="mid">{{prod.name}} <br /> {{prod.marque}}</div>
-                                <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>
-                                <div class="price">{{prod.price}}€</div>
+                                <div class="col-md-8 infos">
+                                    <div class="coin"></div>
+                                    <div class="type">
+                                        <img ng-if="prod.type==='serviette'" src="assets/image/serviette.png"/>
+                                        <img ng-if="prod.type==='tampon'" src="assets/image/tampon.png"/>
+                                    </div>
+                                    <div class="mid">{{prod.name}} <br /> {{prod.marque}}</div>
+                                    <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>
+                                    <div class="price">{{prod.price}}€</div>
+                                </div>
                             </div>
                         </div>
                     </div>
