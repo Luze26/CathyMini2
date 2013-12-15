@@ -1,6 +1,8 @@
 angular.module('products').
-  controller('productsCtrl', ['$scope', '$http', 'cartService', function($scope, $http, cartService) {
+  controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', function($rootScope, $scope, $http, cartService) {
 
+      $rootScope.header = "products";
+      
       /** Search query */
       $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true,
         napkin: true, minPrice: 0, maxPrice: 100, brand: "", flux: [1, 2, 3, 4, 5, 6]};

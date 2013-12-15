@@ -13,10 +13,30 @@
     border-left: solid 1px @mainColorSoft ! important;
     line-height: 50px ! important;
     font-size: 18px ! important;
+    text-align: center;
     &:hover {
         background-color: @mainColorSoft ! important;
         color: #fff ! important;
     }
+    &.active {
+        background-color: @mainColorDark ! important;
+        color: #fff ! important; 
+        .navbar-tick {
+            display: inline;
+        }
+    }
+}
+
+.navbar-tick {
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 12px 12px 12px;
+    border-color: transparent transparent #ffffff transparent;
+    bottom: -1px;
+    margin-left: -12px;
+    display: none;
+    position: absolute;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -32,6 +52,10 @@
     border-top: 5px solid #cccccc;
     margin-top: 20px;
     height: 50px;
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
 }
 
 .hide {
