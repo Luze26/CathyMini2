@@ -1,5 +1,5 @@
 /**
  * Module for the products page
  */
-angular.module('products', ['common', 'infinite-scroll']);
+angular.module('products', ['common', 'uiSlider', 'infinite-scroll']);
 

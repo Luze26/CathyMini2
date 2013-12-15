@@ -22,22 +22,17 @@
         min-height: @galleryProductSize;
         img {
             margin-top: 5px;
-            width: 140px;
-            height: 95px;
+            max-height: 150px;
         }
         button {
             position: absolute;
             bottom: 5px;
+            left: 20px;
         }
     }
     .infos {
         min-height: @galleryProductSize;
         font-weight: bold;
-        .type {
-            position: absolute;
-            top: 5px;
-            right: 4px;
-        }
         .mid {
             margin-top: 20px;
             margin-bottom: 5px;
@@ -46,15 +41,21 @@
         .price {
             position: absolute;
             bottom: 5px;
-            right: 5px;
+            right: 20px;
         }
     }
+}
+
+.type {
+    position: absolute;
+    top: 5px;
+    right: 9px;
 }
 
 .coin {
     position: absolute;
     top: 0px;
-    right: -1px;
+    right: 5px;
     height: 0px;
     width: 0px;
     border-top: 35px solid @mainColor;

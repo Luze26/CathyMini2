@@ -18,7 +18,7 @@ public class ProductSearch {
     public boolean napkin;
     public Float minPrice;
     public Float maxPrice;
-    public String brand;
+    public List<String> brands;
     public List<Float> flux;
     
 

@@ -4,8 +4,11 @@ angular.module('products').
       $rootScope.header = "products";
       
       /** Search query */
-      $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true,
-        napkin: true, minPrice: 0, maxPrice: 100, brand: "", flux: [1, 2, 3, 4, 5, 6]};
+      $scope.offset = 0;
+      $scope.length = 20; 
+      $scope.currentReqHolding = false;
+      $scope.search = {orderBy: "id", orderByASC: true, input: "", tampon: true,
+        napkin: true, minPrice: 0, maxPrice: 20, brands: [], flux: [1, 2, 3, 4, 5, 6]};
 
       /** Path where product's image are stock */
       $scope.cheminImageProduit = "/assets/product/"
@@ -27,7 +30,7 @@ angular.module('products').
 
 
       /** Description of flux **/
-      $scope.selects = [
+      $scope.flux = [
         {
           "id": "1",
           "print": "Mini",
@@ -60,8 +63,6 @@ angular.module('products').
         }
       ];
 
-      $scope.tmp = true;
-
       $scope.brands = [
         {
           "id": "1",
@@ -70,7 +71,17 @@ angular.module('products').
         },
         {
           "id": "2",
-          "print": "Nana",
+          "print": "Tampax",
+          "check": true
+        },
+        {
+          "id": "3",
+          "print": "Nett",
+          "check": true
+        },
+        {
+          "id": "4",
+          "print": "Always",
           "check": true
         }
       ];
@@ -90,15 +101,14 @@ angular.module('products').
           $scope.search.orderBy = property;
           $scope.search.orderByASC = true;
         }
-        $scope.refreshSearch();
       };
 
       /**
        * Refresh product list with the new search query
        */
       $scope.refreshSearch = function() {
-        $scope.search.offset = 0;
-        $scope.search.length = 20;
+        $scope.offset = 0;
+        $scope.length = 20;
         $scope.loadMore = true;
         $scope.loadProducts();
       };
@@ -110,7 +120,6 @@ angular.module('products').
         if($scope.search.tampon === false && $scope.search.napkin === false) {
           $scope.search.napkin = true;
         }
-        $scope.refreshSearch();
       };
 
       /**
@@ -120,41 +129,74 @@ angular.module('products').
         if($scope.search.napkin === false && $scope.search.tampon === false) {
           $scope.search.tampon = true;
         }
-        $scope.refreshSearch();
       };
 
+      /**
+       * 
+       * Refresh list of selected brands
+       */
+      $scope.refreshBrand = function() {
+        var brands = [];
+        for (var i = 0; i < $scope.brands.length; i++) {
+          if ($scope.brands[i].check) {
+            brands.push($scope.brands[i].print);
+          }
+        }
+        $scope.search.brands = brands;
+      };
+      
+      $scope.allNoBrands = function(checked) {
+        for (var i = 0; i < $scope.brands.length; i++) {
+            var brand = $scope.brands[i];
+            brand.check = checked;
+        }
+        $scope.refreshBrands();
+      };
+      
       /**
        * 
        * Refresh list of selected flux
        */
       $scope.refreshFlux = function() {
-        $scope.search.flux = [];
-        for (var i = 0; i < $scope.selects.length; i++) {
-          if ($scope.selects[i].check) {
-            $scope.search.flux.push($scope.selects[i].id);
+        var flux = [];
+        for (var i = 0; i < $scope.flux.length; i++) {
+          if ($scope.flux[i].check) {
+            flux.push($scope.flux[i].id);
           }
         }
-        
-        $scope.refreshSearch();
+        $scope.search.flux = flux;
       };
 
+      $scope.allNoFlux = function(checked) {
+        for (var i = 0; i < $scope.flux.length; i++) {
+            var flu = $scope.flux[i];
+            flu.check = checked;
+        }
+        $scope.refreshFlux();
+      };
+      
       /**
        * Load products
        */
       $scope.loadProducts = function() {
-        if ($scope.loadMore) {
-          $http.post("/webresources/product/all", $scope.search)
+        if ($scope.loadMore && !$scope.currentReqHolding) {
+          $scope.currentReqHolding = true;
+          var searchLimited = {orderBy: $scope.search.orderBy, orderByASC: $scope.search.orderByASC, input: $scope.search.input, tampon: $scope.search.tampon,
+            napkin: $scope.search.napkin, minPrice: $scope.search.minPrice, maxPrice: $scope.search.maxPrice, brand: $scope.search.brand, flux: $scope.search.flux,
+            offset: $scope.offset, length: $scope.length, brands: $scope.search.brands};
+          $http.post("/webresources/product/all", searchLimited)
             .success(function(data) {
-              if (data.length < $scope.search.length) { //If there is no more product to load, end of the list
-                $scope.loadMore = false;
+              if (data.length < $scope.length) { //If there is no more product to load, end of the list
+                $scope.loadMore = false; console.log("llppm");
               }
 
-              if ($scope.search.offset === 0) { //If it's a new search, we reset the list
+              if ($scope.offset === 0) { //If it's a new search, we reset the list
                 $scope.products = [];
               }
 
-              $scope.search.offset += $scope.search.length; //Increment the offset
+              $scope.offset += $scope.length; //Increment the offset
               $scope.products = $scope.products.concat(data); //Add last loaded products
+              $scope.currentReqHolding = false;
             });
         }
       };
@@ -171,26 +213,28 @@ angular.module('products').
       };
       
       
-                      $scope.fichier = "/assets/image/bootstrap-mdo-sfmoma-01.jpg";
-                $scope.newUrl = "";
-                $scope.preview = "";
-                
-                $scope.test = function() {
-                    $http.post("https://api.imageshack.us/v1/user/login", "cathy.mini.5832", "LadiesDays", "TRUE", "TRUE")
-                                .success(function(connect) {
-                                        $http.post("https://api.imageshack.us/v1/images", $scope.fichier, "CathyMini", "image")
-                                                .success(function(data) {
-                                           
-                                                $scope.newUrl = data.filename;
-        //                                        $scope.preview = data.previous_image->filename
-                                            
+            $scope.fichier = "/assets/image/bootstrap-mdo-sfmoma-01.jpg";
+      $scope.newUrl = "";
+      $scope.preview = "";
 
-                                        });
-                                });
-                };
-                
+      $scope.test = function() {
+        $http.post("https://api.imageshack.us/v1/user/login", "cathy.mini.5832", "LadiesDays", "TRUE", "TRUE")
+                      .success(function(connect) {
+                              $http.post("https://api.imageshack.us/v1/images", $scope.fichier, "CathyMini", "image")
+                                      .success(function(data) {
+
+                                      $scope.newUrl = data.filename;
+//                                        $scope.preview = data.previous_image->filename
+
+
+                              });
+                      });
+      };
+
                 
       $scope.showProduct = function(product) {
         $scope.productOverlay = product;
       };
+      
+      $scope.$watch('search', $scope.refreshSearch, true);
     }]);

@@ -35,3 +35,81 @@
     z-index: 800;
     width: inherit;
 }
+
+.panel-default {
+    border: none;
+    padding-top: 12px;
+}
+
+.search-col {
+    border-right: solid 1px #ddd;
+    padding-left: 15px;
+    height: 120px;
+
+    &>label {
+        display: block;
+    }
+
+    &:last-of-type {
+        border: none;
+    }
+}
+
+.labelCheckbox {
+    width: 50%;
+    float: left;
+}
+
+.typeCheckbox(@radius){
+    visibility: hidden;
+    width: 0px;
+
+    & + div {
+        display: inline-block;
+        width: 100%;
+        border-radius: @radius;
+        background-color: @gray;
+    }
+
+    &:checked + div {
+        background-color: @secondaryColorDark;
+        font-weight: bold;
+    }
+}
+
+.typeCheckboxLeft {
+    .typeCheckbox(4px 0px 0px 4px);
+}
+
+.allNoLabel {
+    font-size: 10px;
+
+    &:first-of-type {
+        margin-left: 10px;
+    }
+}
+
+.flux {
+    font-size: 12px;
+    font-weight: normal;
+}
+.typeCheckboxRight {
+    .typeCheckbox(0px 4px 4px 0px);
+}
+
+slider span.pointer {
+    border: 1px solid @secondaryColor ! important;
+
+    &:hover {
+        border: 1px solid @secondaryColorDark ! important; 
+        &:after {
+            background-color: @secondaryColorDark ! important;
+        }
+    }
+
+    &:after {
+        top: 5px ! important;
+        left: 5px ! important;
+        background-color: @secondaryColor ! important;
+    }
+}

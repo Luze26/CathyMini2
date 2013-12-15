@@ -55,7 +55,7 @@ angular.module('common').
     $scope.displayError = false;
     
     /** Error message to display **/
-    $scope.error = {title: "", message: ""};
+    $scope.error = null;
     
     /** Consuler information **/
     $scope.consumer = {user: "", pwd: ""};
@@ -67,13 +67,18 @@ angular.module('common').
      * Connect a user
      */
     $scope.connect = function() {   
-        $scope.displayError = false;
+        $scope.error = null;
         consumerService.connect($scope.consumer)
             .then(function() { //success
                 modal.modal('hide'); //hide the modal
             },
-            function(error) { //error
-                $scope.error.message = error;
+            function(data) { //error
+                if(data.status == 400) {
+                    $scope.error = "Mauvais nom d'utilisateur ou mot de passe.";
+                }
+                else {
+                    $scope.error = "Problème de connexion, vérifier votre connexion internet.";
+                }
             });
     };
   }]);

@@ -8,6 +8,7 @@ import com.cathymini.cathymini2.model.Napkin;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Tampon;
 import com.cathymini.cathymini2.webservices.model.ProductSearch;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -106,7 +107,11 @@ public class ProductBean {
     public Collection<Product> getProducts(ProductSearch searchQuery) {
         searchQuery.validate();
         Query query = constructQuery(searchQuery);
-        return (Collection<Product>) query.getResultList();
+        if (query != null) {
+            return (Collection<Product>) query.getResultList();
+        } else {
+            return new ArrayList<Product>();
+        }
     }
     
     public Product getProduct(Long id){
@@ -128,9 +133,13 @@ public class ProductBean {
 
     private Query constructQuery(ProductSearch searchQuery) {
         String query = "SELECT p FROM Product p WHERE";
+
+        //INPUT
         if (searchQuery.input != null) {
             query += " p.name LIKE '%" + searchQuery.input.toUpperCase() + "%'";
         }
+
+        //TAMPON & NAPKIN
         if (searchQuery.tampon) {
             query += " AND ( p.type = \"tampon\"";
             if(searchQuery.napkin) {
@@ -142,33 +151,51 @@ public class ProductBean {
         } else if (searchQuery.napkin) {
             query += " AND p.type = \"serviette\"";
         } else {
-            query += " AND p.type = \"rien\"";
+            return null;
         }
+
+        //FLUX
         boolean first = true;
-        for(Float s : searchQuery.flux){
-            if(s != 0.0 && first) {
-                query += " AND ( p.flux = "+s;
-                first = false;
-            } else if (s!= 0.0){
-                 query += " OR  p.flux = "+s;
+        if (searchQuery.flux != null && searchQuery.flux.size() > 0) {
+            for (Float s : searchQuery.flux) {
+                if (s != 0.0 && first) {
+                    query += " AND ( p.flux = " + s;
+                    first = false;
+                } else if (s != 0.0) {
+                    query += " OR  p.flux = " + s;
+                }
+            }
+            if (!first) {
+                query += " )";
+            } else {
+                query += " AND p.flux = " + -1.0;
             }
         }
-        if(!first) {
-            query += " )";
-        } else {
-            query += " AND p.flux = " + -1.0;
+
+        //BRANDS
+        if (searchQuery.brands != null && searchQuery.brands.size() > 0) {
+            query += " AND ";
+            first = true;
+            for (String brand : searchQuery.brands) {
+                if (!first) {
+                    query += " OR ";
+                }
+                first = false;
+                query += "p.marque='" + brand.toUpperCase() + "'";
+            }
         }
-        if (searchQuery.brand != null) {
-            query += " AND p.marque LIKE '%" + searchQuery.brand + "%'";
-        }
-        
+
+        //MIN PRICE
         if (searchQuery.minPrice != null) {
             query += " AND p.price >= " + searchQuery.minPrice;
         }
 
+        //MAX PRICE
         if (searchQuery.maxPrice != null) {
             query += " AND p.price <= " + searchQuery.maxPrice;
         }
+
+        //ORDER
         query += " ORDER BY p." + searchQuery.orderBy + " " + (searchQuery.orderByASC ? "ASC" : "DESC");
 
         return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
