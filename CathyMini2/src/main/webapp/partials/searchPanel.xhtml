@@ -6,10 +6,10 @@
     <body>
         <ui:composition>
             <div class="row row-search">
-                <div class="col-sm-12">
-                    <div class="panel panel-default">
+                <div class="col-xs-12">
+                    <div class="panel panel-default" ng-show="displaySearchPanel">
                         <div class="row">
-                            <div class="col-sm-3 search-col">
+                            <div class="col-xs-3 search-col">
                                 <label>Nom</label>
                                 <input style="width: 100%; margin-bottom: 8px;" type="text" ng-model="search.input" placeholder="Entrez un nom" />
                                 <label style="margin-bottom: 0px;">Prix</label>
@@ -17,7 +17,7 @@
                                     <slider floor="0" ceiling="20" ng-model-low="search.minPrice" ng-model-high="search.maxPrice"></slider>
                                 </div>
                             </div>
-                            <div class="col-sm-3 search-col">
+                            <div class="col-xs-3 search-col">
                                 <label>Type</label>
                                 <div class="btn-group">
                                     <label class="labelCheckbox">
@@ -36,7 +36,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-3 search-col">
+                            <div class="col-xs-3 search-col">
                                 <label>
                                     Flux
                                     <a class="allNoLabel" href="#" ng-click="allNoFlux(true)">Tous</a> /
@@ -61,7 +61,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 search-col">
+                            <div class="col-xs-3 search-col">
                                 <label>
                                     Marques
                                     <a class="allNoLabel" href="#" ng-click="allNoBrands(true)">Tous</a> /
@@ -87,6 +87,12 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div ng-click="displaySearchPanel = !displaySearchPanel" style="text-align: right">
+                        <a href="#" class="searchTab">
+                            <span ng-show="displaySearchPanel"><img src="/assets/image/double-arrow-up.png" alt="up"/> Fermer</span>
+                            <span ng-hide="displaySearchPanel"><img src="/assets/image/double-arrow-down.png" alt="down"/> Ouvrir</span> le panneau de filtres
+                        </a>
                     </div>
                 </div>
             </div>

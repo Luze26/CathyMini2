@@ -39,6 +39,8 @@
 .panel-default {
     border: none;
     padding-top: 12px;
+    margin-bottom: 2px;
+    border-bottom: solid 2px #ddd;
 }
 
 .search-col {
@@ -111,5 +113,20 @@ slider span.pointer {
         top: 5px ! important;
         left: 5px ! important;
         background-color: @secondaryColor ! important;
+    }
+}
+
+.searchTab {
+    background-color: @secondaryColor;
+    color: #fff ! important;
+    text-decoration: initial ! important;
+    padding: 5px 10px;
+    border-bottom-left-radius: 5px;
+    margin-right: 40px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 4px 2px -3px rgba(0,0,0,0.5);
+
+    &:hover {
+        background-color: @secondaryColorDark;
     }
 }

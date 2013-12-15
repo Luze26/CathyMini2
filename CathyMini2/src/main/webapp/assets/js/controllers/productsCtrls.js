@@ -16,6 +16,8 @@ angular.module('products').
       /** Products list */
       $scope.products = [];
 
+      $scope.displaySearchPanel = true;
+      
       /** Type list */
       $scope.productsType = [
         {
@@ -187,7 +189,7 @@ angular.module('products').
           $http.post("/webresources/product/all", searchLimited)
             .success(function(data) {
               if (data.length < $scope.length) { //If there is no more product to load, end of the list
-                $scope.loadMore = false; console.log("llppm");
+                $scope.loadMore = false;
               }
 
               if ($scope.offset === 0) { //If it's a new search, we reset the list
