@@ -197,7 +197,7 @@ public class ProductBean {
 
         //ORDER
         query += " ORDER BY p." + searchQuery.orderBy + " " + (searchQuery.orderByASC ? "ASC" : "DESC");
-
+        
         return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
     }
 }
