@@ -1,7 +1,17 @@
+/**
+ * Controller for the address list of an user
+ */
 angular.module('address')
     .controller('addressCtrl', ['$scope', '$http', 'consumerService', function($scope, $http, consumerService) {
     
+        /**
+         * List of address
+         */
         $scope.address = [];
+        
+        /**
+         * Address modal
+         */
         var modal = angular.element("#addressModal");
 
         $scope.addAddress = function() {

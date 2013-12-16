@@ -1,3 +1,6 @@
+/**
+ * Controller for the payment chain
+ */
 angular.module('payment').
     controller('paymentCtrl', ['$scope', '$http', 'cartService', 'consumerService', 
         function($scope, $http, cartService, consumerService) {
