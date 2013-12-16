@@ -17,15 +17,20 @@ angular.module('common').directive('subscriptionDirective', ['subscriptionServic
          */
         scope.toggleSub = function() {
             var position;
+            var zIndex;
             if(scope.subOpen) {
-                position = "-750px";
+                position = "-350px";
+                zIndex = 1500;
             }
             else {
                 position = "0px";
+                zIndex = 500;
             }
             
             scope.subOpen = !scope.subOpen;
-            elm.animate({"right": position}, 300);
+            elm.animate({"right": position}, 200);
+            
+            elm.animate({"z-index": zIndex}, 200);
         };
     },
     template: '<div id="sub">' +

@@ -17,15 +17,19 @@ angular.module('common').directive('cartDirective', ['cartService', function(car
          */
         scope.toggleCart = function() {
             var position;
+            var zIndex;
             if(scope.cartOpen) {
                 position = "-350px";
+                zIndex = 1500;
             }
             else {
                 position = "0px";
+                zIndex = 500;
             }
             
             scope.cartOpen = !scope.cartOpen;
             elm.animate({"right": position}, 200);
+            elm.animate({"z-index": zIndex}, 200);
         };
     },
     template: '<div id="cart">' +
@@ -35,9 +39,11 @@ angular.module('common').directive('cartDirective', ['cartService', function(car
                  '</div>' +
                  '<div id="cartPanel">' +
                     '<ul>' +
-                        '<li ng-repeat="prod in cartService.cart.products">' +
-                            '{{prod.name}} quantity : \n\
-                        <input type="text" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
+                        '<li class="prodCart" ng-repeat="prod in cartService.cart.products">' +
+                            ' <img class="imgCart" ng-src="/assets/product/{{prod.pictureUrl}}"/>'+
+
+                            '{{prod.name}} quantity : '+
+                        '<input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
                 <span>\n\
                                 <img class="imgDelete" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
 </span>' +
