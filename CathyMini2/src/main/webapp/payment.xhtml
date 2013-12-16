@@ -61,7 +61,13 @@
                         
                         <!-- Display Login/Subscribe Tab -->
                         <div class="{{getTabClass(1)}}" id="login-payementTab">
-                          <p>login</p>
+                            <fieldset class="login-tab">
+                                <legend>Connectez-vous ou Inscrivez-vous un compte</legend>
+                                <button class="btn btn-primary" href="#connect" title="Connexion" type="button" data-toggle="modal" data-target="#connectModal">
+                                    Se Connecter</button>
+                                <button class="btn btn-primary" href="#subscribe" title="Inscription" type="button" data-toggle="modal" data-target="#subscribeModal">
+                                    S'inscrire</button>
+                            </fieldset>
                         </div>
                         
                         <!-- Display Delivery Address Selection -->
@@ -140,12 +146,14 @@
                 </div>
                 
                 <!-- Pager -->
-                <div class="row">
-                    <div class="col-lg-10">
-                        <ul class="pager">
-                            <li class="previous {{getLastBtnClass()}}"><a href="#lastTab" ng-click="lastTab()">&larr; Précédent</a></li>
-                            <li class="next {{getNextBtnClass()}}"><a href="#nextTab" ng-click="nextTab()">{{lastBtnValue[[activeTab]]}} &rarr;</a></li>
-                        </ul>
+                <div class="row pager">
+                    <div class="col-lg-12">
+                        <button class="previous pull-left btn btn-primary {{getLastBtnClass()}}" href="#lastTab" ng-click="lastTab()">
+                                &larr; Précédent
+                        </button>
+                        <button class="next pull-right btn btn-primary {{getNextBtnClass()}}" href="#nextTab" ng-click="nextTab()">
+                            {{lastBtnValue[[activeTab]]}} &rarr;
+                        </button>
                     </div>
                 </div>
             </ui:define>
