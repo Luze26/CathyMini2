@@ -18,7 +18,7 @@ public class ProductSearch {
     public boolean napkin;
     public Float minPrice;
     public Float maxPrice;
-    public String brand;
+    public List<String> brands;
     public List<Float> flux;
     
 
@@ -50,7 +50,6 @@ public class ProductSearch {
             DecimalFormat df = new DecimalFormat("##.##");
             s =  new Float(df.format(s.doubleValue()));
         }
-        System.out.println("mlkmllm");
         if(length == 0) {
             length = 10;
         }

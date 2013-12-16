@@ -1,124 +1,50 @@
-@mainColor: #18bc9c;
+@import "variables.less";
+@import "search.less";
+@import "cart.less";
+@import "product.less";
+
+.navbar-default {
+    background-color: @mainColor; 
+    border-bottom: solid 2px #fff;
+}
+
+.navbar a {
+    border-right: solid 1px #158d76;
+    border-left: solid 1px @mainColorSoft ! important;
+    line-height: 50px ! important;
+    font-size: 18px ! important;
+    text-align: center;
+    &:hover {
+        background-color: @mainColorSoft ! important;
+        color: #fff ! important;
+    }
+    &.active {
+        background-color: @mainColorDark;
+        color: #fff ! important; 
+        .navbar-tick {
+            display: inline;
+        }
+    }
+}
+
+.navbar-tick {
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 12px 12px 12px;
+    border-color: transparent transparent #ffffff transparent;
+    bottom: -1px;
+    margin-left: -12px;
+    display: none;
+    position: absolute;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #fff;
+}
 
 #content {
-    margin-top: 75px;
-}
-
-#cart {
-    position: fixed;
-    z-index: 1500;
-    right: -350px;
-}
-
-#cartTab {
-    background-color: @mainColor;
-    width: 160px;
-    color: #fff;
-    border: solid 2px @mainColor;
-    font-weight: bold;
-    text-align: center;
-    height: 100px;
-    display: inline-block;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-#cartPanel {
-    width: 350px;
-    height: 400px;
-    display: inline-block;
-    background-color: #fff;
-    border: solid 1px @mainColor;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    float: right;
-}
-
-#search {
-    position: fixed;
-    z-index: 1500;
-    left: 0px;
-}
-
-#searchTab {
-    // -webkit-transform: rotate(90deg); 
-    // -moz-transform: rotate(90deg); //Rotate for mozilla
-    // filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); //Rotate for IE
-    background-color: @mainColor;
-    width: 50px;
-    color: #fff;
-    border: solid 2px @mainColor;
-    font-weight: bold;
-    text-align: center;
-    height: 140px;
-    display: inline-block;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-#searchPanel {
-    width: 350px;
-    height: 400px;
-    display: inline-block;
-    background-color: #fff;
-    border: solid 1px @mainColor;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    float: right;
-}
-
-.group-flux {
-    width: 500px;
-}
-
-@galleryProductSize: 200px;
-.product {
-    min-height: @galleryProductSize;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    cursor: pointer;
-
-    .image {
-        min-height: @galleryProductSize;
-        img {
-            margin-top: 5px;
-            width: 140px;
-            height: 95px;
-        }
-        button {
-            position: absolute;
-            bottom: 5px;
-        }
-    }
-    .infos {
-        min-height: @galleryProductSize;
-        font-weight: bold;
-        .type {
-            position: absolute;
-            top: 5px;
-            right: -10px;
-        }
-        .mid {
-            margin-top: 20px;
-            margin-bottom: 5px;
-            padding-right: 10px;
-        }
-        .price {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-        }
-    }
-}
-
-.coin {
-    position: absolute;
-    top: 0px;
-    right: -15px;
-    height: 0px;
-    width: 0px;
-    border-top: 35px solid #ccc;
-    border-right: 35px solid #ccc;
-    border-bottom: 35px solid transparent;
-    border-left: 35px solid transparent;
+    margin-top: 82px;
 }
 
 #footer {
@@ -126,179 +52,35 @@
     border-top: 5px solid #cccccc;
     margin-top: 20px;
     height: 50px;
+    width: 100%;
 }
 
-@buttonSize: 250px;
-@textDecale: -7px;
-@textCorrect: 7px;
-.selectFlux {
-    width: @buttonSize;
-    i {
-        display: none;
-    }
-    button {
-        width: @buttonSize;
-        padding-bottom: @textCorrect;
-    }
-    ul {
-        width: @buttonSize;
-        li a {
-            padding-bottom: @textCorrect;
-        }
-    }
-    span.pull-left {
-        float: none;
-        span {
-        }
-    }
-}
-
-.drops-b {
-    background: url(/assets/image/drops.png) no-repeat;
-    height: 39px;
-    margin: 0 auto 10px auto;
-    .drop-inner {
-        background: url(/assets/image/drops.png) no-repeat 0 0;
-        height: 39px;
-    }
-    &.drops-active-0 .drops-inner {
-        width: 0;
-    }
-    &.drops-active-0-5 .drops-inner {
-        width: 26px;
-    }
-    &.drops-active-1 .drops-inner {
-        width: 36px;
-    }
-    &.drops-active-1-5 .drops-inner {
-        width: 54px;
-    }
-    &.drops-active-2 .drops-inner {
-        width: 63px;
-    }
-    &.drops-active-2-5 .drops-inner {
-        width: 82px;
-    }
-    &.drops-active-3 .drops-inner {
-        width: 91px;
-    }
-    &.drops-active-3-5 .drops-inner {
-        width: 110px;
-    }
-    &.drops-active-4 .drops-inner {
-        width: 119px;
-    }
-    &.drops-active-4-5 .drops-inner {
-        width: 139px;
-    }
-    &.drops-active-5 .drops-inner {
-        width: 148px;
-    }
-    &.drops-active-5-5 .drops-inner {
-        width: 169px;
-    }
-    &.drops-active-6 .drops-inner {
-        width: 100%;
-    }
-}
-.drops-b-6 {
-    width: 196px;
-    background-position: 0 -39px;
-}
-.drops-b-5 {
-    width: 166px;
-    background-position: 0 -78px;
-}
-.drops-b-4 {
-    width: 137px;
-    background-position: 0 -117px;
-}
-.drops-b-3 {
-    width: 109px;
-    background-position: 0 -156px;
-}
-.drops-b-2 {
-    width: 80px;
-    background-position: 0 -195px;
-}
-.drops-b-1 {
-    width: 52px;
-    background-position: 0 -234px;
-}
-
-.drops-c {
-    background: url(/assets/image/drops.png) no-repeat;
-    height: 29px;
-    display: inline-block;
-    margin-bottom: @textDecale;
-    .drops-inner {
-        background: url(/assets/image/drops.png) no-repeat 0 -273px;
-        height: 29px;
-    }
-    &.drops-active-0 .drops-inner {
-        width: 0;
-    }
-    &.drops-active-0-5 .drops-inner {
-        width: 14px;
-    }
-    &.drops-active-1 .drops-inner {
-        width: 23px;
-    }
-    &.drops-active-1-5 .drops-inner {
-        width: 33px;
-    }
-    &.drops-active-2 .drops-inner {
-        width: 41px;
-    }
-    &.drops-active-2-5 .drops-inner {
-        width: 52px;
-    }
-    &.drops-active-3 .drops-inner {
-        width: 60px;
-    }
-    &.drops-active-3-5 .drops-inner {
-        width: 70px;
-    }
-    &.drops-active-4 .drops-inner {
-        width: 78px;
-    }
-    &.drops-active-4-5 .drops-inner {
-        width: 89px;
-    }
-    &.drops-active-5 .drops-inner {
-        width: 97px;
-    }
-    &.drops-active-5-5 .drops-inner {
-        width: 108px;
-    }
-    &.drops-active-6 .drops-inner {
-        width: 100%;
-    }
-}
-.drops-c-6 {
-    width: 124px;
-    background-position: 0 -302px;
-}
-.drops-c-5 {
-    width: 105px;
-    background-position: 0 -331px;
-}
-.drops-c-4 {
-    width: 85px;
-    background-position: 0 -360px;
-}
-.drops-c-3 {
-    width: 68px;
-    background-position: 0 -389px;
-}
-.drops-c-2 {
-    width: 49px;
-    background-position: 0 -418px;
-}
-.drops-c-1 {
-    width: 31px;
-    background-position: 0 -447px;
-}
 .hide {
     display: none;
+}
+
+a {
+    color: @secondaryColor;
+    &:hover {
+        color: @secondaryColorDark;
+    }
+}
+
+.img-thumbnail {
+    border: none;
+}
+
+.btn-primary.disabled, .btn-primary[disabled], fieldset[disabled] .btn-primary, .btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover, .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus, .btn-primary.disabled:active, .btn-primary[disabled]:active, fieldset[disabled] .btn-primary:active, .btn-primary.disabled.active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary.active {
+    background-color: @secondaryColorSoft;
+    border-color: @secondaryColor;
+}
+
+.btn-primary {
+    background-color: @secondaryColor;
+    border-color: @secondaryColorDark;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+    background-color: @secondaryColorDark;
+    border-color: @secondaryColor;
 }

@@ -23,7 +23,7 @@
                             <legend>Vos paramètres</legend>
                             <div class="form-group" ng-repeat="field in fields">
                                 {{field.label}}: {{$parent.consumer[field.key]}}
-                                <span class="account-edit" ng-show="field.editable" ng-click="showEdit(field)">Edit</span>
+                                <a href="#" class="account-edit" ng-show="field.editable" ng-click="showEdit(field)">Edit</a>
                                 <img ng-show="field.loading" src="/assets/image/loading.gif" alt="loading" />
                                 <img ng-show="field.success" src="/assets/image/ok.png" alt="success" />
                                 <p ng-show="field.error">{{field.error}}</p>
@@ -50,11 +50,11 @@
                                         <td>{{addr.address}}</td>
                                         <td>{{addr.zipCode}}</td>
                                         <td>{{addr.city}}</td>
-                                        <td><span ng-click="initEditAddress(addr)" class="btn btn-info" data-toggle="modal" data-target="#addressModal">Edit</span></td>
+                                        <td><span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Edit</span></td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <button type="button" ng-click="modal = newModal" class="btn btn-info" data-toggle="modal" data-target="#addressModal">Ajouter une adresse</button>
+                            <button type="button" ng-click="modal = newModal" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Ajouter une adresse</button>
                             <ui:include src="/partials/addressModal.xhtml" />
                         </fieldset>
                     </div>

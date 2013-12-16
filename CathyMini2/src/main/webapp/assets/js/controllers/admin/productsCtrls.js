@@ -82,7 +82,7 @@ angular.module('products').
 
       /** Search query */
       $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: "", tampon: true,
-        napkin: true, minPrice: 0, maxPrice: 100, brand: "", flux: [1, 2, 3, 4, 5, 6]};
+        napkin: true, minPrice: 0, maxPrice: 100, brands: [], flux: [1, 2, 3, 4, 5, 6]};
 
       /** Products list */
       $scope.products = [];

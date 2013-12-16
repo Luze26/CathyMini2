@@ -12,92 +12,29 @@
             <ui:param name="ngController" value="productsCtrl" />
             <ui:param name="title" value="CathyMini - Catalogue" />
             <ui:define name="content">
-                <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Search panel</div>
-                        <form action="#" id="search-form">
-                                                <!--        <label class="btn-default">
-                                                            <input type="checkbox" ng-change="test()" /> 
-                                                            test
-                                                        </label> -->
-                            <table class="table">                       
-                                <tr>
-                                    <td>
-                                        <div>
-                                            <label>Rechecher par nom </label>
-                                            <input type="text" ng-model="search.input" placeholder="Search a product" ng-change="refreshSearch()" />
-                                        </div>
-                                        <div>
-                                            <label>Type du produit </label>
-                                            <div class="btn-group">
-                                                <label class="btn btn-default">
-                                                    <input type="checkbox" ng-model="search.napkin" ng-change="changeNapkin()">Serviette</input>
-                                                </label>
-                                                <label class="btn btn-default">
-                                                    <input type="checkbox" ng-model="search.tampon" ng-change="changeTampon()">Tampon </input>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>                                   
-                                        <div class="panel-group group-flux" id="accordion">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                                            Recherche par Flux
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseOne" class="panel-collapse collapse in">
-                                                    <div class="btn-group" ng-repeat="select in selects" >
-                                                        <label class="btn btn-default">
-                                                            <input type="checkbox" ng-model="select.check" ng-change="refreshFlux()" /> 
-                                                            {{select.print}}
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label>Rechecher par marque </label>
-                                            <input type="text" ng-model="search.brand" placeholder="Search a brand" ng-change="refreshSearch()" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <label for="pPrice">Rechecher par prix </label>
-                                            <div class="controls input-prepend">
-                                                <input type="text" ng-model="search.minPrice" placeholder="Minimum price" ng-change="refreshSearch()" />
-                                                <span class="add-on">€</span>
-                                            </div>
-                                            <div class="controls input-prepend">
-                                                <input type="text" ng-model="search.maxPrice" placeholder="Maximum price" ng-change="refreshSearch()"/>
-                                                <span class="add-on">€</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </form>
-                        <cart-directive></cart-directive>
-                    </div>
+                <cart-directive></cart-directive>
+                <ui:include src="/partials/searchPanel.xhtml" />
+                <div class="row" ng-class="displaySearchPanel == true ? 'row-products' : 'row-products-top'">
                     <div class="col-xs-12" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
-                        <div type="button" ng-repeat="prod in products" data-toggle="modal" data-target="#productOverlay"
-                             ng-click="showProduct(prod)" class="product col-xs-12 col-sm-6 col-md-4">
-                            <div class="col-md-4 image">
-                                <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
-                                <button class="btn" ng-click="addProductToCart($event, prod)">Add to cart</button>
-                            </div>
-                            <div class="col-md-8 infos">
+                        <div class="col-xs-12 col-sm-6 col-md-4 product-container" ng-repeat="prod in products">
+                            <div type="button" data-toggle="modal" data-target="#productOverlay"
+                                 ng-click="showProduct(prod)" class="product">
                                 <div class="coin"></div>
                                 <div class="type">
                                     <img ng-if="prod.type==='serviette'" src="assets/image/serviette.png"/>
                                     <img ng-if="prod.type==='tampon'" src="assets/image/tampon.png"/>
                                 </div>
-                                <div class="mid">{{prod.name}} <br /> {{prod.marque}}</div>
-                                <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>
-                                <div class="price">{{prod.price}}€</div>
+                                <div class="row">
+                                    <div class="image col-xs-5">
+                                        <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
+                                        <button class="btn btn-primary" ng-click="addProductToCart($event, prod)">Add to cart</button>
+                                    </div>
+                                    <div class="infos col-xs-7">
+                                        <div class="mid">{{prod.name}} <br /> {{prod.marque}}</div>
+                                        <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>
+                                        <div class="price">{{prod.price}}€</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -107,12 +44,16 @@
             </ui:define>
 
             <ui:define name="scripts">
+                <script src="/assets/js/lib/angular-slider.min.js"></script>
                 <script src="/assets/js/lib/ng-infinite-scroll.min.js"></script>
                 <script src="/assets/js/modules/productsModule.js"></script>
                 <script src="/assets/js/controllers/productsCtrls.js"></script>
                 <script src="/assets/js/services/cartService.js"></script>
                 <script src="/assets/js/directives/cartDirective.js"></script>
                 <script src="/assets/js/directives/form/formDirective.js"></script>
+            </ui:define>
+            <ui:define name="css">
+                <link rel="stylesheet" type="text/css" href="/assets/css/lib/angular-slider.min.css"></link>
             </ui:define>
         </ui:composition>
 

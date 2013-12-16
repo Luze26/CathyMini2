@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <body>
+        <ui:composition>
+            <div class="row row-search">
+                <div class="col-xs-12">
+                    <div class="panel panel-default" ng-show="displaySearchPanel">
+                        <div class="row">
+                            <div class="col-xs-3 search-col">
+                                <label>Nom</label>
+                                <input style="width: 100%; margin-bottom: 8px;" type="text" ng-model="search.input" placeholder="Entrez un nom" />
+                                <label style="margin-bottom: 0px;">Prix</label>
+                                <div style="width: 100%">
+                                    <slider floor="0" ceiling="20" ng-model-low="search.minPrice" ng-model-high="search.maxPrice"></slider>
+                                </div>
+                            </div>
+                            <div class="col-xs-3 search-col">
+                                <label>Type</label>
+                                <div class="btn-group">
+                                    <label class="labelCheckbox">
+                                        <input class="typeCheckboxLeft" type="checkbox" ng-model="search.napkin" ng-change="changeNapkin()" />
+                                        <div class="btn btn-primary">
+                                            <img alt="Serviette" src="assets/image/serviette.png" />
+                                            Serviette
+                                        </div>
+                                    </label>
+                                    <label class="labelCheckbox">
+                                        <input class="typeCheckboxRight" type="checkbox" ng-model="search.tampon" ng-change="changeTampon()" />
+                                        <div class="btn btn-primary">
+                                            <img alt="Tampon" src="assets/image/tampon.png" />
+                                            Tampon
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-3 search-col">
+                                <label>
+                                    Flux
+                                    <a class="allNoLabel" href="#" ng-click="allNoFlux(true)">Tous</a> /
+                                    <a class="allNoLabel" href="#" ng-click="allNoFlux(false)">Aucun</a>
+                                </label>
+                                <div class="row">
+                                    <div class="col-xs-6" style="border-right: solid 1px #eee">
+                                        <div  ng-repeat="flu in flux |limitTo:3">
+                                            <label class="flux">
+                                                <input type="checkbox" ng-model="flu.check" ng-change="refreshFlux()" /> 
+                                                {{flu.print}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div  ng-repeat="flu in flux" ng-show="$index > 2">
+                                            <label class="flux">
+                                                <input type="checkbox" ng-model="flu.check" ng-change="refreshFlux()" /> 
+                                                {{flu.print}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3 search-col">
+                                <label>
+                                    Marques
+                                    <a class="allNoLabel" href="#" ng-click="allNoBrands(true)">Tous</a> /
+                                    <a class="allNoLabel" href="#" ng-click="allNoBrands(false)">Aucune</a>
+                                </label>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div  ng-repeat="brand in brands |limitTo:3">
+                                            <label class="flux">
+                                                <input type="checkbox" ng-model="brand.check" ng-change="refreshBrand()" /> 
+                                                {{brand.print}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6" style="border-left: solid 1px #eee">
+                                        <div  ng-repeat="brand in brands" ng-show="$index > 2">
+                                            <label class="flux">
+                                                <input type="checkbox" ng-model="brand.check" ng-change="refreshBrand()" /> 
+                                                {{brand.print}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-click="displaySearchPanel = !displaySearchPanel" style="text-align: right">
+                        <a href="#" class="searchTab">
+                            <span ng-show="displaySearchPanel"><img src="/assets/image/double-arrow-up.png" alt="up"/> Fermer</span>
+                            <span ng-hide="displaySearchPanel"><img src="/assets/image/double-arrow-down.png" alt="down"/> Ouvrir</span> le panneau de filtres
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </ui:composition>
+    </body>
+</html>
