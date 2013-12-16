@@ -1,6 +1,8 @@
 angular.module('index').
-        controller('indexCtrl', ['$scope', '$http', function($scope, $http) {
-
+        controller('indexCtrl', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+                
+                $rootScope.header = "home";
+                
                 $scope.articles = [];
 
                 $scope.search = {offset: 0, length: 20};

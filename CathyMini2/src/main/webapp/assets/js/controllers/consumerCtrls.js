@@ -24,10 +24,11 @@ angular.module('common').
     .controller('subscribeModalCtrl', ['$scope', 'consumerService', function($scope, consumerService) {
             
    /** Display error message */
-    $scope.displayError = false;
+    $scope.nameError = false;
+    $scope.mailError = false;
     
     /** Error message to display **/
-    $scope.error = {title: "", message: ""};
+    $scope.error = null;
     
     /** Form information **/
     $scope.subscriber = {};
@@ -39,14 +40,33 @@ angular.module('common').
      * Subscribe a new user
      */
     $scope.subscribe = function() {
-        $scope.displayError = false;
+        $scope.error = null;
+        $scope.nameError = false;
+        $scope.mailError = false;
+        console.log($scope.subscriber);
         consumerService.subscribe($scope.subscriber)
             .then(function() { //success
                 modal.modal('hide'); //hide the modal
             },
-            function(error) { //error
-                $scope.error.message = error;
+            function(data) { //error
+                if(data.status == 400) {
+                    console.log(data);
+                    if(data.data == "mail error") {
+                        $scope.mailError = true;
+                    }
+                    else if(data.data == "username error") {
+                        console.log("lllllllll");
+                        $scope.nameError = true;
+                    }
+                }
+                else {
+                    $scope.error = "Problème de connexion, vérifier votre connexion internet.";
+                }
             });
+    };
+    
+    $scope.and = function(x,y) {
+        return x && y;
     };
   }])
   .controller('connectionModalCtrl', ['$scope', 'consumerService',  function($scope, consumerService) {
