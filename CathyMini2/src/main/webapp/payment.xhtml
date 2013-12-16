@@ -44,7 +44,15 @@
                     
                     <div class="list-group-item" id="paymentTab">
                         <div class="" id="cart-payementTab">
-                          <p>cart</p>
+                            <ul>
+                                <li ng-repeat="prod in cartService.cart.products">{{prod.name}} quantity :
+                                    <input type="text" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/>
+                                    <span>
+                                        <img class="imgGallery" style="width:20px;" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>
+                                    </span>
+                                </li>
+                            </ul>
+                            Price: {{cartService.cart.price}} €
                         </div>
                         <div class="hidden" id="login-payementTab">
                           <p>login</p>
