@@ -26,11 +26,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="image col-xs-5">
-                                        <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
+                                        <div class="image-container">
+                                            <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
+                                        </div>
                                         <button class="btn btn-primary" ng-click="addProductToCart($event, prod)">Add to cart</button>
                                     </div>
                                     <div class="infos col-xs-7">
-                                        <div class="mid">{{prod.name}} <br /> {{prod.marque}}</div>
+                                        <div class="mid">{{prod.name}} <br /> <span class="brandName">{{prod.marque}}</span></div>
                                         <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>
                                         <div class="price">{{prod.price}}€</div>
                                     </div>
