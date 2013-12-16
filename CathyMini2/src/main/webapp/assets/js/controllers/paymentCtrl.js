@@ -7,6 +7,8 @@ angular.module('payment').
         $scope.paymentBtn = ['#cart-payementBtn', '#login-payementBtn', '#address-payementBtn', 
             '#shipping-payementBtn', '#payment-payementBtn'];
     
+        $scope.cartService = cartService;
+    
         $scope.selectTab = function(select) {
             if(!angular.element(select).hasClass('disabled')) {
                 $scope.activeTab(select);
