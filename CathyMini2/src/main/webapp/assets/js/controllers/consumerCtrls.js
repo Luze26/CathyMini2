@@ -43,7 +43,6 @@ angular.module('common').
         $scope.error = null;
         $scope.nameError = false;
         $scope.mailError = false;
-        console.log($scope.subscriber);
         consumerService.subscribe($scope.subscriber)
             .then(function() { //success
                 modal.modal('hide'); //hide the modal
@@ -69,7 +68,7 @@ angular.module('common').
         return x && y;
     };
   }])
-  .controller('connectionModalCtrl', ['$scope', 'consumerService',  function($scope, consumerService) {
+  .controller('connectionModalCtrl', ['$scope', 'consumerService', 'notificationService', function($scope, consumerService, notificationService) {
           
     /** Display error message */
     $scope.displayError = false;
@@ -91,6 +90,7 @@ angular.module('common').
         consumerService.connect($scope.consumer)
             .then(function() { //success
                 modal.modal('hide'); //hide the modal
+                notificationService.displayMessage("Bienvenue " + $scope.consumer.user + ", ça fait longtemps que t'es pas venu voir Cathy !", 4000);
             },
             function(data) { //error
                 if(data.status == 400) {
