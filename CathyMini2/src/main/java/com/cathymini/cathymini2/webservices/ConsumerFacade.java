@@ -44,6 +44,9 @@ public class ConsumerFacade{
     /**
      * Rest service to subscribe a new consumer
      *
+     * @param form subscribe form
+     * @param request
+     * @param response
      * @return A String containing the service termination message
      */
     @POST
@@ -126,6 +129,9 @@ public class ConsumerFacade{
     /**
      * Rest service to delete a consumer
      *
+     * @param form connection form
+     * @param request
+     * @param response
      * @return A String containing the service termination message
      */
     @POST
@@ -157,6 +163,8 @@ public class ConsumerFacade{
     /**
      * Rest service to check if the client is connected
      *
+     * @param request
+     * @param response
      * @return The username if the consumer is connected, else an empty String
      */
     @GET
@@ -176,7 +184,7 @@ public class ConsumerFacade{
     /**
      * Upade consumer
      *
-     * @param consumer
+     * @param consumer consumer with edited info
      * @param request
      * @param response
      * @return The username if the consumer is connected, else an empty String
@@ -283,8 +291,9 @@ public class ConsumerFacade{
     }
     
     /**
+     * Delete an address for an user
      *
-     * @param address
+     * @param address address to delete
      * @param request
      * @param response
      */

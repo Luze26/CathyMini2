@@ -34,6 +34,7 @@ import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
 /**
+ * Product facade, operation on products
  *
  * @author zang
  */
@@ -46,6 +47,13 @@ public class ProductFacade {
     @EJB
     private ProductBean productBean;
 
+    /**
+     * Create a product
+     *
+     * @param form product form
+     * @param response
+     * @return the created product
+     */
     @POST
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -60,6 +68,13 @@ public class ProductFacade {
         }
     }
 
+    /**
+     * Upload a file
+     *
+     * @param file content of the file to upload
+     * @param response
+     * @return
+     */
     @POST
     @Path("/uploadFile")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -77,6 +92,13 @@ public class ProductFacade {
         return "Upload pas réalisé!";
     }
 
+    /**
+     * Get a list of product based on the search query
+     *
+     * @param query search query, also used to order the list
+     * @param response
+     * @return the list of products
+     */
     @POST
     @Path("/all")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -89,6 +111,13 @@ public class ProductFacade {
         return productBean.getProducts(query);
     }
 
+    /**
+     * Edit a product
+     *
+     * @param form edit product form
+     * @param response
+     * @return the edited product
+     */
     @POST
     @Path("/edit")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -97,6 +126,9 @@ public class ProductFacade {
         return productBean.editProduct(form.id, form.name, form.marque, form.flux, form.price, form.description);
     }
 
+    /**
+     * Populate the db
+     */
     @GET
     @Path("/populate")
     @Produces(MediaType.APPLICATION_JSON)
@@ -172,8 +204,10 @@ public class ProductFacade {
     }
 
     /**
+     * Delete a product
      *
-     * @param id
+     * @param id product's id to delete
+     * @param response
      * @return
      */
     @DELETE

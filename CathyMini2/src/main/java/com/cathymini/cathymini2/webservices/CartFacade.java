@@ -22,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 /**
+ * Cart facade, operation on cart and subscription.
  *
  * @author yuzel
  */
@@ -38,7 +39,14 @@ public class CartFacade {
     @EJB
     private ProductBean productBean;
 
-    
+    /**
+     * Add a product to a cart
+     *
+     * @param id product's id to add
+     * @param request
+     * @param response
+     * @return true if the product has been added, false otherwise
+     */
     @POST
     @Path("/addProductToCart")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -62,22 +70,21 @@ public class CartFacade {
             }
             else{
                 Product prod = productBean.getProduct(id);
-                Cart newCartTemp = null;
+                Cart newCartTemp;
                 Boolean noCart = false;
-               try{
+                try {
                     newCartTemp = getCartSession(request);
-                    if(newCartTemp == null)
+                    if (newCartTemp == null) {
                         noCart = true;
-               }
-               catch(Exception ex){
-                   noCart = true;
-                   return false;
-               }
-               
-               if(noCart){
+                    }
+                } catch (Exception ex) {
+                    return false;
+                }
+
+                if (noCart) {
                     newCartTemp = cartBean.newCart(null);
                     setCartSession(request, newCartTemp);
-               }
+                }
                 cartBean.addProductToCart(prod, newCartTemp, false);
                 return true;
             }
@@ -87,17 +94,14 @@ public class CartFacade {
             
         }
     }
-    
-    private Cart getCartSession(HttpServletRequest request) {
-        HttpSession session = request.getSession(true);
-        return (Cart) session.getAttribute(CART_ATTR);
-    }
-    
-    private void setCartSession(HttpServletRequest request, Cart cart) {
-        HttpSession session = request.getSession(true);
-        session.setAttribute(CART_ATTR, cart);
-    }
-    
+
+    /**
+     * Return the cart
+     *
+     * @param request
+     * @param response
+     * @return the cart for the current user
+     */
     @POST
     @Path("/getCart")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -119,7 +123,15 @@ public class CartFacade {
         }
 
     }
-    
+
+    /**
+     * Change the quantity of a product in the cart
+     *
+     * @param clTemp product's id + quantity
+     * @param request
+     * @param response
+     * @return
+     */
     @POST
     @Path("/changeQuantityToCart")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -151,7 +163,15 @@ public class CartFacade {
         }
         return clTemp.getQuantity();
     }
-    
+
+    /**
+     * Delete a product from the cart
+     *
+     * @param id product's id
+     * @param request
+     * @param response
+     * @return
+     */
     @POST
     @Path("/deleteToCart")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -159,7 +179,7 @@ public class CartFacade {
     public int deleteToCart(Long id, @Context HttpServletRequest request, @Context HttpServletResponse response){
         Product prod = productBean.getProduct(id);
         Consumer cons  = sessionSecuring.getConsumer(request);
-        Cart cart = null;
+        Cart cart;
         int place = -1;
         if(cons != null){
             try{
@@ -176,7 +196,15 @@ public class CartFacade {
         place = cartBean.removeProductToCart(prod, cart);
         return place;
     }
-    
+
+    /**
+     * Add a product to a subscription
+     *
+     * @param id product's id
+     * @param request
+     * @param response
+     * @return true if the product has been added, false otherwise
+     */
     @POST
     @Path("/addProductToSub")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -225,17 +253,14 @@ public class CartFacade {
             
         }
     }
-    
-    private Subscription getSubSession(HttpServletRequest request) {
-        HttpSession session = request.getSession(true);
-        return (Subscription) session.getAttribute(SUB_ATTR);
-    }
-    
-    private void setSubSession(HttpServletRequest request, Subscription sub) {
-        HttpSession session = request.getSession(true);
-        session.setAttribute(SUB_ATTR, sub);
-    }
-    
+
+    /**
+     * Get the subscription for the current user
+     *
+     * @param request
+     * @param response
+     * @return the subscription for the current user
+     */
     @POST
     @Path("/getSub")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -257,7 +282,15 @@ public class CartFacade {
         }
 
     }
-    
+
+    /**
+     * Change the quantity of a product in the subscription
+     *
+     * @param clTemp product's id + quantity
+     * @param request
+     * @param response
+     * @return
+     */
     @POST
     @Path("/changeQuantityToSub")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -289,7 +322,15 @@ public class CartFacade {
         }
         return clTemp.getQuantity();
     }
-    
+
+    /**
+     * Delete the product from the subscription
+     *
+     * @param id product's id to delete
+     * @param request
+     * @param response
+     * @return
+     */
     @POST
     @Path("/deleteToSub")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -314,8 +355,16 @@ public class CartFacade {
         place = cartBean.removeProductToSub(prod, sub);
         return place;
     }
-    
-     @POST
+
+    /**
+     * Change the number of days for a subscription
+     *
+     * @param nbJ number of days
+     * @param request
+     * @param response
+     * @return
+     */
+    @POST
     @Path("/changeNbJ")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -344,5 +393,48 @@ public class CartFacade {
         }
         return sub.getNbJ();
     }
-    
+
+    /**
+     * Return the cart
+     *
+     * @param request
+     * @return the cart for the session
+     */
+    private Cart getCartSession(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        return (Cart) session.getAttribute(CART_ATTR);
+    }
+
+    /**
+     * Set the cart for the session
+     *
+     * @param request
+     * @param cart the cart to add to the session
+     */
+    private void setCartSession(HttpServletRequest request, Cart cart) {
+        HttpSession session = request.getSession(true);
+        session.setAttribute(CART_ATTR, cart);
+    }
+
+    /**
+     * Get the subscription for the session
+     *
+     * @param request
+     * @return the subscription
+     */
+    private Subscription getSubSession(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        return (Subscription) session.getAttribute(SUB_ATTR);
+    }
+
+    /**
+     * Set the subscription
+     *
+     * @param request
+     * @param sub the subscription
+     */
+    private void setSubSession(HttpServletRequest request, Subscription sub) {
+        HttpSession session = request.getSession(true);
+        session.setAttribute(SUB_ATTR, sub);
+    }
 }
