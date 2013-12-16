@@ -98,5 +98,3 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
     
     return service;
 }]);
-
-

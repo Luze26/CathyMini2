@@ -1,13 +1,15 @@
 /**
-* Cart directive, used to display the cart tab
-*/
+
+ * Cart directive, used to display the cart tab
+ */
 angular.module('common').directive('cartDirective', ['cartService', 'subscriptionService', function(cartService, subscriptionService) {
   return {
     restrict: 'E',
     replace: true,
     scope: {
     },
-    link: function(scope, elm, attrs, ctrl) {
+
+    link: function(scope, elm, attrs, ctrl) {      
         scope.cartOpen = false; //If the cart tab is open or not
         scope.subOpen = false; //If the sub tab is open or not
         
@@ -37,8 +39,8 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
         };
         
         /**
-* Toggle sub's tab
-*/
+         * Toggle sub's tab
+         */
         scope.toggleSub = function() {
             var position;
             if(scope.subOpen) {
@@ -53,12 +55,12 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                 elm.animate({"right": position}, 200);
             }
             else {
-               scope.cartOpen = false;
+               scope.cartOpen = false; 
             }
         };
     },
     template: '<div id="cart">' +
-                '<div id="cartTabs">' +
+                '<div id="cartTabs">' + 
                     '<div id="cartTab" ng-class="{\'active\': cartOpen}" ng-click="toggleCart()">' +
                         '<i class="fa fa-shopping-cart fa-4x"></i>' +
                         '<div>{{cartService.nbProducts()}} products</div>' +
@@ -91,6 +93,7 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
 <span>\n\
 <img class="deleteProduct" ng-click="subService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
 </span>' +
+
                             '</li>' +
                         '</ul>' +
                         'Price: {{subService.sub.price}} €' +

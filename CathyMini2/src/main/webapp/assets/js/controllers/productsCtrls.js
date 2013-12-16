@@ -1,4 +1,3 @@
-
 angular.module('products').
   controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', 'subscriptionService', function($rootScope, $scope, $http, cartService, subscriptionService) {
       
@@ -224,7 +223,7 @@ angular.module('products').
         }
         cartService.addProduct(product);
       };
-
+             
       /**
        * Add a product to the sub
        * @param {Product} product
@@ -235,16 +234,6 @@ angular.module('products').
         }
         subscriptionService.addProduct(product);
       };
-
-      
-      /**
-       * Add a product to the cart or the subscription
-       * * @param {Product} product
-       */
-      $scope.addProduct = function(product){
-          console.log("Dans addProduct");
-
-      }
       
       $scope.showProduct = function(product) {
         $scope.productOverlay = product;
