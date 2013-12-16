@@ -86,6 +86,7 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                     '</div>' +
                     '<div ng-show="subOpen">' +
                         '<ul>' +
+                            '<input type="text" class="inputQ" name="subname" ng-model="subService.sub.name" ng-change="subService.changeName(subService.sub)">{{subService.sub.name}}</input> '+
                             '<li class="prodCart" ng-repeat="prod in subService.sub.products">' +
                                 ' <img class="imgCart" ng-src="/assets/product/{{prod.pictureUrl}}"/>'+
                                 '{{prod.name}} quantity : \n\

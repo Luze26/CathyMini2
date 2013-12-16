@@ -209,6 +209,7 @@ public class CartSession {
         sub.setConsumer(cons);
         sub.setNbJ(21);
         sub.setCartLineCollection(new ArrayList<CartLine>());
+        sub.setName(cons.getUsername());
         if(cons != null)
             manager.persist(sub);
         return sub; 
@@ -307,9 +308,20 @@ public class CartSession {
         return "Empty cart";
     }
     
-    private Subscription findSubByConsumer(Consumer consumer) {
+    private ArrayList<Subscription> findSubByConsumer(Consumer consumer) {
+        Query q = manager.createNamedQuery("SubscriptionByCons", Subscription.class); 
+        q.setParameter("consumer", consumer);
+        
+        if (q.getResultList().isEmpty())
+            return null; 
+        
+        return (ArrayList<Subscription>) q.getResultList();
+    }
+    
+    private Subscription findSubByConsumerAndName(Consumer consumer, String name) {
         Query q = manager.createNamedQuery("SubscriptionByName", Subscription.class); 
         q.setParameter("consumer", consumer);
+        q.setParameter("name", name);
         
         if (q.getResultList().isEmpty())
             return null; 
@@ -365,8 +377,15 @@ public class CartSession {
     /**
      * Get a cart sessionBean of an user.
      */
-    public Subscription getUserSubscription(Consumer consumer) throws Exception {
+    public ArrayList<Subscription> getUserSubscription(Consumer consumer) throws Exception {
         return findSubByConsumer(consumer);
+    }
+    
+    /**
+     * Get a cart sessionBean of an user.
+     */
+    public Subscription getUserSubscriptionByName(Consumer consumer, String name) throws Exception {
+        return findSubByConsumerAndName(consumer, name);
     }
     
     public int changeNbJ(Subscription sub, int nbJ, boolean persist){
@@ -375,5 +394,11 @@ public class CartSession {
             manager.merge(sub);
         return sub.getNbJ();
     }
-    
+
+    public String changeName(Subscription sub, String name, boolean persist){
+        sub.setName(name);
+        if(persist)
+            manager.merge(sub);
+        return sub.getName();
+    }
 }

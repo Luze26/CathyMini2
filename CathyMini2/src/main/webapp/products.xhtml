@@ -33,7 +33,12 @@
                                             <a data-toggle="dropdown" href="#">Add Product</a>
                                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                                 <li><a class="btn" ng-click="addProductToCart($event, prod)">Add to cart</a></li>
-                                                <li><a class="btn" ng-click="addProductToSub($event, prod)">Add Product t sub</a></li>
+                                                <li><a data-toggle="dropdown" href="#">Add to subscription</a>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                        <li><a class="btn" ng-click="newCart($event)">New subscription</a></li>
+                                                        <!--Ajouter les different abo-->
+                                                    </ul>
+                                                </li>
                                             </ul>
                                         </button>
                                     </div>
