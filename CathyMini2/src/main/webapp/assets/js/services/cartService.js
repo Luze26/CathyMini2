@@ -18,10 +18,10 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     
     
     $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
-        $http.post("/webresources/cart/get")
+        $http.post("/webresources/cart/getCart")
         .success(function(data){
             service.cart.price = 0;
-            if(data != null){
+            if(data !== null){
                 service.cart.products = [];
                 var prodColl = data.cartLineCollection;
                 for( var i = 0;i<prodColl.length; i++){
@@ -44,13 +44,18 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
      * @param {Product} product
      */
     service.addProduct = function(product) {
-        $http.post("/webresources/cart/add", product.id)
+        $http.post("/webresources/cart/addProductToCart", product.id)
             .success(function(data) {
                 //If the product is already in the cart, we increase its quantity
-                if(service.cart.products.indexOf(product) !== -1) { 
-                    product.quantity++;
-                }
-                else { //Else, new product for the cart
+                var i = 0;
+                var found = false;
+                for(i;i<service.cart.products.length;i++){
+                    if(service.cart.products[i].id === product.id){
+                        found = true;
+                        service.cart.products[i].quantity++;
+                    }
+                }                
+                if(!found){ //Else, new product for the cart
                     product.quantity = 1;
                     service.cart.products.push(product);
                 }
@@ -63,7 +68,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
      * @param {Product} product
      */
     service.changeQuantity = function(product) {        
-        $http.post("/webresources/cart/changeQuantity", {"productId": product.id, "quantity": product.quantity})
+        $http.post("/webresources/cart/changeQuantityToCart", {"productId": product.id, "quantity": product.quantity})
                 .success(function(data) {
                 product.quantity = data;
             })
@@ -77,7 +82,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
      * @param {Product} product
      */
     service.deleteProduct = function(product) {
-        $http.post("/webresources/cart/delete", product.id)
+        $http.post("/webresources/cart/deleteToCart", product.id)
             .success(function(data) {
                 service.cart.products.splice(data,1);
                 service.cart.price += -product.price;

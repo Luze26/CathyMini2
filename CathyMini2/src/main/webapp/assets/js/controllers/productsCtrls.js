@@ -1,6 +1,6 @@
 angular.module('products').
   controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', 'subscriptionService', function($rootScope, $scope, $http, cartService, subscriptionService) {
-
+      
       $rootScope.header = "products";
       
       /** Search query */
@@ -212,8 +212,8 @@ angular.module('products').
             });
         }
       };
-
-      /**
+      
+       /**
        * Add a product to the cart
        * @param {Product} product
        */
