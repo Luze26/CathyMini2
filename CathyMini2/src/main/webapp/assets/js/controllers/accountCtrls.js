@@ -84,9 +84,29 @@ angular.module('account')
         }); 
     };
     
+       /**
+       * Delete the adress
+       * @param {Adress} adress to delete
+       */
+      $scope.deleteAddress = function(address) {
+        $http.post("/webresources/consumer/deleteAddress", address)
+          .success(function() {
+                  consumerService.getAddress().success(
+                        function(data) {
+                            $scope.address = data;
+                     });
+                 
+          })
+          .error(function(data) {
+              console.log("errpr");
+            $scope.displayConnectionError = true; // display error feedback
+          });
+      };
+      
     consumerService.getAddress().success(
             function(data) {
                 $scope.address = data;
+                console.log($scope.address);
             });
             
     $scope.editModal = {title: "Editer l'adresse", address: {}, action: $scope.editAddress};

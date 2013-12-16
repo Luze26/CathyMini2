@@ -18,10 +18,13 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -226,6 +229,10 @@ public class ConsumerFacade{
 
     /**
      * Edit address
+     * @param address
+     * @param request
+     * @param response
+     * @throws java.lang.Exception
      */
     @POST
     @Path("/editAddress")
@@ -247,6 +254,10 @@ public class ConsumerFacade{
 
     /**
      * Get address
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
      */
     @GET
     @Path("/address")
@@ -266,6 +277,24 @@ public class ConsumerFacade{
         }
         
         return address;
+    }
+    
+    /**
+     *
+     * @param address
+     * @param request
+     * @param response
+     */
+    @POST
+    @Path("/deleteAddress")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public void deleteAddress(Address address, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+        if (address.validate()) {
+            Consumer user = sessionSecuring.getConsumer(request);
+            consumerBean.deleteAddress(user, address);
+        }
+        response.setStatus(400);
     }
     
     /**
