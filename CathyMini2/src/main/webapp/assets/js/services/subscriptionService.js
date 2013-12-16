@@ -48,10 +48,15 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
         $http.post("/webresources/cart/addProductToSub", product.id)
             .success(function(data) {
                 //If the product is already in the sub, we increase its quantity
-                if(service.sub.products.indexOf(product) !== -1) { 
-                    product.quantity++;
-                }
-                else { //Else, new product for the sub
+                var i = 0;
+                var found = false;
+                for(i;i<service.sub.products.length;i++){
+                    if(service.sub.products[i].id === product.id){
+                        found = true;
+                        service.sub.products[i].quantity++;
+                    }
+                }                
+                if(!found){ //Else, new product for the cart
                     product.quantity = 1;
                     service.sub.products.push(product);
                 }
