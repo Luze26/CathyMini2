@@ -64,12 +64,10 @@ public class ConsumerFacade{
             logger.debug("Create user = " + form.username + " :: " + form.pwd + " :: " + form.mail);
             return new ConsumerApi(user);
         } catch (Exception ex) {
-            try {
-                response.sendError(400, ex.getMessage());
-            } catch (IOException ex1) {
-                logger.debug("Failed to send error after user creation");
-            }
-            return null;
+            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+            builder.entity(ex.getMessage());
+            Response res = builder.build();
+            throw new WebApplicationException(res);
         }
     }
 

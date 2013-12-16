@@ -52,14 +52,14 @@ public class ConsumerBean {
                 logger.debug(message);
                 return user;
             } else {
-                String message = "This mail address is already used by another user.";
+                String message = "mail error";
                 logger.error(message);
                 throw new Exception(message);
             }
         } else {
-                String message = "This username already exist.";
-                logger.error(message);
-                throw new Exception(message);
+            String message = "username error";
+            logger.error(message);
+            throw new Exception(message);
         }
     }
     
