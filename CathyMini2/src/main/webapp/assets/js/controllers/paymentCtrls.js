@@ -1,31 +1,41 @@
 angular.module('payment').
     controller('paymentCtrl', ['$scope', '$http', 'cartService', 'consumerService', 
         function($scope, $http, cartService, consumerService) {
-           
         $scope.cartService = cartService; // load the service in the scope
-  
+        
+        // Redirect user if his cart is empty when loading the payment page
+        /*if (cartService.cart.price === 0) {
+            window.location = "/index.xhtml";
+        }*/
+        
+        // Payment tabs buttons values
         $scope.btnList = ['Récaputulatif de la commande', 'Identification du client', 'Adresse de livraison',
             'Calcul des frais de port', 'Choix du mode de paiement'];
         $scope.lastBtnValue = ['Valider le panier', '', '', 'Accepter', 'Commander'];
         
+        // Current active tab
         $scope.activeTab = 0;
     
+        // User do return to index when login out
         $scope.$on('consumerDisconnect', function() {
             window.location = "/index.xhtml";
         });
         
+        // Listener for the login tab
         $scope.$on('consumerConnect', function() {
             if($scope.activeTab === 1) {
                 $scope.nextTab();
             }
         });
         
+        // Listener for the login tab
         $scope.$on('consumerSubscribe', function() {
             if($scope.activeTab === 1) {
                 $scope.nextTab();
             }
         });
         
+        // Behaviour of the pager 'next'
         $scope.nextTab = function(param) {
             if($scope.activeTab === 0) {
                 // Cart validation
@@ -55,6 +65,7 @@ angular.module('payment').
             }
         };
         
+        // Behaviour of the pager 'last'
         $scope.lastTab = function() {
             if($scope.activeTab > 0) {
                 if ($scope.activeTab === 2) {
@@ -66,6 +77,7 @@ angular.module('payment').
             }
         };
     
+        // Behaviour of tabs buttons head
         $scope.selectTab = function(select) {
             if(select <= $scope.activeTab) {
                 $scope.activeTab = select;
