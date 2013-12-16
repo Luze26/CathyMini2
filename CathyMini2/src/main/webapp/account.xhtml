@@ -24,8 +24,8 @@
                             <div class="form-group" ng-repeat="field in fields">
                                 {{field.label}}: {{$parent.consumer[field.key]}}
                                 <a href="#" class="account-edit" ng-show="field.editable" ng-click="showEdit(field)">Edit</a>
-                                <img ng-show="field.loading" src="/assets/image/loading.gif" alt="loading" />
-                                <img ng-show="field.success" src="/assets/image/ok.png" alt="success" />
+                                <img ng-show="field.loading" src="/assets/images/loading.gif" alt="loading" />
+                                <img ng-show="field.success" src="/assets/images/ok.png" alt="success" />
                                 <p ng-show="field.error">{{field.error}}</p>
                                 <div ng-hide="field.editable">
                                     <input type="text" class="form-control" ng-model="$parent.editConsumer[field.key]" />
