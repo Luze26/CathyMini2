@@ -9,7 +9,9 @@ angular.module('index').
     
                 /** If we continue to requests the server or not */
                 $scope.loadMore = true;
-
+$(document).ready(function() {
+        $('#myCarousel').carousel();
+    });
                 $scope.loadArticles = function() {
                     if ($scope.loadMore) {
                         $http.post("/webresources/article/all", $scope.search)
