@@ -17,11 +17,11 @@ import javax.persistence.Temporal;
  * 
  * @author Kraiss
  */
-@Entity(name="Subscription")
-@DiscriminatorValue("Subscription")
+@Entity(name="PurchaseSubscription")
+@DiscriminatorValue("PurchaseSubscription")
 @NamedQueries({
-    @NamedQuery(name="SubscriptionById", query="select object(s) from Subscription s where s.transactionID = :transactionID"),
-    @NamedQuery(name="SubscriptionByConsumer", query="select object(s) from Subscription s where s.consumer = :consumer")
+    @NamedQuery(name="SubscriptionById", query="select object(s) from PurchaseSubscription s where s.transactionID = :transactionID"),
+    @NamedQuery(name="SubscriptionByConsumer", query="select object(s) from PurchaseSubscription s where s.consumer = :consumer")
 })
 public class PurchaseSubscription extends Purchase {
     /** Date to store the start date of the subscription

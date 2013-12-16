@@ -1,6 +1,6 @@
 angular.module('products').
-  controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', function($rootScope, $scope, $http, cartService) {
-
+  controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', 'subscriptionService', function($rootScope, $scope, $http, cartService, subscriptionService) {
+      
       $rootScope.header = "products";
       
       /** Search query */
@@ -212,8 +212,8 @@ angular.module('products').
             });
         }
       };
-
-      /**
+      
+       /**
        * Add a product to the cart
        * @param {Product} product
        */
@@ -223,7 +223,18 @@ angular.module('products').
         }
         cartService.addProduct(product);
       };
-                    
+             
+      /**
+       * Add a product to the sub
+       * @param {Product} product
+       */
+      $scope.addProductToSub = function(event, product) {
+        if(event) {
+            event.stopPropagation();
+        }
+        subscriptionService.addProduct(product);
+      };
+      
       $scope.showProduct = function(product) {
         $scope.productOverlay = product;
       };

@@ -4,9 +4,14 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -22,9 +27,14 @@ import javax.persistence.Table;
  */
 @Entity(name="Cart")
 @Table(name="Cart")
+
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="Cart", discriminatorType=DiscriminatorType.STRING, length=15)
+
+
 @NamedQueries({
     @NamedQuery(name="CartByName",
-        query="select object(c) from Cart c where c.consumer = :consumer"),
+        query="select object(c) from Cart c where c.consumer = :consumer and TYPE(c) = Cart"),
     @NamedQuery(name="DeleteCartById",
         query="DELETE FROM Cart c WHERE c.cartID = :id"),
     @NamedQuery(name="CartByID",

@@ -11,20 +11,42 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h3 id="label">{{productOverlay.name}}</h3>
                         </div>
                         <div class="modal-body">
-                            <img ng-if="productOverlay.type==='serviette'" src="assets/image/serviette.png"/>
-                            <img ng-if="productOverlay.type==='tampon'" src="assets/image/tampon.png"/>
-                            <div class="mid">{{productOverlay.name}} <br /> {{productOverlay.marque}}</div>
-                            <div class="drops-c drops-c-6 drops-active-{{productOverlay.flux}}"><div class="drops-inner"></div></div>
-                            <div class="price">{{productOverlay.price}}€</div>
-                            <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{productOverlay.pictureUrl}}"/>
-                            <p>{{productOverlay.description}}</p>
-                            <button class="btn" ng-click="addProductToCart(null, productOverlay)">Add to cart</button>
+                            <div class="row">
+                                <div class="col-xs-5 product-overlay-img">
+                                    <img class="imgGallery" ng-src="{{cheminImageProduit}}{{productOverlay.pictureUrl}}"/>
+                                </div>
+                                <div class="col-xs-7">
+                                    <h3>{{productOverlay.name}}</h3>
+                                    <p>{{productOverlay.marque}}</p>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <p><b>Type:</b> 
+                                                <span ng-if="productOverlay.type==='serviette'"><img src="assets/image/serviette.png"/> Serviette</span>
+                                                <span ng-if="productOverlay.type==='tampon'"><img src="assets/image/tampon.png"/> Tampon</span>
+                                            </p>
+                                            <p><b>Flux:</b> 
+                                                <span class="drops-c drops-c-6 drops-active-{{productOverlay.flux}}"><span class="drops-inner"></span></span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <p><b>Prix:<br/>
+                                                    <span class="price">{{productOverlay.price}}€</span></b>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                    <p><b>En savoir plus:</b><br/>
+                                        {{productOverlay.description}}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" data-dismiss="modal">Fermer</button>
+                            <button class="btn btn-primary" ng-click="addProductToCart(null, productOverlay)">Ajouter au caddie</button>
+                            <button class="btn btn-primary" ng-click="addProductToSub(null, productOverlay)">Ajouter à un abonnement</button>
                         </div>
                     </div>
                 </div>
