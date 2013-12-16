@@ -14,17 +14,33 @@ angular.module('payment').
             window.location = "/index.xhtml";
         });
         
+        $scope.$on('consumerConnect', function() {
+            if($scope.activeTab === 1) {
+                $scope.nextTab();
+            }
+        });
+        
+        $scope.$on('consumerSubscribe', function() {
+            if($scope.activeTab === 1) {
+                $scope.nextTab();
+            }
+        });
+        
         $scope.nextTab = function(param) {
             if($scope.activeTab === 0) {
-                // Validation du panier
+                // Cart validation
                 if (consumerService.isConnected) {
                     $scope.activeTab += 2;
                 } else {
                     $scope.activeTab++;
                 }
+                
             } else if($scope.activeTab === 1) {
-                // Verification de l'identification
-                $scope.activeTab++;
+                // Login or subscribe
+                if (consumerService.isConnected) {
+                    $scope.activeTab++;
+                }
+                
             } else if($scope.activeTab === 2) {
                 // Verification de l'adresse de livraison
                 $scope.activeTab++;

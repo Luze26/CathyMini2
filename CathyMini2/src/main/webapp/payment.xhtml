@@ -13,18 +13,18 @@
             <ui:define name="content">
                 <div class="row">
                     <div class="col-lg-12" style="text-align:center">
-                        <ul class="nav">
+                        <ul class="navtab nav">
                             <li class="col-lg-1"><!-- Center tabs buttons --></li>
                             <li ng-repeat="label in btnList" class="{{getBtnClass($index)}}">
                                 <a href="" class="col-lg-2 {{isLinkedTabActive($index)}}" ng-click="selectTab($index)">
+                                    <span ng-if="$index !== 0" class="navtab-follow"></span>
                                     {{label}}
-                                    <span class="navbar-tick"></span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                     
-                    <div class="list-group-item" id="paymentTab">
+                    <div class="list-group-item payment-tabs" id="paymentTab">
                         <!-- Display Cart Sum Up -->
                         <div class="{{getTabClass(0)}}" id="cart-payementTab">
                             <fieldset>
@@ -61,12 +61,14 @@
                         
                         <!-- Display Login/Subscribe Tab -->
                         <div class="{{getTabClass(1)}}" id="login-payementTab">
-                            <fieldset class="login-tab">
+                            <fieldset>
                                 <legend>Connectez-vous ou Inscrivez-vous un compte</legend>
-                                <button class="btn btn-primary" href="#connect" title="Connexion" type="button" data-toggle="modal" data-target="#connectModal">
-                                    Se Connecter</button>
-                                <button class="btn btn-primary" href="#subscribe" title="Inscription" type="button" data-toggle="modal" data-target="#subscribeModal">
-                                    S'inscrire</button>
+                                <div class="login-buttons">
+                                    <button class="btn btn-primary" href="#connect" title="Connexion" type="button" data-toggle="modal" data-target="#connectModal">
+                                        Se Connecter</button>
+                                    <button class="btn btn-primary" href="#subscribe" title="Inscription" type="button" data-toggle="modal" data-target="#subscribeModal">
+                                        S'inscrire</button>
+                                </div>
                             </fieldset>
                         </div>
                         
