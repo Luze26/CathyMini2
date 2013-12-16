@@ -176,7 +176,11 @@ public class ConsumerFacade{
     /**
      * Upade consumer
      *
+     * @param consumer
+     * @param request
+     * @param response
      * @return The username if the consumer is connected, else an empty String
+     * @throws java.lang.Exception
      */
     @POST
     @Path("/update")
@@ -203,6 +207,10 @@ public class ConsumerFacade{
 
     /**
      * Add address
+     * @param address
+     * @param request
+     * @param response
+     * @throws java.lang.Exception
      */
     @POST
     @Path("/addAddress")
@@ -224,6 +232,10 @@ public class ConsumerFacade{
 
     /**
      * Edit address
+     * @param address
+     * @param request
+     * @param response
+     * @throws java.lang.Exception
      */
     @POST
     @Path("/editAddress")
@@ -245,6 +257,10 @@ public class ConsumerFacade{
 
     /**
      * Get address
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
      */
     @GET
     @Path("/address")
@@ -264,6 +280,24 @@ public class ConsumerFacade{
         }
         
         return address;
+    }
+    
+    /**
+     *
+     * @param address
+     * @param request
+     * @param response
+     */
+    @POST
+    @Path("/deleteAddress")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public void deleteAddress(Address address, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+        if (address.validate()) {
+            Consumer user = sessionSecuring.getConsumer(request);
+            consumerBean.deleteAddress(user, address);
+        }
+        response.setStatus(400);
     }
     
     /**

@@ -99,6 +99,12 @@ public class Consumer implements Serializable {
         }
         deliveryCollection.add(address);
     }
+    
+     public void deleteDelivery(DeliveryAddress address) {
+        if (deliveryCollection.contains(address)) {
+            deliveryCollection.remove(address);
+        }
+    }
 
     public Long getUserID() {
         return userID;
