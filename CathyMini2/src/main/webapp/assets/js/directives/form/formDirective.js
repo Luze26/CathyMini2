@@ -53,4 +53,49 @@ angular.module('common').directive('smartFloat', function() {
   };
 });
 
+/**
+ * Check if the input field value is the same than the given
+ * is greater than 0
+ */
+angular.module('common').directive('pwCheck', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, elem, attrs, ctrl) {
+            var firstPassword = '#' + attrs.pwCheck;
+            elem.add(firstPassword).on('keyup', function() {
+                scope.$apply(function() {
+                    var v = elem.val() === $(firstPassword).val();
+                    ctrl.$setValidity('pwmatch', v);
+                });
+            });
+        }
+    };
+});
 
+/**
+ * Invalidate if nameError is set to true
+ */
+angular.module('common').directive('nameCheck', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, elem, attrs, ctrl) {
+            scope.$watch('nameError', function() {
+                ctrl.$setValidity('usernameNotUnique', !scope.nameError); 
+            });
+        }
+    };
+});
+
+/**
+ * Invalidate if mailError is set to true
+ */
+angular.module('common').directive('mailCheck', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, elem, attrs, ctrl) {
+            scope.$watch('mailError', function() {
+                ctrl.$setValidity('mailNotUnique', !scope.mailError); 
+            });
+        }
+    };
+});

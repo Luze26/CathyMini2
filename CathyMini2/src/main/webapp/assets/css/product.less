@@ -190,6 +190,7 @@
     display: inline-block;
     margin-bottom: @textDecale;
     .drops-inner {
+        display: inline-block;
         background: url(/assets/image/drops.png) no-repeat 0 -273px;
         height: 29px;
     }
@@ -260,4 +261,37 @@
 
 .brandName {
     font-size: 12px;
+}
+
+.product-overlay {
+    .modal-dialog {
+        width: 80%;
+    }
+
+    .modal-header {
+        border-bottom: none;
+        display: inline-block;
+        position: absolute;
+        right: 0px;
+        z-index: 1500;
+    }
+
+    h3 {
+        margin-top: 0;
+        font-weight: bold;
+    }
+
+    .price {
+        font-size: 24px;
+    }
+}
+
+.product-overlay-img {
+    text-align: center;
+    line-height: 200px;
+    vertical-align: middle;
+
+    img {
+        width: 50%;
+    }
 }

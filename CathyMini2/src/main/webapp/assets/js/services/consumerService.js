@@ -69,11 +69,7 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
                 connectUser(user);
                 deferred.resolve();})
             .error(function(data, status, headers, config) {
-                if (status === 400) {
-                    deferred.reject(data);
-                } else {
-                    deferred.reject("Connection error");
-                }
+                deferred.reject({status: status, data: data});
             });
         return deferred.promise;
     };

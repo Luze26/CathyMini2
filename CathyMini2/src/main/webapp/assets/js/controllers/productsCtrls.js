@@ -1,6 +1,6 @@
 angular.module('products').
-  controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', function($rootScope, $scope, $http, cartService) {
-
+  controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', 'subscriptionService', function($rootScope, $scope, $http, cartService, subscriptionService) {
+      
       $rootScope.header = "products";
       
       /** Search query */
@@ -152,7 +152,12 @@ angular.module('products').
             var brand = $scope.brands[i];
             brand.check = checked;
         }
-        $scope.refreshBrands();
+        if(checked) {
+            $scope.refreshBrand();
+        }
+        else {
+            $scope.products = [];
+        }
       };
       
       /**
@@ -174,7 +179,12 @@ angular.module('products').
             var flu = $scope.flux[i];
             flu.check = checked;
         }
-        $scope.refreshFlux();
+        if(checked) {
+            $scope.refreshFlux();
+        }
+        else {
+            $scope.products = [];
+        }
       };
       
       /**
@@ -202,8 +212,8 @@ angular.module('products').
             });
         }
       };
-
-      /**
+      
+       /**
        * Add a product to the cart
        * @param {Product} product
        */
@@ -213,27 +223,18 @@ angular.module('products').
         }
         cartService.addProduct(product);
       };
-      
-      
-            $scope.fichier = "/assets/image/bootstrap-mdo-sfmoma-01.jpg";
-      $scope.newUrl = "";
-      $scope.preview = "";
-
-      $scope.test = function() {
-        $http.post("https://api.imageshack.us/v1/user/login", "cathy.mini.5832", "LadiesDays", "TRUE", "TRUE")
-                      .success(function(connect) {
-                              $http.post("https://api.imageshack.us/v1/images", $scope.fichier, "CathyMini", "image")
-                                      .success(function(data) {
-
-                                      $scope.newUrl = data.filename;
-//                                        $scope.preview = data.previous_image->filename
-
-
-                              });
-                      });
+             
+      /**
+       * Add a product to the sub
+       * @param {Product} product
+       */
+      $scope.addProductToSub = function(event, product) {
+        if(event) {
+            event.stopPropagation();
+        }
+        subscriptionService.addProduct(product);
       };
-
-                
+      
       $scope.showProduct = function(product) {
         $scope.productOverlay = product;
       };

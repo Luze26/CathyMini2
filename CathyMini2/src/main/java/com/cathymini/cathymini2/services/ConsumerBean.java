@@ -120,10 +120,10 @@ public class ConsumerBean {
 
     public void addAddress(Consumer user, Address address) throws Exception {
         if (user != null && address != null) {
-            DeliveryAddress delivery = new DeliveryAddress(user.getUsername(), user.getUsername(), address.address, address.zipCode, address.city);
+            DeliveryAddress delivery = new DeliveryAddress(user.getUsername(), user.getUsername(), address.address, address.zipCode, address.city);      
+            manager.persist(delivery);
             user.addDelivery(delivery);
             manager.merge(user);
-            manager.persist(delivery);
         }
     }
 
@@ -134,6 +134,23 @@ public class ConsumerBean {
                     addr.setAddress(address.address);
                     addr.setZipCode(address.zipCode);
                     addr.setCity(address.city);
+                    manager.merge(addr);
+                    manager.merge(user);
+                }
+                break;
+            }
+        }
+         
+    }
+    
+    public void deleteAddress(Consumer user, Address address) {
+        if (user != null && address != null) {
+           for (DeliveryAddress addr : user.getDeliveryCollection()) {
+               if (addr.getDeliveryAddresID().equals(address.id)) {           
+                    Query query = manager.createNamedQuery("deleteByIdAdress", DeliveryAddress.class); 
+                    query.setParameter("id", address.id);
+                    query.executeUpdate();
+                    user.deleteDelivery(addr);
                 }
                 break;
             }

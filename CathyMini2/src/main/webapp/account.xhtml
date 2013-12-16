@@ -29,7 +29,7 @@
                                 <p ng-show="field.error">{{field.error}}</p>
                                 <div ng-hide="field.editable">
                                     <input type="text" class="form-control" ng-model="$parent.editConsumer[field.key]" />
-                                    <button type="button" class="btn btn-success" ng-click="edit(field)">Edit</button>
+                                    <button type="button" class="btn btn-success" ng-click="edit(field)">Edit</button>                     
                                     <button type="button" class="btn" ng-click="cancelEdit(field)">Annuler</button>
                                 </div>
                             </div>
@@ -50,7 +50,9 @@
                                         <td>{{addr.address}}</td>
                                         <td>{{addr.zipCode}}</td>
                                         <td>{{addr.city}}</td>
-                                        <td><span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Edit</span></td>
+                                        <td><span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Edit</span>
+                                            <span ng-click="deleteAddress(addr)" class="btn btn-primary" data-toggle="modal">Supprimer</span>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -60,7 +62,7 @@
                     </div>
                     <div id="achats" class="tab-pane"></div>
                     <div id="abonnements" class="tab-pane"></div>
-                </div>
+                </div>            
             </ui:define>
 
             <ui:define name="scripts">

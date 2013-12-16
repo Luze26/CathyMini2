@@ -174,7 +174,7 @@ public class ProductBean {
 
         //BRANDS
         if (searchQuery.brands != null && searchQuery.brands.size() > 0) {
-            query += " AND ";
+            query += " AND ( ";
             first = true;
             for (String brand : searchQuery.brands) {
                 if (!first) {
@@ -183,6 +183,7 @@ public class ProductBean {
                 first = false;
                 query += "p.marque='" + brand.toUpperCase() + "'";
             }
+            query += " ) ";
         }
 
         //MIN PRICE
@@ -197,7 +198,7 @@ public class ProductBean {
 
         //ORDER
         query += " ORDER BY p." + searchQuery.orderBy + " " + (searchQuery.orderByASC ? "ASC" : "DESC");
-
+        
         return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
     }
 }
