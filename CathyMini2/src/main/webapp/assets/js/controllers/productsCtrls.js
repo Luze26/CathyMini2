@@ -152,7 +152,12 @@ angular.module('products').
             var brand = $scope.brands[i];
             brand.check = checked;
         }
-        $scope.refreshBrands();
+        if(checked) {
+            $scope.refreshBrand();
+        }
+        else {
+            $scope.products = [];
+        }
       };
       
       /**
@@ -174,7 +179,12 @@ angular.module('products').
             var flu = $scope.flux[i];
             flu.check = checked;
         }
-        $scope.refreshFlux();
+        if(checked) {
+            $scope.refreshFlux();
+        }
+        else {
+            $scope.products = [];
+        }
       };
       
       /**
