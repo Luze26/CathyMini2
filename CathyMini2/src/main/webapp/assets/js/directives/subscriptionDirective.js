@@ -20,11 +20,11 @@ angular.module('common').directive('subscriptionDirective', ['subscriptionServic
             var zIndex;
             if(scope.subOpen) {
                 position = "-350px";
-                zIndex = 1500;
+                zIndex = 500;
             }
             else {
                 position = "0px";
-                zIndex = 500;
+                zIndex = 1500;
             }
             
             scope.subOpen = !scope.subOpen;
