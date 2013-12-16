@@ -48,7 +48,7 @@
                                 <li ng-repeat="prod in cartService.cart.products">{{prod.name}} quantity :
                                     <input type="text" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/>
                                     <span>
-                                        <img class="imgGallery" style="width:20px;" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>
+                                        <img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>
                                     </span>
                                 </li>
                             </ul>
