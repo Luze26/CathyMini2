@@ -213,27 +213,7 @@ angular.module('products').
         }
         cartService.addProduct(product);
       };
-      
-      
-            $scope.fichier = "/assets/image/bootstrap-mdo-sfmoma-01.jpg";
-      $scope.newUrl = "";
-      $scope.preview = "";
-
-      $scope.test = function() {
-        $http.post("https://api.imageshack.us/v1/user/login", "cathy.mini.5832", "LadiesDays", "TRUE", "TRUE")
-                      .success(function(connect) {
-                              $http.post("https://api.imageshack.us/v1/images", $scope.fichier, "CathyMini", "image")
-                                      .success(function(data) {
-
-                                      $scope.newUrl = data.filename;
-//                                        $scope.preview = data.previous_image->filename
-
-
-                              });
-                      });
-      };
-
-                
+                    
       $scope.showProduct = function(product) {
         $scope.productOverlay = product;
       };
