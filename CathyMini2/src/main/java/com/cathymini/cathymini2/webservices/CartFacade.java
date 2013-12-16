@@ -184,38 +184,26 @@ public class CartFacade {
     public Boolean addProductToSub(Long id, @Context HttpServletRequest request, @Context HttpServletResponse response){
         Consumer cons;
         try{
-           // logger.debug("rechercher cons");
             cons = sessionSecuring.getConsumer(request);
         }catch(Exception ex){
             cons = null;
         }
         try{
             if (cons != null) {
-             //   logger.debug("cons pas null");
                 Subscription sub  = cartBean.getUserSubscription(cons);
-               // logger.debug("recupération sub");
                 if(sub == null){
-                 //   logger.debug("creation new sub");
                     sub = cartBean.newSubscription(cons);
-                    logger.debug("7");
                 }
                 Product prod = productBean.getProduct(id);
-                logger.debug("8");
-                //logger.debug("prod récupéré");
                 cartBean.addProductToSub(prod, sub, true);
-                logger.debug("9");
-                //logger.debug("produit ajouté!!");
                 return true;
             }
             else{
-                //logger.debug("cons null");
                 Product prod = productBean.getProduct(id);
-                //logger.debug("prod récupéré");
                 Subscription newSubTemp = null;
                 Boolean noSub = false;
                try{
                     newSubTemp = getSubSession(request);
-                   // logger.debug("recupération sub temp");
                     if(newSubTemp == null)
                         noSub = true;
                }
@@ -225,10 +213,8 @@ public class CartFacade {
                }
                
                if(noSub){
-                   //logger.debug("creation subTemp avec cons null");
                     newSubTemp = cartBean.newSubscription(null);
                     setSubSession(request, newSubTemp);
-                    //logger.debug("mise deans session");
                }
                 cartBean.addProductToSub(prod, newSubTemp, false);
                 return true;
@@ -258,9 +244,7 @@ public class CartFacade {
         Subscription sub = getSubSession(request);
         Consumer cons  = sessionSecuring.getConsumer(request);
         if(sub != null){
-            logger.debug("sub session n'est pas nul");
             cartBean.mergeSub(cons, sub);
-            logger.debug("apres merge");
             setSubSession(request, null);
         }
         try{
@@ -336,7 +320,6 @@ public class CartFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public int changeNbJ(int nbJ, @Context HttpServletRequest request, @Context HttpServletResponse response){
-        logger.debug("changeQuantity work :)");
         Consumer cons  = sessionSecuring.getConsumer(request);
         Subscription sub = null;
         if(cons != null){

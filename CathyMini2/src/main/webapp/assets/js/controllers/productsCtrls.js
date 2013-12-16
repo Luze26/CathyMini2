@@ -1,8 +1,7 @@
 
-angular.module('products')
-        .controller('productsCtrl', ['$scope', '$http', 'cartService', 'subscriptionService', function($scope, $http, cartService, subscriptionService) {
-
-
+angular.module('products').
+  controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', 'subscriptionService', function($rootScope, $scope, $http, cartService, subscriptionService) {
+      
       $rootScope.header = "products";
       
       /** Search query */

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       >
@@ -19,7 +19,6 @@
                         <div class="col-xs-12 col-sm-6 col-md-4 product-container" ng-repeat="prod in products">
                             <div type="button" data-toggle="modal" data-target="#productOverlay"
                                  ng-click="showProduct(prod)" class="product">
-
                                 <div class="coin"></div>
                                 <div class="type">
                                     <img ng-if="prod.type==='serviette'" src="assets/image/serviette.png"/>
@@ -30,7 +29,13 @@
                                         <div class="image-container">
                                             <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
                                         </div>
-                                        <button class="btn btn-primary" ng-click="addProductToCart($event, prod)">Add to cart</button>
+                                        <button class="btn btn-primary dropdown">
+                                            <a data-toggle="dropdown" href="#">Add Product</a>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                <li><a class="btn" ng-click="addProductToCart($event, prod)">Add to cart</a></li>
+                                                <li><a class="btn" ng-click="addProductToSub($event, prod)">Add Product t sub</a></li>
+                                            </ul>
+                                        </button>
                                     </div>
                                     <div class="infos col-xs-7">
                                         <div class="mid">{{prod.name}} <br /> <span class="brandName">{{prod.marque}}</span></div>
@@ -52,8 +57,8 @@
                 <script src="/assets/js/modules/productsModule.js"></script>
                 <script src="/assets/js/controllers/productsCtrls.js"></script>
                 <script src="/assets/js/services/cartService.js"></script>
-                <script src="/assets/js/directives/cartDirective.js"></script>
                 <script src="/assets/js/services/subscriptionService.js"></script>
+                <script src="/assets/js/directives/cartDirective.js"></script>
                 <script src="/assets/js/directives/form/formDirective.js"></script>
             </ui:define>
             <ui:define name="css">

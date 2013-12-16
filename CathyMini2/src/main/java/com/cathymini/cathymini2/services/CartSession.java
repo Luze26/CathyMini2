@@ -138,13 +138,10 @@ public class CartSession {
     }
     
     private Cart findCartByConsumer(Consumer consumer) {
-        logger.debug("avant create query");
         Query q = manager.createNamedQuery("CartByName", Cart.class); 
         q.setParameter("consumer", consumer);
-        logger.debug("dans findCartByConsumer");
         if (q.getResultList().isEmpty())
             return null; 
-        logger.debug("liste : r"+q.getResultList().size());
 
         return (Cart) q.getResultList().get(0);
         
@@ -172,12 +169,9 @@ public class CartSession {
     }
     
     public void changeQuantityCartLine(CartLine cl, int quantity, Boolean persist){
-        logger.debug("quantity : "+quantity);
         cl.setQuantity(quantity);
-        logger.debug("apres setQuantity");
         if(persist)
             manager.merge(cl);
-        logger.debug("fin fonction");
     }
     
     public String mergeCart(Consumer cons, Cart cartTemp){
@@ -191,43 +185,32 @@ public class CartSession {
                     boolean find = false;
                     for(CartLine cl : cartCons.getCartLineCollection())
                     {
-                        logger.debug("id cl : "+cl.getProduct().getId()+ "// id clTemp : "+ clTemp.getProduct().getId());
                         if(cl.getProduct().getId() == clTemp.getProduct().getId()){
                             //change the quantity is it's the same product
-                            logger.debug("change quantity to a product");
                             cl.setQuantity(cl.getQuantity()+clTemp.getQuantity());
                             find = true;
                         }
                     }
                     if(!find){
-                        logger.debug("product not found so add to cart cartLIne");
                             //add the product
                             addProductToCart(clTemp, cartCons, true);
                     }
                 }
-                logger.debug("merge finish");
             }
         }
         else{
             addCartToConsumer(cons, cartTemp);
-            logger.debug("pas de cart pour le consumer donc mis a jour");
         }
         return "";
     }
     
      public Subscription newSubscription(Consumer cons){
-        logger.debug("1");
         Subscription sub = new Subscription();
-        logger.debug("2");
         sub.setConsumer(cons);
-        logger.debug("3");
         sub.setNbJ(21);
-        logger.debug("4");
         sub.setCartLineCollection(new ArrayList<CartLine>());
-        logger.debug("5");
         if(cons != null)
             manager.persist(sub);
-        logger.debug("6");
         return sub; 
     }
     
@@ -326,12 +309,10 @@ public class CartSession {
     
     private Subscription findSubByConsumer(Consumer consumer) {
         Query q = manager.createNamedQuery("SubscriptionByName", Subscription.class); 
-        logger.debug("dans findSubByConsumer");
         q.setParameter("consumer", consumer);
         
         if (q.getResultList().isEmpty())
             return null; 
-        logger.debug("nombre de sub pour ce consumer : "+q.getResultList().size());
         
         return (Subscription) q.getResultList().get(0);
     }
@@ -362,26 +343,21 @@ public class CartSession {
                     boolean find = false;
                     for(CartLine cl : subCons.getCartLineCollection())
                     {
-                        logger.debug("id cl : "+cl.getProduct().getId()+ "// id clTemp : "+ clTemp.getProduct().getId());
                         if(cl.getProduct().getId() == clTemp.getProduct().getId()){
                             //change the quantity is it's the same product
-                            logger.debug("change quantity to a product");
                             cl.setQuantity(cl.getQuantity()+clTemp.getQuantity());
                             find = true;
                         }
                     }
                     if(!find){
-                        logger.debug("product not found so add to cart cartLIne");
                             //add the product
                             addProductToSub(clTemp, subCons, true);
                     }
                 }
-                logger.debug("merge finish");
             }
         }
         else{
             addSubscriptionToConsumer(cons, subTemp);
-            logger.debug("pas de cart pour le consumer donc mis a jour");
         }
         return "";
     }

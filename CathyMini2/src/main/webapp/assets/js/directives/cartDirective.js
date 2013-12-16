@@ -71,9 +71,10 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                  '<div id="cartPanel">' +
                     '<div ng-show="cartOpen">' +
                         '<ul>' +
-                            '<li ng-repeat="prod in cartService.cart.products">' +
-                                '{{prod.name}} quantity : \n\
-<input type="text" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
+                            '<li class="prodCart" ng-repeat="prod in cartService.cart.products">' +
+                                ' <img class="imgCart" ng-src="/assets/product/{{prod.pictureUrl}}"/>'+
+            '{{prod.name}} quantity : \n\
+<input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
 <span>\n\
 <img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
 </span>' +
@@ -83,9 +84,10 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                     '</div>' +
                     '<div ng-show="subOpen">' +
                         '<ul>' +
-                            '<li ng-repeat="prod in subService.sub.products">' +
+                            '<li class="prodCart" ng-repeat="prod in subService.sub.products">' +
+                                ' <img class="imgCart" ng-src="/assets/product/{{prod.pictureUrl}}"/>'+
                                 '{{prod.name}} quantity : \n\
-<input type="text" name="lname" ng-model="prod.quantity" ng-change="subService.changeQuantity(prod)"/> \n\
+<input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="subService.changeQuantity(prod)"/> \n\
 <span>\n\
 <img class="deleteProduct" ng-click="subService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
 </span>' +

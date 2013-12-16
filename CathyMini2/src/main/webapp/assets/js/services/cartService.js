@@ -21,7 +21,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
         $http.post("/webresources/cart/getCart")
         .success(function(data){
             service.cart.price = 0;
-            if(data != null){
+            if(data !== null){
                 service.cart.products = [];
                 var prodColl = data.cartLineCollection;
                 for( var i = 0;i<prodColl.length; i++){
@@ -47,10 +47,15 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
         $http.post("/webresources/cart/addProductToCart", product.id)
             .success(function(data) {
                 //If the product is already in the cart, we increase its quantity
-                if(service.cart.products.indexOf(product) !== -1) { 
-                    product.quantity++;
-                }
-                else { //Else, new product for the cart
+                var i = 0;
+                var found = false;
+                for(i;i<service.cart.products.length;i++){
+                    if(service.cart.products[i].id === product.id){
+                        found = true;
+                        service.cart.products[i].quantity++;
+                    }
+                }                
+                if(!found){ //Else, new product for the cart
                     product.quantity = 1;
                     service.cart.products.push(product);
                 }
