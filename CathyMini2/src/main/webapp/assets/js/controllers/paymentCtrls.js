@@ -29,12 +29,13 @@ angular.module('payment').
         $scope.nextTab = function(param) {
             if($scope.activeTab === 0) {
                 // Cart validation
-                if (consumerService.isConnected) {
-                    $scope.activeTab += 2;
-                } else {
-                    $scope.activeTab++;
+                if (cartService.cart.price !== 0) {
+                    if (consumerService.isConnected) {
+                        $scope.activeTab += 2;
+                    } else {
+                        $scope.activeTab++;
+                    }
                 }
-                
             } else if($scope.activeTab === 1) {
                 // Login or subscribe
                 if (consumerService.isConnected) {
@@ -44,9 +45,11 @@ angular.module('payment').
             } else if($scope.activeTab === 2) {
                 // Verification de l'adresse de livraison
                 $scope.activeTab++;
+                
             } else if($scope.activeTab === 3) {
                 // Validation des frais de transports
                 $scope.activeTab++;
+                
             } if($scope.activeTab === 4) {
                 // Verificaction des informations de paiement et commande
             }
@@ -54,7 +57,12 @@ angular.module('payment').
         
         $scope.lastTab = function() {
             if($scope.activeTab > 0) {
-                $scope.activeTab--;
+                if ($scope.activeTab === 2) {
+                    // Do not display login tab when user is connected
+                    $scope.activeTab -= 2;
+                } else {
+                    $scope.activeTab--;
+                }
             }
         };
     
@@ -84,6 +92,8 @@ angular.module('payment').
         $scope.getNextBtnClass = function() {
             if($scope.activeTab === 1 || $scope.activeTab === 2) {
                 return 'hidden';
+            } else if(cartService.cart.price === 0) {
+                return 'disabled';
             } else {
                 return '';
             }
