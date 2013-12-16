@@ -28,7 +28,7 @@
 
         .coin {
             border-top: 35px solid @mainColorSoft;
-            border-right: 35px solid @mainColorSoft;
+            border-left: 35px solid @mainColorSoft;
         }
     }
 
@@ -48,7 +48,7 @@
         min-height: @galleryProductSize;
         font-weight: bold;
         .mid {
-            margin-top: 20px;
+            margin-top: 8px;
             margin-bottom: 5px;
             padding-right: 10px;
         }
@@ -60,22 +60,30 @@
     }
 }
 
+.image-container {
+    vertical-align: middle;
+    line-height: 150px;
+    text-align: center;
+}
+
 .type {
     position: absolute;
     top: 5px;
-    right: 9px;
+    z-index: 250;
+    left: 13px;
 }
 
 .coin {
     position: absolute;
     top: 0px;
-    right: 5px;
+    left: 5px;
     height: 0px;
+    z-index: 200;
     width: 0px;
     border-top: 35px solid @mainColor;
-    border-right: 35px solid @mainColor;
+    border-left: 35px solid @mainColor;
     border-bottom: 35px solid transparent;
-    border-left: 35px solid transparent;
+    border-right: 35px solid transparent;
 }
 
 @buttonSize: 250px;
@@ -248,4 +256,8 @@
 .drops-c-1 {
     width: 31px;
     background-position: 0 -447px;
+}
+
+.brandName {
+    font-size: 12px;
 }
