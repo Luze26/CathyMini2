@@ -98,7 +98,6 @@ angular.module('account')
                  
           })
           .error(function(data) {
-              console.log("errpr");
             $scope.displayConnectionError = true; // display error feedback
           });
       };
@@ -106,7 +105,6 @@ angular.module('account')
     consumerService.getAddress().success(
             function(data) {
                 $scope.address = data;
-                console.log($scope.address);
             });
             
     $scope.editModal = {title: "Editer l'adresse", address: {}, action: $scope.editAddress};
