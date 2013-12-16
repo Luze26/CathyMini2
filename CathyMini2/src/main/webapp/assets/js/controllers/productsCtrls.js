@@ -1,5 +1,7 @@
-angular.module('products').
-  controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', function($rootScope, $scope, $http, cartService) {
+
+angular.module('products')
+        .controller('productsCtrl', ['$scope', '$http', 'cartService', 'subscriptionService', function($scope, $http, cartService, subscriptionService) {
+
 
       $rootScope.header = "products";
       
@@ -212,8 +214,8 @@ angular.module('products').
             });
         }
       };
-
-      /**
+      
+       /**
        * Add a product to the cart
        * @param {Product} product
        */
@@ -223,7 +225,28 @@ angular.module('products').
         }
         cartService.addProduct(product);
       };
-                    
+
+      /**
+       * Add a product to the sub
+       * @param {Product} product
+       */
+      $scope.addProductToSub = function(event, product) {
+        if(event) {
+            event.stopPropagation();
+        }
+        subscriptionService.addProduct(product);
+      };
+
+      
+      /**
+       * Add a product to the cart or the subscription
+       * * @param {Product} product
+       */
+      $scope.addProduct = function(product){
+          console.log("Dans addProduct");
+
+      }
+      
       $scope.showProduct = function(product) {
         $scope.productOverlay = product;
       };
