@@ -9,7 +9,11 @@
     width:20px;
 }
 
-#cartTab {
+#cartTabs {
+    display: inline-block;
+}
+
+#cartTab, #subTab {
     background-color: @mainColor;
     width: 160px;
     color: #fff;
@@ -17,11 +21,10 @@
     font-weight: bold;
     text-align: center;
     height: 100px;
-    display: inline-block;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     cursor: pointer;
 
-    &:hover {
+    &:hover, &.active {
         border: solid 2px @mainColorSoft;
         background-color: @mainColorSoft;
     }
