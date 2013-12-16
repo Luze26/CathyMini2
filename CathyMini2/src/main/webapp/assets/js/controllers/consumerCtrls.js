@@ -21,7 +21,7 @@ angular.module('common').
         consumerService.disconnect();
     };
   }])
-    .controller('subscribeModalCtrl', ['$scope', 'consumerService', function($scope, consumerService) {
+    .controller('subscribeModalCtrl', ['$scope', 'consumerService', 'notificationService', function($scope, consumerService, notificationService) {
             
    /** Display error message */
     $scope.nameError = false;
@@ -46,6 +46,7 @@ angular.module('common').
         consumerService.subscribe($scope.subscriber)
             .then(function() { //success
                 modal.modal('hide'); //hide the modal
+                notificationService.displayMessage("Bienvenue sur CathyMini !", 4000);
             },
             function(data) { //error
                 if(data.status == 400) {
@@ -54,7 +55,6 @@ angular.module('common').
                         $scope.mailError = true;
                     }
                     else if(data.data == "username error") {
-                        console.log("lllllllll");
                         $scope.nameError = true;
                     }
                 }
@@ -90,7 +90,7 @@ angular.module('common').
         consumerService.connect($scope.consumer)
             .then(function() { //success
                 modal.modal('hide'); //hide the modal
-                notificationService.displayMessage("Bienvenue " + $scope.consumer.user + ", ça fait longtemps que t'es pas venu voir Cathy !", 4000);
+                notificationService.displayMessage("Je suis contente de te revoir " + $scope.consumer.user + "!", 4000);
             },
             function(data) { //error
                 if(data.status == 400) {
