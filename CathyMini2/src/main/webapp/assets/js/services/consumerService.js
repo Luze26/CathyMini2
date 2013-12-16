@@ -50,9 +50,11 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
                 .success(function(user) { //success
                     connectUser(user);
                     deferred.resolve();
+                    $rootScope.$broadcast('consumerConnect');
                 })
                 .error(function(data, status, headers, config) {  // error
                     deferred.reject({status: status, data: data});
+                    $rootScope.$broadcast('consumerConnect');
                 });
         return deferred.promise;
     };
@@ -67,9 +69,12 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
         $http.post("/webresources/consumer/subscribe", subscriber)
             .success(function(user) { 
                 connectUser(user);
-                deferred.resolve();})
+                deferred.resolve();
+                $rootScope.$broadcast('consumerSubscribe');
+            })
             .error(function(data, status, headers, config) {
                 deferred.reject({status: status, data: data});
+                $rootScope.$broadcast('consumerSubscribe');
             });
         return deferred.promise;
     };
