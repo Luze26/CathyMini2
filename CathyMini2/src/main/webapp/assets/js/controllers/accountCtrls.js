@@ -2,14 +2,14 @@
  * Controller for the account page
  */
 angular.module('account')
-.controller('accountSettingsCtrl', ['$scope', '$http', 'consumerService', function($scope, $http, consumerService) {
+.controller('accountSettingsCtrl', ['$scope', '$http', 'consumerService', 'notificationService', function($scope, $http, consumerService, notificationService) {
     
     //////////////////////////////////////////////////
     //  ATTRIBUTES
     //////////////////////////////////////////////////
     
-    $scope.fields = [{label: "Name", key: "username", placeholder: "", success: false, loading: false, editable: true},
-        {label: "Email", key: "mail", placeholder: "", success: false, loading: false, editable: true}];
+    $scope.fields = [{label: "Nom", key: "username", type: "text", placeholder: "", success: false, loading: false, editable: true},
+        {label: "E-mail", key: "mail", placeholder: "", type: "email", success: false, loading: false, editable: true}];
     
     $scope.address = [];
     
@@ -62,6 +62,7 @@ angular.module('account')
         field.loading = true;
         field.error = null;
         field.editable = true;
+        field.success = false;
         $http.post("/webresources/consumer/update", $scope.editConsumer).success(function(consumer) {
             field.loading = false;
             if(consumer) { //Consumer returned by the server
@@ -69,10 +70,32 @@ angular.module('account')
                 $scope.consumer = consumer; //change the current consumer
                 $scope.editConsumer[field.key] = $scope.consumer[field.key]; //change the edited field
             }
+            
+            var notif;
+            switch(field.key) {
+                case "username":
+                    notif = "Je vous appelerai dorénavant " + consumer.username + ".";
+                    break;
+                case "mail":
+                    notif = "Votre adresse e-mail a correctement été changée.";
+                    break;
+            }
+            
+            notificationService.displayMessage(notif);
         }).error(function(error ,status) {
-            $scope.editConsumer[field.key] = $scope.consumer[field.key]; //reset the edited value for the field
             field.loading = false;
-            field.error = error;
+            if(status === 400) {
+                if(error === "username already exist") {
+                    field.error = " " + $scope.editConsumer[field.key] + " est déjà utilisé par un autre membre.";
+                }
+                else if(error === "mail already exist") {
+                    field.error = " " + $scope.editConsumer[field.key] + " est déjà utilisée par un autre membre.";
+                }
+                $scope.editConsumer[field.key] = $scope.consumer[field.key]; //reset the edited value for the field
+            }
+            else {
+                field.error = "Problème de connexion, vérifiez votre connexion internet.";
+            }
         });
     };
     

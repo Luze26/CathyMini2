@@ -12,7 +12,7 @@
             <ui:param name="ngController" value="accountSettingsCtrl" />
             <ui:param name="title" value="CathyMini" />
             <ui:define name="content">
-                <ul class="nav nav-tabs">
+                <ul class="account-settings nav nav-tabs">
                     <li class="active"><a href="#infos" data-toggle="tab">Mes infos</a></li>
                     <li><a href="#achats" data-toggle="tab">Mes achats</a></li>
                     <li><a href="#abonnments" data-toggle="tab">Mes abonnements</a></li>
@@ -21,18 +21,20 @@
                     <div id="infos" class="tab-pane active">
                         <fieldset>
                             <legend>Vos paramètres</legend>
-                            <div class="form-group" ng-repeat="field in fields">
-                                {{field.label}}: {{$parent.consumer[field.key]}}
-                                <a href="#" class="account-edit" ng-show="field.editable" ng-click="showEdit(field)">Edit</a>
-                                <img ng-show="field.loading" src="/assets/images/loading.gif" alt="loading" />
-                                <img ng-show="field.success" src="/assets/images/ok.png" alt="success" />
-                                <p ng-show="field.error">{{field.error}}</p>
-                                <div ng-hide="field.editable">
-                                    <input type="text" class="form-control" ng-model="$parent.editConsumer[field.key]" />
-                                    <button type="button" class="btn btn-success" ng-click="edit(field)">Edit</button>                     
-                                    <button type="button" class="btn" ng-click="cancelEdit(field)">Annuler</button>
+                            <form class="form-group" ng-repeat="field in fields" name="form" novalidate="   novalidate">
+                                <div><b>{{field.label}}:</b> <a href="#" class="account-edit" ng-show="field.editable" ng-click="showEdit(field)">Editer</a></div>
+                                <div class="row">
+                                    <span class="col-xs-4">{{$parent.consumer[field.key]}}</span>
+                                    <img ng-show="field.loading" src="/assets/images/loading.gif" alt="loading" />
+                                    <img ng-show="field.success" src="/assets/images/ok.png" alt="success" />
+                                    <span ng-show="field.error"><img src="/assets/images/error.png" alt="error" />{{field.error}}</span>
                                 </div>
-                            </div>
+                                <div ng-hide="field.editable" class="row">
+                                    <input name="input" type="{{field.type}}" class="account-input col-xs-5" required="required" ng-model="$parent.editConsumer[field.key]" />
+                                    <button type="button" class="account-btn btn col-xs-2" ng-click="cancelEdit(field)">Annuler</button>
+                                    <button type="button" ng-disabled="form.$invalid" class="account-btn btn btn-primary col-xs-2" ng-click="edit(field)">Editer</button>                     
+                                </div>
+                            </form>
                         </fieldset>
                         <fieldset>
                             <legend>Vos adresses</legend>

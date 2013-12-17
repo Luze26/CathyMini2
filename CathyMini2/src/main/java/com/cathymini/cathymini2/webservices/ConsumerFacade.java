@@ -203,11 +203,14 @@ public class ConsumerFacade{
                 updateSession(request);
                 return new ConsumerApi(user);
             } catch (Exception ex) {
-                throw new Exception("error");
+                ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+                builder.entity(ex.getMessage());
+                Response res = builder.build();
+                throw new WebApplicationException(res);
             }
         } else {
             ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-            builder.entity("Missing idLanguage parameter on request");
+            builder.entity("Bad request");
             Response res = builder.build();
             throw new WebApplicationException(res);
         }
