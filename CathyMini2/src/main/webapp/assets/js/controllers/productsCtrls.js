@@ -104,6 +104,7 @@ angular.module('products').
       /**
        * Order by the product's list
        * @param {type} property, property on which the sort is done
+       * @param {type} state, state oof the orderBy
        */
       $scope.orderBy = function(property) {
         if (property === $scope.search.orderBy) { //If the property is unchanged, we change the direction of the sort

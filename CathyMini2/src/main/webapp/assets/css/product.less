@@ -67,23 +67,15 @@
 }
 
 .type {
+    background-color: #13b6ff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
     position: absolute;
     top: 5px;
+    box-shadow: 2px 2px 2px -1px rgba(0,0,0,.2);
     z-index: 250;
     left: 13px;
-}
-
-.coin {
-    position: absolute;
-    top: 0px;
-    left: 5px;
-    height: 0px;
-    z-index: 200;
-    width: 0px;
-    border-top: 35px solid @mainColor;
-    border-left: 35px solid @mainColor;
-    border-bottom: 35px solid transparent;
-    border-right: 35px solid transparent;
 }
 
 @buttonSize: 250px;
@@ -294,4 +286,28 @@
     img {
         width: 50%;
     }
+}
+
+.product-aura:hover {
+    box-shadow: inset 0 0 6px #1abc9c;
+}
+
+.caret-up {
+    display: inline-block;
+    width: 0px;
+    height: 0px;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: none;
+    border-bottom: 4px solid #000000;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    border-top-width: 0px;
+    border-top-style: dotted;
+    content: "";
+}
+
+.caret {
+    margin-left: 2px;
+    vertical-align: middle;
 }

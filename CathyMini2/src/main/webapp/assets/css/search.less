@@ -43,7 +43,7 @@
 .search-col {
     border-right: solid 1px #ddd;
     padding-left: 15px;
-    height: 120px;
+    height: 130px;
 
     &>label {
         display: block;
@@ -52,11 +52,23 @@
     &:last-of-type {
         border: none;
     }
+    .divTrie {
+        margin-top: 15px;
+    }
+    .btn-trie button {
+        padding: 5px;
+    }
 }
 
 .labelCheckbox {
     width: 50%;
     float: left;
+    .typeCheckboxLeft {
+        float: left;
+    }
+    .typeCheckboxRight {
+        float: right;
+    }
 }
 
 .typeCheckbox(@radius){
@@ -71,12 +83,12 @@
         border: solid 1px @grayDark;
 
         &:hover {
-            background-color: @gray ! important;
+            background-color: @secondaryColorDark ! important;
         }
     }
 
     &:checked + div {
-        background-color: @secondaryColorDark;
+        background-color: @secondaryColor;
         font-weight: bold;
         border: solid 1px @thirdColor;
 
@@ -138,5 +150,7 @@ slider span.pointer {
 }
 
 .type-tick {
+    .tick-icon;
+    display: inline-block;
     vertical-align: baseline;
 }

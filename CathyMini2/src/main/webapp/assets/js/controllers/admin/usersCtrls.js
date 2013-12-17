@@ -4,7 +4,7 @@ angular.module('users').
       /** Search query */
       $scope.search = {offset: 0, length: 20, orderBy: "id", orderByASC: true, input: ""};
 
-      /** Products list */
+      /** User list */
       $scope.users = [];
 
       /** Success feedback*/
@@ -32,7 +32,7 @@ angular.module('users').
       };
 
       /**
-       * Refresh product list with the new search query
+       * Refresh user list with the new search query
        */
       $scope.refreshSearch = function() {
         $scope.search.offset = 0;
@@ -42,7 +42,7 @@ angular.module('users').
       };
 
       /**
-       * Load products
+       * Load users
        * @returns {undefined}
        */
       $scope.loadUsers = function() {
@@ -68,7 +68,7 @@ angular.module('users').
        * Edit the user
        */
       $scope.editUser = function(dismiss) {
-        var editedUser = $scope.editedProduct;
+        var editedUser = $scope.editedUser;
         $scope.displayConnectionError = false;
         $http.post("/webresources/consumer/edit", $scope.editModal.user)
           .success(function(data) {
@@ -91,9 +91,9 @@ angular.module('users').
       $scope.deleteUser = function(user) {
         $http.delete("/webresources/consumer/deleteAdmin?id=" + user.id)
           .success(function(data) {
-            //We delete the product client side from the list if it is in
+            //We delete the user client side from the list if it is in
             var index = $scope.users.indexOf(user);
-            if (index > -1) { //If the product is still displayed, we delete it from the list
+            if (index > -1) { //If the user is still displayed, we delete it from the list
               $scope.users.splice(index, 1);
             }
             //Display success feedback
@@ -120,6 +120,6 @@ angular.module('users').
         $scope.modal = $scope.editModal;
       };
 
-      /** Modal information for edit product */
+      /** Modal information for edit user */
       $scope.editModal = {title: "Edit user", okAction: $scope.editUser, user: {}, add: false};
     }]);

@@ -113,6 +113,10 @@ public class PurchaseFacade {
     
     /**
      * Get purchases
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception
      */
     @GET
     @Path("/purchases")
@@ -133,6 +137,10 @@ public class PurchaseFacade {
     
     /**
      * Get subscriptions
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
      */
     @GET
     @Path("/subscriptions")
@@ -142,6 +150,29 @@ public class PurchaseFacade {
     public Collection<Payment> getSubscriptions(@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
         Consumer user = sessionSecuring.getConsumer(request);
         Collection<PurchaseSubscription> subscriptions = purchaseBean.getConsumerSubscriptions(user);
+        Collection<Payment> payments = new ArrayList<Payment>();
+        if (subscriptions != null) {
+            for (Purchase subscription : subscriptions) {
+                payments.add(new Payment(subscription));
+            }
+        }
+        
+        return payments;
+    }
+    
+    /**
+     * Get all subscriptions
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
+     */
+    @POST
+    @Path("/allSubscriptions")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public Collection<Payment> getAllSubscriptions(@Context HttpServletResponse response) throws Exception {
+        
+        Collection<PurchaseSubscription> subscriptions = purchaseBean.getAllSubscriptions();
         Collection<Payment> payments = new ArrayList<Payment>();
         if (subscriptions != null) {
             for (Purchase subscription : subscriptions) {

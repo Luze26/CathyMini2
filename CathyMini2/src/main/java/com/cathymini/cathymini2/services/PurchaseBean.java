@@ -105,6 +105,15 @@ public class PurchaseBean {
         return q.getResultList();
     }
     
+    public Collection<PurchaseSubscription> getAllSubscriptions() {
+        Query q = manager.createNamedQuery("AllSubscription", PurchaseSubscription.class);
+
+        if (q.getResultList().isEmpty())
+            return null;
+
+        return q.getResultList();
+    }
+    
     private Collection<PurchaseLine> cartLineToPurchaseLine(Collection<CartLine> cartLines) {
         Collection<PurchaseLine> purchase = new ArrayList<PurchaseLine>();
         for (CartLine cartline : cartLines){
