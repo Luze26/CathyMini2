@@ -1,4 +1,1 @@
-/**
- * Module for the payment page
- */
-angular.module('payment', ['common']);
+angular.module('payment', ['common', 'address']);

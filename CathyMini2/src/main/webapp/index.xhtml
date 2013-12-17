@@ -12,37 +12,50 @@
             <ui:param name="ngController" value="indexCtrl" />
             <ui:param name="title" value="CathyMini" />
             <ui:define name="content">
-                <div id="carousel" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                          <li data-target="carousel-example-generic" data-slide-to="0" class="active"></li>
-                          <li data-target="carousel-example-generic" data-slide-to="1"></li>
-                          <li data-target="carousel-example-generic" data-slide-to="2"></li>
-                        </ol>
-
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner">
-                          <div class="item active" align="center"><img src="/assets/image/bootstrap-mdo-sfmoma-01.jpg" alt="Photo de montagne"   /></div>
-                          <div class="item" align="center"><img src="/assets/image/bootstrap-mdo-sfmoma-02.jpg" alt="Photo de montagne" align="center" /></div>
-                          <div class="item" align="center"><img src="/assets/image/bootstrap-mdo-sfmoma-03.jpg" alt="Photo de montagne" align="center" /></div>
+                <div id="myCarousel" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="http://placehold.it/1140x450" alt=""/>
+                            <div class="container">
+                                <div class="carousel-caption">
+                                    <h1>Example headline.</h1>
+                                    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                    <a class="btn btn-large btn-primary" href="#">Sign up today</a>
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                          <span class="glyphicon glyphicon-chevron-left"></span>
-                        </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                          <span class="glyphicon glyphicon-chevron-right"></span>
-                        </a>              
-                  </div>
+                        <div class="item">
+                            <img src="http://placehold.it/1140x450" alt=""/>
+                            <div class="container">
+                                <div class="carousel-caption">
+                                    <h1>Another example headline.</h1>
+                                    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                    <a class="btn btn-large btn-primary" href="#">Learn more</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <img src="http://placehold.it/1140x450" alt=""/>
+                            <div class="container">
+                                <div class="carousel-caption">
+                                    <h1>One more for good measure.</h1>
+                                    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                    <a class="btn btn-large btn-primary" href="#">Browse gallery</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-prev" href="#myCarousel" data-slide="prev"></a>
+                    <a class="carousel-next" href="#myCarousel" data-slide="next"></a>
+                </div><!-- /.carousel -->
                 <div class="row">
-                <div class="col-md-2">
-                    <ul id="navigation">
-                        <li><a href="#presentation" title="aller à la section 5">Présentation de CathyMini</a></li>
-                        <li><a href="#about" title="aller à la section 2">Notre histoire</a></li>
-                        <li><a href="#contact" title="aller à la section 3">Nous contacter</a></li>                      
-                    </ul>
-                </div>
+                    <div class="col-md-2">
+                        <ul id="navigation">
+                            <li><a href="#presentation" title="aller à la section 5">Présentation de CathyMini</a></li>
+                            <li><a href="#about" title="aller à la section 2">Notre histoire</a></li>
+                            <li><a href="#contact" title="aller à la section 3">Nous contacter</a></li>                      
+                        </ul>
+                    </div>
                     <div class="col-md-10" infinite-scroll="loadArticles()" infinite-scroll-distance="2">
                         <div ng-repeat="art in articles">
                             <div class="col-md-10">

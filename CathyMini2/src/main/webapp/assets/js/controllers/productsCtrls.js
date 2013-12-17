@@ -1,6 +1,12 @@
+/**
+ * Controller for the products list
+ */
 angular.module('products').
   controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', 'subscriptionService', function($rootScope, $scope, $http, cartService, subscriptionService) {
       
+      /**
+       * Set the tick on the navbar
+       */
       $rootScope.header = "products";
       
       /** Search query */
@@ -11,11 +17,12 @@ angular.module('products').
         napkin: true, minPrice: 0, maxPrice: 20, brands: [], flux: [1, 2, 3, 4, 5, 6]};
 
       /** Path where product's image are stock */
-      $scope.cheminImageProduit = "/assets/product/"
+      $scope.cheminImageProduit = "/assets/images/product/"
 
       /** Products list */
       $scope.products = [];
 
+      /** true if the search panel is displayed, false otherwise **/
       $scope.displaySearchPanel = true;
       
       /** Type list */
@@ -65,6 +72,9 @@ angular.module('products').
         }
       ];
 
+      /**
+       * Brands list
+       */
       $scope.brands = [
         {
           "id": "1",
@@ -147,6 +157,10 @@ angular.module('products').
         $scope.search.brands = brands;
       };
       
+      /**
+       * Enable or disable all brands
+       * @param {type} true = enable, false = disable
+       */
       $scope.allNoBrands = function(checked) {
         for (var i = 0; i < $scope.brands.length; i++) {
             var brand = $scope.brands[i];
@@ -174,6 +188,10 @@ angular.module('products').
         $scope.search.flux = flux;
       };
 
+      /**
+       * Enable or disable all flux
+       * @param {type} true = enable, false = disable
+       */
       $scope.allNoFlux = function(checked) {
         for (var i = 0; i < $scope.flux.length; i++) {
             var flu = $scope.flux[i];
@@ -235,9 +253,16 @@ angular.module('products').
         subscriptionService.addProduct(product);
       };
       
+      /**
+       * Display an overlay for the product
+       * @param {type} product to display in the overlay
+       */
       $scope.showProduct = function(product) {
         $scope.productOverlay = product;
       };
       
+      /**
+       * Watch if the search query change
+       */
       $scope.$watch('search', $scope.refreshSearch, true);
     }]);

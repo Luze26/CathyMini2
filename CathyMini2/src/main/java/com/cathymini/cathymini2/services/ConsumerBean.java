@@ -5,6 +5,7 @@ import com.cathymini.cathymini2.model.DeliveryAddress;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
 import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.secure.Role;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -115,6 +116,7 @@ public class ConsumerBean {
             }
             user.setUsername(newUser.username);
             user.setMail(newUser.mail);
+            manager.merge(user);
         }
     }
 
@@ -194,13 +196,18 @@ public class ConsumerBean {
     }
     
     private Consumer findUserByName(String username) {
+        if (username == null) {
+            return null;
+        }
+
         Query q = manager.createNamedQuery("ConsumerByName", Consumer.class); 
         q.setParameter("username", username);
-        
-        if (q.getResultList().isEmpty())
+        List results = q.getResultList();
+
+        if (results.isEmpty())
             return null; 
         
-        return (Consumer) q.getResultList().get(0);
+        return (Consumer) results.get(0);
     }
     
     private Consumer findUserByMail(String mail) {

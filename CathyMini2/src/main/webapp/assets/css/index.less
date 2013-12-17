@@ -1,0 +1,19 @@
+.carousel-prev-next(@url) {
+    background-image: @url;
+    width: 45px;
+    height: 44px;  
+    position: absolute;
+    display: block;
+    z-index: 800;
+    top: 48%;
+}
+
+.carousel-prev {
+    .carousel-prev-next(url('/assets/images/prev.png'));
+    left: 5px;
+}
+
+.carousel-next {
+    .carousel-prev-next(url('/assets/images/next.png'));
+    right: 5px;
+}

@@ -1,4 +1,4 @@
-angular.module('account', ['common']);
+angular.module('account', ['common', 'address']);
 
 
 
