@@ -1,7 +1,4 @@
-.carousel-prev-next(@url) {
-    background-image: @url;
-    width: 45px;
-    height: 44px;  
+.carousel-prev-next() {
     position: absolute;
     display: block;
     z-index: 800;
@@ -9,11 +6,13 @@
 }
 
 .carousel-prev {
-    .carousel-prev-next(url('/assets/images/prev.png'));
+    .carousel-prev-next();
+    .carousel-prev-icon;
     left: 5px;
 }
 
 .carousel-next {
-    .carousel-prev-next(url('/assets/images/next.png'));
+    .carousel-prev-next();
+    .carousel-next-icon;
     right: 5px;
 }
