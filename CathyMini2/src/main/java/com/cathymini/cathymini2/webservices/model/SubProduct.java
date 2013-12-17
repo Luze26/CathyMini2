@@ -3,9 +3,9 @@ package com.cathymini.cathymini2.webservices.model;
 
 /**
  *
- * @author yuzel
+ * @author AnaelleBernard
  */
-public class CartProduct {
+public class SubProduct {
 
     public Long productId;
     public int quantity;
@@ -25,6 +25,14 @@ public class CartProduct {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

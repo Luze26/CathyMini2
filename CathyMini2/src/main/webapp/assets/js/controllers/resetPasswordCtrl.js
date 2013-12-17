@@ -2,7 +2,7 @@
  * Controller for the reset password page
  */
 angular.module('resetPassword')
-.controller('resetPasswordCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+.controller('resetPasswordCtrl', ['$scope', '$http', 'notificationService', function($scope, $http, notificationService) {
     
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -20,6 +20,7 @@ angular.module('resetPassword')
         $scope.error = null;
         $http.post("/webresources/consumer/resetPasswordForm", $scope.resetForm).success(function() {
             $scope.success = "Votre mot de passe a bien été changé.";
+            notificationService.displayMessage("Vous pouvez maintenant utilisez votre nouveau mot de passe.");
         }).error(function(data, status) {
             if(status === 400) {
                 if(data === "user not found") {

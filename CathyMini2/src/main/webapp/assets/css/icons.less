@@ -1,0 +1,72 @@
+@spriteUrl: url('../images/sprite.png');
+
+.icon(@x, @y, @w, @h) {
+    background-image: @spriteUrl;
+    background-position: @x @y;
+    width: @w;
+    height: @h;
+}
+
+.logo {
+    .icon(0px, 0px, 155px, 50px);
+}
+
+.cathy-icon {
+    .icon(0px, -51px, 40px, 50px);
+}
+
+.tampon-icon {
+    .icon(-41px, -51px, 26px, 26px);
+}
+
+.napkin-icon {
+    .icon(-68px, -51px, 26px, 27px);
+}
+
+.ok-icon {
+    .icon(-98px, -51px, 20px, 20px);
+}
+
+.error-icon {
+    .icon(-124px, -51px, 20px, 20px);
+}
+
+.tick-icon {
+    .icon(-44px, -82px, 10px, 10px);
+}
+
+.edit-icon {
+    .icon(-61px, -82px, 20px, 20px);
+}
+
+.remove-icon {
+    .icon(-84px, -82px, 16px, 16px);
+}
+
+.double-up-icon {
+    .icon(-101px, -82px, 20px, 20px);
+}
+
+.double-down-icon {
+    .icon(-118px, -82px, 20px, 20px);
+}
+
+.carousel-next-icon {
+    .icon(-155px, 0px, 45px, 44px);
+}
+
+.carousel-prev-icon {
+    .icon(-155px, -44px, 45px, 44px);
+}
+
+.edit-img-icon {
+    vertical-align: baseline;
+    width: 12px;
+    height: 12px;
+}
+
+.img-icon {
+    vertical-align: middle;
+    width: 12px;
+    height: 12px;
+}

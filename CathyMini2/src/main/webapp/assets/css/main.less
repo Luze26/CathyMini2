@@ -1,4 +1,5 @@
 @import "variables.less";
+@import "icons.less";
 @import "search.less";
 @import "cart.less";
 @import "product.less";
@@ -7,9 +8,21 @@
 @import "index.less";
 @import "account.less";
 
+body {
+    background-color: #F5F5F5;
+}
+
 .navbar-default {
     background-color: @mainColor; 
     border-bottom: solid 2px #fff;
+}
+
+.navbar-nav {
+    border-right: solid 1px @mainColorSoft;
+}
+
+.navbar-right {
+    border-left: solid 1px @mainColorDark;
 }
 
 .navbar a {
@@ -50,6 +63,7 @@
 
 #content {
     margin-top: 82px;
+    height: 100%;
 }
 
 #footer {
@@ -58,6 +72,10 @@
     margin-top: 20px;
     height: 50px;
     width: 100%;
+}
+
+.hand-cursor {
+    cursor: pointer;
 }
 
 .hide {
@@ -120,7 +138,7 @@ input {
 }
 
 input.ng-dirty.ng-invalid {
-    border: solid 1px #c0392b;
+    border: solid 1px #FF1800;
 }
 
 .error-form {
@@ -141,4 +159,26 @@ input.ng-dirty.ng-invalid {
     h3 {
         margin-top: 0px;
     }
+}
+
+/* Table open animation (@see account.xhtml#address) */
+.show-table-anim td {
+    animation: show-account-anim-param 1s ease;
+    -webkit-animation: show-account-anim-param 1s ease;
+}
+
+@keyframes show-table-anim-param
+{
+    from {opacity: 0; max-height:0%}
+    to {opacity: 1; max-height:100%}
+}
+
+@-webkit-keyframes show-table-anim-param /* Safari and Chrome */
+{
+    from {opacity: 0; max-height:0%}
+    to {opacity: 1; max-height:100%}
+}
+
+.inline-block {
+    display: inline-block;
 }

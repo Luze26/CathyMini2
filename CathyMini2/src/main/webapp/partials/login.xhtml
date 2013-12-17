@@ -8,19 +8,19 @@
         <ui:composition>
             <ul class="nav navbar-nav navbar-right login-zone" ng-controller="consumerCtrl">
                 <li ng-show="isConnected()">
-                    <a type="button" href="/account.xhtml" ng-class="{'active': header == 'myAccount'}">
+                   <a type="button" href="/account.xhtml" ng-class="{'active': header == 'myAccount'}">
                         Mon compte
                         <span class="navbar-tick"></span>
                     </a>
                 </li>
                 <li ng-show="isConnected()">
-                    <a href="#" type="button" ng-click="disconnect()">Logout</a>
+                    <a href="#" type="button" ng-click="disconnect()">Se déconnecter</a>
                 </li>
                 <li ng-show="!isConnected()">
-                    <a href="#connect" title="Connexion" type="button" data-toggle="modal" data-target="#connectModal">Login</a>
+                    <a href="#connect" title="Connexion" type="button" data-toggle="modal" data-target="#connectModal">Se connecter</a>
                 </li>
                 <li ng-show="!isConnected()">
-                    <a href="#subscribe" title="Inscription" type="button" data-toggle="modal" data-target="#subscribeModal">Subscribe</a>
+                    <a href="#subscribe" title="Inscription" type="button" data-toggle="modal" data-target="#subscribeModal">S'inscrire</a>
                 </li>
             </ul>
         </ui:composition>

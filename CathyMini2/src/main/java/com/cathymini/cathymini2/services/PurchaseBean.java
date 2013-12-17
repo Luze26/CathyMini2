@@ -77,9 +77,9 @@ public class PurchaseBean {
     
     public void stopSubscription(Long subscriptionID, Cart cart, Consumer consumer, 
                 DeliveryAddress da, PayementInfo pi) {
-        PurchaseSubscription purchase = getSubscriptionById(subscriptionID);
+        PurchaseSubscription subscription = getSubscriptionById(subscriptionID);
         
-        manager.remove(purchase);
+        manager.remove(subscription);
         
         String message = consumer.getUsername() + "finalize a subscription.";
         logger.debug(message);
@@ -101,6 +101,15 @@ public class PurchaseBean {
 
         if (q.getResultList().isEmpty())
             return null; 
+
+        return q.getResultList();
+    }
+    
+    public Collection<PurchaseSubscription> getAllSubscriptions() {
+        Query q = manager.createNamedQuery("AllSubscription", PurchaseSubscription.class);
+
+        if (q.getResultList().isEmpty())
+            return null;
 
         return q.getResultList();
     }

@@ -23,7 +23,7 @@
                         <fieldset>
                             <legend>Vos paramètres</legend>
                             <form class="form-group" ng-repeat="field in fields" name="form" novalidate="   novalidate">
-                                <div class="row">
+                               <div class="row">
                                     <span class="col-xs-1"><b>{{field.label}}:</b></span>
                                     <span class="col-xs-2">{{$parent.consumer[field.key]}}</span>
                                     <span class="col-xs-1">
@@ -32,7 +32,8 @@
                                         <span ng-show="field.error"><img src="/assets/images/error.png" alt="error" />{{field.error}}</span>
                                     </span>
                                     <span class="col-xs-2">
-                                        <button href="#" class="btn btn-primary account-edit" ng-show="field.editable" ng-click="showEdit(field)">Editer</button>
+                                        <button href="#" class="btn btn-primary account-edit" ng-show="field.editable" ng-click="showEdit(field)">
+                                            <img class="edit-img-icon" src="/assets/images/edit.png" alt="edit" /> Editer</button>
                                     </span>
                                 </div>
                                 <div ng-hide="field.editable" class="row">
@@ -59,8 +60,8 @@
                                             <td>{{addr.address}}</td>
                                             <td>{{addr.zipCode}}</td>
                                             <td>{{addr.city}}</td>
-                                            <td><span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Editer</span>
-                                                <span ng-click="deleteAddress(addr)" class="btn btn-primary" data-toggle="modal">Supprimer</span>
+                                            <td><span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal"><img class="edit-img-icon" src="/assets/images/edit.png" alt="éditer" /> Editer</span>
+                                                <span ng-click="deleteAddress(addr)" class="btn btn-primary" data-toggle="modal"><img class="img-icon" src="/assets/images/remove-white.png" alt="supprimer" /> Supprimer</span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -69,7 +70,7 @@
                                     Vous n'avez pas encore renseigné d'adresse.
                                 </div>
                             </div>
-                            <button type="button" ng-click="modal = newModal" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Ajouter une adresse</button>
+                            <button type="button" ng-click="modal = newModal" class="btn btn-primary" data-toggle="modal" data-target="#addressModal"><img class="img-icon" src="/assets/images/add.png" alt="ajouter" /> Ajouter une adresse</button>
                             <ui:include src="/partials/addressModal.xhtml" />
                         </fieldset>
                     </div>
@@ -89,11 +90,41 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="purchase in purchases" ng-click="showPurchaseDetails(purchase)" style="cursor:pointer;">
-                                            <td>{{purchase.creationDate}}</td>
-                                            <td>{{purchase.deliveryDate}}</td>
-                                            <td>{{purchase.paymentDate}}</td>
-                                            <td>{{purchase.cost}}</td>
+                                        <tr class="hand-cursor" ng-repeat="purchase in purchases" ng-click="showPurchaseDetails($index)">
+                                            <td ng-if="$index!==selectedPurchase">{{purchase.creationDate}}</td>
+                                            <td ng-if="$index!==selectedPurchase">{{purchase.deliveryDate}}</td>
+                                            <td ng-if="$index!==selectedPurchase">{{purchase.paymentDate}}</td>
+                                            <td ng-if="$index!==selectedPurchase">{{purchase.cost}}</td>
+                                            <td ng-if="$index===selectedPurchase" class="show-table-anim" colspan="4">
+                                                <span class="col-lg-3"><b>Date de commande</b></span>
+                                                <span class="col-lg-2">{{purchase.creationDate}}</span>
+                                                <br/>
+                                                <span class="col-lg-3"><b>Date d'envoi</b></span>
+                                                <span class="col-lg-2">{{purchase.deliveryDate}}</span>
+                                                <br/>
+                                                <span class="col-lg-3"><b>Date de debit</b></span>
+                                                <span class="col-lg-2">{{purchase.paymentDate}}</span>
+                                                <br/>
+                                                <span class="col-lg-3"><b>Résume de votre commande</b></span>
+                                                <table class="col-lg-6">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Produit</th>
+                                                            <th>Quantité</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="prod in purchase.products">
+                                                            <td>prod.name</td>
+                                                            <td>prod.quantity</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Total avec les frais de port</b></td>
+                                                            <td>{{purchase.cost}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -120,12 +151,48 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="subscription in subscriptions" ng-click="showPurchaseDetails(purchase)" style="cursor:pointer;">
-                                            <td>{{subscription.creationDate}}</td>
-                                            <td>{{subscription.deliveryDate}}</td>
-                                            <td>{{subscription.paymentDate}}</td>
-                                            <td>{{subscription.cost}}</td>
-                                            <td>{{subscription.daysDelay}}</td>
+                                        <tr class="hand-cursor show-table-anim" ng-repeat="subscription in subscriptions" ng-click="showSubscriptionDetails($index)">
+                                            <td ng-if="$index!==selectedSubscription">{{subscription.creationDate}}</td>
+                                            <td ng-if="$index!==selectedSubscription">{{subscription.deliveryDate}}</td>
+                                            <td ng-if="$index!==selectedSubscription">{{subscription.paymentDate}}</td>
+                                            <td ng-if="$index!==selectedSubscription">{{subscription.cost}}</td>
+                                            <td ng-if="$index!==selectedSubscription">{{subscription.daysDelay}}</td>
+                                            <td ng-if="$index===selectedSubscription" colspan="5">
+                                                <span class="col-lg-3"><b>Date du prochain envoi</b></span>
+                                                <span class="col-lg-2">{{subscription.nextDelivery}}</span>
+                                                <br/>
+                                                <span class="col-lg-3"><b>Date de création de l'abonnement</b></span>
+                                                <span class="col-lg-2">{{subscription.creationDate}}</span>
+                                                <br/>
+                                                <span class="col-lg-3"><b>Date du dernier envoi</b></span>
+                                                <span class="col-lg-2">{{subscription.deliveryDate}}</span>
+                                                <br/>
+                                                <span class="col-lg-3"><b>Date du dernier debit</b></span>
+                                                <span class="col-lg-2">{{subscription.paymentDate}}</span>
+                                                <br/>
+                                                <span class="col-lg-3"><b>Interval entre vos regles</b></span>
+                                                <span class="col-lg-2">{{subscription.daysDelay}}</span>
+                                                <br/>
+                                                <span class="col-lg-3"><b>Résume de votre commande</b></span>
+                                                <table class="col-lg-6">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Produit</th>
+                                                            <th>Quantité</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="prod in subscription.products">
+                                                            <td>prod.name</td>
+                                                            <td>prod.quantity</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Total avec les frais de port</b></td>
+                                                            <td>{{subscription.cost}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

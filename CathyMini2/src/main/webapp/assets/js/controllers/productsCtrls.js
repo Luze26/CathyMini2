@@ -17,10 +17,14 @@ angular.module('products').
         napkin: true, minPrice: 0, maxPrice: 20, brands: [], flux: [1, 2, 3, 4, 5, 6]};
 
       /** Path where product's image are stock */
-      $scope.cheminImageProduit = "/assets/images/product/"
+
+      $scope.cheminImageProduit = "/assets/images/product/";
 
       /** Products list */
       $scope.products = [];
+      
+      /**Subscription list*/
+      $scope.subService = subscriptionService;
 
       /** true if the search panel is displayed, false otherwise **/
       $scope.displaySearchPanel = true;
@@ -104,6 +108,7 @@ angular.module('products').
       /**
        * Order by the product's list
        * @param {type} property, property on which the sort is done
+       * @param {type} state, state oof the orderBy
        */
       $scope.orderBy = function(property) {
         if (property === $scope.search.orderBy) { //If the property is unchanged, we change the direction of the sort
@@ -241,16 +246,23 @@ angular.module('products').
         }
         cartService.addProduct(product);
       };
-             
+      
+      $scope.newSubscription = function(event){
+        if(event) {
+            event.stopPropagation();
+        }
+        subscriptionService.newSubscription();
+      };
+      
       /**
        * Add a product to the sub
        * @param {Product} product
        */
-      $scope.addProductToSub = function(event, product) {
+      $scope.addProductToSub = function(event, product, name) {
         if(event) {
             event.stopPropagation();
         }
-        subscriptionService.addProduct(product);
+        subscriptionService.addProduct(product, name);
       };
       
       /**
