@@ -1,15 +1,37 @@
+/**
+ * Controller for the index page
+ */
 angular.module('index').
         controller('indexCtrl', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
                 
+                /**
+                 * Set the tick on the navbar
+                 */
                 $rootScope.header = "home";
                 
+                /**
+                 * List of articles
+                 */
                 $scope.articles = [];
 
+                /**
+                 * Search object
+                 */
                 $scope.search = {offset: 0, length: 20};
     
                 /** If we continue to requests the server or not */
                 $scope.loadMore = true;
-
+                
+                /**
+                 * Initialize the carousel
+                 */
+                $(document).ready(function() {
+                    $('#myCarousel').carousel();
+                });
+                
+                /**
+                 * Load articles
+                 */
                 $scope.loadArticles = function() {
                     if ($scope.loadMore) {
                         $http.post("/webresources/article/all", $scope.search)

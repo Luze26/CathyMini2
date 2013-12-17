@@ -1,5 +1,4 @@
 /**
-
  * Cart directive, used to display the cart tab
  */
 angular.module('common').directive('cartDirective', ['cartService', 'subscriptionService', function(cartService, subscriptionService) {

@@ -5,6 +5,10 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
     
     var service = {};
     
+    //////////////////////////////////////////////////
+    //  ATTRIBUTES
+    //////////////////////////////////////////////////
+    
     /**
      * If the user is connected
      * @type {Boolean}
@@ -16,8 +20,17 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
      */
     service.consumer = {};
     
+    //////////////////////////////////////////////////
+    //  USER METHODS
+    //////////////////////////////////////////////////
+    
+    /**
+     * Connect a user
+     * @param {type} user
+     * @returns {undefined}
+     */
     var connectUser = function(user) {
-        if(!service.isConnected) {
+        if(!service.isConnected) { //If the user is not already connected
             service.consumer.username = user.username;
             service.isConnected = true;
             $rootScope.$broadcast('consumerConnect', user);
@@ -50,11 +63,9 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
                 .success(function(user) { //success
                     connectUser(user);
                     deferred.resolve();
-                    $rootScope.$broadcast('consumerConnect');
                 })
                 .error(function(data, status, headers, config) {  // error
                     deferred.reject({status: status, data: data});
-                    $rootScope.$broadcast('consumerConnect');
                 });
         return deferred.promise;
     };
@@ -94,22 +105,53 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
             });
     };
     
-    /**
-     * Request the server to get the user status
-     */
-    service.getCurrentUser();
+    //////////////////////////////////////////////////
+    //  ADDRESS METHODS
+    //////////////////////////////////////////////////
     
+    /**
+     * Add an address to the user
+     * @param {type} address to add
+     * @returns {promise}
+     */
     service.addAddress = function(address) {
         return $http.post("/webresources/consumer/addAddress", address);
     };
     
+    /**
+     * Edit an address
+     * @param {type} address to edit
+     * @returns {promise}
+     */
     service.editAddress = function(address) {
         return $http.post("/webresources/consumer/editAddress", address);
     };
     
+    /**
+     * Delete an address
+     * @param {type} address to delete
+     * @returns {promise}
+     */
+    service.deleteAddress = function(address) {
+        return $http.post("/webresources/consumer/deleteAddress", address);
+    };
+    
+    /**
+     * Get the list of address
+     * @returns {promise}
+     */
     service.getAddress = function() {
         return $http.get("/webresources/consumer/address");
     };
+    
+    //////////////////////////////////////////////////
+    //  INITIALIZATION
+    //////////////////////////////////////////////////
+    
+    /**
+     * Request the server to get the user status
+     */
+    service.getCurrentUser();
     
     return service;
 }]);
