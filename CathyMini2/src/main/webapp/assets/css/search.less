@@ -43,7 +43,7 @@
 .search-col {
     border-right: solid 1px #ddd;
     padding-left: 15px;
-    height: 120px;
+    height: 130px;
 
     &>label {
         display: block;
@@ -52,11 +52,23 @@
     &:last-of-type {
         border: none;
     }
+    .divTrie {
+        margin-top: 15px;
+    }
+    .btn-trie button {
+        padding: 5px;
+    }
 }
 
 .labelCheckbox {
     width: 50%;
     float: left;
+    .typeCheckboxLeft {
+        float: left;
+    }
+    .typeCheckboxRight {
+        float: right;
+    }
 }
 
 .typeCheckbox(@radius){

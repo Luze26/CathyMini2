@@ -19,7 +19,8 @@ import javax.persistence.NamedQuery;
 @DiscriminatorValue("PurchaseSubscription")
 @NamedQueries({
     @NamedQuery(name="SubscriptionById", query="select object(s) from PurchaseSubscription s where s.transactionID = :transactionID"),
-    @NamedQuery(name="SubscriptionByConsumer", query="select object(s) from PurchaseSubscription s where s.consumer = :consumer")
+    @NamedQuery(name="SubscriptionByConsumer", query="select object(s) from PurchaseSubscription s where s.consumer = :consumer"),
+    @NamedQuery(name="AllSubscription", query="select object(s) from PurchaseSubscription s")
 })
 public class PurchaseSubscription extends Purchase {
     /** Next delivery date */
