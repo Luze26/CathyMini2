@@ -6,10 +6,11 @@
     <body>
         <ui:composition>
             <ui:decorate template="/template/modalLayout.xhtml">           
-                <ui:param name="modalTitle" value="S'inscire" />
+                <ui:param name="modalTitle" value="Inscription" />
                 <ui:param name="ngCtrl" value="subscribeModalCtrl" />
                 <ui:param name="modalId" value="subscribeModal" />
                 <ui:param name="okAction" value="subscribe()" />
+                <ui:param name="okLabel" value="S'inscrire" />
                 <ui:param name="ngDisabled" value="form.$invalid" />
                 <ui:define name="modalContent">
                     <div ng-show="error" class="alert alert-danger">

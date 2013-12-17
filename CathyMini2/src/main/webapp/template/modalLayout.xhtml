@@ -17,7 +17,7 @@
                         </ui:insert>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn" data-dismiss="modal" ng-click="#{empty closeAction ? '' : closeAction}">#{empty closeLabel ? 'Close' : closeLabel}</button>
+                        <button type="button" class="btn" data-dismiss="modal" ng-click="#{empty closeAction ? '' : closeAction}">#{empty closeLabel ? 'Annuler' : closeLabel}</button>
                         <button ng-show="#{empty ngShow ? 'true' : ngShow}" class="btn btn-primary" ng-disabled="#{empty ngDisabled ? 'false' : ngDisabled}" ng-click="#{empty okAction ? '' : okAction}">#{empty okLabel ? 'Ok' : okLabel}</button>
                         <button ng-if="#{empty ngShow2 ? 'false' : ngShow2}" class="btn btn-primary" ng-disabled="#{empty ngDisabled2 ? 'false' : ngDisabled2}" ng-click="#{empty okAction2 ? '' : okAction2}">#{empty okLabel2 ? 'Ok' : okLabel2}</button>
                     </div>
