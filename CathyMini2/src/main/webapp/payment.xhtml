@@ -15,7 +15,6 @@
                     <div class="row" >
                         <div class="col-lg-12">
                             <ul class="navtab nav">
-                                <li class="col-lg-1"><!-- Center tabs buttons --></li>
                                 <li ng-repeat="label in btnList" class="{{getBtnClass($index)}}">
                                     <a href="" class="col-lg-2 {{isLinkedTabActive($index)}}" ng-click="selectTab($index)">
                                         <span ng-if="$index !== 0" class="navtab-follow"></span>
@@ -28,8 +27,54 @@
                     <div class="row" >
                         <div class="col-lg-12">
                             <div class="list-group-item payment-tabs" id="paymentTab">
+                                <div class="{{getTabClass(0)}}" id="cartSelect-payementTab">
+                                    <fieldset>
+                                        <legend>
+                                            Selectionner la commande a validé<br/>
+                                        </legend>
+                                        <small>Les abonnements que vous possédiez déjà sur votre compte sont validés automatiquement</small>
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Nom</th>
+                                                    <th>Prix de la commande</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><b>Panier</b></td>
+                                                    <td ng-if="cartService.cart.price !== 0">
+                                                        Commande immédiate
+                                                    </td>
+                                                    <td ng-if="cartService.cart.price !== 0">
+                                                        {{cartService.cart.price}} &euro;
+                                                    </td>
+                                                    <td ng-if="cartService.cart.price !== 0">
+                                                        <span ng-click="nextTab()" class="btn btn-primary">Finaliser cette commande</span>
+                                                    </td>
+                                                    <td ng-if="cartService.cart.price === 0" colspan="3" >
+                                                        Vous n'avez actuellement pas de panier (commande immédiate) à valider
+                                                    </td>
+                                                </tr>
+                                                
+                                                <!-- New Line -->
+                                                <tr><td colspan="3"></td></tr>
+                                                
+                                                <tr>
+                                                    <td><b>Abonnement</b></td>
+                                                    <td colspan="3" >
+                                                        Vous n'avez actuellement aucun abonnement à valider
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                </div>
+                                
                                 <!-- Display Cart Sum Up -->
-                                <div class="{{getTabClass(0)}}" id="cart-payementTab">
+                                <div class="{{getTabClass(1)}}" id="cartSumUp-payementTab">
                                     <fieldset>
                                         <legend>Récaputulatif de la commande</legend>
                                         <table class="table table-striped table-bordered table-hover">
@@ -63,7 +108,7 @@
                                 </div>
 
                                 <!-- Display Login/Subscribe Tab -->
-                                <div class="{{getTabClass(1)}}" id="login-payementTab">
+                                <div class="{{getTabClass(2)}}" id="login-payementTab">
                                     <fieldset>
                                         <legend>Connectez-vous ou Inscrivez-vous un compte</legend>
                                         <div class="login-buttons">
@@ -76,7 +121,7 @@
                                 </div>
 
                                 <!-- Display Delivery Address Selection -->
-                                <div class="{{getTabClass(2)}}" ng-controller="addressCtrl" id="address-payementTab">
+                                <div class="{{getTabClass(3)}}" ng-controller="addressCtrl" id="address-payementTab">
                                     <fieldset>
                                         <legend>Selectionner votre addresse de livraison</legend>
                                         <table class="table table-striped table-bordered table-hover">
@@ -105,7 +150,7 @@
                                 </div>
 
                                 <!-- Display Shipping Cost -->
-                                <div class="{{getTabClass(3)}}" id="shipping-payementTab">
+                                <div class="{{getTabClass(4)}}" id="shipping-payementTab">
                                     <fieldset>
                                         <legend>Récaputulatif de la commande</legend>
                                         <table class="table table-striped table-bordered table-hover">
@@ -144,7 +189,7 @@
                                 </div>
 
                                 <!-- Display Payement -->
-                                <div class="{{getTabClass(4)}}" id="payment-payementTab">
+                                <div class="{{getTabClass(5)}}" id="payment-payementTab">
                                   <p>payment</p>
                                 </div>
                             </div>

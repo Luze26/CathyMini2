@@ -6,15 +6,10 @@ angular.module('payment').
         function($scope, $http, cartService, consumerService) {
         $scope.cartService = cartService; // load the service in the scope
         
-        // Redirect user if his cart is empty when loading the payment page
-        /*if (cartService.cart.price === 0) {
-            window.location = "/index.xhtml";
-        }*/
-        
         // Payment tabs buttons values
-        $scope.btnList = ['Récaputulatif de la commande', 'Identification du client', 'Adresse de livraison',
+        $scope.btnList = ['Selection du caddie', 'Récaputulatif de la commande', 'Identification du client', 'Adresse de livraison',
             'Calcul des frais de port', 'Choix du mode de paiement'];
-        $scope.lastBtnValue = ['Valider le panier', '', '', 'Accepter', 'Commander'];
+        $scope.lastBtnValue = ['', 'Valider le panier', '', '', 'Accepter', 'Commander'];
         
         // Current active tab
         $scope.activeTab = 0;
@@ -26,14 +21,14 @@ angular.module('payment').
         
         // Listener for the login tab
         $scope.$on('consumerConnect', function() {
-            if($scope.activeTab === 1) {
+            if($scope.activeTab === 2) {
                 $scope.nextTab();
             }
         });
         
         // Listener for the login tab
         $scope.$on('consumerSubscribe', function() {
-            if($scope.activeTab === 1) {
+            if($scope.activeTab === 2) {
                 $scope.nextTab();
             }
         });
@@ -42,6 +37,9 @@ angular.module('payment').
         $scope.nextTab = function(param) {
             if($scope.activeTab === 0) {
                 // Cart validation
+                $scope.activeTab++;
+            } else if($scope.activeTab === 1) {
+                // Cart validation
                 if (cartService.cart.price !== 0) {
                     if (consumerService.isConnected) {
                         $scope.activeTab += 2;
@@ -49,21 +47,21 @@ angular.module('payment').
                         $scope.activeTab++;
                     }
                 }
-            } else if($scope.activeTab === 1) {
+            } else if($scope.activeTab === 2) {
                 // Login or subscribe
                 if (consumerService.isConnected) {
                     $scope.activeTab++;
                 }
                 
-            } else if($scope.activeTab === 2) {
+            } else if($scope.activeTab === 3) {
                 // Verification de l'adresse de livraison
                 $scope.activeTab++;
                 
-            } else if($scope.activeTab === 3) {
+            } else if($scope.activeTab === 4) {
                 // Validation des frais de transports
                 $scope.activeTab++;
                 
-            } if($scope.activeTab === 4) {
+            } if($scope.activeTab === 5) {
                 // Verificaction des informations de paiement et commande
             }
         };
@@ -71,7 +69,7 @@ angular.module('payment').
         // Behaviour of the pager 'last'
         $scope.lastTab = function() {
             if($scope.activeTab > 0) {
-                if ($scope.activeTab === 2) {
+                if ($scope.activeTab === 3) {
                     // Do not display login tab when user is connected
                     $scope.activeTab -= 2;
                 } else {
@@ -105,9 +103,9 @@ angular.module('payment').
         };
         
         $scope.getNextBtnClass = function() {
-            if($scope.activeTab === 1 || $scope.activeTab === 2) {
+            if($scope.activeTab === 0 || $scope.activeTab === 2 || $scope.activeTab === 3) {
                 return 'hidden';
-            } else if(cartService.cart.price === 0) {
+            } else if(cartService.cart.price === 1) {
                 return 'disabled';
             } else {
                 return '';
