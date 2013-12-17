@@ -177,7 +177,7 @@ angular.module('account')
     consumerService.getAddress().success(function(data) {
         $scope.address = data;
     });
-            
+
     /**
      * Edit modal object
      */

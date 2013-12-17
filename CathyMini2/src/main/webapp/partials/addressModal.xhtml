@@ -37,6 +37,9 @@
                                     <input class="col-md-7" name="city" ng-model="modal.address.city" type="text"
                                            autofocus="autofocus" required="required" />   
                                 </div>
+                                <div ng-repeat="city in modal.address.cities">
+                                    {{city}}
+                                </div>
                             </div>
                         </fieldset>
                     </form>
