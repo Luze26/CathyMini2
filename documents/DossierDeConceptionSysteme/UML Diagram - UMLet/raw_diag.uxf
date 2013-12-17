@@ -208,6 +208,7 @@
 - consumer : Consumer
 - deliveryAddress : DeliveryAddress
 - payementInfo : PayementInfo
+- nextDelivery : Long
 - creationDate : Long
 - payementDate : Long 
 - deliveryDate : Long 

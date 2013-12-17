@@ -22,9 +22,21 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name="SubscriptionByConsumer", query="select object(s) from PurchaseSubscription s where s.consumer = :consumer")
 })
 public class PurchaseSubscription extends Purchase {
+    /** Next delivery date */
+    @Column(name="nextDelivery")
+    private Long nextDelivery;
+    
     /** Number of days between two purchase. It is calculated from the 'creationDate' */
     @Column(name="daysDelay")
     private Integer daysDelay;
+
+    public Long getNextDelivery() {
+        return nextDelivery;
+    }
+
+    public void setNextDelivery(Long nextDelivery) {
+        this.nextDelivery = nextDelivery;
+    }
     
     public Integer getDaysDelay() {
         return daysDelay;

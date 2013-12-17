@@ -29,6 +29,7 @@ public class Payment {
     public String creationDate;
     public String paymentDate;
     public String deliveryDate;
+    public String nextDelivery;
     
     public Integer daysDelay;
     public Integer cost;
@@ -91,6 +92,13 @@ public class Payment {
         this.paymentDate = formatter.format(cal.getTime().toString());
         } else {
             this.paymentDate = "";
+        }
+        
+        if (subscription.getNextDelivery()!= null) {
+        cal.setTimeInMillis(subscription.getNextDelivery());
+        this.nextDelivery = formatter.format(cal.getTime().toString());
+        } else {
+            this.nextDelivery = "";
         }
         
         this.daysDelay = subscription.getDaysDelay();

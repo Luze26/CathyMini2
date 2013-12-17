@@ -157,13 +157,16 @@
                                             <td ng-if="$index!==selectedSubscription">{{subscription.cost}}</td>
                                             <td ng-if="$index!==selectedSubscription">{{subscription.daysDelay}}</td>
                                             <td ng-if="$index===selectedSubscription" colspan="5">
-                                                <span class="col-lg-3"><b>Date de commande</b></span>
+                                                <span class="col-lg-3"><b>Date du prochain envoi</b></span>
+                                                <span class="col-lg-2">{{subscription.nextDelivery}}</span>
+                                                <br/>
+                                                <span class="col-lg-3"><b>Date de création de l'abonnement</b></span>
                                                 <span class="col-lg-2">{{subscription.creationDate}}</span>
                                                 <br/>
-                                                <span class="col-lg-3"><b>Date d'envoi</b></span>
+                                                <span class="col-lg-3"><b>Date du dernier envoi</b></span>
                                                 <span class="col-lg-2">{{subscription.deliveryDate}}</span>
                                                 <br/>
-                                                <span class="col-lg-3"><b>Date de debit</b></span>
+                                                <span class="col-lg-3"><b>Date du dernier debit</b></span>
                                                 <span class="col-lg-2">{{subscription.paymentDate}}</span>
                                                 <br/>
                                                 <span class="col-lg-3"><b>Interval entre vos regles</b></span>
