@@ -26,15 +26,15 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
         .success(function(data){
             service.sub.price = 0;
             if(data !== null){
+                service.sub = [];
                 for(var j = 0; j < data.length; j++){
-                    service.sub = [];
                     var prodColl = data[j].cartLineCollection;
                     service.sub.push({products: [], price: 0, name: data[j].name, nbJ: data[j].nbJ});
                     for( var i = 0;i<prodColl.length; i++){
                         var prod = prodColl[i].product;
                         prod.quantity = prodColl[i].quantity;
                         service.sub[j].products.push(prod);
-                        service.sub[j].price += prodColl[i].product.price;
+                        service.sub[j].price += (prodColl[i].product.quantity * prodColl[i].product.price);
                     }
                 }
             }
@@ -52,11 +52,9 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * @param {String} name
      */
     service.addProduct = function(product, name) {
-        console.log("dans addProductToSub in subscriptionService");
         var quantity = 1;
         $http.post("/webresources/cart/addProductToSub", {"productId": product.id, "quantity": quantity, "name":name})
             .success(function(data) {
-                console.log("dans addProductToSub in subscriptionService success");
                 //If the product is already in the sub, we increase its quantity
                 var i = 0;
                 var found = false;
@@ -88,6 +86,11 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
     service.changeQuantity = function(product, name) {        
         $http.post("/webresources/cart/changeQuantityToSub", {"productId": product.id, "quantity": product.quantity, "name": name})
                 .success(function(data) {
+                for(var i =0;i<service.sub.length;i++){
+                    if(service.sub[i].name === name){
+                        service.sub[i].price += (data *product.price)-(product.quantity*product.price);
+                    }
+                }
                 product.quantity = data;
             })
                 .error(function(data) {
@@ -96,10 +99,13 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
     };
     
     service.editName = function(oldName, newName) {
-        console.log("hehe old :"+oldName+" / new:"+newName);
          $http.post("/webresources/cart/changeName", {"oldName": oldName, "newName": newName})
                 .success(function(data) {
-                //service.
+                for(var j=0;j<service.sub.length;j++){
+                    if(service.sub[j].name === oldName){
+                        service.sub[j].name = newName;
+                    }
+                }
             })
                 .error(function(data) {
                     alert("Un problème lors du changement de quantité a été déclenché!");
@@ -112,7 +118,6 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      */
     service.deleteProduct = function(product, name) {
         var q = product.quantity;
-        console.log("dans deleteProduct subService");
         $http.post("/webresources/cart/deleteToSub", {"productId": product.id, "quantity": product.quantity, "name": name})
             .success(function(data) {
                 for(var i =0;i<service.sub.length;i++){

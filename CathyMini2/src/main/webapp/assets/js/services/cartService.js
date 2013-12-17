@@ -16,7 +16,9 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     };
 
     
-    
+    /**
+     * load the cart when the consumer been connected
+     */
     $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
         $http.post("/webresources/cart/getCart")
         .success(function(data){
@@ -72,11 +74,12 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     service.changeQuantity = function(product) {        
         $http.post("/webresources/cart/changeQuantityToCart", {"productId": product.id, "quantity": product.quantity})
                 .success(function(data) {
+                service.cart.price += (data *product.price)-(product.quantity*product.price);
                 product.quantity = data;
             })
                 .error(function(data) {
                     alert("Un problème lors du changement de quantité a été déclenché!");
-                })
+                });
     };
     
     /**

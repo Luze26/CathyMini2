@@ -60,6 +60,10 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
         
         scope.selectedSub = null;
         
+        /**
+         * return the list of product of the selected subscription
+         * @returns {@exp;sub@pro;products|unresolved}
+         */
         scope.getSubProducts = function() {
             for(var i = 0; i < subscriptionService.sub.length; i++) {
                 var sub = subscriptionService.sub[i];
@@ -74,6 +78,10 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
             }
         };
         
+        /**
+         * return the name of the selected subscription
+         * @returns {unresolved|@exp;sub@pro;name}
+         */
         scope.getNameSub = function() {
             for(var i = 0; i < subscriptionService.sub.length; i++) {
                 var sub = subscriptionService.sub[i];
@@ -89,6 +97,10 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
             
         };
         
+        /**
+         * return the price of the selected subscription
+         * @returns {@exp;sub@pro;price|unresolved}
+         */
         scope.getPriceSub = function() {
             for(var i = 0; i < subscriptionService.sub.length; i++) {
                 var sub = subscriptionService.sub[i];
@@ -104,23 +116,30 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
         };
         
         /**
-        * Called when a field is edited
-        * @param {type} field edited
+        * called when the user want to edit the subscription's name
         */
        scope.showEdit = function() {
            scope.show = false;
        };
        
+       /**
+        * called when the user cancel the subscription's name's edit
+        */
        scope.cancelEdit = function() {
            scope.show = true;
        };
        
+       /**
+        * called when the user edit the name of the subscription
+        */
        scope.editName = function(){
            subscriptionService.editName(scope.oldName, scope.nameTemp);
            scope.show = true;
        };
        
-      
+       /**
+        * called when the user change the subscription selection
+        */
        scope.changeSelection = function () {
            if(scope.selectedSub !== null){
                scope.showEditButton = false;
@@ -133,6 +152,10 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
            }
        };
        
+       /**
+        * called when the user change the value of textinput of the new subscription name 
+        * @param {string} name
+        */
        scope.changeNameTemp = function (name) {
            scope.nameTemp = name;
        };
@@ -171,16 +194,15 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                         'Price: {{cartService.cart.price}} €' +
                     '</div>' +
                     '<div ng-show="subOpen">' +
+                        '<select class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
+                        '</select>'+
+                        '<button type="button" ng-hide="showEditButton" ng-click="showEdit()">Editer</button>'+
+                        '<div ng-hide="show" >'+
+                                '<input name="input" type="text" class="account-input col-xs-5" ng-model="name" ng-change="changeNameTemp(name)" required="required" />'+
+                                '<button type="button" class="account-btn btn col-xs-2" ng-click="cancelEdit()">Annuler</button>'+
+                                '<button type="button" class="account-btn btn btn-primary col-xs-2" ng-click="editName()">Editer</button>'+
+                        '</div>'+
                         '<ul>' +
-                            '<input type="text" class="inputQ" name="subname" ng-model="subService.sub.name" ng-change="subService.changeName(subService.sub)">{{subService.sub.name}}</input> '+
-                            '<select class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
-                            '</select>'+
-                            '<button type="button" ng-hide="showEditButton" ng-click="showEdit()">Editer</button>'+
-                            '<div ng-hide="show" >'+
-                                    '<input name="input" type="text" class="account-input col-xs-5" ng-model="name" ng-change="changeNameTemp(name)" required="required" />'+
-                                    '<button type="button" class="account-btn btn col-xs-2" ng-click="cancelEdit()">Annuler</button>'+
-                                    '<button type="button" class="account-btn btn btn-primary col-xs-2" ng-click="editName()">Editer</button>'+
-                            '</div>'+
                             '<li class="prodCart" ng-repeat="prod in getSubProducts()">' +
                                 ' <img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>'+
                                 '{{prod.name}} quantity : \n\

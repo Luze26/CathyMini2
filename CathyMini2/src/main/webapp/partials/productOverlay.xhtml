@@ -46,7 +46,12 @@
                         <div class="modal-footer">
                             <button type="button" class="btn" data-dismiss="modal">Fermer</button>
                             <button class="btn btn-primary" ng-click="addProductToCart(null, productOverlay)">Ajouter au caddie</button>
-                            <button class="btn btn-primary" ng-click="addProductToSub(null, productOverlay)">Ajouter à un abonnement</button>
+                            <button class="btn btn-primary dropdown" data-toggle="dropdown">
+                                <label data-toggle="dropdown" >Ajouter à un abonnement</label>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <li ng-repeat="sub in subService.sub"><a class="btn" ng-click="addProductToSub(null, productOverlay, sub.name)">Add to {{sub.name}}</a></li>
+                                </ul>
+                            </button>
                         </div>
                     </div>
                 </div>

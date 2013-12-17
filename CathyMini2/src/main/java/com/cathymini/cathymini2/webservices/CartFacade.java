@@ -248,7 +248,10 @@ public class CartFacade {
             if (cons != null) {
                 Subscription sub  = cartBean.getUserSubscriptionByName(cons, subP.getName());
                 if(sub == null){
-                    sub = cartBean.newSubscription(cons, "abonnement2");
+                    /*logger.debug("dans addProductToSub : "+subP.getName());
+                    sub = cartBean.newSubscription(cons, "abonnement2");*/
+                    response.setStatus(400);
+                    return false;
                 }
                 Product prod = productBean.getProduct(subP.getProductId());
                 cartBean.addProductToSub(prod, sub, true);
@@ -269,8 +272,10 @@ public class CartFacade {
                }
                
                if(noSub){
-                    newSubTemp = cartBean.newSubscription(null, "abonnement3");
-                    setSubSession(request, newSubTemp);
+                    /*newSubTemp = cartBean.newSubscription(null, "abonnement3");
+                    setSubSession(request, newSubTemp);*/
+                    response.setStatus(400);
+                    return false;
                }
                 cartBean.addProductToSub(prod, newSubTemp, false);
                 return true;
