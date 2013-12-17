@@ -77,6 +77,116 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
         scope.prevent = function(event) {
             event.stopPropagation();
         };
+        
+        scope.selectedSub = null;
+        
+        /**
+         * return the list of product of the selected subscription
+         * @returns {@exp;sub@pro;products|unresolved}
+         */
+        scope.getSubProducts = function() {
+            for(var i = 0; i < subscriptionService.sub.length; i++) {
+                var sub = subscriptionService.sub[i];
+                if(scope.selectedSub !== null){
+                    if(sub.name === scope.selectedSub.name) {
+                        return sub.products;
+                    }
+                }
+                else{
+                    return null;
+                }
+            }
+        };
+        
+        /**
+         * return the name of the selected subscription
+         * @returns {unresolved|@exp;sub@pro;name}
+         */
+        scope.getNameSub = function() {
+            for(var i = 0; i < subscriptionService.sub.length; i++) {
+                var sub = subscriptionService.sub[i];
+                if(scope.selectedSub !== null){
+                    if(sub.name === scope.selectedSub.name) {
+                        return sub.name;
+                    }
+                }
+                else{
+                    return null;
+                }
+            }
+            
+        };
+        
+        /**
+         * return the price of the selected subscription
+         * @returns {@exp;sub@pro;price|unresolved}
+         */
+        scope.getPriceSub = function() {
+            for(var i = 0; i < subscriptionService.sub.length; i++) {
+                var sub = subscriptionService.sub[i];
+                if(scope.selectedSub !== null){
+                    if(sub.name === scope.selectedSub.name) {
+                        return sub.price;
+                    }
+                }
+                else{
+                    return null;
+                }
+            }
+        };
+        
+        /**
+        * called when the user want to edit the subscription's name
+        */
+       scope.showEdit = function() {
+           scope.show = false;
+       };
+       
+       /**
+        * called when the user cancel the subscription's name's edit
+        */
+       scope.cancelEdit = function() {
+           scope.show = true;
+       };
+       
+       /**
+        * called when the user edit the name of the subscription
+        */
+       scope.editName = function(){
+           subscriptionService.editName(scope.oldName, scope.nameTemp);
+           scope.show = true;
+       };
+       
+       /**
+        * called when the user change the subscription selection
+        */
+       scope.changeSelection = function () {
+           if(scope.selectedSub !== null){
+               scope.showEditButton = false;
+               scope.oldName = scope.selectedSub.name;
+               
+           }
+           else{
+               scope.showEditButton = true;
+               scope.oldName = null;
+           }
+       };
+       
+       /**
+        * called when the user change the value of textinput of the new subscription name 
+        * @param {string} name
+        */
+       scope.changeNameTemp = function (name) {
+           scope.nameTemp = name;
+       };
+       
+       scope.show = true;
+       
+       scope.showEditButton = true;
+       
+       scope.oldName = null;
+        
+        scope.cheminImageProduit = "/assets/images/product/"
     },
     template: '<div id="cart">' +
                 '<div id="cartTabs" ng-click="prevent($event)">' + 
@@ -93,29 +203,37 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                     '<div ng-show="cartOpen">' +
                         '<ul>' +
                             '<li class="prodCart" ng-repeat="prod in cartService.cart.products">' +
-                                ' <img class="imgCart" ng-src="/assets/product/{{prod.pictureUrl}}"/>'+
+                                ' <img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>'+
             '{{prod.name}} quantity : \n\
 <input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
 <span>\n\
-<img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
+<img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
 </span>' +
                             '</li>' +
                         '</ul>' +
                         'Price: {{cartService.cart.price}} €' +
                     '</div>' +
                     '<div ng-show="subOpen">' +
+                        '<select class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
+                        '</select>'+
+                        '<button type="button" ng-hide="showEditButton" ng-click="showEdit()">Editer</button>'+
+                        '<div ng-hide="show" >'+
+                                '<input name="input" type="text" class="account-input col-xs-5" ng-model="name" ng-change="changeNameTemp(name)" required="required" />'+
+                                '<button type="button" class="account-btn btn col-xs-2" ng-click="cancelEdit()">Annuler</button>'+
+                                '<button type="button" class="account-btn btn btn-primary col-xs-2" ng-click="editName()">Editer</button>'+
+                        '</div>'+
                         '<ul>' +
-                            '<li class="prodCart" ng-repeat="prod in subService.sub.products">' +
-                                ' <img class="imgCart" ng-src="/assets/product/{{prod.pictureUrl}}"/>'+
+                            '<li class="prodCart" ng-repeat="prod in getSubProducts()">' +
+                                ' <img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>'+
                                 '{{prod.name}} quantity : \n\
 <input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="subService.changeQuantity(prod)"/> \n\
 <span>\n\
-<img class="deleteProduct" ng-click="subService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
+<img class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
 </span>' +
 
                             '</li>' +
                         '</ul>' +
-                        'Price: {{subService.sub.price}} €' +
+                        'Price: {{getPriceSub()}} €' +
                     '</div>' +
                  '</div>' +
               '</div>'

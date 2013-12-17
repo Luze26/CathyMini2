@@ -28,11 +28,11 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 /**
- * The class {@link ConsumerBean} is a stateless session bean to log in or
- * suscribe a {@link Consumer}
- *
- * @author kraiss
- */
+* The class {@link ConsumerBean} is a stateless session bean to log in or
+* suscribe a {@link Consumer}
+*
+* @author kraiss
+*/
 @Stateless
 public class ConsumerBean {
 
@@ -45,24 +45,24 @@ public class ConsumerBean {
     private static final Logger logger = Logger.getLogger(ConsumerBean.class);
 
     /**
-     * Properties of a consumer (used to order by)
-     */
+* Properties of a consumer (used to order by)
+*/
     public enum ConsumerKeys {
 
         ID, USERNAME, MAIL
     }
 
     /**
-     * Create a new User
-     *
-     * @param usr Username
-     * @param pwd Password
-     * @param mail Mail Address
-     * @return The new consumer data
-     * @throws Exception
-     */
+* Create a new User
+*
+* @param usr Username
+* @param pwd Password
+* @param mail Mail Address
+* @return The new consumer data
+* @throws Exception
+*/
     public Consumer subscribeUser(String usr, String pwd, String mail) throws Exception {
-        // Check if one of the field is null 
+        // Check if one of the field is null
         if (usr == null || pwd == null || mail == null) {
             String message = "One of the field is <code>null</code>.";
             logger.error(message);
@@ -96,13 +96,13 @@ public class ConsumerBean {
     }
 
     /**
-     * Connect the user 'usr'
-     *
-     * @param usr Username
-     * @param pwd Password
-     * @return The consumer data
-     * @throws Exception
-     */
+* Connect the user 'usr'
+*
+* @param usr Username
+* @param pwd Password
+* @return The consumer data
+* @throws Exception
+*/
     public Consumer connectUser(String usr, String pwd) throws Exception {
         Consumer consumer;
         if (usr.contains("@")) { // Decide if 'usr' is a mail address or a username
@@ -132,8 +132,8 @@ public class ConsumerBean {
     }
 
     /**
-     * Log the current user out.
-     */
+* Log the current user out.
+*/
     public void logout() {
         String message = "The user log out.";
         logger.debug(message);
@@ -203,12 +203,12 @@ public class ConsumerBean {
     }
 
     /**
-     * Remove the user in parameter from the DB
-     *
-     * @param usr Username
-     * @param pwd Password
-     * @throws Exception
-     */
+* Remove the user in parameter from the DB
+*
+* @param usr Username
+* @param pwd Password
+* @throws Exception
+*/
     public void deleteUser(String usr, String pwd) throws Exception {
         Consumer consumer;
         if (usr.contains("@")) { // Decide if 'usr' is a mail address or a username
@@ -221,7 +221,7 @@ public class ConsumerBean {
             if (consumer.getPwd().equals(pwd)) {
                 String message = "The user " + usr + " has been deleted from DB.";
                 logger.debug(message);
-                // De-comment if needed 
+                // De-comment if needed
                 //manager.merge(user); // enforse synch with DB
                 manager.remove(consumer);
             } else {
@@ -240,12 +240,12 @@ public class ConsumerBean {
     }
 
     /**
-     * Remove the user in parameter from the DB
-     *
-     * @param id
-     * @return Information of consumer deleted
-     * @throws Exception
-     */
+* Remove the user in parameter from the DB
+*
+* @param id
+* @return Information of consumer deleted
+* @throws Exception
+*/
     public Connect deleteUser(Long id) throws Exception {
         Consumer c = this.findUserById(id);
         Connect connect = new Connect();
@@ -256,11 +256,11 @@ public class ConsumerBean {
     }
 
     /**
-     * Generate a token to reset a password and send the mail
-     *
-     * @param usr user who wants to reset his password
-     * @return generated token or null if the user doesn't exists
-     */
+* Generate a token to reset a password and send the mail
+*
+* @param usr user who wants to reset his password
+* @return generated token or null if the user doesn't exists
+*/
     public String resetPassword(String usr) throws Exception {
         Consumer user = findUserByName(usr);
         if (user != null) {
@@ -293,13 +293,13 @@ public class ConsumerBean {
     }
 
     /**
-     * Check if a token match the token of the given user
-     *
-     * @param usr user
-     * @param token token
-     * @param newPassword new password
-     * @throws java.lang.Exception "user not found", "token incorrect"
-     */
+* Check if a token match the token of the given user
+*
+* @param usr user
+* @param token token
+* @param newPassword new password
+* @throws java.lang.Exception "user not found", "token incorrect"
+*/
     public void resetPassword(String usr, String token, String newPassword) throws Exception {
         Consumer user = findUserByName(usr);
         if (user != null) {

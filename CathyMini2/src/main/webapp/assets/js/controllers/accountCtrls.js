@@ -14,6 +14,7 @@ angular.module('account')
     $scope.fields = [{label: "Nom", key: "username", type: "text", placeholder: "", success: false, loading: false, editable: true},
         {label: "E-mail", key: "mail", placeholder: "", type: "email", success: false, loading: false, editable: true}];
     
+
     /**
      * Set the tick on the navbar
      */
@@ -30,6 +31,7 @@ angular.module('account')
      */
     $scope.selectedPurchase = -1;
     $scope.selectedSubscription = -1;
+
     
     //////////////////////////////////////////////////
     //  METHODS

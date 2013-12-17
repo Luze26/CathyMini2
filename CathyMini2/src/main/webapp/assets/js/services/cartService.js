@@ -16,7 +16,9 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     };
 
     
-    
+    /**
+     * load the cart when the consumer been connected
+     */
     $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
         $http.post("/webresources/cart/getCart")
         .success(function(data){
@@ -24,11 +26,13 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
             if(data !== null){
                 service.cart.products = [];
                 var prodColl = data.cartLineCollection;
-                for( var i = 0;i<prodColl.length; i++){
-                    var prod = prodColl[i].product;
-                    prod.quantity = prodColl[i].quantity;
-                    service.cart.products.push(prod);
-                    service.cart.price += prodColl[i].product.price;
+                if(prodColl != null){
+                    for( var i = 0;i<prodColl.length; i++){
+                        var prod = prodColl[i].product;
+                        prod.quantity = prodColl[i].quantity;
+                        service.cart.products.push(prod);
+                        service.cart.price += (prodColl[i].product.price* prodColl[i].product.quantity);
+                    }
                 }
             }
         });
@@ -70,11 +74,12 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     service.changeQuantity = function(product) {        
         $http.post("/webresources/cart/changeQuantityToCart", {"productId": product.id, "quantity": product.quantity})
                 .success(function(data) {
+                service.cart.price += (data *product.price)-(product.quantity*product.price);
                 product.quantity = data;
             })
                 .error(function(data) {
                     alert("Un problème lors du changement de quantité a été déclenché!");
-                })
+                });
     };
     
     /**
@@ -82,10 +87,11 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
      * @param {Product} product
      */
     service.deleteProduct = function(product) {
+        var q = product.quantity;
         $http.post("/webresources/cart/deleteToCart", product.id)
             .success(function(data) {
                 service.cart.products.splice(data,1);
-                service.cart.price += -product.price;
+                service.cart.price += -(q*product.price);
             });
     };
     
