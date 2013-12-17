@@ -76,12 +76,64 @@
                     
                     <!-- User Purchases -->
                     <div id="achats" class="tab-pane">
-                        
+                        <fieldset>
+                            <legend>Historique de vos achats</legend>
+                            <div ng-switch="!!purchases.length">
+                                <table ng-switch-when="true" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Date de commande</th>
+                                            <th>Date d'envoi</th>
+                                            <th>Date de debit</th>
+                                            <th>Prix total de la commande</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="purchase in purchases" ng-click="showPurchaseDetails(purchase)" style="cursor:pointer;">
+                                            <td>{{purchase.creationDate}}</td>
+                                            <td>{{purchase.deliveryDate}}</td>
+                                            <td>{{purchase.paymentDate}}</td>
+                                            <td>{{purchase.cost}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div ng-switch-default="ng-switch-default">
+                                    Vous n'avez pas encore effectué d'achats.
+                                </div>
+                            </div>
+                        </fieldset>
                     </div>
                     
                     <!-- User Subscriptions -->
                     <div id="abonnements" class="tab-pane">
-                        
+                        <fieldset>
+                            <legend>Vos abonnements</legend>
+                            <div ng-switch="!!subscriptions.length">
+                                <table ng-switch-when="true" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Date de commande</th>
+                                            <th>Date d'envoi</th>
+                                            <th>Date de debit</th>
+                                            <th>Prix total de la commande</th>
+                                            <th>Interval entre vos regles</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="subscription in subscriptions" ng-click="showPurchaseDetails(purchase)" style="cursor:pointer;">
+                                            <td>{{subscription.creationDate}}</td>
+                                            <td>{{subscription.deliveryDate}}</td>
+                                            <td>{{subscription.paymentDate}}</td>
+                                            <td>{{subscription.cost}}</td>
+                                            <td>{{subscription.daysDelay}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div ng-switch-default="ng-switch-default">
+                                    Vous n'avez pas encore souscrit à un abonnement.
+                                </div>
+                            </div>
+                        </fieldset>
                     </div>
                 </div>            
             </ui:define>

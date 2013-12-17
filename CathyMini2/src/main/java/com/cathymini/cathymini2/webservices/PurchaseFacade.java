@@ -1,16 +1,18 @@
 package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Consumer;
-import com.cathymini.cathymini2.model.PayementInfo;
 import com.cathymini.cathymini2.model.Purchase;
-import com.cathymini.cathymini2.services.ProductBean;
+import com.cathymini.cathymini2.model.PurchaseSubscription;
+import com.cathymini.cathymini2.model.Subscription;
 import com.cathymini.cathymini2.services.PurchaseBean;
 import com.cathymini.cathymini2.webservices.model.Payment;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
@@ -85,8 +87,6 @@ public class PurchaseFacade {
         return "Not Implemented";
     }
     
-    
-
     /**
      * Get purchases
      */
@@ -99,9 +99,32 @@ public class PurchaseFacade {
         Consumer user = sessionSecuring.getConsumer(request);
         Collection<Purchase> purchases = purchaseBean.getConsumerPurchases(user);
         Collection<Payment> payments = new ArrayList<Payment>();
-        for (Purchase purchase : purchases) {
-            payments.add(new Payment(purchase));
+        if (purchases != null) {
+            for (Purchase purchase : purchases) {
+                payments.add(new Payment(purchase));
+            }
+        } 
+        return payments;
+    }
+    
+    /**
+     * Get subscriptions
+     */
+    @GET
+    @Path("/subscriptions")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public Collection<Payment> getSubscriptions(@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        Consumer user = sessionSecuring.getConsumer(request);
+        Collection<PurchaseSubscription> subscriptions = purchaseBean.getConsumerSubscriptions(user);
+        Collection<Payment> payments = new ArrayList<Payment>();
+        if (subscriptions != null) {
+            for (Purchase subscription : subscriptions) {
+                payments.add(new Payment(subscription));
+            }
         }
+        
         return payments;
     }
 }

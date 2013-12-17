@@ -3,6 +3,8 @@ package com.cathymini.cathymini2.webservices.model;
 import com.cathymini.cathymini2.model.PayementInfo;
 import com.cathymini.cathymini2.model.Purchase;
 import com.cathymini.cathymini2.model.PurchaseLine;
+import com.cathymini.cathymini2.model.PurchaseSubscription;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -12,40 +14,92 @@ import java.util.Collection;
  * @author yuzel
  */
 public class Payment {
-    String creationDate;
-    String paymentDate;
-    String deliveryDate;
-    
-    Integer cost;
-    Collection<Payment.PurchaseProduct> products;
-    
     /** Inner class to associate a product to a quantity */
-    class PurchaseProduct {
+    private static class PurchaseProduct {
         public String product; // product name
         public Integer quantity;
+
+        public PurchaseProduct(String name, Integer quantity) {
+            this.product = name;
+            this.quantity = quantity;
+        }
     }
+    
+    private final static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    
+    public String creationDate;
+    public String paymentDate;
+    public String deliveryDate;
+    
+    public Integer daysDelay;
+    public Integer cost;
+    public Collection<Payment.PurchaseProduct> products;
 
     public Payment() {
     }
 
     public Payment(Purchase purchase) {
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(purchase.getCreationDate());
-        this.creationDate = cal.getTime().toString();
+        if (purchase.getCreationDate() != null) {
+            cal.setTimeInMillis(purchase.getCreationDate());
+            this.creationDate = formatter.format(cal.getTime().toString());
+        } else {
+            this.creationDate = "";
+        }
         
-        cal.setTimeInMillis(purchase.getDeliveryDate());
-        this.deliveryDate = cal.getTime().toString();
+        if (purchase.getDeliveryDate() != null) {
+            cal.setTimeInMillis(purchase.getDeliveryDate());
+            this.deliveryDate = formatter.format(cal.getTime().toString());
+        } else {
+            this.deliveryDate = "";
+        }
         
+        if (purchase.getPayementDate() != null) {
         cal.setTimeInMillis(purchase.getPayementDate());
-        this.paymentDate = cal.getTime().toString();
+        this.paymentDate = formatter.format(cal.getTime().toString());
+        } else {
+            this.paymentDate = "";
+        }
+        
         
         this.cost = purchase.getTotalCost();
         
         this.products = new ArrayList<Payment.PurchaseProduct>();
         for(PurchaseLine pl : purchase.getPurchaseLineCollection()) {
-            PurchaseProduct pp = new PurchaseProduct();
-            pp.product = pl.getProduct().getName();
-            pp.quantity = pl.getQuantity();
+            PurchaseProduct pp = new PurchaseProduct(pl.getProduct().getName(), pl.getQuantity());
+            this.products.add(pp);
+        }
+    }
+    
+    public Payment(PurchaseSubscription subscription) {
+        Calendar cal = Calendar.getInstance();
+        if (subscription.getCreationDate() != null) {
+            cal.setTimeInMillis(subscription.getCreationDate());
+            this.creationDate = formatter.format(cal.getTime().toString());
+        } else {
+            this.creationDate = "";
+        }
+        
+        if (subscription.getDeliveryDate() != null) {
+            cal.setTimeInMillis(subscription.getDeliveryDate());
+            this.deliveryDate = formatter.format(cal.getTime().toString());
+        } else {
+            this.deliveryDate = "";
+        }
+        
+        if (subscription.getPayementDate() != null) {
+        cal.setTimeInMillis(subscription.getPayementDate());
+        this.paymentDate = formatter.format(cal.getTime().toString());
+        } else {
+            this.paymentDate = "";
+        }
+        
+        this.daysDelay = subscription.getDaysDelay();
+        this.cost = subscription.getTotalCost();
+        
+        this.products = new ArrayList<Payment.PurchaseProduct>();
+        for(PurchaseLine pl : subscription.getPurchaseLineCollection()) {
+            PurchaseProduct pp = new PurchaseProduct(pl.getProduct().getName(), pl.getQuantity());
             this.products.add(pp);
         }
    }
