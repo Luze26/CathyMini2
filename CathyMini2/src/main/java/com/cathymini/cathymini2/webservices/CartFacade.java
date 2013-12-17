@@ -377,7 +377,9 @@ public class CartFacade {
         int place = -1;
         if(cons != null){
             try{
+                logger.debug("avant : "+subP.getName());
                 sub = cartBean.getUserSubscriptionByName(cons, subP.getName());
+                logger.debug("apres");
             }
             catch(Exception ex){
                 response.setStatus(400);
@@ -387,6 +389,12 @@ public class CartFacade {
         else{
             sub = getSubSession(request);
         }
+        if(sub == null)
+            logger.debug("sub null");
+        else if (sub.getCartLineCollection() == null)
+            logger.debug("pas de cartLine");
+        else
+            logger.debug("sub et cartLines");
         place = cartBean.removeProductToSub(prod, sub);
         return place;
     }

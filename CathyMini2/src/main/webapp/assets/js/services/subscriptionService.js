@@ -135,7 +135,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
     service.newSubscription = function(){
         $http.post("/webresources/cart/newSubscription")
             .success(function(data) {
-                    var newS = {products: [], price: 0, name: data, price: 21};
+                    var newS = {products: [], price: 0, name: data, nbJ: 21};
                     service.sub.push(newS);
             });
     };

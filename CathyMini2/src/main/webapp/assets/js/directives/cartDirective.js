@@ -63,9 +63,38 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
         scope.getSubProducts = function() {
             for(var i = 0; i < subscriptionService.sub.length; i++) {
                 var sub = subscriptionService.sub[i];
-                if(scope.selectedSub != null){
+                if(scope.selectedSub !== null){
                     if(sub.name === scope.selectedSub.name) {
                         return sub.products;
+                    }
+                }
+                else{
+                    return null;
+                }
+            }
+        };
+        
+        scope.getNameSub = function() {
+            for(var i = 0; i < subscriptionService.sub.length; i++) {
+                var sub = subscriptionService.sub[i];
+                if(scope.selectedSub !== null){
+                    if(sub.name === scope.selectedSub.name) {
+                        return sub.name;
+                    }
+                }
+                else{
+                    return null;
+                }
+            }
+            
+        };
+        
+        scope.getPriceSub = function() {
+            for(var i = 0; i < subscriptionService.sub.length; i++) {
+                var sub = subscriptionService.sub[i];
+                if(scope.selectedSub !== null){
+                    if(sub.name === scope.selectedSub.name) {
+                        return sub.price;
                     }
                 }
                 else{
@@ -109,12 +138,12 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                                 '{{prod.name}} quantity : \n\
 <input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="subService.changeQuantity(prod)"/> \n\
 <span>\n\
-<img class="deleteProduct" ng-click="subService.deleteProduct(prod)" src="/assets/images/product/supprimer.jpg"/>\n\
+<img class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="/assets/images/product/supprimer.jpg"/>\n\
 </span>' +
 
                             '</li>' +
                         '</ul>' +
-                        'Price: {{subService.sub.price}} €' +
+                        'Price: {{getPriceSub()}} €' +
                     '</div>' +
                  '</div>' +
               '</div>'
