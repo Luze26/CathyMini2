@@ -18,21 +18,27 @@
                     <li><a href="#abonnments" data-toggle="tab">Mes abonnements</a></li>
                 </ul>
                 <div class="tab-content">
+                    <!-- User Addresses -->
                     <div id="infos" class="tab-pane active">
                         <fieldset>
                             <legend>Vos paramètres</legend>
                             <form class="form-group" ng-repeat="field in fields" name="form" novalidate="   novalidate">
-                                <div><b>{{field.label}}:</b> <a href="#" class="account-edit" ng-show="field.editable" ng-click="showEdit(field)">Editer</a></div>
                                 <div class="row">
-                                    <span class="col-xs-4">{{$parent.consumer[field.key]}}</span>
-                                    <img ng-show="field.loading" src="/assets/images/loading.gif" alt="loading" />
-                                    <img ng-show="field.success" src="/assets/images/ok.png" alt="success" />
-                                    <span ng-show="field.error"><img src="/assets/images/error.png" alt="error" />{{field.error}}</span>
+                                    <span class="col-xs-1"><b>{{field.label}}:</b></span>
+                                    <span class="col-xs-2">{{$parent.consumer[field.key]}}</span>
+                                    <span class="col-xs-1">
+                                        <img ng-show="field.loading" src="/assets/images/loading.gif" alt="loading" />
+                                        <img ng-show="field.success" src="/assets/images/ok.png" alt="success" />
+                                        <span ng-show="field.error"><img src="/assets/images/error.png" alt="error" />{{field.error}}</span>
+                                    </span>
+                                    <span class="col-xs-2">
+                                        <button href="#" class="btn btn-primary account-edit" ng-show="field.editable" ng-click="showEdit(field)">Editer</button>
+                                    </span>
                                 </div>
                                 <div ng-hide="field.editable" class="row">
                                     <input name="input" type="{{field.type}}" class="account-input col-xs-5" required="required" ng-model="$parent.editConsumer[field.key]" />
                                     <button type="button" class="account-btn btn col-xs-2" ng-click="cancelEdit(field)">Annuler</button>
-                                    <button type="button" ng-disabled="form.$invalid" class="account-btn btn btn-primary col-xs-2" ng-click="edit(field)">Editer</button>                     
+                                    <button type="button" ng-disabled="form.$invalid" class="account-btn btn btn-primary col-xs-2" ng-click="edit(field)">Valider</button>                     
                                 </div>
                             </form>
                         </fieldset>
@@ -53,7 +59,7 @@
                                             <td>{{addr.address}}</td>
                                             <td>{{addr.zipCode}}</td>
                                             <td>{{addr.city}}</td>
-                                            <td><span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Edit</span>
+                                            <td><span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Editer</span>
                                                 <span ng-click="deleteAddress(addr)" class="btn btn-primary" data-toggle="modal">Supprimer</span>
                                             </td>
                                         </tr>
@@ -67,8 +73,16 @@
                             <ui:include src="/partials/addressModal.xhtml" />
                         </fieldset>
                     </div>
-                    <div id="achats" class="tab-pane"></div>
-                    <div id="abonnements" class="tab-pane"></div>
+                    
+                    <!-- User Purchases -->
+                    <div id="achats" class="tab-pane">
+                        
+                    </div>
+                    
+                    <!-- User Subscriptions -->
+                    <div id="abonnements" class="tab-pane">
+                        
+                    </div>
                 </div>            
             </ui:define>
 
