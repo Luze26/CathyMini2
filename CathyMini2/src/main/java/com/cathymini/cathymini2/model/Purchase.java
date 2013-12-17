@@ -23,7 +23,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 
 /**
  * The class {@link Purchase} is an EJB Entity representing a list of {@link PurchaseLine} buy by a {@link Consumer}.

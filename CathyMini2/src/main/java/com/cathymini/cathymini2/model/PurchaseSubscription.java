@@ -4,13 +4,11 @@
  */
 package com.cathymini.cathymini2.model;
 
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Temporal;
 
 /**
  * The class {@link PurchaseSubscription} is an EJB Entity representing purchase made by a consumer every month
@@ -24,10 +22,22 @@ import javax.persistence.Temporal;
     @NamedQuery(name="SubscriptionByConsumer", query="select object(s) from PurchaseSubscription s where s.consumer = :consumer")
 })
 public class PurchaseSubscription extends Purchase {
+    /** Next delivery date */
+    @Column(name="nextDelivery")
+    private Long nextDelivery;
+    
     /** Number of days between two purchase. It is calculated from the 'creationDate' */
     @Column(name="daysDelay")
     private Integer daysDelay;
 
+    public Long getNextDelivery() {
+        return nextDelivery;
+    }
+
+    public void setNextDelivery(Long nextDelivery) {
+        this.nextDelivery = nextDelivery;
+    }
+    
     public Integer getDaysDelay() {
         return daysDelay;
     }

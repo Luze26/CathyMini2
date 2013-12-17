@@ -1,6 +1,5 @@
 package com.cathymini.cathymini2.webservices.model;
 
-import com.cathymini.cathymini2.model.PayementInfo;
 import com.cathymini.cathymini2.model.Purchase;
 import com.cathymini.cathymini2.model.PurchaseLine;
 import com.cathymini.cathymini2.model.PurchaseSubscription;
@@ -15,7 +14,7 @@ import java.util.Collection;
  */
 public class Payment {
     /** Inner class to associate a product to a quantity */
-    private static class PurchaseProduct {
+    public class PurchaseProduct {
         public String product; // product name
         public Integer quantity;
 
@@ -30,6 +29,7 @@ public class Payment {
     public String creationDate;
     public String paymentDate;
     public String deliveryDate;
+    public String nextDelivery;
     
     public Integer daysDelay;
     public Integer cost;
@@ -92,6 +92,13 @@ public class Payment {
         this.paymentDate = formatter.format(cal.getTime().toString());
         } else {
             this.paymentDate = "";
+        }
+        
+        if (subscription.getNextDelivery()!= null) {
+        cal.setTimeInMillis(subscription.getNextDelivery());
+        this.nextDelivery = formatter.format(cal.getTime().toString());
+        } else {
+            this.nextDelivery = "";
         }
         
         this.daysDelay = subscription.getDaysDelay();

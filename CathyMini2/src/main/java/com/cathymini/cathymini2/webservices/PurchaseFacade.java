@@ -3,16 +3,13 @@ package com.cathymini.cathymini2.webservices;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.Purchase;
 import com.cathymini.cathymini2.model.PurchaseSubscription;
-import com.cathymini.cathymini2.model.Subscription;
 import com.cathymini.cathymini2.services.PurchaseBean;
 import com.cathymini.cathymini2.webservices.model.Payment;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
@@ -114,19 +111,6 @@ public class PurchaseFacade {
         if (subscriptions != null) {
             for (Purchase subscription : subscriptions) {
                 payments.add(new Payment(subscription));
-            }
-        } else {
-            for (int i = 0; i<3; i++) {
-                Payment p = new Payment();
-                p.cost = i;
-                SimpleDateFormat formatter = new SimpleDateFormat("dd - MM - yyyy");
-                p.creationDate = formatter.format(new Date());
-                p.paymentDate = "";
-                p.deliveryDate = "";
-                p.daysDelay = 28;
-                p.products = null;
-                
-                payments.add(p);
             }
         }
         

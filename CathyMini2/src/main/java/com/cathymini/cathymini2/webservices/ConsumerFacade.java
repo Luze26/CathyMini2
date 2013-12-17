@@ -4,6 +4,7 @@ import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.DeliveryAddress;
 import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
+import com.cathymini.cathymini2.webservices.model.ConsumerSearch;
 import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
 import com.cathymini.cathymini2.webservices.model.form.ResetPassword;
@@ -19,10 +20,13 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -160,7 +164,35 @@ public class ConsumerFacade{
             return ex.getMessage();
         }
     }
+    
+    /**
+     * Rest service to delete a consumer from admin panel
+     *
+     * @param id connection form
+     * @param response
+     * @return A String containing the service termination message
+     */
+    @DELETE
+    @Path("/deleteAdmin")
+    @Produces(MediaType.APPLICATION_JSON)
+    //@Secure(Role.ADMIN)
+    public String deleteAdmin(@QueryParam("id") @DefaultValue("-1") Long id, @Context final HttpServletResponse response) {
+        if (id >= 0) {
+            logger.debug("Delete user " + id);
+            try {
+                // Delete a consumer account from the data base
+                Connect c = consumerBean.deleteUser(id);
 
+                return "You delete the account of '"+c.user+"'";
+            } catch (Exception ex) {
+                response.setStatus(400);
+                return ex.getMessage();
+            }
+        }
+        response.setStatus(400);
+        return "unknow client";
+    }
+    
     /**
      * Rest service to check if the client is connected
      *
@@ -271,7 +303,7 @@ public class ConsumerFacade{
      * Get address
      * @param request
      * @param response
-     * @return 
+     * @return The collection of adress.
      * @throws java.lang.Exception 
      */
     @GET
@@ -303,7 +335,7 @@ public class ConsumerFacade{
      */
     @POST
     @Path("/deleteAddress")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Secure(Role.MEMBER)
     public void deleteAddress(Address address, @Context HttpServletRequest request, @Context HttpServletResponse response) {
         if (address.validate()) {
@@ -375,5 +407,60 @@ public class ConsumerFacade{
         // Open new session
         user = consumerBean.connectUser(user.getUsername(), user.getPwd());
         sessionSecuring.openSession(request, user);
+    }
+    
+    /**
+     * Return all users present in our DB
+     *
+     * @param query
+     * @param response
+     * @return The collection of consumers
+     */
+    @POST
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    //@Secure(Role.ADMIN)
+    public Collection<ConsumerApi> getConsumers(ConsumerSearch query, @Context HttpServletResponse response) {
+        
+        if (query == null) {
+            response.setStatus(400);
+            return null;
+        }
+        
+        Collection<Consumer> consumers = consumerBean.getUsers(query);
+        Collection<ConsumerApi> consumersApi = new ArrayList<ConsumerApi>();
+        for(Consumer c : consumers) {
+            consumersApi.add(new ConsumerApi(c));
+        }
+        
+        return consumersApi;
+    }
+    
+    /**
+     * Uses to edit information of an user from the admin panel
+     * 
+     * @param c A ConsumerApi
+     * @param request
+     * @param response
+     * @return The new consumer
+     * @throws java.lang.Exception
+    */
+    @POST
+    @Path("/editUser")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    //@Secure(Role.ADMIN)
+    public ConsumerApi editUser(ConsumerApi c, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        try {
+            consumerBean.editConsumer(c);
+        } catch (Exception ex) {
+            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+            builder.entity(ex.getMessage());
+            Response res = builder.build();
+            throw new WebApplicationException(res);
+        }
+        
+        return c;
+        
     }
 }

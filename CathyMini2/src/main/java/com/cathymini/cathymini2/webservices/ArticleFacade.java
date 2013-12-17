@@ -8,7 +8,6 @@ import com.cathymini.cathymini2.model.Article;
 import com.cathymini.cathymini2.services.ArticleBean;
 import com.cathymini.cathymini2.webservices.model.ArticleSearch;
 import com.cathymini.cathymini2.webservices.model.form.AddArticle;
-//import com.cathymini.cathymini2.webservices.model.form.EditProduct;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
