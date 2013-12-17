@@ -9,20 +9,20 @@
                 <type>presentation</type>
 		<description>Et voilà le lancement officiel de cathy mini en France</description>
 		<detail>false</detail>
-		<image>/assets/article/icone.png</image>
+                <image>/assets/images/article/icone.png</image>
 	</article>
         <article typeA="news">
 		<titre> About Us</titre>
                 <type>about</type>
 		<description>NETT</description>
 		<detail>false</detail>
-		<image>/assets/article/About-Us.jpg</image>
+                <image>/assets/images/article/About-Us.jpg</image>
 	</article>
         <article typeA="news">
 		<titre> Contactez nous</titre>
                 <type>contact</type>
 		<description>NETT</description>
 		<detail>false</detail>
-		<image>/assets/article/message-icone.png</image>
+                <image>/assets/images/article/message-icone.png</image>
 	</article>
 </liste>

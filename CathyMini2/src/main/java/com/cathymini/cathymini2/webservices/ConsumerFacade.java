@@ -44,6 +44,9 @@ public class ConsumerFacade{
     /**
      * Rest service to subscribe a new consumer
      *
+     * @param form subscribe form
+     * @param request
+     * @param response
      * @return A String containing the service termination message
      */
     @POST
@@ -126,6 +129,9 @@ public class ConsumerFacade{
     /**
      * Rest service to delete a consumer
      *
+     * @param form connection form
+     * @param request
+     * @param response
      * @return A String containing the service termination message
      */
     @POST
@@ -157,6 +163,8 @@ public class ConsumerFacade{
     /**
      * Rest service to check if the client is connected
      *
+     * @param request
+     * @param response
      * @return The username if the consumer is connected, else an empty String
      */
     @GET
@@ -176,7 +184,11 @@ public class ConsumerFacade{
     /**
      * Upade consumer
      *
+     * @param consumer consumer with edited info
+     * @param request
+     * @param response
      * @return The username if the consumer is connected, else an empty String
+     * @throws java.lang.Exception
      */
     @POST
     @Path("/update")
@@ -191,11 +203,14 @@ public class ConsumerFacade{
                 updateSession(request);
                 return new ConsumerApi(user);
             } catch (Exception ex) {
-                throw new Exception("error");
+                ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+                builder.entity(ex.getMessage());
+                Response res = builder.build();
+                throw new WebApplicationException(res);
             }
         } else {
             ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-            builder.entity("Missing idLanguage parameter on request");
+            builder.entity("Bad request");
             Response res = builder.build();
             throw new WebApplicationException(res);
         }
@@ -203,6 +218,10 @@ public class ConsumerFacade{
 
     /**
      * Add address
+     * @param address
+     * @param request
+     * @param response
+     * @throws java.lang.Exception
      */
     @POST
     @Path("/addAddress")
@@ -224,6 +243,10 @@ public class ConsumerFacade{
 
     /**
      * Edit address
+     * @param address
+     * @param request
+     * @param response
+     * @throws java.lang.Exception
      */
     @POST
     @Path("/editAddress")
@@ -245,6 +268,10 @@ public class ConsumerFacade{
 
     /**
      * Get address
+     * @param request
+     * @param response
+     * @return 
+     * @throws java.lang.Exception 
      */
     @GET
     @Path("/address")
@@ -264,6 +291,25 @@ public class ConsumerFacade{
         }
         
         return address;
+    }
+    
+    /**
+     * Delete an address for an user
+     *
+     * @param address address to delete
+     * @param request
+     * @param response
+     */
+    @POST
+    @Path("/deleteAddress")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public void deleteAddress(Address address, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+        if (address.validate()) {
+            Consumer user = sessionSecuring.getConsumer(request);
+            consumerBean.deleteAddress(user, address);
+        }
+        response.setStatus(400);
     }
     
     /**

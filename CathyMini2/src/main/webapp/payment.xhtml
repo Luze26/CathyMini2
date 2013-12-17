@@ -13,77 +13,164 @@
             <ui:define name="content">
                 <div class="row">
                     <div class="col-lg-12" style="text-align:center">
-                        <ul class="nav nav-tab">
-                            <li class="col-lg-2" id="cart-payementBtn">
-                                <a href="#cart-payementTab" ng-click="selectTab('#cart-payementBtn')">
-                                    Récaputulatif de la commande
-                                </a>
-                            </li>
-                            <li class="col-lg-2 disabled" id="login-payementBtn">
-                                <a href="#login-payementTab" ng-click="selectTab('#login-payementBtn')">
-                                    Identification du client
-                                </a>
-                            </li>
-                            <li class="col-lg-2 disabled" id="address-payementBtn">
-                                <a href="#address-payementTab" ng-click="selectTab('#address-payementBtn')">
-                                    Adresse de livraison
-                                </a>
-                            </li>
-                            <li class="col-lg-2 disabled" id="shipping-payementBtn">
-                                <a href="#shipping-payementTab" ng-click="selectTab('#shipping-payementBtn')">
-                                    Calcul des frais de port
-                                </a>
-                            </li>
-                            <li class="col-lg-2 disabled" id="payment-payementBtn">
-                                <a href="#payment-payementTab" ng-click="selectTab('#payment-payementBtn')">
-                                    Choix du mode de paiement
+                        <ul class="navtab nav">
+                            <li class="col-lg-1"><!-- Center tabs buttons --></li>
+                            <li ng-repeat="label in btnList" class="{{getBtnClass($index)}}">
+                                <a href="" class="col-lg-2 {{isLinkedTabActive($index)}}" ng-click="selectTab($index)">
+                                    <span ng-if="$index !== 0" class="navtab-follow"></span>
+                                    {{label}}
                                 </a>
                             </li>
                         </ul>
                     </div>
                     
-                    <div class="list-group-item" id="paymentTab">
-                        <div class="" id="cart-payementTab">
-                            <ul>
-                                <li ng-repeat="prod in cartService.cart.products">{{prod.name}} quantity :
-                                    <input type="text" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/>
-                                    <span>
-                                        <img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>
-                                    </span>
-                                </li>
-                            </ul>
-                            Price: {{cartService.cart.price}} €
+                    <div class="list-group-item payment-tabs" id="paymentTab">
+                        <!-- Display Cart Sum Up -->
+                        <div class="{{getTabClass(0)}}" id="cart-payementTab">
+                            <fieldset>
+                                <legend>Récaputulatif de la commande</legend>
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Produit</th>
+                                            <th>Quantité</th>
+                                            <th>Prix Unitaire</th>
+                                            <th>Total</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="prod in cartService.cart.products">
+                                            <td>{{prod.name}} </td>
+                                            <td><input type="text" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/></td>
+                                            <td>{{prod.price}} &euro;</td>
+                                            <td>{{prod.price * prod.quantity}} &euro;</td>
+                                            <td>
+                                                <span><img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td><b>Total de la Commande</b></td>
+                                            <td colspan="2"><b>{{cartService.cart.price}} &euro;</b></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </fieldset>
                         </div>
-                        <div class="hidden" id="login-payementTab">
-                          <p>login</p>
+                        
+                        <!-- Display Login/Subscribe Tab -->
+                        <div class="{{getTabClass(1)}}" id="login-payementTab">
+                            <fieldset>
+                                <legend>Connectez-vous ou Inscrivez-vous un compte</legend>
+                                <div class="login-buttons">
+                                    <button class="btn btn-primary" href="#connect" title="Connexion" type="button" data-toggle="modal" data-target="#connectModal">
+                                        Se Connecter</button>
+                                    <button class="btn btn-primary" href="#subscribe" title="Inscription" type="button" data-toggle="modal" data-target="#subscribeModal">
+                                        S'inscrire</button>
+                                </div>
+                            </fieldset>
                         </div>
-                        <div class="hidden" id="address-payementTab">
-                          <p>address</p>
+                        
+                        <!-- Display Delivery Address Selection -->
+                        <div class="{{getTabClass(2)}}" ng-controller="addressCtrl" id="address-payementTab">
+                            <fieldset>
+                                <legend>Selectionner votre addresse de livraison</legend>
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Adresse</th>
+                                            <th>Code postal</th>
+                                            <th>Ville</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="addr in address">
+                                            <td>{{addr.address}}</td>
+                                            <td>{{addr.zipCode}}</td>
+                                            <td>{{addr.city}}</td>
+                                            <td><span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Editer</span>
+                                                <span ng-click="nextTab(addr)" class="btn btn-primary">Selectionner</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button type="button" ng-click="modal = newModal" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Ajouter une adresse</button>
+                                <ui:include src="/partials/addressModal.xhtml" />
+                            </fieldset>
                         </div>
-                        <div class="hidden" id="shipping-payementTab">
-                          <p>shipping</p>
+                        
+                        <!-- Display Shipping Cost -->
+                        <div class="{{getTabClass(3)}}" id="shipping-payementTab">
+                            <fieldset>
+                                <legend>Récaputulatif de la commande</legend>
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Produit</th>
+                                            <th>Quantité</th>
+                                            <th>Prix Unitaire</th>
+                                            <th>Total</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="prod in cartService.cart.products">
+                                            <td>{{prod.name}} </td>
+                                            <td>{{prod.quantity}}</td>
+                                            <td>{{prod.price}} &euro;</td>
+                                            <td>{{prod.price * prod.quantity}} &euro;</td>
+                                            <td>
+                                                <span><img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td>Frais de port</td>
+                                            <td colspan="2">5 &euro;</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td><b>Total de la Commande</b></td>
+                                            <td colspan="2"><b>{{cartService.cart.price + 5}} &euro;</b></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </fieldset>
                         </div>
-                        <div class="hidden" id="payment-payementTab">
+                        
+                        <!-- Display Payement -->
+                        <div class="{{getTabClass(4)}}" id="payment-payementTab">
                           <p>payment</p>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-10">
-                        <ul class="pager">
-                            <li class="previous"><a href="#lastTab" ng-click="lastTab()">&larr; Précédent</a></li>
-                            <li class="next"><a href="#nextTab" ng-click="nextTab()">Suivant &rarr;</a></li>
-                        </ul>
+                
+                <!-- Pager -->
+                <div class="row pager">
+                    <div class="col-lg-12">
+                        <button class="previous pull-left btn btn-primary {{getLastBtnClass()}}" href="" ng-click="lastTab()">
+                                &larr; Précédent
+                        </button>
+                        <button class="next pull-right btn btn-primary {{getNextBtnClass()}}" href="" ng-click="nextTab()">
+                            {{lastBtnValue[[activeTab]]}} &rarr;
+                        </button>
                     </div>
                 </div>
             </ui:define>
 
             <ui:define name="scripts">
                 <script src="/assets/js/lib/jquery.min.js"></script>
+                
                 <script src="/assets/js/modules/paymentModule.js"></script>
-                <script src="/assets/js/controllers/paymentCtrl.js"></script>
+                <script src="/assets/js/controllers/paymentCtrls.js"></script>
+                
+                <script src="/assets/js/modules/addressModule.js"></script>
+                <script src="/assets/js/controllers/addressCtrls.js"></script>
+                
                 <script src="/assets/js/services/cartService.js"></script>
-                <script src="/assets/js/directives/cartDirective.js"></script>
+                <script src="/assets/js/services/consumerService.js"></script>
             </ui:define>
         </ui:composition>
  

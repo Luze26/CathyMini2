@@ -5,6 +5,7 @@ import com.cathymini.cathymini2.model.DeliveryAddress;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
 import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.secure.Role;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -52,14 +53,14 @@ public class ConsumerBean {
                 logger.debug(message);
                 return user;
             } else {
-                String message = "mail error";
+                String message = "This mail address is already used by another user.";
                 logger.error(message);
                 throw new Exception(message);
             }
         } else {
-            String message = "username error";
-            logger.error(message);
-            throw new Exception(message);
+                String message = "This username already exist.";
+                logger.error(message);
+                throw new Exception(message);
         }
     }
     
@@ -115,15 +116,16 @@ public class ConsumerBean {
             }
             user.setUsername(newUser.username);
             user.setMail(newUser.mail);
+            manager.merge(user);
         }
     }
 
     public void addAddress(Consumer user, Address address) throws Exception {
         if (user != null && address != null) {
-            DeliveryAddress delivery = new DeliveryAddress(user.getUsername(), user.getUsername(), address.address, address.zipCode, address.city);
+            DeliveryAddress delivery = new DeliveryAddress(user.getUsername(), user.getUsername(), address.address, address.zipCode, address.city);      
+            manager.persist(delivery);
             user.addDelivery(delivery);
             manager.merge(user);
-            manager.persist(delivery);
         }
     }
 
@@ -134,6 +136,23 @@ public class ConsumerBean {
                     addr.setAddress(address.address);
                     addr.setZipCode(address.zipCode);
                     addr.setCity(address.city);
+                    manager.merge(addr);
+                    manager.merge(user);
+                }
+                break;
+            }
+        }
+         
+    }
+    
+    public void deleteAddress(Consumer user, Address address) {
+        if (user != null && address != null) {
+           for (DeliveryAddress addr : user.getDeliveryCollection()) {
+               if (addr.getDeliveryAddresID().equals(address.id)) {           
+                    Query query = manager.createNamedQuery("deleteByIdAdress", DeliveryAddress.class); 
+                    query.setParameter("id", address.id);
+                    query.executeUpdate();
+                    user.deleteDelivery(addr);
                 }
                 break;
             }
@@ -177,13 +196,18 @@ public class ConsumerBean {
     }
     
     private Consumer findUserByName(String username) {
+        if (username == null) {
+            return null;
+        }
+
         Query q = manager.createNamedQuery("ConsumerByName", Consumer.class); 
         q.setParameter("username", username);
-        
-        if (q.getResultList().isEmpty())
+        List results = q.getResultList();
+
+        if (results.isEmpty())
             return null; 
         
-        return (Consumer) q.getResultList().get(0);
+        return (Consumer) results.get(0);
     }
     
     private Consumer findUserByMail(String mail) {

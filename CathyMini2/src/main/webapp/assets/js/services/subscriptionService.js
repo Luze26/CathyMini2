@@ -21,22 +21,25 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
 
     
     
-   /* $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
+    $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
         $http.post("/webresources/cart/getSub")
         .success(function(data){
             service.sub.price = 0;
             if(data != null){
-                service.sub.products = [];
-                var prodColl = data.cartLineCollection;
-                for( var i = 0;i<prodColl.length; i++){
-                    var prod = prodColl[i].product;
-                    prod.quantity = prodColl[i].quantity;
-                    service.sub.products.push(prod);
-                    service.sub.price += prodColl[i].product.price;
+                for(var j = 0; j < data.length; j++){
+                    service.sub = [];
+                    var prodColl = data[j].cartLineCollection;
+                    service.sub.push({products: [], price: 0, name: data[j].name, nbJ: data[j].nbJ});
+                    for( var i = 0;i<prodColl.length; i++){
+                        var prod = prodColl[i].product;
+                        prod.quantity = prodColl[i].quantity;
+                        service.sub[j].products.push(prod);
+                        service.sub[j].price += prodColl[i].product.price;
+                    }
                 }
             }
         });
-    } );*/
+    } );
     
      $rootScope.$on('consumerDisconnect',function (){
                 service.sub = [];
@@ -49,10 +52,11 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * @param {String} name
      */
     service.addProduct = function(product, name) {
-        var productId = product.id;
+        console.log("dans addProductToSub in subscriptionService");
         var quantity = 1;
-        $http.post("/webresources/cart/addProductToSub", productId, quantity, name)
+        $http.post("/webresources/cart/addProductToSub", {"productId": product.id, "quantity": quantity, "name":name})
             .success(function(data) {
+                console.log("dans addProductToSub in subscriptionService success");
                 //If the product is already in the sub, we increase its quantity
                 var i = 0;
                 var found = false;
@@ -82,7 +86,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * @param {String} name
      */
     service.changeQuantity = function(product, name) {        
-        $http.post("/webresources/cart/changeQuantityToSub", {"productId": product.id, "quantity": product.quantity}, name)
+        $http.post("/webresources/cart/changeQuantityToSub", {"productId": product.id, "quantity": product.quantity, "name": name})
                 .success(function(data) {
                 product.quantity = data;
             })
@@ -96,12 +100,14 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * @param {Product} product
      */
     service.deleteProduct = function(product, name) {
-        $http.post("/webresources/sub/deleteToSub", product.id, 1, name)
+        var q = product.quantity;
+        console.log("dans deleteProduct subService");
+        $http.post("/webresources/cart/deleteToSub", {"productId": product.id, "quantity": product.quantity, "name": name})
             .success(function(data) {
                 for(var i =0;i<service.sub.length;i++){
                     if(service.sub[i].name === name){
                         service.sub[i].products.splice(data,1);
-                        service.sub[i].price += -product.price;
+                        service.sub[i].price += -(q *product.price);
                     }
                 }
                 

@@ -214,6 +214,19 @@ public class CartSession {
             manager.persist(sub);
         return sub; 
     }
+     
+     public Subscription recordSubscription(Consumer cons, Subscription sub){
+         logger.debug("in recordSubscription");
+         sub.setConsumer(cons);
+         if(cons != null){
+             for (CartLine cl : sub.getCartLineCollection()) {
+                 manager.persist(cl);
+             }
+            manager.persist(sub);
+            logger.debug("cons non nul : persist");
+         }
+         return sub;
+     }
     
 
     public void addProductToSub(Product prod, int qu, Subscription sub, boolean persist){
@@ -314,8 +327,8 @@ public class CartSession {
         
         if (q.getResultList().isEmpty())
             return null; 
-        
-        return (ArrayList<Subscription>) q.getResultList();
+        logger.debug("dans findSubByConsumer taille :"+q.getResultList().size());
+        return  new ArrayList<Subscription>(q.getResultList());
     }
     
     private Subscription findSubByConsumerAndName(Consumer consumer, String name) {

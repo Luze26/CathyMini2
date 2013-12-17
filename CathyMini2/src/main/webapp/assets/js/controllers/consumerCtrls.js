@@ -1,3 +1,6 @@
+/**
+ * Controllers to manage consumer connection and subscription
+ */
 angular.module('common').
   controller('consumerCtrl', ['$scope', 'consumerService', function($scope, consumerService) {
     
@@ -21,7 +24,7 @@ angular.module('common').
         consumerService.disconnect();
     };
   }])
-    .controller('subscribeModalCtrl', ['$scope', 'consumerService', function($scope, consumerService) {
+    .controller('subscribeModalCtrl', ['$scope', 'consumerService', 'notificationService', function($scope, consumerService, notificationService) {
             
    /** Display error message */
     $scope.nameError = false;
@@ -43,10 +46,10 @@ angular.module('common').
         $scope.error = null;
         $scope.nameError = false;
         $scope.mailError = false;
-        console.log($scope.subscriber);
         consumerService.subscribe($scope.subscriber)
             .then(function() { //success
                 modal.modal('hide'); //hide the modal
+                notificationService.displayMessage("Bienvenue sur CathyMini !", 4000);
             },
             function(data) { //error
                 if(data.status == 400) {
@@ -55,7 +58,6 @@ angular.module('common').
                         $scope.mailError = true;
                     }
                     else if(data.data == "username error") {
-                        console.log("lllllllll");
                         $scope.nameError = true;
                     }
                 }
@@ -69,7 +71,7 @@ angular.module('common').
         return x && y;
     };
   }])
-  .controller('connectionModalCtrl', ['$scope', 'consumerService',  function($scope, consumerService) {
+  .controller('connectionModalCtrl', ['$scope', 'consumerService', 'notificationService', function($scope, consumerService, notificationService) {
           
     /** Display error message */
     $scope.displayError = false;
@@ -91,6 +93,7 @@ angular.module('common').
         consumerService.connect($scope.consumer)
             .then(function() { //success
                 modal.modal('hide'); //hide the modal
+                notificationService.displayMessage("Je suis contente de te revoir " + $scope.consumer.user + "!", 4000);
             },
             function(data) { //error
                 if(data.status == 400) {

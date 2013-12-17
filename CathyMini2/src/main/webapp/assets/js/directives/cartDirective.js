@@ -1,5 +1,4 @@
 /**
-
  * Cart directive, used to display the cart tab
  */
 angular.module('common').directive('cartDirective', ['cartService', 'subscriptionService', function(cartService, subscriptionService) {
@@ -64,8 +63,13 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
         scope.getSubProducts = function() {
             for(var i = 0; i < subscriptionService.sub.length; i++) {
                 var sub = subscriptionService.sub[i];
-                if(sub.name === scope.selectedSub) {
-                    return sub.products;
+                if(scope.selectedSub != null){
+                    if(sub.name === scope.selectedSub.name) {
+                        return sub.products;
+                    }
+                }
+                else{
+                    return null;
                 }
             }
         };
@@ -78,7 +82,7 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                      '</div>' +
                      '<div id="subTab" ng-class="{\'active\': subOpen}" ng-click="toggleSub()">' +
                         '<i class="fa fa-shopping-cart fa-4x"></i>' +
-                        //'<div>{{subService.nbProducts()}} products</div>' +
+                        '<div>{{subService.nbProducts()}} products</div>' +
                      '</div>' +
                  '</div>' +
                  '<div id="cartPanel">' +
@@ -89,7 +93,7 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
             '{{prod.name}} quantity : \n\
 <input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
 <span>\n\
-<img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
+<img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/images/product/supprimer.jpg"/>\n\
 </span>' +
                             '</li>' +
                         '</ul>' +
@@ -105,7 +109,7 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                                 '{{prod.name}} quantity : \n\
 <input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="subService.changeQuantity(prod)"/> \n\
 <span>\n\
-<img class="deleteProduct" ng-click="subService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/>\n\
+<img class="deleteProduct" ng-click="subService.deleteProduct(prod)" src="/assets/images/product/supprimer.jpg"/>\n\
 </span>' +
 
                             '</li>' +

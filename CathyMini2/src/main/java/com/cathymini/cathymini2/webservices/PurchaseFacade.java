@@ -2,10 +2,8 @@ package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.PayementInfo;
-import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.services.ProductBean;
 import com.cathymini.cathymini2.webservices.model.Payment;
-import com.cathymini.cathymini2.webservices.model.form.AddProduct;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
@@ -37,7 +35,14 @@ public class PurchaseFacade {
     
     @EJB
     private ProductBean productBean;
-    
+
+    /**
+     * Create a purchase
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     @POST
     @Path("/createPurchase")
     @Consumes(MediaType.APPLICATION_JSON)
