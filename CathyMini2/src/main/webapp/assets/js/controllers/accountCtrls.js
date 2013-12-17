@@ -25,6 +25,12 @@ angular.module('account')
     $scope.purchases;
     $scope.subscriptions;
     
+    /**
+     * Purchase and Subscription to display detail
+     */
+    $scope.selectedPurchase = -1;
+    $scope.selectedSubscription = -1;
+    
     //////////////////////////////////////////////////
     //  METHODS
     //////////////////////////////////////////////////
@@ -120,7 +126,19 @@ angular.module('account')
     };
     
     $scope.showPurchaseDetails = function(purchase) {
-        console.log(purchase);
+        if ($scope.selectedPurchase !== purchase) {
+            $scope.selectedPurchase = purchase;
+        } else {
+            $scope.selectedPurchase = -1;
+        }
+    };
+    
+    $scope.showSubscriptionDetails = function(subscription) {
+        if ($scope.selectedSubscription !== subscription) {
+            $scope.selectedSubscription = subscription;
+        } else {
+            $scope.selectedSubscription = -1;
+        }
     };
     
     /**

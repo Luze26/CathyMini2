@@ -14,3 +14,20 @@
 .account-edit {
     margin-left: 40px;
 }
+
+.show-account-anim {
+    animation: show-account-anim-param 1.3s ease;
+    -webkit-animation: show-account-anim-param 1.3s ease;
+}
+
+@keyframes show-account-anim-param, 
+{
+    from {opacity: 0; max-height:0%}
+    to {opacity: 1; max-height:100%}
+}
+
+@-webkit-keyframes show-account-anim-param /* Safari and Chrome */
+{
+    from {opacity: 0; max-height:0%}
+    to {opacity: 1; max-height:100%}
+}
