@@ -200,7 +200,10 @@ angular.module('products').
         $http.post("/webresources/product/edit", $scope.editModal.product)
           .success(function(data) {
             editedProduct.name = data.name;
+            editedProduct.marque = data.marque;
+            editedProduct.flux = data.flux;
             editedProduct.price = data.price;
+            editedProduct.description = data.description;
             $scope.feedbackOk.display = true;
             $scope.feedbackOk.text = "You have correctly edited the product : " + data.name;
             dismiss()

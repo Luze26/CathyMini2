@@ -24,17 +24,15 @@ import javax.persistence.Temporal;
     @NamedQuery(name="SubscriptionByConsumer", query="select object(s) from PurchaseSubscription s where s.consumer = :consumer")
 })
 public class PurchaseSubscription extends Purchase {
-    /** Date to store the start date of the subscription
-     *  The next payement and delivery date is calculate from the subscription's start date
-     */
-    @Column(name="startDate")
-    private Long startDate;
+    /** Number of days between two purchase. It is calculated from the 'creationDate' */
+    @Column(name="daysDelay")
+    private Integer daysDelay;
 
-    public Long getStartDate() {
-        return startDate;
+    public Integer getDaysDelay() {
+        return daysDelay;
     }
 
-    public void setStartDate(Long startDate) {
-        this.startDate = startDate;
+    public void setDaysDelay(Integer daysDelay) {
+        this.daysDelay = daysDelay;
     }
 }

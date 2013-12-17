@@ -132,7 +132,7 @@ public class ProductFacade {
     @GET
     @Path("/populate")
     @Produces(MediaType.APPLICATION_JSON)
-    public void populate(){
+    public String populate(){
         Element racine;
         SAXBuilder sxb = new SAXBuilder();
         Document document = null;
@@ -200,7 +200,7 @@ public class ProductFacade {
              }
         }
         
-        
+        return "populate";
     }
 
     /**

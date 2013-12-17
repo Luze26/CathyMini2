@@ -37,14 +37,19 @@ import javax.persistence.UniqueConstraint;
         query="select object(c) from Consumer c where c.userID = :userID")
 })
 public class Consumer implements Serializable {
+
+    /**
+     * Integer primary Key
+     */
     @Id
     @GeneratedValue
     @Column(name="userID")
-    /** Integer primary Key */
     private Long userID;
-    
+
+    /**
+     * Consumer username
+     */
     @Column(name="username")
-    /** Consumer username */
     private String username;
     
     @Column(name="pwd")
@@ -54,11 +59,19 @@ public class Consumer implements Serializable {
     @Column(name="mail")
     /** Consumer mail address */
     private String mail;
-    
+
+    /**
+     * Consumer role
+     */
     @Column(name="role")
-    /** Consumer role */
     private Role role;
-    
+
+    /**
+     * Consumer token, used to reset password
+     */
+    @Column(name = "token")
+    private String token;
+
     @OneToMany(mappedBy = "consumer")
     @Basic(fetch = FetchType.EAGER)
     /** Consumer {@link DeliveryAddress} collection */
@@ -122,6 +135,10 @@ public class Consumer implements Serializable {
         return mail;
     }
 
+    public String getToken() {
+        return token;
+    }
+
     public void setUserID(Long userID) {
         this.userID = userID;
     }
@@ -136,5 +153,9 @@ public class Consumer implements Serializable {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity(name="DeliveryAddress")
 @Table(name="DeliveryAddress")
 @NamedQueries({
-    @NamedQuery(name="deleteByIdAdress", query="DELETE FROM DeliveryAddress d WHERE d.deliveryAddresID=:id"),
+    @NamedQuery(name="deleteByIdAddress", query="DELETE FROM DeliveryAddress d WHERE d.deliveryAddresID=:id"),
 })
 
 public class DeliveryAddress implements Serializable {

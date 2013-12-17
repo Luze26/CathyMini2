@@ -29,13 +29,13 @@
                                         <div class="image-container">
                                             <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
                                         </div>
-                                        <button class="btn btn-primary dropdown">
-                                            <a data-toggle="dropdown" href="#">Add Product</a>
-                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                                <li><a class="btn" ng-click="addProductToCart($event, prod)">Add to cart</a></li>
-                                                <li><a class="btn" ng-click="addProductToSub($event, prod)">Add Product t sub</a></li>
-                                            </ul>
+                                        <button class="btn btn-primary dropdown" data-toggle="dropdown" href="#">
+                                            Ajouter un produit
                                         </button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                <li><a class="btn" ng-click="addProductToCart($event, prod)">Ajouter au panier</a></li>
+                                                <li><a class="btn" ng-click="addProductToSub($event, prod)">Ajouter à un abonnement</a></li>
+                                            </ul>
                                     </div>
                                     <div class="infos col-xs-7">
                                         <div class="mid">{{prod.name}} <br /> <span class="brandName">{{prod.marque}}</span></div>

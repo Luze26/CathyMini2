@@ -7,32 +7,62 @@
         <ui:composition>
             <ui:decorate template="/template/modalLayout.xhtml">
                 <ui:param name="modalId" value="connectModal" />
-                <ui:param name="modalTitle" value="Se connecter" />
+                <ui:param name="modalTitle" value="{{modal.title}}" />
                 <ui:param name="ngCtrl" value="connectionModalCtrl" />
+                <ui:param name="okLabel" value="Se connecter" />
                 <ui:param name="okAction" value="connect()" />
+                <ui:param name="okLabel2" value="Demander un nouveau mot de passe" />
+                <ui:param name="okAction2" value="resetPassword()" />
+                <ui:param name="closeAction" value="displayResetForm = false" />
                 <ui:param name="ngDisabled" value="form.$invalid" />
+                <ui:param name="ngDisabled2" value="resetForm.$invalid" />
+                <ui:param name="ngShow" value="!displayResetForm" />
+                <ui:param name="ngShow2" value="displayResetForm" />
                 <ui:define name="modalContent">
-                    <div ng-show="error" class="alert alert-dismissable alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    <div ng-show="error" class="alert alert-danger">
                         {{error}}
                     </div>
-                    <form name="form" class="form-horizontal" novalidate="novalidate">
+                    <div ng-show="and(errorReset,displayResetForm)" class="alert alert-danger">
+                        {{errorReset}}
+                    </div>
+                    <div ng-show="resetPasswordInfo" class="alert alert-info">
+                        Un e-mail vous a été envoyé pour changer votre mot de passe.
+                    </div>
+                    <form ng-hide="displayResetForm" ng-model="form" name="form" class="form-horizontal" novalidate="novalidate">
                         <fieldset class="connectionModal">
                             <div class="form-group">
-                                <label>Nom d'utilisateur ou e-mail</label>
+                                <label>Nom d'utilisateur ou e-mail *</label>
                                 <input name="username" ng-model="consumer.user" type="text" placeholder="Entrez votre nom d'utilisateur ou e-mail"
                                        autofocus="autofocus" required="required" />
-                                <div ng-show="form.username.$error.required" class="error-form">
+                                <div ng-show="and(form.username.$error.required, form.username.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label >Mot de passe</label>
+                                <label >Mot de passe *</label>
                                 <input name="password" ng-model="consumer.pwd" type="password" placeholder="Entrez votre mot de passe"
                                        autofocus="autofocus" required="required" />   
-                                <div ng-show="form.password.$error.required" class="error-form">
+                                <div ng-show="and(form.password.$error.required, form.password.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <a href="#" ng-click="showResetPassword(true)" alt="Nouveau mot de passe">Mot de passe oublié?</a>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <form ng-show="displayResetForm" ng-model="resetForm" name="resetForm" class="form-horizontal" novalidate="novalidate">
+                        <fieldset class="connectionModal">
+                            <div class="form-group">
+                                <label>Nom d'utilisateur *</label>
+                                <input name="username" ng-model="resetPwdUsername" type="text" placeholder="Entrez votre nom d'utilisateur"
+                                       autofocus="autofocus" required="required" />
+                                <div ng-show="and(resetForm.username.$error.required, resetForm.username.$dirty)" class="error-form">
+                                    Ce champ est requis.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <a href="#" ng-click="showResetPassword(false)" alt="Revenir au formulaire de connexion">Revenir au formulaire de connexion</a>
                             </div>
                         </fieldset>
                     </form>
