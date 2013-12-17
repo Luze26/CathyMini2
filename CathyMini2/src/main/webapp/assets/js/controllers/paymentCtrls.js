@@ -90,7 +90,7 @@ angular.module('payment').
         };
         
         $scope.getTabClass = function(select) {
-            return ($scope.activeTab === select) ? '' : 'hidden';
+            return ($scope.activeTab === select) ? 'show-anim' : 'hidden';
         };
         
         $scope.isLinkedTabActive = function(select) {
