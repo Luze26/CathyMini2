@@ -37,6 +37,22 @@
                                         </div>
                                     </label>
                                 </div>
+
+                                <div class="divTrie">
+                                    <label>Trie</label>
+                                    <span class="btn-group btn-trie">
+                                        <button type="button" class="btn btn-default" ng-click="orderBy('name')">Nom<b class="unselectable" ng-class="search.orderBy=='name' ? (search.orderByASC ? 'caret' : 'caret-up'
+                                            ) : ''"></b></button>
+                                        <button type="button" class="btn btn-default" ng-click="orderBy('price')">Prix<b class="unselectable" ng-class="search.orderBy=='price' ? (search.orderByASC ? 'caret' : 'caret-up'
+                                            ) : ''"></b></button>
+                                        <button type="button" class="btn btn-default" ng-click="orderBy('type')">Type<b class="unselectable" ng-class="search.orderBy=='type' ? (search.orderByASC ? 'caret' : 'caret-up'
+                                            ) : ''"></b></button>
+                                        <button type="button" class="btn btn-default" ng-click="orderBy('flux')">Flux<b class="unselectable" ng-class="search.orderBy=='flux' ? (search.orderByASC ? 'caret' : 'caret-up'
+                                            ) : ''"></b></button>
+                                        <button type="button" class="btn btn-default" ng-click="orderBy('marque')">Marque<b class="unselectable" ng-class="search.orderBy=='marque' ? (search.orderByASC ? 'caret' : 'caret-up'
+                                            ) : ''"></b></button>
+                                    </span>
+                                </div>
                             </div>
                             <div class="col-xs-3 search-col">
                                 <label>
@@ -46,7 +62,7 @@
                                 </label>
                                 <div class="row">
                                     <div class="col-xs-6" style="border-right: solid 1px #eee">
-                                        <div  ng-repeat="flu in flux |limitTo:3">
+                                        <div  ng-repeat="flu in flux|limitTo:3">
                                             <label class="flux">
                                                 <input type="checkbox" ng-model="flu.check" ng-change="refreshFlux()" /> 
                                                 {{flu.print}}
@@ -71,7 +87,7 @@
                                 </label>
                                 <div class="row">
                                     <div class="col-xs-6">
-                                        <div  ng-repeat="brand in brands |limitTo:3">
+                                        <div  ng-repeat="brand in brands|limitTo:3">
                                             <label class="flux">
                                                 <input type="checkbox" ng-model="brand.check" ng-change="refreshBrand()" /> 
                                                 {{brand.print}}
