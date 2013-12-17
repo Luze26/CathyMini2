@@ -1,3 +1,6 @@
+/**
+ * Controllers to manage consumer connection and subscription
+ */
 angular.module('common').
   controller('consumerCtrl', ['$scope', 'consumerService', function($scope, consumerService) {
     

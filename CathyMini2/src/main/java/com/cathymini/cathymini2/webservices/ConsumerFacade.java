@@ -44,6 +44,9 @@ public class ConsumerFacade{
     /**
      * Rest service to subscribe a new consumer
      *
+     * @param form subscribe form
+     * @param request
+     * @param response
      * @return A String containing the service termination message
      */
     @POST
@@ -126,6 +129,9 @@ public class ConsumerFacade{
     /**
      * Rest service to delete a consumer
      *
+     * @param form connection form
+     * @param request
+     * @param response
      * @return A String containing the service termination message
      */
     @POST
@@ -157,6 +163,8 @@ public class ConsumerFacade{
     /**
      * Rest service to check if the client is connected
      *
+     * @param request
+     * @param response
      * @return The username if the consumer is connected, else an empty String
      */
     @GET
@@ -176,7 +184,7 @@ public class ConsumerFacade{
     /**
      * Upade consumer
      *
-     * @param consumer
+     * @param consumer consumer with edited info
      * @param request
      * @param response
      * @return The username if the consumer is connected, else an empty String
@@ -195,11 +203,14 @@ public class ConsumerFacade{
                 updateSession(request);
                 return new ConsumerApi(user);
             } catch (Exception ex) {
-                throw new Exception("error");
+                ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+                builder.entity(ex.getMessage());
+                Response res = builder.build();
+                throw new WebApplicationException(res);
             }
         } else {
             ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
-            builder.entity("Missing idLanguage parameter on request");
+            builder.entity("Bad request");
             Response res = builder.build();
             throw new WebApplicationException(res);
         }
@@ -283,8 +294,9 @@ public class ConsumerFacade{
     }
     
     /**
+     * Delete an address for an user
      *
-     * @param address
+     * @param address address to delete
      * @param request
      * @param response
      */

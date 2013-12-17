@@ -11,16 +11,10 @@ import com.cathymini.cathymini2.services.ProductBean;
 import com.cathymini.cathymini2.webservices.model.ProductSearch;
 import com.cathymini.cathymini2.webservices.model.form.AddProduct;
 import com.cathymini.cathymini2.webservices.model.form.EditProduct;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +34,7 @@ import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
 /**
+ * Product facade, operation on products
  *
  * @author zang
  */
@@ -52,6 +47,13 @@ public class ProductFacade {
     @EJB
     private ProductBean productBean;
 
+    /**
+     * Create a product
+     *
+     * @param form product form
+     * @param response
+     * @return the created product
+     */
     @POST
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -66,6 +68,13 @@ public class ProductFacade {
         }
     }
 
+    /**
+     * Upload a file
+     *
+     * @param file content of the file to upload
+     * @param response
+     * @return
+     */
     @POST
     @Path("/uploadFile")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -83,6 +92,13 @@ public class ProductFacade {
         return "Upload pas réalisé!";
     }
 
+    /**
+     * Get a list of product based on the search query
+     *
+     * @param query search query, also used to order the list
+     * @param response
+     * @return the list of products
+     */
     @POST
     @Path("/all")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -95,6 +111,13 @@ public class ProductFacade {
         return productBean.getProducts(query);
     }
 
+    /**
+     * Edit a product
+     *
+     * @param form edit product form
+     * @param response
+     * @return the edited product
+     */
     @POST
     @Path("/edit")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -103,6 +126,9 @@ public class ProductFacade {
         return productBean.editProduct(form.id, form.name, form.marque, form.flux, form.price, form.description);
     }
 
+    /**
+     * Populate the db
+     */
     @GET
     @Path("/populate")
     @Produces(MediaType.APPLICATION_JSON)
@@ -113,7 +139,7 @@ public class ProductFacade {
         try {
            //On crée un nouveau document JDOM avec en argument le fichier XML
            //Le parsing est terminé ;)
-           document = sxb.build(new URL("http://localhost:8080/assets/product/listeProduit.xml"));
+           document = sxb.build(new URL("http://localhost:8080/assets/data/listeProduit.xml"));
         } catch(Exception e){
             System.out.println(e);
         }
@@ -178,8 +204,10 @@ public class ProductFacade {
     }
 
     /**
+     * Delete a product
      *
-     * @param id
+     * @param id product's id to delete
+     * @param response
      * @return
      */
     @DELETE
