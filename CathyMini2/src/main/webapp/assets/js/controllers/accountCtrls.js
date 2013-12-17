@@ -2,17 +2,27 @@
  * Controller for the account page
  */
 angular.module('account')
-.controller('accountSettingsCtrl', ['$scope', '$http', 'consumerService', 'notificationService', function($scope, $http, consumerService, notificationService) {
+.controller('accountSettingsCtrl', ['$scope', '$http', 'consumerService', 'notificationService', '$rootScope', function($scope, $http, consumerService, notificationService, $rootScope) {
     
     //////////////////////////////////////////////////
     //  ATTRIBUTES
     //////////////////////////////////////////////////
     
+    /**
+     * Settings field
+     */
     $scope.fields = [{label: "Nom", key: "username", type: "text", placeholder: "", success: false, loading: false, editable: true},
         {label: "E-mail", key: "mail", placeholder: "", type: "email", success: false, loading: false, editable: true}];
     
+    /**
+     * List of address
+     */
     $scope.address = [];
     
+    /**
+     * Set the tick on the navbar
+     */
+    $rootScope.header = "myAccount";
     
     //////////////////////////////////////////////////
     //  METHODS
