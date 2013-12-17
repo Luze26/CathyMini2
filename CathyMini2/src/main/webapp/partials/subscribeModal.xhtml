@@ -12,8 +12,7 @@
                 <ui:param name="okAction" value="subscribe()" />
                 <ui:param name="ngDisabled" value="form.$invalid" />
                 <ui:define name="modalContent">
-                    <div ng-show="error" class="alert alert-dismissable alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    <div ng-show="error" class="alert alert-danger">
                         {{error}}
                     </div>
                     <form name="form" class="form-horizontal" novalidate="novalidate">
@@ -21,7 +20,7 @@
                             <div class="form-group">
                                 <label>Nom *</label>
                                 <input name="username" ng-model="subscriber.username" type="text" placeholder="Entrez votre nom"
-                                       autofocus="autofocus" required="required" name-check="name-check" />
+                                       autofocus="autofocus" required="required" name-check="name-check" ng-change="nameError = false"/>
                                 <div ng-show="and(form.username.$error.required, form.username.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
@@ -32,7 +31,7 @@
                             <div class="form-group">
                                 <label>Adresse e-mail *</label>
                                 <input name="mail" ng-model="subscriber.mail" type="email" placeholder="Quelle est votre adresse e-mail ?"
-                                       autofocus="autofocus" required="required" mail-check="mail-check"/>
+                                       autofocus="autofocus" required="required" mail-check="mail-check" ng-change="mailError = false"/>
                                 <div ng-show="and(form.mail.$error.required, form.mail.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
