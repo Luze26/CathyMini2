@@ -67,6 +67,12 @@ angular.module('common').
             });
     };
     
+    /**
+     * And function, because xhtml not allow & in attributes
+     * @param {type} x
+     * @param {type} y
+     * @returns {boolean} x && y
+     */
     $scope.and = function(x,y) {
         return x && y;
     };
@@ -103,5 +109,15 @@ angular.module('common').
                     $scope.error = "Problème de connexion, vérifier votre connexion internet.";
                 }
             });
+    };
+    
+    /**
+     * And function, because xhtml not allow & in attributes
+     * @param {type} x
+     * @param {type} y
+     * @returns {boolean} x && y
+     */
+    $scope.and = function(x,y) {
+        return x && y;
     };
   }]);
