@@ -19,18 +19,18 @@
                     <form name="form" class="form-horizontal" novalidate="novalidate">
                         <fieldset class="connectionModal">
                             <div class="form-group">
-                                <label>Nom d'utilisateur ou e-mail</label>
+                                <label>Nom d'utilisateur ou e-mail *</label>
                                 <input name="username" ng-model="consumer.user" type="text" placeholder="Entrez votre nom d'utilisateur ou e-mail"
                                        autofocus="autofocus" required="required" />
-                                <div ng-show="form.username.$error.required" class="error-form">
+                                <div ng-show="and(form.username.$error.required, form.username.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label >Mot de passe</label>
+                                <label >Mot de passe *</label>
                                 <input name="password" ng-model="consumer.pwd" type="password" placeholder="Entrez votre mot de passe"
                                        autofocus="autofocus" required="required" />   
-                                <div ng-show="form.password.$error.required" class="error-form">
+                                <div ng-show="and(form.password.$error.required, form.password.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
                             </div>

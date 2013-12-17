@@ -4,54 +4,113 @@
 angular.module('address')
     .controller('addressCtrl', ['$scope', '$http', 'consumerService', function($scope, $http, consumerService) {
     
-        /**
-         * List of address
-         */
-        $scope.address = [];
-        
-        /**
-         * Address modal
-         */
-        var modal = angular.element("#addressModal");
+    /**
+     * List of address
+     */
+    $scope.address = [];
 
-        $scope.addAddress = function() {
-            var newAddress = $scope.newModal.address;
+    /** Popup element for address **/
+    var modal = angular.element("#addressModal");
+    
+    /**
+     * Add address
+     */
+    $scope.addAddress = function() {
+        var newAddress = $scope.newModal.address;
+        consumerService.addAddress(newAddress).success(function() {
+            $scope.address.push(newAddress);
+            modal.modal('hide');
+            $scope.newModal.address = {};
+        });
+    };
+    
+    /**
+     * Init the modal with the given address info
+     * @param {type} address
+     */
+    $scope.initEditAddress = function(address) {
+        $scope.modal = $scope.editModal;
+        $scope.editModal.address.id = address.id; 
+        $scope.editModal.address.address = address.address;
+        $scope.editModal.address.zipCode = parseInt(address.zipCode);
+        $scope.editModal.address.city = address.city;
+        $scope.editModal.oldAddress = address;
+    };
+    
+    /**
+     * Edition for an address finish
+     * @param {type} address
+     */
+    $scope.editAddress = function(address) {
+        var editedAddress = $scope.editModal.address;
+        var oldAddress = $scope.editModal.oldAddress;
+        consumerService.editAddress(editedAddress).success(function() {
+            oldAddress.address = editedAddress.address;
+            oldAddress.zipCode = editedAddress.zipCode;
+            oldAddress.city = editedAddress.city;
+            modal.modal('hide');
+            $scope.editAddress.address = {};
+        }); 
+    };
+    
+       /**
+       * Delete the adress
+       * @param {Adress} adress to delete
+       */
+      $scope.deleteAddress = function(address) {
+          consumerService.deleteAddress(address)
+            .success(function() {
+                    consumerService.getAddress().success(
+                          function(data) {
+                              $scope.address = data;
+                       });
 
-            consumerService.addAddress(newAddress).success(function() {
-                $scope.address.push(newAddress);
-                modal.modal('hide');
-                $scope.newModal.address = {};
+            })
+            .error(function(data) {
+              $scope.displayConnectionError = true; // display error feedback
             });
-        };
-
-        $scope.initEditAddress = function(address) {
-            $scope.modal = $scope.editModal;
-            $scope.editModal.address.id = address.id; 
-            $scope.editModal.address.address = address.address;
-            $scope.editModal.address.zipCode = parseInt(address.zipCode);
-            $scope.editModal.address.city = address.city;
-            $scope.editModal.oldAddress = address;
-        };
-
-        $scope.editAddress = function(address) {
-            var editedAddress = $scope.editModal.address;
-            var oldAddress = $scope.editModal.oldAddress;
-            consumerService.editAddress(editedAddress).success(function() {
-                oldAddress.address = editedAddress.address;
-                oldAddress.zipCode = editedAddress.zipCode;
-                oldAddress.city = editedAddress.city;
-                modal.modal('hide');
-                $scope.editAddress.address = {};
-            }); 
-        };
-
-        consumerService.getAddress().success(
-                function(data) {
-                    $scope.address = data;
-                });
-
-        $scope.editModal = {title: "Editer l'adresse", address: {}, action: $scope.editAddress};
-        $scope.newModal = {title: "Ajouter une adresse", address: {}, action: $scope.addAddress};
-        $scope.modal = $scope.newModal;
-    }]);
+      };
+      
+    /**
+     * Initialize list of address
+     */
+    consumerService.getAddress().success(function(data) {
+        $scope.address = data;
+    });
+    
+    /**
+     * Edit modal object
+     */
+    $scope.editModal = {title: "Editer l'adresse", address: {}, action: $scope.editAddress};
+    
+    /**
+     * New modal object
+     */
+    $scope.newModal = {title: "Ajouter une adresse", address: {}, action: $scope.addAddress};
+    
+    /**
+     * Modal
+     */
+    $scope.modal = $scope.newModal;
+    
+    /**
+     * And function, because xhtml not allow & in attributes
+     * @param {type} x
+     * @param {type} y
+     * @returns {boolean} x && y
+     */
+    $scope.and = function(x,y) {
+        return x && y;
+    };
+    
+    /**
+     * Or function, because xhtml not allow | in attributes
+     * @param {type} x
+     * @param {type} y
+     * @returns {boolean} x || y
+     */
+    $scope.or = function(x,y) {
+        return x || y;
+    };
+}]);
 

@@ -16,29 +16,32 @@
                         <strong>{{modal.error.title}}</strong> {{modal.error.text}}
                     </div>
                     <form name="form" class="form-horizontal" novalidate="novalidate">
-                        <fieldset>
+                        <fieldset class="addressModal">
                             <div class="form-group">
-                                <label class="col-md-4">Adresse</label>
-                                <div>
-                                    <input class="col-md-7" name="address" ng-model="modal.address.address" type="text"
-                                           autofocus="autofocus" required="required"/>
+                                <label>Adresse *</label>
+                                <input name="address" ng-model="modal.address.address" type="text"
+                                       autofocus="autofocus" required="required"/>
+                                <div ng-show="and(form.address.$error.required, form.address.$dirty)" class="error-form">
+                                    Ce champ est requis.
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4">Code postal</label>
-                                <div>
-                                    <input class="col-md-7" name="zipCode" ng-model="modal.address.zipCode" type="number"
-                                           autofocus="autofocus" required="required" ng-minlength="5" ng-maxlength="5"/>   
+                                <label>Code postal *</label>
+                                <input name="zipCode" ng-model="modal.address.zipCode" type="number"
+                                       autofocus="autofocus" required="required" ng-minlength="5" ng-maxlength="5"/>  
+                                <div ng-show="and(form.zipCode.$error.required, form.zipCode.$dirty)" class="error-form">
+                                    Ce champ est requis.
+                                </div>
+                                <div ng-show="or(form.zipCode.$error.minlength, form.zipCode.$error.maxlength)" class="error-form">
+                                    Le code postal doit être composé de 5 chiffres.
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4">Ville</label>
-                                <div>
-                                    <input class="col-md-7" name="city" ng-model="modal.address.city" type="text"
-                                           autofocus="autofocus" required="required" />   
-                                </div>
-                                <div ng-repeat="city in modal.address.cities">
-                                    {{city}}
+                                <label>Ville *</label>
+                                <input name="city" ng-model="modal.address.city" type="text"
+                                       autofocus="autofocus" required="required" /> 
+                                <div ng-show="and(form.city.$error.required, form.city.$dirty)" class="error-form">
+                                    Ce champ est requis.
                                 </div>
                             </div>
                         </fieldset>
