@@ -27,7 +27,7 @@ public class Article implements Serializable {
     @Column(name="description")
     private String description;
     
-    @Column(name="detail")
+    @Column(name="detail",columnDefinition="LONG VARCHAR")
     private String detail;
     
     @Column(name="type")

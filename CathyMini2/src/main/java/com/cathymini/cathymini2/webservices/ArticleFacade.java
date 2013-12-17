@@ -93,7 +93,7 @@ public class ArticleFacade {
       {
          //On crée un nouveau document JDOM avec en argument le fichier XML
          //Le parsing est terminé ;)
-         document = sxb.build(new URL("http://localhost:8080/assets/article/listeArticle.xml"));
+         document = sxb.build(new URL("http://localhost:8080/assets/images/article/listeArticle.xml"));
       }
       catch(Exception e){
           System.out.println(e);

@@ -2,7 +2,7 @@
  * Controller for the index page
  */
 angular.module('index').
-        controller('indexCtrl', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+        controller('indexCtrl', ['$scope', '$http', '$rootScope', '$sce', '$sceDelegate', function($scope, $http, $rootScope, $sce, $sceDelegate) {
                 
                 /**
                  * Set the tick on the navbar
@@ -28,7 +28,7 @@ angular.module('index').
                 $(document).ready(function() {
                     $('#myCarousel').carousel();
                 });
-                
+
                 /**
                  * Load articles
                  */
@@ -39,11 +39,17 @@ angular.module('index').
                                     if (data.length < $scope.search.length) { //If there is no more product to load, end of the list
                                         $scope.loadMore = false;
                                     }
-
+                                    
                                     $scope.search.offset += $scope.search.length; //Increment the offset
                                     $scope.articles = $scope.articles.concat(data); //Add last loaded products
+                                    for(var i = 0; i < $scope.articles.length; i++){
+                                        $scope.articles[i].html = $sce.trustAsHtml($scope.articles[i].detail);
+                                        $sceDelegate.trustAs("html",$scope.articles[i].detail);
+                                    }
                                 });
                     }
                 };
+                
+              
 
             }]);
