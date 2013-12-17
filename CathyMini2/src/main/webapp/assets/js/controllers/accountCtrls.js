@@ -139,7 +139,7 @@ angular.module('account')
      */       
     $http.get("/webresources/purchase/subscriptions")
         .success(function(subscriptions) { 
-            $scope.purchases = subscriptions;
+            $scope.subscriptions = subscriptions;
         })
         .error(function(data, status, headers, config) { 
             purchase = {};

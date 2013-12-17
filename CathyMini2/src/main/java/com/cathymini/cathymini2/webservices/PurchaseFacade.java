@@ -79,14 +79,6 @@ public class PurchaseFacade {
         return "Not Implemented";
     }
     
-    @GET
-    @Path("/subscriptions")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String subscriptions(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-        return "Not Implemented";
-    }
-    
     /**
      * Get purchases
      */
@@ -122,6 +114,19 @@ public class PurchaseFacade {
         if (subscriptions != null) {
             for (Purchase subscription : subscriptions) {
                 payments.add(new Payment(subscription));
+            }
+        } else {
+            for (int i = 0; i<3; i++) {
+                Payment p = new Payment();
+                p.cost = i;
+                SimpleDateFormat formatter = new SimpleDateFormat("dd - MM - yyyy");
+                p.creationDate = formatter.format(new Date());
+                p.paymentDate = "";
+                p.deliveryDate = "";
+                p.daysDelay = 28;
+                p.products = null;
+                
+                payments.add(p);
             }
         }
         
