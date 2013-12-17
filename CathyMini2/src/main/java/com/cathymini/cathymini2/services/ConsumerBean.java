@@ -3,8 +3,12 @@ package com.cathymini.cathymini2.services;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.DeliveryAddress;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
+import com.cathymini.cathymini2.webservices.model.ConsumerSearch;
 import com.cathymini.cathymini2.webservices.model.form.Address;
+import com.cathymini.cathymini2.webservices.model.form.Connect;
 import com.cathymini.cathymini2.webservices.secure.Role;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -23,11 +27,19 @@ public class ConsumerBean {
     
     private static final Logger logger = Logger.getLogger(ConsumerBean.class);
     
+     /**
+     * Properties of a consumer (used to order by)
+     */
+    public enum ConsumerKeys {
+        ID, USERNAME, MAIL
+    }
+    
     /**
      * Create a new User
      * @param usr Username
      * @param pwd Password
-     * @param mail Mail Adress
+     * @param mail Mail Address
+     * @return The new consumer data
      * @throws Exception
      */
     public Consumer subscribeUser(String usr, String pwd, String mail) throws Exception {
@@ -68,6 +80,7 @@ public class ConsumerBean {
      * Connect the user 'usr'
      * @param usr Username
      * @param pwd Password
+     * @return The consumer data
      * @throws Exception
      */
     public Consumer connectUser(String usr, String pwd) throws Exception {
@@ -104,6 +117,16 @@ public class ConsumerBean {
     public void logout() {
         String message = "The user log out.";
         logger.debug(message);
+    }
+    
+    public void editConsumer(ConsumerApi newUser) throws Exception {
+        Consumer user = this.findUserById(newUser.id);
+        this.updateUser(user, newUser);
+        if (newUser.address != null && !user.getDeliveryCollection().equals(newUser.address)) {
+            for(DeliveryAddress a : newUser.address) {
+                this.editAddress(user, new Address(a));
+            }
+        }
     }
 
     public void updateUser(Consumer user, ConsumerApi newUser) throws Exception {
@@ -149,7 +172,7 @@ public class ConsumerBean {
         if (user != null && address != null) {
            for (DeliveryAddress addr : user.getDeliveryCollection()) {
                if (addr.getDeliveryAddresID().equals(address.id)) {           
-                    Query query = manager.createNamedQuery("deleteByIdAdress", DeliveryAddress.class); 
+                    Query query = manager.createNamedQuery("deleteByIdAddress", DeliveryAddress.class);
                     query.setParameter("id", address.id);
                     query.executeUpdate();
                     user.deleteDelivery(addr);
@@ -195,6 +218,21 @@ public class ConsumerBean {
         }
     }
     
+    /**
+     * Remove the user in parameter from the DB
+     * @param id
+     * @return Information of consumer deleted
+     * @throws Exception
+     */
+    public Connect deleteUser(Long id) throws Exception {
+        Consumer c = this.findUserById(id);
+        Connect connect = new Connect();
+        connect.user = c.getUsername();
+        connect.pwd = c.getPwd();
+        this.deleteUser(connect.user, connect.pwd);
+        return connect;
+    }
+    
     private Consumer findUserByName(String username) {
         if (username == null) {
             return null;
@@ -220,7 +258,7 @@ public class ConsumerBean {
         return (Consumer) q.getResultList().get(0);
     }
     
-    private Consumer findUserById(Long userID) {
+    public Consumer findUserById(Long userID) {
         Query q = manager.createNamedQuery("ConsumerById", Consumer.class);
         q.setParameter("userID", userID);
 
@@ -228,5 +266,29 @@ public class ConsumerBean {
             return null; 
 
         return (Consumer) q.getResultList().get(0);
+    }
+    
+    public Collection<Consumer> getUsers(ConsumerSearch searchQuery) {
+        searchQuery.validate();
+        Query query = constructQuery(searchQuery);
+        if (query != null) {
+            return (Collection<Consumer>) query.getResultList();
+        } else {
+            return new ArrayList<Consumer>();
+        }
+    }
+    
+    public Query constructQuery(ConsumerSearch searchQuery) {
+        String query = "SELECT c FROM Consumer c WHERE";
+
+        //INPUT
+        if (searchQuery.input != null) {
+            query += " c.username LIKE '%" + searchQuery.input + "%'";
+        }
+
+        //ORDER
+        query += " ORDER BY c." + searchQuery.orderBy + " " + (searchQuery.orderByASC ? "ASC" : "DESC");
+        
+        return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
     }
 }

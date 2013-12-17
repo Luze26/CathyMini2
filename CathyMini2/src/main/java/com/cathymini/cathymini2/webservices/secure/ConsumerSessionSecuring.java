@@ -5,6 +5,7 @@ import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
@@ -159,6 +160,23 @@ public class ConsumerSessionSecuring {
         request.getSession().invalidate(); // Clear all session data
         secureMap.remove(consumerSession);
     }
+    
+     /**
+     * Close a consumer connexion from admin side
+     * @param c The consumer session to close
+     *//*
+    public void closeSession (Consumer c) {
+        String consumerSession = null;
+        for(Entry<String, SecureEntry> entry : secureMap.entrySet()) {
+            if(entry.getValue().consumer == c) {
+                consumerSession = entry.getKey();
+                break;
+            }
+        }
+        if(consumerSession != null) {
+            secureMap.remove(consumerSession);
+        }
+    }*/
     
     /**
      * Return the value of the consumer session attribute of the requester
