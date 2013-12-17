@@ -19,6 +19,12 @@ angular.module('account')
      */
     $rootScope.header = "myAccount";
     
+    /**
+     * User's purchases and subscriptions
+     */
+    $scope.purchases;
+    $scope.subscriptions;
+    
     //////////////////////////////////////////////////
     //  METHODS
     //////////////////////////////////////////////////
@@ -112,4 +118,30 @@ angular.module('account')
         $scope.editConsumer[field.key] = $scope.consumer[field.key];
         field.editable = true;
     };
+    
+    $scope.showPurchaseDetails = function(purchase) {
+        console.log(purchase);
+    };
+    
+    /**
+     * Get user's purchases
+     */       
+    $http.get("/webresources/purchase/purchases")
+        .success(function(purchases) { 
+            $scope.purchases = purchases;
+        })
+        .error(function(data, status, headers, config) { 
+            purchase = {};
+        });
+        
+    /**
+     * Get user's subscriptions
+     */       
+    $http.get("/webresources/purchase/subscriptions")
+        .success(function(subscriptions) { 
+            $scope.subscriptions = subscriptions;
+        })
+        .error(function(data, status, headers, config) { 
+            purchase = {};
+        });
 }]);
