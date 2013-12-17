@@ -216,14 +216,12 @@ public class CartSession {
     }
      
      public Subscription recordSubscription(Consumer cons, Subscription sub){
-         logger.debug("in recordSubscription");
          sub.setConsumer(cons);
          if(cons != null){
              for (CartLine cl : sub.getCartLineCollection()) {
                  manager.persist(cl);
              }
             manager.persist(sub);
-            logger.debug("cons non nul : persist");
          }
          return sub;
      }
@@ -260,25 +258,19 @@ public class CartSession {
     }
     
     public int removeProductToSub(Product prod, Subscription sub){
-        logger.debug("dans removeproductToSub : "+sub == null);
         int place = -1;
         int i = 0;
         int size = sub.getCartLineCollection().size();
-        logger.debug("avant boucle : "+size);
         
         for(CartLine myCartLine : sub.getCartLineCollection()){
-            logger.debug("dans boucle");
 	// Manipulations avec l'élément actuel
             if(myCartLine.getProduct().getId() == prod.getId()){
-                logger.debug("dans if");
                 sub.getCartLineCollection().remove(myCartLine);
-                logger.debug("avant merge dans boucle");
                 manager.merge(sub);
                 return i;
             }
             i++;
         }
-        logger.debug("avant merge apres boucle (non trouvé)");
         manager.merge(sub);
         return place;
     }
@@ -333,7 +325,6 @@ public class CartSession {
         
         if (q.getResultList().isEmpty())
             return null; 
-        logger.debug("dans findSubByConsumer taille :"+q.getResultList().size());
         return  new ArrayList<Subscription>(q.getResultList());
     }
     
@@ -341,9 +332,6 @@ public class CartSession {
         Query q = manager.createNamedQuery("SubscriptionByName", Subscription.class); 
         q.setParameter("consumer", consumer);
         q.setParameter("name", name);
-        logger.debug("1 before log");
-        logger.debug("cons : "+consumer.getUserID()+" et name : "+name);
-        logger.debug("2 after log");
         
         if (q.getResultList().isEmpty())
             return null; 

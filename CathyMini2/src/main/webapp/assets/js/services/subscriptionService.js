@@ -25,7 +25,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
         $http.post("/webresources/cart/getSub")
         .success(function(data){
             service.sub.price = 0;
-            if(data != null){
+            if(data !== null){
                 for(var j = 0; j < data.length; j++){
                     service.sub = [];
                     var prodColl = data[j].cartLineCollection;
@@ -92,8 +92,19 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
             })
                 .error(function(data) {
                     alert("Un problème lors du changement de quantité a été déclenché!");
-                })
+                });
     };
+    
+    service.editName = function(oldName, newName) {
+        console.log("hehe old :"+oldName+" / new:"+newName);
+         $http.post("/webresources/cart/changeName", {"oldName": oldName, "newName": newName})
+                .success(function(data) {
+                //service.
+            })
+                .error(function(data) {
+                    alert("Un problème lors du changement de quantité a été déclenché!");
+                });          
+       };
     
     /**
      * Delete a product from the sub

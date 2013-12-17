@@ -10,6 +10,7 @@ import com.cathymini.cathymini2.services.ProductBean;
 import com.cathymini.cathymini2.webservices.model.CartProduct;
 import com.cathymini.cathymini2.webservices.model.SubProduct;
 import com.cathymini.cathymini2.webservices.model.SubscriptionDays;
+import com.cathymini.cathymini2.webservices.model.SubscriptionName;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -140,7 +141,6 @@ public class CartFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public int changeQuantityToCart(CartProduct clTemp, @Context HttpServletRequest request, @Context HttpServletResponse response){
-        logger.debug("changeQuantity work :)");
         Consumer cons  = sessionSecuring.getConsumer(request);
         if(cons != null){
             try{
@@ -238,7 +238,6 @@ public class CartFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Boolean addProductToSub(SubProduct subP, @Context HttpServletRequest request, @Context HttpServletResponse response){
-        logger.debug("dans java addProductToSub");
         Consumer cons;
         try{
             cons = sessionSecuring.getConsumer(request);
@@ -298,20 +297,14 @@ public class CartFacade {
         Subscription sub = getSubSession(request);
         Consumer cons  = sessionSecuring.getConsumer(request);
         if(sub != null){
-            //cartBean.mergeSub(cons, sub);
-            logger.debug("sub session non nul");
             cartBean.recordSubscription(cons, sub);
             setSubSession(request, null);
         }
-        else
-            logger.debug("sub session null");
         try{
                 ArrayList  cartToSend = cartBean.getUserSubscription(cons);
-                logger.debug("dans consIsConnectedSub : "+cartToSend.size());
                 return cartToSend;
         }
         catch(Exception ex){
-            logger.debug("dans soncIsConnected : erreur retourne null");
             response.setStatus(400);
             return null;
         }
@@ -331,7 +324,6 @@ public class CartFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public int changeQuantityToSub(SubProduct clTemp, @Context HttpServletRequest request, @Context HttpServletResponse response){
-        logger.debug("changeQuantity work :)");
         Consumer cons  = sessionSecuring.getConsumer(request);
         if(cons != null){
             try{
@@ -377,9 +369,7 @@ public class CartFacade {
         int place = -1;
         if(cons != null){
             try{
-                logger.debug("avant : "+subP.getName());
                 sub = cartBean.getUserSubscriptionByName(cons, subP.getName());
-                logger.debug("apres");
             }
             catch(Exception ex){
                 response.setStatus(400);
@@ -389,12 +379,6 @@ public class CartFacade {
         else{
             sub = getSubSession(request);
         }
-        if(sub == null)
-            logger.debug("sub null");
-        else if (sub.getCartLineCollection() == null)
-            logger.debug("pas de cartLine");
-        else
-            logger.debug("sub et cartLines");
         place = cartBean.removeProductToSub(prod, sub);
         return place;
     }
@@ -449,13 +433,13 @@ public class CartFacade {
     @Path("/changeName")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String changeName(String name, @Context HttpServletRequest request, @Context HttpServletResponse response){
+    public String changeName(SubscriptionName infoSubName, @Context HttpServletRequest request, @Context HttpServletResponse response){
         Consumer cons  = sessionSecuring.getConsumer(request);
         Subscription sub = null;
         if(cons != null){
             try{
-                sub = cartBean.getUserSubscriptionByName(cons, name);
-                cartBean.changeName(sub, name, true);
+                sub = cartBean.getUserSubscriptionByName(cons, infoSubName.getOldName());
+                cartBean.changeName(sub, infoSubName.getNewName(), true);
             }
             catch(Exception ex){
                 response.setStatus(400);
@@ -465,7 +449,7 @@ public class CartFacade {
         else{
             sub = getSubSession(request);
             if(sub != null){
-                cartBean.changeName(sub, name, false);
+                cartBean.changeName(sub, infoSubName.getNewName(), false);
             }
             else{
                 response.setStatus(400);
