@@ -104,8 +104,25 @@
                                                 <span class="col-lg-3"><b>Date de debit</b></span>
                                                 <span class="col-lg-2">{{purchase.paymentDate}}</span>
                                                 <br/>
-                                                <span class="col-lg-3"><b>Prix total de la commande</b></span>
-                                                <span class="col-lg-2">{{purchase.cost}}</span>
+                                                <span class="col-lg-3"><b>Résume de votre commande</b></span>
+                                                <table class="col-lg-6">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Produit</th>
+                                                            <th>Quantité</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="prod in purchase.products">
+                                                            <td>prod.name</td>
+                                                            <td>prod.quantity</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Total avec les frais de port</b></td>
+                                                            <td>{{purchase.cost}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -149,11 +166,28 @@
                                                 <span class="col-lg-3"><b>Date de debit</b></span>
                                                 <span class="col-lg-2">{{subscription.paymentDate}}</span>
                                                 <br/>
-                                                <span class="col-lg-3"><b>Prix total de la commande</b></span>
-                                                <span class="col-lg-2">{{subscription.cost}}</span>
-                                                <br/>
                                                 <span class="col-lg-3"><b>Interval entre vos regles</b></span>
                                                 <span class="col-lg-2">{{subscription.daysDelay}}</span>
+                                                <br/>
+                                                <span class="col-lg-3"><b>Résume de votre commande</b></span>
+                                                <table class="col-lg-6">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Produit</th>
+                                                            <th>Quantité</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="prod in subscription.products">
+                                                            <td>prod.name</td>
+                                                            <td>prod.quantity</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b>Total avec les frais de port</b></td>
+                                                            <td>{{subscription.cost}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </td>
                                         </tr>
                                     </tbody>

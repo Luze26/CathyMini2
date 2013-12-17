@@ -115,19 +115,6 @@ public class PurchaseFacade {
             for (Purchase subscription : subscriptions) {
                 payments.add(new Payment(subscription));
             }
-        } else {
-            for (int i = 0; i<3; i++) {
-                Payment p = new Payment();
-                p.cost = i;
-                SimpleDateFormat formatter = new SimpleDateFormat("dd - MM - yyyy");
-                p.creationDate = formatter.format(new Date());
-                p.paymentDate = "";
-                p.deliveryDate = "";
-                p.daysDelay = 28;
-                p.products = null;
-                
-                payments.add(p);
-            }
         }
         
         return payments;
