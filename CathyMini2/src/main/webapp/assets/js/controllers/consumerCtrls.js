@@ -53,11 +53,10 @@ angular.module('common').
             },
             function(data) { //error
                 if(data.status == 400) {
-                    console.log(data);
-                    if(data.data == "mail error") {
+                    if(data.data == "This mail address is already used by another user.") {
                         $scope.mailError = true;
                     }
-                    else if(data.data == "username error") {
+                    else if(data.data == "This username already exist.") {
                         $scope.nameError = true;
                     }
                 }
@@ -110,6 +109,66 @@ angular.module('common').
                 }
             });
     };
+    
+    /**
+     * Displayed or not the reset password form
+     */
+    $scope.displayResetForm = false;
+    
+    /**
+     * Feedback reset password
+     */
+    $scope.resetPasswordInfo = null;
+    
+    /**
+     * Username for reset password
+     */
+    $scope.resetPwdUsername = "";
+    var resetModal = {title: "Demande de nouveau mot de passe", okLabel: "Demander un nouveau mot de passe"};
+    var connectModal = {title: "Connexion", okLabel: "Se connecter"};
+    
+    /**
+     * Reset password
+     */
+    $scope.resetPassword = function() {
+        $scope.resetPasswordInfo = null;
+        $scope.error = null;
+        $scope.errorReset = null;
+        consumerService.resetPassword($scope.resetPwdUsername).success(function() { //success
+               $scope.displayResetForm = false;
+               $scope.modal = connectModal;
+               $scope.resetPasswordInfo = "Un e-mail vous a été envoyé, avec la marche à suivre pour changer votre mot de passe."
+            }).error(function(data, status) { //error
+                if(status == 400) {
+                    $scope.errorReset = "Aucun utilisateur correspond au nom donné.";
+                }
+                else {
+                    $scope.error = "Problème de connexion, vérifier votre connexion internet.";
+                }
+            });
+    };
+    
+    /**
+     * Show reset password form
+     * @param {type} show
+     */
+    $scope.showResetPassword = function(show) {
+        $scope.displayResetForm = show;
+        if(show) {
+            $scope.modal = resetModal;
+        }
+        else {
+            $scope.modal = connectModal;
+        }
+    };
+    
+    resetModal.action = $scope.resetPassword;
+    connectModal.action = $scope.connect;
+    
+    /**
+     * Modal info
+     */
+    $scope.modal = connectModal;
     
     /**
      * And function, because xhtml not allow & in attributes
