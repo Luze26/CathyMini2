@@ -6,23 +6,23 @@
     <body>
         <ui:composition>
             <ui:decorate template="/template/modalLayout.xhtml">           
-                <ui:param name="modalTitle" value="S'inscire" />
+                <ui:param name="modalTitle" value="Inscription" />
                 <ui:param name="ngCtrl" value="subscribeModalCtrl" />
                 <ui:param name="modalId" value="subscribeModal" />
                 <ui:param name="okAction" value="subscribe()" />
+                <ui:param name="okLabel" value="S'inscrire" />
                 <ui:param name="ngDisabled" value="form.$invalid" />
                 <ui:define name="modalContent">
-                    <div ng-show="error" class="alert alert-dismissable alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    <div ng-show="error" class="alert alert-danger">
                         {{error}}
                     </div>
                     <form name="form" class="form-horizontal" novalidate="novalidate">
                         <fieldset class="subscribeModal">
                             <div class="form-group">
-                                <label>Nom</label>
+                                <label>Nom *</label>
                                 <input name="username" ng-model="subscriber.username" type="text" placeholder="Entrez votre nom"
-                                       autofocus="autofocus" required="required" name-check="name-check" />
-                                <div ng-show="form.username.$error.required" class="error-form">
+                                       autofocus="autofocus" required="required" name-check="name-check" ng-change="nameError = false"/>
+                                <div ng-show="and(form.username.$error.required, form.username.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
                                 <div ng-show="form.username.$error.usernameNotUnique" class="error-form">
@@ -30,10 +30,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Adresse e-mail</label>
+                                <label>Adresse e-mail *</label>
                                 <input name="mail" ng-model="subscriber.mail" type="email" placeholder="Quelle est votre adresse e-mail ?"
-                                       autofocus="autofocus" required="required" mail-check="mail-check"/>
-                                <div ng-show="form.mail.$error.required" class="error-form">
+                                       autofocus="autofocus" required="required" mail-check="mail-check" ng-change="mailError = false"/>
+                                <div ng-show="and(form.mail.$error.required, form.mail.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
                                 <div ng-show="form.mail.$error.email" class="error-form">
@@ -44,10 +44,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Mot de passe</label>
+                                <label>Mot de passe *</label>
                                 <input name="password" id="pwd" ng-model="subscriber.pwd" type="password" placeholder="Entrez votre mot de passe, 3 caractères minimum"
                                        autofocus="autofocus" required="required" ng-minlength="3" />
-                                <div ng-show="form.password.$error.required" class="error-form">
+                                <div ng-show="and(form.password.$error.required, form.password.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
                                 <div ng-show="form.password.$error.minlength" class="error-form">
@@ -55,10 +55,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Confirmation du mot de passe</label>
+                                <label>Confirmation du mot de passe *</label>
                                 <input name="confirmPassword" ng-model="subscriber.confirmPwd" type="password" placeholder="Retaper votre mot de passe"
                                        autofocus="autofocus" required="required" ng-minlength="3" pw-check="pwd"/>
-                                <div ng-show="form.confirmPassword.$error.required" class="error-form">
+                                <div ng-show="and(form.confirmPassword.$error.required, form.confirmPassword.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
                                 <div ng-show="and(form.confirmPassword.$error.pwmatch, form.confirmPassword.$dirty)" class="error-form">

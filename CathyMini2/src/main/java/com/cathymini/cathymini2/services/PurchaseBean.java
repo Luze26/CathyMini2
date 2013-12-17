@@ -2,6 +2,7 @@ package com.cathymini.cathymini2.services;
 
 import com.cathymini.cathymini2.model.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,6 +29,8 @@ public class PurchaseBean {
                 cart.getCartLineCollection()));
         purchase.setPayementInfo(pi);
         purchase.setDeliveryAddress(da);
+        Calendar cal = Calendar.getInstance();
+        purchase.setCreationDate(cal.getTimeInMillis());
         
         manager.persist(purchase);
         
@@ -35,14 +38,16 @@ public class PurchaseBean {
         logger.debug(message);
     }
     
-    public void finalizeSubscription(Cart cart, Long startDate, DeliveryAddress da, PayementInfo pi) {
+    public void finalizeSubscription(Cart cart, Long startDate, DeliveryAddress da, PayementInfo pi, Integer daysDelay) {
         PurchaseSubscription purchase = new PurchaseSubscription();
         purchase.setConsumer(cart.getConsumer());
         purchase.setPurchaseLineCollection(cartLineToPurchaseLine(
                 cart.getCartLineCollection()));
-        purchase.setStartDate(startDate);
         purchase.setPayementInfo(pi);
         purchase.setDeliveryAddress(da);
+        Calendar cal = Calendar.getInstance();
+        purchase.setCreationDate(cal.getTimeInMillis());
+        purchase.setDaysDelay(daysDelay);
         
         manager.persist(purchase);
         
@@ -51,16 +56,18 @@ public class PurchaseBean {
     }
     
     public void editSubscription(Long subscriptionID, Cart cart,  Long startDate,
-                DeliveryAddress da, PayementInfo pi) {
+                DeliveryAddress da, PayementInfo pi, Integer daysDelay) {
         
         PurchaseSubscription purchase = getSubscriptionById(subscriptionID);
         
         purchase.setConsumer(cart.getConsumer());
         purchase.setPurchaseLineCollection(cartLineToPurchaseLine(
                 cart.getCartLineCollection()));
-        purchase.setStartDate(startDate);
         purchase.setPayementInfo(pi);
         purchase.setDeliveryAddress(da);
+        Calendar cal = Calendar.getInstance();
+        purchase.setCreationDate(cal.getTimeInMillis()); // Re-set to re-calculate next delivery
+        purchase.setDaysDelay(daysDelay);
         
         manager.persist(purchase);
         
@@ -70,9 +77,9 @@ public class PurchaseBean {
     
     public void stopSubscription(Long subscriptionID, Cart cart, Consumer consumer, 
                 DeliveryAddress da, PayementInfo pi) {
-        PurchaseSubscription purchase = getSubscriptionById(subscriptionID);
+        PurchaseSubscription subscription = getSubscriptionById(subscriptionID);
         
-        manager.remove(purchase);
+        manager.remove(subscription);
         
         String message = consumer.getUsername() + "finalize a subscription.";
         logger.debug(message);

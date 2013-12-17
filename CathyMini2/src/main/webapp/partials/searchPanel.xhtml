@@ -23,15 +23,17 @@
                                     <label class="labelCheckbox">
                                         <input class="typeCheckboxLeft" type="checkbox" ng-model="search.napkin" ng-change="changeNapkin()" />
                                         <div class="btn btn-primary">
-                                            <img alt="Serviette" src="assets/images/serviette.png" />
+                                            <span style="width: 20px; height: 20px;"><span class="type-tick tick" ng-show="search.napkin"></span></span>
                                             Serviette
+                                            <img alt="Serviette" src="assets/images/serviette.png" />
                                         </div>
                                     </label>
                                     <label class="labelCheckbox">
                                         <input class="typeCheckboxRight" type="checkbox" ng-model="search.tampon" ng-change="changeTampon()" />
                                         <div class="btn btn-primary">
-                                            <img alt="Tampon" src="assets/images/tampon.png" />
+                                            <span class="type-tick tick" ng-show="search.tampon"></span>
                                             Tampon
+                                            <img alt="Tampon" src="assets/images/tampon.png" />
                                         </div>
                                     </label>
                                 </div>

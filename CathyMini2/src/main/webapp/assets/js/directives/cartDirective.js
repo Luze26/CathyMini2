@@ -8,54 +8,74 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
     scope: {
     },
 
-    link: function(scope, elm, attrs, ctrl) {      
+    link: function(scope, elm, attrs, ctrl) {
         scope.cartOpen = false; //If the cart tab is open or not
         scope.subOpen = false; //If the sub tab is open or not
-        
+
         scope.cartService = cartService; //Cart service
-        
+
         scope.subService = subscriptionService;
-        
+
         /**
-* Toggle cart's tab
-*/
-        scope.toggleCart = function() {
+         * Toggle cart's tab
+         */
+        scope.toggleCart = function(event) {
             var position;
-            if(scope.cartOpen) {
+            if (scope.cartOpen) {
                 position = "-350px";
             }
             else {
                 position = "0px";
             }
-            
+
             scope.cartOpen = !scope.cartOpen;
-            if(!scope.subOpen) {
+            if (!scope.subOpen) {
                 elm.animate({"right": position}, 200);
             }
             else {
                 scope.subOpen = false;
             }
         };
-        
+
         /**
          * Toggle sub's tab
          */
-        scope.toggleSub = function() {
+        scope.toggleSub = function(event) {
             var position;
-            if(scope.subOpen) {
+            if (scope.subOpen) {
                 position = "-350px";
             }
             else {
                 position = "0px";
             }
-            
+
             scope.subOpen = !scope.subOpen;
-            if(!scope.cartOpen) {
+            if (!scope.cartOpen) {
                 elm.animate({"right": position}, 200);
             }
             else {
-               scope.cartOpen = false; 
+                scope.cartOpen = false;
             }
+        };
+        
+        /**
+         * Watch click on body to close tabs
+         */
+        angular.element("body").click(function() {
+            if (scope.cartOpen) {
+                scope.toggleCart();
+            }
+            else if(scope.subOpen) {
+                scope.toggleSub();
+            }
+        });
+        
+        /**
+         * Prevent click on cart to toggle cart
+         * @param {type} event
+         */
+        scope.prevent = function(event) {
+            event.stopPropagation();
         };
         
         scope.selectedSub = null;
@@ -169,17 +189,17 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
         scope.cheminImageProduit = "/assets/images/product/"
     },
     template: '<div id="cart">' +
-                '<div id="cartTabs">' + 
-                    '<div id="cartTab" ng-class="{\'active\': cartOpen}" ng-click="toggleCart()">' +
+                '<div id="cartTabs" ng-click="prevent($event)">' + 
+                    '<div id="cartTab" ng-class="{\'active\': cartOpen}" ng-click="toggleCart($event)">' +
                         '<i class="fa fa-shopping-cart fa-4x"></i>' +
                         '<div>{{cartService.nbProducts()}} products</div>' +
                      '</div>' +
-                     '<div id="subTab" ng-class="{\'active\': subOpen}" ng-click="toggleSub()">' +
+                     '<div id="subTab" ng-class="{\'active\': subOpen}" ng-click="toggleSub($event)">' +
                         '<i class="fa fa-shopping-cart fa-4x"></i>' +
                         '<div>{{subService.nbProducts()}} products</div>' +
                      '</div>' +
                  '</div>' +
-                 '<div id="cartPanel">' +
+                 '<div id="cartPanel" ng-click="prevent($event)">' +
                     '<div ng-show="cartOpen">' +
                         '<ul>' +
                             '<li class="prodCart" ng-repeat="prod in cartService.cart.products">' +

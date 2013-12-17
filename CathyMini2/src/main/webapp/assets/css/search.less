@@ -5,9 +5,6 @@
 }
 
 #searchTab {
-    // -webkit-transform: rotate(90deg); 
-    // -moz-transform: rotate(90deg); //Rotate for mozilla
-    // filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); //Rotate for IE
     background-color: @mainColor;
     width: 50px;
     color: #fff;
@@ -71,11 +68,21 @@
         width: 100%;
         border-radius: @radius;
         background-color: @gray;
+        border: solid 1px @grayDark;
+
+        &:hover {
+            background-color: @secondaryColorDark ! important;
+        }
     }
 
     &:checked + div {
-        background-color: @secondaryColorDark;
+        background-color: @secondaryColor;
         font-weight: bold;
+        border: solid 1px @thirdColor;
+
+        &:hover {
+            background-color: @secondaryColorDark ! important;
+        }
     }
 }
 
@@ -128,4 +135,10 @@ slider span.pointer {
     &:hover {
         background-color: @secondaryColorDark;
     }
+}
+
+.type-tick {
+    .tick-icon;
+    display: inline-block;
+    vertical-align: baseline;
 }

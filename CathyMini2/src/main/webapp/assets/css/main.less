@@ -1,4 +1,5 @@
 @import "variables.less";
+@import "icons.less";
 @import "search.less";
 @import "cart.less";
 @import "product.less";
@@ -6,6 +7,10 @@
 @import "notification.less";
 @import "index.less";
 @import "account.less";
+
+body {
+    height: 100%;
+}
 
 .navbar-default {
     background-color: @mainColor; 
@@ -50,6 +55,7 @@
 
 #content {
     margin-top: 82px;
+    height: 100%;
 }
 
 #footer {
@@ -58,6 +64,10 @@
     margin-top: 20px;
     height: 50px;
     width: 100%;
+}
+
+.hand-cursor {
+    cursor: pointer;
 }
 
 .hide {
@@ -90,7 +100,7 @@ a {
     border-color: @secondaryColor;
 }
 
-.subscribeModal, .connectionModal {
+.subscribeModal, .connectionModal, .addressModal {
     padding-left: 20px;
 
     label {
@@ -127,4 +137,40 @@ input.ng-dirty.ng-invalid {
     font-size: 12px;
     color: @grayDark;
     padding: 3px;
+}
+
+.resetPasswordPanel {
+    display: inline-block;
+    float: none;
+    margin-top: 40px;
+    background-color: #eee;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 2px -3px;
+
+    h3 {
+        margin-top: 0px;
+    }
+}
+
+/* Table open animation (@see account.xhtml#address) */
+.show-table-anim td {
+    animation: show-account-anim-param 1s ease;
+    -webkit-animation: show-account-anim-param 1s ease;
+}
+
+@keyframes show-table-anim-param
+{
+    from {opacity: 0; max-height:0%}
+    to {opacity: 1; max-height:100%}
+}
+
+@-webkit-keyframes show-table-anim-param /* Safari and Chrome */
+{
+    from {opacity: 0; max-height:0%}
+    to {opacity: 1; max-height:100%}
+}
+
+.inline-block {
+    display: inline-block;
 }

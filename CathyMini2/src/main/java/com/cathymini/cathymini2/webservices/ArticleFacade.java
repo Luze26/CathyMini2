@@ -8,7 +8,6 @@ import com.cathymini.cathymini2.model.Article;
 import com.cathymini.cathymini2.services.ArticleBean;
 import com.cathymini.cathymini2.webservices.model.ArticleSearch;
 import com.cathymini.cathymini2.webservices.model.form.AddArticle;
-//import com.cathymini.cathymini2.webservices.model.form.EditProduct;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
@@ -74,19 +73,10 @@ public class ArticleFacade {
 
     }
     
- /*   @POST
-    @Path("/edit")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Product edit(EditProduct form, @Context final HttpServletResponse response) {
-        return productBean.editProduct(form.id, form.name, form.marque, form.flux, form.price, form.description);
-    }
-   */ 
-    
     @GET
-    @Path("/readXML")
+    @Path("/populate")
     @Produces(MediaType.APPLICATION_JSON)
-    public void readXML(){
+    public String populate(@QueryParam("size") int size) {
             SAXBuilder sxb = new SAXBuilder();
             Document document = null;
       try
@@ -119,40 +109,7 @@ public class ArticleFacade {
            Article a = new Article(titre, description, detail, type, image);
            articleBean.addArticle(a);
         }
-      
-    }
-
-    
- /*   @GET
-    @Path("/afficheAll")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void afficheAll(){
         
-        List listEtudiants = racine.getChildren("article");
-        //On crée un Iterator sur notre liste
-        Iterator i = listEtudiants.iterator();
-        while(i.hasNext())
-        {
-           //On recrée l'Element courant à chaque tour de boucle afin de
-           //pouvoir utiliser les méthodes propres aux Element comme :
-           //sélectionner un nœud fils, modifier du texte, etc...
-           Element courant = (Element)i.next();
-           //récupérer information sur les produits
-           String titre = courant.getChild("titre").getText();
-           String type = courant.getChild("type").getText();
-           String description = courant.getChild("description").getText();
-           String detail = courant.getChild("detail").getText();
-           String image = courant.getChild("image").getText();
-           Article a = new Article(titre, description, detail, type, image);
-           articleBean.addArticle(a);
-        }
-    }*/
-    
-    @GET
-    @Path("/populate")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String populate(@QueryParam("size") int size) {
-        readXML();
         return "article populated";
     }
     /**

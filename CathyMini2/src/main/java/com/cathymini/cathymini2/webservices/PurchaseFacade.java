@@ -1,8 +1,9 @@
 package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Consumer;
-import com.cathymini.cathymini2.model.PayementInfo;
-import com.cathymini.cathymini2.services.ProductBean;
+import com.cathymini.cathymini2.model.Purchase;
+import com.cathymini.cathymini2.model.PurchaseSubscription;
+import com.cathymini.cathymini2.services.PurchaseBean;
 import com.cathymini.cathymini2.webservices.model.Payment;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
@@ -34,7 +35,7 @@ public class PurchaseFacade {
     private static final ConsumerSessionSecuring sessionSecuring = ConsumerSessionSecuring.getInstance();
     
     @EJB
-    private ProductBean productBean;
+    private PurchaseBean purchaseBean;
 
     /**
      * Create a purchase
@@ -75,16 +76,6 @@ public class PurchaseFacade {
         return "Not Implemented";
     }
     
-    @GET
-    @Path("/subscriptions")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String subscriptions(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-        return "Not Implemented";
-    }
-    
-    
-
     /**
      * Get purchases
      */
@@ -93,13 +84,36 @@ public class PurchaseFacade {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Secure(Role.MEMBER)
-    public Collection<Payment> purchases(@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+    public Collection<Payment> getPurchases(@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
         Consumer user = sessionSecuring.getConsumer(request);
-        Collection<PayementInfo> purchases = user.getPaymentInfoCollection();
+        Collection<Purchase> purchases = purchaseBean.getConsumerPurchases(user);
         Collection<Payment> payments = new ArrayList<Payment>();
-        for (PayementInfo purchase : purchases) {
-            payments.add(new Payment(purchase));
+        if (purchases != null) {
+            for (Purchase purchase : purchases) {
+                payments.add(new Payment(purchase));
+            }
+        } 
+        return payments;
+    }
+    
+    /**
+     * Get subscriptions
+     */
+    @GET
+    @Path("/subscriptions")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+    public Collection<Payment> getSubscriptions(@Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        Consumer user = sessionSecuring.getConsumer(request);
+        Collection<PurchaseSubscription> subscriptions = purchaseBean.getConsumerSubscriptions(user);
+        Collection<Payment> payments = new ArrayList<Payment>();
+        if (subscriptions != null) {
+            for (Purchase subscription : subscriptions) {
+                payments.add(new Payment(subscription));
+            }
         }
+        
         return payments;
     }
 }

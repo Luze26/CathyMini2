@@ -6,11 +6,13 @@ package com.cathymini.cathymini2.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -21,7 +23,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 
 /**
  * The class {@link Purchase} is an EJB Entity representing a list of {@link PurchaseLine} buy by a {@link Consumer}.
@@ -38,35 +39,76 @@ import javax.persistence.Temporal;
     @NamedQuery(name="PurchaseByConsumer", query="select object(p) from Purchase p where p.consumer = :consumer")
 })
 public class Purchase implements Serializable {
+    /** Integer primary Key */
     @Id
     @GeneratedValue
     @Column(name="transactionID")
-    /** Integer primary Key */
     private Long transactionID;
     
-    @OneToMany
     /** Purchase {@link PurchaseLine} collection */
+    @OneToMany
+    @Basic(fetch = FetchType.EAGER)
     private Collection<PurchaseLine> purchaseLineCollection;
     
-    @ManyToOne
     /* Purchase owner */
+    @ManyToOne
     private Consumer consumer;
     
-    @OneToOne
+    /** Cost of the purchase */
+    @Column(name="totalCost")
+    private Integer totalCost;
+    
     /** Consumer {@link DeliveryAddress} for the purchase */
+    @OneToOne
     private DeliveryAddress deliveryAddress;
     
-    @OneToOne
     /** Consumer {@link PaymentInfo} for the purchase */
+    @OneToOne
     private PayementInfo payementInfo;
     
-    /** List of payement dates for the purchase (unique for Purchase, multiple for Subscription) */
-    @Column(name="payementDate")
-    private Long PayementDate;
+    /** Creation date of the purchase */
+    @Column(name="creationDate")
+    private Long creationDate;
     
-    /** List of delivery dates for the purchase (unique for Purchase, multiple for Subscription) */
+    /** Payement date of the purchase */
+    @Column(name="payementDate")
+    private Long payementDate;
+    
+    /** Delivery date of the purchase */
     @Column(name="deliveryDate")
-    private Long DeliveryDate;
+    private Long deliveryDate;
+
+    public Integer getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(Integer totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public Long getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Long creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Long getPayementDate() {
+        return payementDate;
+    }
+
+    public void setPayementDate(Long payementDate) {
+        this.payementDate = payementDate;
+    }
+
+    public Long getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Long deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
 
     public DeliveryAddress getDeliveryAddress() {
         return deliveryAddress;
@@ -106,21 +148,5 @@ public class Purchase implements Serializable {
 
     public void setPurchaseLineCollection(Collection<PurchaseLine> purchaseLineCollection) {
         this.purchaseLineCollection = purchaseLineCollection;
-    }
-
-    public Long getPayementDate() {
-        return PayementDate;
-    }
-
-    public void setPayementDate(Long PayementDate) {
-        this.PayementDate = PayementDate;
-    }
-
-    public Long getDeliveryDate() {
-        return DeliveryDate;
-    }
-
-    public void setDeliveryDate(Long DeliveryDate) {
-        this.DeliveryDate = DeliveryDate;
     }
 }

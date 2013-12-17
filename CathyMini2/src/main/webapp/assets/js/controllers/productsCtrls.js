@@ -17,6 +17,7 @@ angular.module('products').
         napkin: true, minPrice: 0, maxPrice: 20, brands: [], flux: [1, 2, 3, 4, 5, 6]};
 
       /** Path where product's image are stock */
+
       $scope.cheminImageProduit = "/assets/images/product/";
 
       /** Products list */

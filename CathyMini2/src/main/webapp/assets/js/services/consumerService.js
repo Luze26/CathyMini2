@@ -144,6 +144,14 @@ angular.module('common').factory('consumerService', ['$http', '$rootScope', '$q'
         return $http.get("/webresources/consumer/address");
     };
     
+    /**
+     * Reset password
+     * @returns {promise}
+     */
+    service.resetPassword = function(username) {
+        return $http.post("/webresources/consumer/resetPassword", username);
+    }
+    
     //////////////////////////////////////////////////
     //  INITIALIZATION
     //////////////////////////////////////////////////

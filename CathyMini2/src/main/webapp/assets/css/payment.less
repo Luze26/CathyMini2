@@ -1,5 +1,9 @@
 @import "variables.less";
 
+.navtab {
+    text-align : center;
+}
+
 .navtab.nav li.disabled, .nav li.disabled a {
     background-color: @secondaryColorSoft ! important;
     border-color: @secondaryColor ! important;
@@ -44,4 +48,22 @@
     & button {
         margin:20px;
     }   
+}
+
+/* Tabs Content Animation 'ON' */
+.show-anim {
+    animation: show-anim-param 1.3s ease;
+    -webkit-animation: show-anim-param 1.3s ease;
+}
+
+@keyframes show-anim-param
+{
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@-webkit-keyframes show-anim-param /* Safari and Chrome */
+{
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
