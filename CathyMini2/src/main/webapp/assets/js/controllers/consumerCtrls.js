@@ -49,7 +49,7 @@ angular.module('common').
         consumerService.subscribe($scope.subscriber)
             .then(function() { //success
                 modal.modal('hide'); //hide the modal
-                notificationService.displayMessage("Bienvenue sur CathyMini !", 4000);
+                notificationService.displayMessage("Bienvenue sur CathyMini ! Je m'appelle Cathy.", 4000);
             },
             function(data) { //error
                 if(data.status == 400) {
