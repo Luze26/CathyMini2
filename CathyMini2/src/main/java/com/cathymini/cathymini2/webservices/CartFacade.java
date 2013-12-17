@@ -227,7 +227,8 @@ public class CartFacade {
         }
         name += nbAbo;
         
-        cartBean.newSubscription(cons,name);
+        Subscription sub = cartBean.newSubscription(cons,name);
+        setSubSession(request, sub);
         return name;
         
     }
