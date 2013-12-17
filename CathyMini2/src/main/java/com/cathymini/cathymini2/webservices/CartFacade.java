@@ -29,8 +29,8 @@ import org.apache.log4j.Logger;
 @Path("/cart")
 public class CartFacade {
 
-    private static final String CART_ATTR = "_CART_ATTR";
-    private static final String SUB_ATTR = "_SUB_ATTR";
+    public static final String CART_ATTR = "_CART_ATTR";
+    public static final String SUB_ATTR = "_SUB_ATTR";
     private static final Logger logger = Logger.getLogger(CartFacade.class);
     private static final ConsumerSessionSecuring sessionSecuring = ConsumerSessionSecuring.getInstance();
 

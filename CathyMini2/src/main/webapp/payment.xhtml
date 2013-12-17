@@ -139,7 +139,7 @@
                                                     <td>{{addr.zipCode}}</td>
                                                     <td>{{addr.city}}</td>
                                                     <td><span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Editer</span>
-                                                        <span ng-click="nextTab(addr)" class="btn btn-primary">Selectionner</span>
+                                                        <span ng-click="selectAddr(addr);nextTab()" class="btn btn-primary">Selectionner</span>
                                                     </td>
                                                 </tr>
                                             </tbody>
