@@ -29,6 +29,30 @@ angular.module('index').
                     $('#myCarousel').carousel();
                 });
 
+
+                $scope.Nom ="";
+                $scope.Prenom ="";
+                $scope.Mail ="";
+                $scope.Age ="";
+                $scope.Sujet ="";
+                $scope.Message ="";
+                
+                /**
+                 * Envoyer un mail
+                 */
+                $scope.envoyerMail = function() {
+                    console.log("ici");
+                    if ($scope.Sujet !== null && $scope.Message !== null) {
+                        console.log("Nom : " + $scope.Nom + " Prenom : " + $scope.Prenom + " Mail : "+ $scope.Mail + " Age : " + $scope.Age + " Sujet : "+$scope.Sujet+ " Message : "+$scope.Message);
+                        $scope.Nom ="";
+                        $scope.Prenom ="";
+                        $scope.Mail ="";
+                        $scope.Age ="";
+                        $scope.Sujet ="";
+                        $scope.Message ="";
+                    }
+                };
+                
                 /**
                  * Load articles
                  */
