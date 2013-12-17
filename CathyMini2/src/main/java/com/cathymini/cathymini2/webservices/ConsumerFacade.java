@@ -6,6 +6,7 @@ import com.cathymini.cathymini2.services.ConsumerBean;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
 import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.model.form.Connect;
+import com.cathymini.cathymini2.webservices.model.form.ResetPassword;
 import com.cathymini.cathymini2.webservices.model.form.Subscribe;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
@@ -311,7 +312,53 @@ public class ConsumerFacade{
         }
         response.setStatus(400);
     }
-    
+
+    /**
+     * Reset password
+     *
+     * @param resetForm reset form
+     * @param request
+     * @param response
+     * @return ok, if ok
+     */
+    @POST
+    @Path("/resetPasswordForm")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String resetPasswordForm(ResetPassword resetForm, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+        try {
+            consumerBean.resetPassword(resetForm.username, resetForm.token, resetForm.pwd);
+            return "ok";
+        } catch (Exception ex) {
+            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+            builder.entity(ex.getMessage());
+            Response res = builder.build();
+            throw new WebApplicationException(res);
+        }
+    }
+
+    /**
+     * Generate token to reset a password and send the mail
+     *
+     * @param username
+     * @param request
+     * @param response
+     * @return
+     */
+    @POST
+    @Path("/resetPassword")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String resetPassword(String username, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+        try {
+            consumerBean.resetPassword(username);
+            return "ok";
+        } catch (Exception ex) {
+            ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+            builder.entity(ex.getMessage());
+            Response res = builder.build();
+            throw new WebApplicationException(res);
+        }
+    }
+
     /**
      * Regenerate the consumer session. This method should be used when the consumer infos are modified
      * @param request

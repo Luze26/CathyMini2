@@ -5,8 +5,19 @@ import com.cathymini.cathymini2.model.DeliveryAddress;
 import com.cathymini.cathymini2.webservices.model.ConsumerApi;
 import com.cathymini.cathymini2.webservices.model.form.Address;
 import com.cathymini.cathymini2.webservices.secure.Role;
+import java.math.BigInteger;
+import java.net.URLEncoder;
+import java.security.SecureRandom;
+import java.util.Date;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -20,7 +31,10 @@ import org.apache.log4j.Logger;
 public class ConsumerBean { 
     @PersistenceContext(unitName="com.cathymini_CathyMini2_PU")
     private EntityManager manager;
-    
+
+    @Resource(name = "mail/mailSession")
+    private Session mailSession;
+
     private static final Logger logger = Logger.getLogger(ConsumerBean.class);
     
     /**
@@ -194,7 +208,67 @@ public class ConsumerBean {
             throw new Exception(message);
         }
     }
-    
+
+    /**
+     * Generate a token to reset a password and send the mail
+     *
+     * @param usr user who wants to reset his password
+     * @return generated token or null if the user doesn't exists
+     */
+    public String resetPassword(String usr) throws Exception {
+        Consumer user = findUserByName(usr);
+        if (user != null) {
+            try {
+                SecureRandom random = new SecureRandom();
+                String token = new BigInteger(130, random).toString(32);
+                user.setToken(token);
+                manager.merge(user);
+
+                //Send mail
+                Message message = new MimeMessage(mailSession);
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getMail(), false));
+                message.setSubject("Demande de nouveau mot de passe");
+                String url = "http://localhost:8080/resetPassword.xhtml?username=" + URLEncoder.encode(user.getUsername(), "UTF-8")
+                        + "&token=" + user.getToken();
+                String html = "<p>Bonjour,<br/>Une demande de nouveau mot de passe pour CathyMini a été faite.<br/>"
+                        + "Si vous en êtes pas l'auteur, merci d'ignorer cet email. Sinon suivez le lien en-dessous:<br/>"
+                        + "<a href=\"" + url + "\">" + url + "</a>";
+                message.setContent(html, "text/html; charset=utf-8");
+                Date timeStamp = new Date();
+                message.setSentDate(timeStamp);
+                Transport.send(message);
+
+                return token;
+            } catch (MessagingException ex) {
+                throw new Exception("mail not sent");
+            }
+        }
+        throw new Exception("user not found");
+    }
+
+    /**
+     * Check if a token match the token of the given user
+     *
+     * @param usr user
+     * @param token token
+     * @param newPassword new password
+     * @throws java.lang.Exception "user not found", "token incorrect"
+     */
+    public void resetPassword(String usr, String token, String newPassword) throws Exception {
+        Consumer user = findUserByName(usr);
+        if (user != null) {
+            if (user.getToken() != null && user.getToken().equals(token)) {
+                user.setToken(null);
+                user.setPwd(newPassword);
+                manager.merge(user);
+            } else {
+                throw new Exception("token incorrect");
+            }
+        } else {
+            throw new Exception("user not found");
+        }
+    }
+
     private Consumer findUserByName(String username) {
         if (username == null) {
             return null;
