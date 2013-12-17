@@ -180,6 +180,21 @@ public class CartFacade {
     }
     
     @POST
+    @Path("/newSubscription")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String newSubscription(SubProduct subP, @Context HttpServletRequest request, @Context HttpServletResponse response){
+        Consumer cons;
+        String name = "abonnement1";
+        
+        cons  = sessionSecuring.getConsumer(request);
+        cartBean.newSubscription(cons,name);
+        return name;
+        
+    }
+    
+    
+    @POST
     @Path("/addProductToSub")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -194,7 +209,7 @@ public class CartFacade {
             if (cons != null) {
                 Subscription sub  = cartBean.getUserSubscriptionByName(cons, subP.getName());
                 if(sub == null){
-                    sub = cartBean.newSubscription(cons);
+                    sub = cartBean.newSubscription(cons, "abonnement2");
                 }
                 Product prod = productBean.getProduct(subP.getProductId());
                 cartBean.addProductToSub(prod, sub, true);
@@ -215,7 +230,7 @@ public class CartFacade {
                }
                
                if(noSub){
-                    newSubTemp = cartBean.newSubscription(null);
+                    newSubTemp = cartBean.newSubscription(null, "abonnement3");
                     setSubSession(request, newSubTemp);
                }
                 cartBean.addProductToSub(prod, newSubTemp, false);
@@ -347,7 +362,7 @@ public class CartFacade {
         return sub.getNbJ();
     }
      
-    @Path("/changeName")
+   /* @Path("/changeName")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String changeName(String name, @Context HttpServletRequest request, @Context HttpServletResponse response){
@@ -374,6 +389,6 @@ public class CartFacade {
             }
         }
         return sub.getName();
-    }
+    }*/
     
 }

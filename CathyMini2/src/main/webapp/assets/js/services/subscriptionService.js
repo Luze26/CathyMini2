@@ -5,20 +5,23 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
     /**
      * Products in the sub
      */
-    service.sub = {products: [], price: 0, name: ""};
+    service.sub = [];
 
-    service.nbJ = 21;
     /**
      * Number of different products in the sub
      * @returns {service.sub.products.length|Number}
      */
-    service.nbProducts = function() {
-        return service.sub.products.length;
+    service.nbProducts = function(name) {
+        for(var i = 0;i < service.sub.length; i++){
+            if(service.sub[i] === name)
+                return service.sub[i].products.length;
+        }
+        return "";
     };
 
     
     
-    $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
+   /* $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
         $http.post("/webresources/cart/getSub")
         .success(function(data){
             service.sub.price = 0;
@@ -33,43 +36,53 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                 }
             }
         });
-    } );
+    } );*/
     
      $rootScope.$on('consumerDisconnect',function (){
-                service.sub.products = [];
-                service.sub.price = 0;
+                service.sub = [];
+                //service.sub.price = 0;
         });
     
     /**
      * Add a product to the sub
      * @param {Product} product
+     * @param {String} name
      */
-    service.addProduct = function(product) {
-        $http.post("/webresources/cart/addProductToSub", product.id, 1, service.sub.name)
+    service.addProduct = function(product, name) {
+        var productId = product.id;
+        var quantity = 1;
+        $http.post("/webresources/cart/addProductToSub", productId, quantity, name)
             .success(function(data) {
                 //If the product is already in the sub, we increase its quantity
                 var i = 0;
                 var found = false;
-                for(i;i<service.sub.products.length;i++){
-                    if(service.sub.products[i].id === product.id){
-                        found = true;
-                        service.sub.products[i].quantity++;
+                for(var j=0;j<service.sub.length;j++){
+                    if(service.sub[j].name === name){
+                        for(i;i<service.sub[j].products.length;i++){
+                            if(service.sub[j].products[i].id === product.id){
+                                found = true;
+                                service.sub[j].products[i].quantity++;
+                            }
+                        }
+                        if(!found){ //Else, new product for the cart
+                            product.quantity = 1;
+                            service.sub[j].products.push(product);
+                        }
+                        service.sub[j].price += product.price;
                     }
-                }                
-                if(!found){ //Else, new product for the cart
-                    product.quantity = 1;
-                    service.sub.products.push(product);
                 }
-                service.sub.price += product.price; //Increment the total price
+                
+                 //Increment the total price
             });
     };
     
     /**
      * Change the quantity for a product already in the sub
      * @param {Product} product
+     * @param {String} name
      */
-    service.changeQuantity = function(product) {        
-        $http.post("/webresources/cart/changeQuantityToSub", {"productId": product.id, "quantity": product.quantity}, service.sub.name)
+    service.changeQuantity = function(product, name) {        
+        $http.post("/webresources/cart/changeQuantityToSub", {"productId": product.id, "quantity": product.quantity}, name)
                 .success(function(data) {
                 product.quantity = data;
             })
@@ -82,11 +95,16 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * Delete a product from the sub
      * @param {Product} product
      */
-    service.deleteProduct = function(product) {
-        $http.post("/webresources/sub/deleteToSub", product.id, 1, service.sub.name)
+    service.deleteProduct = function(product, name) {
+        $http.post("/webresources/sub/deleteToSub", product.id, 1, name)
             .success(function(data) {
-                service.sub.products.splice(data,1);
-                service.sub.price += -product.price;
+                for(var i =0;i<service.sub.length;i++){
+                    if(service.sub[i].name === name){
+                        service.sub[i].products.splice(data,1);
+                        service.sub[i].price += -product.price;
+                    }
+                }
+                
             });
     };
     
@@ -94,10 +112,25 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * Delete a product from the sub
      * @param {Product} product
      */
-    service.changeNbJ = function(nbJ) {
-        $http.post("/webresources/cart/changeNbJ", nbJ, service.sub.name)
+    service.changeNbJ = function(nbJ, name) {
+        $http.post("/webresources/cart/changeNbJ", nbJ, name)
             .success(function(data) {
-            service.nbJ = data;
+                for(var i = 0;i<service.sub.length;i++){
+                    if(service.sub[i].name === name){
+                        service.sub[i].nbJ = data;
+                    }
+                }                
+            });
+    };
+    
+    /**
+     * 
+     */
+    service.newSubscription = function(){
+        $http.post("/webresources/cart/newSubscription")
+            .success(function(data) {
+                    var newS = {products: [], price: 0, name: data, price: 21};
+                    service.sub.push(newS);
             });
     };
     
@@ -105,11 +138,14 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * Change the subscription's name
      * @param {String} name 
      */
-    service.changeName = function(name){
-        $http.post("/webresources/cart/changeName", name)
+    service.changeName = function(name, oldName){
+        $http.post("/webresources/cart/changeName", name, oldName)
             .success(function(data) {
-                if(data !=="")
-                    service.sub.name = data;
+                if(data !==""){
+                    for(var i = 0; i<service.sub.length;i++){
+                         service.sub[i].name = data;
+                    }
+                }
             });
     };
     

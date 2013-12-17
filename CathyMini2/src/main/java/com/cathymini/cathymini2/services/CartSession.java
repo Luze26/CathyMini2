@@ -204,12 +204,12 @@ public class CartSession {
         return "";
     }
     
-     public Subscription newSubscription(Consumer cons){
+     public Subscription newSubscription(Consumer cons, String name){
         Subscription sub = new Subscription();
         sub.setConsumer(cons);
         sub.setNbJ(21);
         sub.setCartLineCollection(new ArrayList<CartLine>());
-        sub.setName(cons.getUsername());
+        sub.setName(name);
         if(cons != null)
             manager.persist(sub);
         return sub; 

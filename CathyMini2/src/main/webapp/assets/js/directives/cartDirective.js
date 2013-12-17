@@ -58,6 +58,17 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                scope.cartOpen = false; 
             }
         };
+        
+        scope.selectedSub = null;
+        
+        scope.getSubProducts = function() {
+            for(var i = 0; i < subscriptionService.sub.length; i++) {
+                var sub = subscriptionService.sub[i];
+                if(sub.name === scope.selectedSub) {
+                    return sub.products;
+                }
+            }
+        };
     },
     template: '<div id="cart">' +
                 '<div id="cartTabs">' + 
@@ -67,7 +78,7 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                      '</div>' +
                      '<div id="subTab" ng-class="{\'active\': subOpen}" ng-click="toggleSub()">' +
                         '<i class="fa fa-shopping-cart fa-4x"></i>' +
-                        '<div>{{subService.nbProducts()}} products</div>' +
+                        //'<div>{{subService.nbProducts()}} products</div>' +
                      '</div>' +
                  '</div>' +
                  '<div id="cartPanel">' +
@@ -87,7 +98,9 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                     '<div ng-show="subOpen">' +
                         '<ul>' +
                             '<input type="text" class="inputQ" name="subname" ng-model="subService.sub.name" ng-change="subService.changeName(subService.sub)">{{subService.sub.name}}</input> '+
-                            '<li class="prodCart" ng-repeat="prod in subService.sub.products">' +
+                            '<select ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
+                            '</select>'+
+                            '<li class="prodCart" ng-repeat="prod in getSubProducts()">' +
                                 ' <img class="imgCart" ng-src="/assets/product/{{prod.pictureUrl}}"/>'+
                                 '{{prod.name}} quantity : \n\
 <input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="subService.changeQuantity(prod)"/> \n\

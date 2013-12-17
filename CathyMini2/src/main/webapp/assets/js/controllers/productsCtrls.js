@@ -15,6 +15,9 @@ angular.module('products').
 
       /** Products list */
       $scope.products = [];
+      
+      /**Subscription list*/
+      $scope.subs = subscriptionService.sub;
 
       $scope.displaySearchPanel = true;
       
@@ -223,16 +226,23 @@ angular.module('products').
         }
         cartService.addProduct(product);
       };
-             
+      
+      $scope.newSubscription = function(event){
+        if(event) {
+            event.stopPropagation();
+        }
+        subscriptionService.newSubscription();
+      };
+      
       /**
        * Add a product to the sub
        * @param {Product} product
        */
-      $scope.addProductToSub = function(event, product) {
+      $scope.addProductToSub = function(event, product, name) {
         if(event) {
             event.stopPropagation();
         }
-        subscriptionService.addProduct(product);
+        subscriptionService.addProduct(product, name);
       };
       
       $scope.showProduct = function(product) {
