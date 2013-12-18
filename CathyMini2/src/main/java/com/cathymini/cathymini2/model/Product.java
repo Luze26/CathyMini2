@@ -47,7 +47,7 @@ public abstract class Product implements Serializable {
     @Column(name="ID")
     protected Long id;
 
-    @Column(name="name",columnDefinition="LONG VARCHAR")
+    @Column(name="name")
     protected String name;
     
     @Column(name="type")
