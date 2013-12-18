@@ -80,8 +80,6 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
             event.stopPropagation();
         };
         
-        scope.selectedSub = null;
-        
         /**
          * return the list of product of the selected subscription
          * @returns {@exp;sub@pro;products|unresolved}
@@ -185,8 +183,15 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
        /**
         * called when the user change something about the different subscription
         */
-       $rootScope.$on('showAddSub',scope.showAddSub = function (event, can){
+       $rootScope.$on('showAddSub', function (event, can){
            scope.showAddS = can;
+       });
+       
+       /**
+        * called when the user charge the subscription with something already existing in it
+        */
+       $rootScope.$on('subLoaded', function (){
+           scope.selectedSub = scope.subService.sub[0];
        });
        
        /**
@@ -211,8 +216,8 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
         * have the oldname of subscription when the user want to change it
         */
        scope.oldName = null;
-       
-       scope.cheminImageProduit = "/assets/images/product/"
+        
+       scope.cheminImageProduit = "/assets/images/product/";
     },
     template: '<div id="cart">' +
                 '<div id="cartTabs" ng-click="prevent($event)">' + 

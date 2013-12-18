@@ -37,6 +37,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                         service.sub[j].price += (prodColl[i].product.quantity * prodColl[i].product.price);
                     }
                 }
+                $rootScope.$broadcast('subLoaded');
             }
         });
     
