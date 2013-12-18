@@ -5,7 +5,7 @@ import com.cathymini.cathymini2.model.CartLine;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Subscription;
-import com.cathymini.cathymini2.services.CartSession;
+import com.cathymini.cathymini2.services.CartBean;
 import com.cathymini.cathymini2.services.ProductBean;
 import com.cathymini.cathymini2.webservices.model.CartProduct;
 import com.cathymini.cathymini2.webservices.model.SubProduct;
@@ -41,7 +41,7 @@ public class CartFacade {
     private static final ConsumerSessionSecuring sessionSecuring = ConsumerSessionSecuring.getInstance();
 
     @EJB
-    private CartSession cartBean;
+    private CartBean cartBean;
     @EJB
     private ProductBean productBean;
 
@@ -442,7 +442,7 @@ public class CartFacade {
                 return -1;
             }
         }
-        return sub.getNbJ();
+        return sub.getDaysDelay();
     }
     
     /**

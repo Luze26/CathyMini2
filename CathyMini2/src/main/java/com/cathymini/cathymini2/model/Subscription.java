@@ -32,17 +32,17 @@ public class Subscription extends Cart{
 
     
     @Column(name="nbJ")
-    private int nbJ;
+    private int daysDelay;
     
     @Column(name="name")
     private String name;
 
-    public int getNbJ() {
-        return nbJ;
+    public int getDaysDelay() {
+        return daysDelay;
     }
 
-    public void setNbJ(int nbJ) {
-        this.nbJ = nbJ;
+    public void setDaysDelay(int daysDelay) {
+        this.daysDelay = daysDelay;
     }
     
     public String getName() {

@@ -7,7 +7,7 @@ import com.cathymini.cathymini2.model.PaymentInfos;
 import com.cathymini.cathymini2.model.Purchase;
 import com.cathymini.cathymini2.model.PurchaseLine;
 import com.cathymini.cathymini2.model.PurchaseSubscription;
-import com.cathymini.cathymini2.services.CartSession;
+import com.cathymini.cathymini2.services.CartBean;
 import com.cathymini.cathymini2.services.PurchaseBean;
 import com.cathymini.cathymini2.webservices.model.Payment;
 import com.cathymini.cathymini2.webservices.model.form.PurchaseForm;
@@ -45,7 +45,7 @@ public class PurchaseFacade {
     @EJB
     private PurchaseBean purchaseBean;
     @EJB
-    private CartSession cartBean;
+    private CartBean cartBean;
 
     /**
      * Create a purchase

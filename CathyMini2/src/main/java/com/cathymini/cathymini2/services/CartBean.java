@@ -24,12 +24,12 @@ import org.apache.log4j.Logger;
  * @author Kraiss
  */
 @Stateless
-public class CartSession {
+public class CartBean {
 
     @PersistenceContext(unitName = "com.cathymini_CathyMini2_PU")
     private EntityManager manager;
 
-    private static final Logger logger = Logger.getLogger(CartSession.class);
+    private static final Logger logger = Logger.getLogger(CartBean.class);
     
     public Cart newCart(Consumer cons){
         Cart cart = new Cart();
@@ -219,7 +219,7 @@ public class CartSession {
      public Subscription newSubscription(Consumer cons, String name){
         Subscription sub = new Subscription();
         sub.setConsumer(cons);
-        sub.setNbJ(21);
+        sub.setDaysDelay(21);
         sub.setCartLineCollection(new ArrayList<CartLine>());
         sub.setName(name);
         if(cons != null)
@@ -430,10 +430,10 @@ public class CartSession {
     }
     
     public int changeNbJ(Subscription sub, int nbJ, boolean persist){
-        sub.setNbJ(nbJ);
+        sub.setDaysDelay(nbJ);
         if(persist)
             manager.merge(sub);
-        return sub.getNbJ();
+        return sub.getDaysDelay();
     }
 
     public String changeName(Subscription sub, String name, boolean persist){
