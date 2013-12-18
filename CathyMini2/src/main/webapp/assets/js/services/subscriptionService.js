@@ -1,4 +1,4 @@
-angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 'consumerService', '$q', function($http, $rootScope, $consumerService, $q) {
+angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 'consumerService', '$q', 'notificationService', function($http, $rootScope, $consumerService, $q, notificationService) {
     
     var service = {};
     
@@ -84,19 +84,24 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                 //If the product is already in the sub, we increase its quantity
                 var i = 0;
                 var found = false;
+                var notif;
                 for(var j=0;j<service.sub.length;j++){
                     if(service.sub[j].name === name){
                         for(i;i<service.sub[j].products.length;i++){
                             if(service.sub[j].products[i].id === product.id){
                                 found = true;
                                 service.sub[j].products[i].quantity++;
+                                notif = "Et un "+service.cart.products[i].name+" de plus dans l'abonnement "+service.sub[j].name;
                             }
                         }
                         if(!found){ //Else, new product for the cart
                             product.quantity = 1;
                             service.sub[j].products.push(product);
+                            notif = "Le produit "+service.cart.products[i].name+" a été ajouté à l'abonnement "+service.sub[j].name+" !";
                         }
                         service.sub[j].price += product.price;
+                        notificationService.displayMessage(notif);
+
                     }
                 }
                 
@@ -118,6 +123,16 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                         for(var j = 0; j<service.sub[i].products.length;j++){
                             if(service.sub[i].products[j].id === product.id){
                                service.sub[i].products[j].quantity = data; 
+                               /*var diff = data - product.quantity;
+                               var notif;
+                               if(diff<0){
+                                   notif = -diff+" "+product.name+" ont été enlevé à l'abonnement "+service.sub[i].name;
+                               }
+                               else
+                                   notif = diff+" "+product.name+" ont été ajouté à l'abonnement "+service.sub[i].name;
+                               notificationService.displayMessage(notif);*/
+                               notificationService.displayMessage("Le nombre de "+service.sub[i].products[j].name+" dans l'abonnement "+service.sub[i].name+" a été modifié");
+
                             }
                         }
                     }
@@ -141,6 +156,8 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                 for(var j=0;j<service.sub.length;j++){
                     if(service.sub[j].name === oldName){
                         service.sub[j].name = newName;
+                        notificationService.displayMessage("L'abonnement "+oldName+" s'appelle maintenant "+newName+" !");
+
                     }
                 }
             })
@@ -161,6 +178,8 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                     if(service.sub[i].name === name){
                         service.sub[i].products.splice(data,1);
                         service.sub[i].price += -(q *product.price);
+                        notificationService.displayMessage("Le produit "+product.name+" a bien été supprimé de l'abonnement "+service.sub[i].name+" !");
+
                     }
                 }
                 
@@ -198,20 +217,6 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
         return deferred.promise;
     };
     
-    /**
-     * Change the subscription's name
-     * @param {String} name 
-     */
-    service.changeName = function(name, oldName){
-        $http.post("/webresources/cart/changeName", name, oldName)
-            .success(function(data) {
-                if(data !==""){
-                    for(var i = 0; i<service.sub.length;i++){
-                         service.sub[i].name = data;
-                    }
-                }
-            });
-    };
     
     return service;
 }]);
