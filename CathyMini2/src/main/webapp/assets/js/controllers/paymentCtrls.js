@@ -7,9 +7,9 @@ angular.module('payment').
         $scope.cartService = cartService; // load the service in the scope
         
         // Payment tabs buttons values
-        $scope.btnList = ['Selection du caddie', 'Récaputulatif de la commande', 'Identification du client', 'Adresse de livraison',
-            'Calcul des frais de port', 'Choix du mode de paiement'];
-        $scope.lastBtnValue = ['', 'Valider le panier', '', '', 'Accepter', 'Commander'];
+        $scope.btnList = ['Choix de la Commande', 'Résumé de la commande', 'Identification', 'Adresse de Livraison',
+            'Frais de port', 'Mode de paiement'];
+        $scope.lastBtnValue = ['', 'Valider la commande', '', '', 'Accepter', 'Terminer ma Commande'];
         
         // Current active tab
         $scope.activeTab = 0;
