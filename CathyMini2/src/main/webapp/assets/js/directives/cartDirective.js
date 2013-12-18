@@ -1,7 +1,7 @@
 /**
  * Cart directive, used to display the cart tab
  */
-angular.module('common').directive('cartDirective', ['cartService', 'subscriptionService', function(cartService, subscriptionService) {
+angular.module('common').directive('cartDirective', ['$rootScope', 'cartService', 'subscriptionService', function($rootScope, cartService, subscriptionService) {
   return {
     restrict: 'E',
     replace: true,
@@ -180,6 +180,9 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
            scope.nameTemp = name;
        };
        
+       $rootScope.$on('showAddSub',scope.showAddSub = function (event, can){
+           scope.showAddS = can;
+       });
        
        scope.show = true;
        
@@ -187,7 +190,7 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
        
        scope.oldName = null;
         
-        scope.cheminImageProduit = "/assets/images/product/"
+       scope.cheminImageProduit = "/assets/images/product/"
     },
     template: '<div id="cart">' +
                 '<div id="cartTabs" ng-click="prevent($event)">' + 
@@ -215,7 +218,7 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                         'Price: {{cartService.cart.price}} €' +
                     '</div>' +
                     '<div ng-show="subOpen">' +
-                        '<a class="btn" ng-click="subService.newSubscription()">New subscription</a>'+
+                        '<a class="btn" ng-hide="showAddS" ng-click="subService.newSubscription()">New subscription</a>'+
                         '<select class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
                         '</select>'+
                         '<button type="button" ng-hide="showEditButton" ng-click="showEdit()">Editer</button>'+

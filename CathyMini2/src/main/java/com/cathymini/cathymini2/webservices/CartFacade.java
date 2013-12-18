@@ -324,9 +324,13 @@ public class CartFacade {
             }
         }
         else{
-            ArrayList abo = new ArrayList();
-            abo.add(sub);
-            return abo;
+            if(sub == null)
+                return null;
+            else{
+                ArrayList abo = new ArrayList();
+                abo.add(sub);
+                return abo;
+            }
         }
 
     }

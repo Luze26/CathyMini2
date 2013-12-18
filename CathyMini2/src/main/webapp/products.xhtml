@@ -32,9 +32,9 @@
                                             </div>
                                             <button class="btn btn-primary dropdown">
                                                 <label data-toggle="dropdown" >Ajouter Produit</label>
-                                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
                                                     <li><a class="btn" ng-click="addProductToCart($event, prod)">Add to cart</a></li>
-                                                    <li><a class="btn" ng-click="newSubscription($event)">New subscription</a></li>
+                                                    <li><a class="btn" ng-hide="showAddSub()" ng-click="newSubscription($event)">New subscription</a></li>
                                                     <li ng-repeat="sub in subService.sub"><a class="btn" ng-click="addProductToSub($event, prod, sub.name)">Add to {{sub.name}}</a></li>
                                                 </ul>
                                             </button>
@@ -63,6 +63,7 @@
                 <script src="/assets/js/lib/ng-infinite-scroll.min.js"></script>
                 <script src="/assets/js/modules/productsModule.js"></script>
                 <script src="/assets/js/controllers/productsCtrls.js"></script>
+                <script src="/assets/js/services/consumerService.js"></script>
                 <script src="/assets/js/services/cartService.js"></script>
                 <script src="/assets/js/services/subscriptionService.js"></script>
                 <script src="/assets/js/directives/cartDirective.js"></script>
