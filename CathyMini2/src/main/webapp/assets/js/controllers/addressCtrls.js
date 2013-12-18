@@ -83,12 +83,12 @@ angular.module('address')
     /**
      * Edit modal object
      */
-    $scope.editModal = {title: "Editer l'adresse", address: {}, action: $scope.editAddress};
+    $scope.editModal = {title: "Edition d'adresse", okLabel: "Editer l'adresse", address: {}, action: $scope.editAddress};
     
     /**
      * New modal object
      */
-    $scope.newModal = {title: "Ajouter une adresse", address: {}, action: $scope.addAddress};
+    $scope.newModal = {title: "Ajout d'adresse", okLabel: "Ajouter l'adresse", address: {}, action: $scope.addAddress};
     
     /**
      * Modal

@@ -12,7 +12,7 @@
             <ui:param name="ngController" value="indexCtrl" />
             <ui:param name="title" value="CathyMini" />
             <ui:define name="content">
-                <div id="myCarousel" class="carousel slide">
+                <div id="carousel" class="carousel slide">
                     <div class="carousel-inner">
                         <div class="item active">
                             <img src="http://placehold.it/1140x450" alt=""/>
@@ -49,35 +49,47 @@
                     <a class="carousel-next" href="#myCarousel" data-slide="next"></a>
                 </div><!-- /.carousel -->
                 <div class="row">
-                    <div class="col-md-2">
-                        <ul id="navigation">
-                            <li><a href="#presentation" title="aller à la section 5">Présentation de CathyMini</a></li>
-                            <li><a href="#about" title="aller à la section 2">Notre histoire</a></li>
-                            <li><a href="#contact" title="aller à la section 3">Nous contacter</a></li>                      
-                        </ul>
-                    </div>
-                    <div class="col-md-10" infinite-scroll="loadArticles()" infinite-scroll-distance="2">
-                        <div ng-repeat="art in articles">
-                            <div class="col-md-10">
-                                <div class="col-md-3 image">
-                                    <img class="imgGallery img-thumbnail" width="500" height="500" ng-src="{{art.image}}"/>
-                                </div>
-                                <div id="{{art.type}}" class="col-md-7">
-                                    <h3 class="type">{{art.titre}}</h3>
-                                    <h4 class="mid">{{art.description}}</h4>
-                                    <div>Detail : {{art.detail}}</div>
-                                    <a class="btn" href="#carousel" >haut2page</a>
-                                </div>
+                    <div class="col-xs-3">
+                        <br />
+                            <div class="list-group">
+                                <a class="list-group-item" tabindex="-1" href="#carousel">Les News</a>
+                                <a class="list-group-item" href="#presentation" title="aller à la section 5">Présentation de CathyMini</a>
+                                <a class="list-group-item" href="#about" title="aller à la section 2">Notre Histoire</a>
+                                <a class="list-group-item" href="#contact" title="aller à la section 3">Nous Contacter</a>                      
                             </div>
+                    </div>
+                    <div class="col-xs-9" infinite-scroll="loadArticles()" infinite-scroll-distance="2">
+                        <div class="row list-group" ng-repeat="art in articles">
+                            <div class="list-group-item" id="{{art.type}}">
+                                    <div class="col-xs-2 image">
+                                        <img class="imgGallery img-thumbnail" width="200" height="200" ng-src="{{art.image}}"/>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <div class="row">
+                                            <h4 class="col-xs-8">{{art.titre}}</h4> 
+                                            <font size="3"><a align="center" class="glyphicon glyphicon-chevron-up col-xs-4 lien-article" href="#carousel"> Haut de Page</a></font>                           
+                                        </div>
+                                    </div>  
+                                <br />
+                                <div ><b>{{art.description}}</b></div>
+                                <br />
+                                  <div>
+                                        <p ng-bind-html="art.html"></p>
+                                  </div>
+                                </div>
                         </div>
                     </div>
             </div>
+                
             </ui:define>
             
             <ui:define name="scripts">
                 <script src="/assets/js/lib/ng-infinite-scroll.min.js"></script>
                 <script src="/assets/js/modules/indexModule.js"></script>
                 <script src="/assets/js/controllers/indexCtrls.js"></script>
+            </ui:define>
+            <ui:define name="css">
+                <link rel="stylesheet" type="text/css" href="/assets/css/lib/bootstrap.min.css"></link>
             </ui:define>
     	</ui:composition>
  

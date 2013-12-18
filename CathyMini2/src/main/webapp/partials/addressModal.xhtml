@@ -9,6 +9,7 @@
                 <ui:param name="modalId" value="addressModal" />
                 <ui:param name="modalTitle" value="{{modal.title}}" />
                 <ui:param name="okAction" value="modal.action()" />
+                <ui:param name="okLabel" value="{{modal.okLabel}}" />
                 <ui:param name="ngDisabled" value="form.$invalid" />
                 <ui:define name="modalContent">
                     <div ng-show="modal.displayError" class="alert alert-dismissable alert-danger">
@@ -42,6 +43,9 @@
                                        autofocus="autofocus" required="required" /> 
                                 <div ng-show="and(form.city.$error.required, form.city.$dirty)" class="error-form">
                                     Ce champ est requis.
+                                </div>
+                                <div ng-repeat="city in modal.address.cities">
+                                    {{city}}
                                 </div>
                             </div>
                         </fieldset>

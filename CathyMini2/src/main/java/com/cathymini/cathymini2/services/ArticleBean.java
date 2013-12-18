@@ -48,7 +48,7 @@ public class ArticleBean {
     }
     
     private Query constructQuery(ArticleSearch searchQuery) {
-        String query = "SELECT a FROM Article a";
+        String query = "SELECT a FROM Article a ORDER BY a.id";
         return manager.createQuery(query).setFirstResult(searchQuery.offset).setMaxResults(searchQuery.length);
     }
 
