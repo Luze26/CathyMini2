@@ -207,23 +207,23 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                      '</div>' +
                      '<div id="subTab" ng-class="{\'active\': subOpen}" ng-click="toggleSub($event)" title="Abonnements">' +
                         '<img src="/assets/images/order.png" alt="abonnement"/>' +
-                        '<div ng-show="subService.nbProducts() == 0">Abonnement bien vide</div>' +
-                        '<div ng-show="subService.nbProducts() != 0">{{subService.nbProducts()}} produits dans l\'abonnement</div>' +
+                        '<div ng-show="selectedSub">{{selectedSub.name}}</div>' +
+                        '<div ng-hide="selectedSub">Abonnement</div>' +
                      '</div>' +
                  '</div>' +
                  '<div id="cartPanel" ng-click="prevent($event)">' +
                     '<div ng-show="cartOpen">' +
-                        '<ul>' +
-                            '<li class="prodCart" ng-repeat="prod in cartService.cart.products">' +
-                                ' <img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>'+
-                            '{{prod.name}} quantity : \n\
-                <input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
-                <span>\n\
-                <img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
-                </span>' +
-                            '</li>' +
-                        '</ul>' +
-                        'Price: {{cartService.cart.price}} €' +
+                        '<table class="table table-striped table-bordered table-hover product-list">' +
+                            '<tr class="prodCart" ng-repeat="prod in cartService.cart.products">' +
+                                '<td><img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/></td>'+
+                                '<td>{{prod.name}}</td>' +
+                                '<td><input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/></td>' +
+                                '<td title="Enlever du panier">\n\
+                                <img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/images/remove.png"/>\n\
+                                </td>' +
+                            '</tr>' +
+                        '</table>' +
+                        '<span style="font-style: 14px; font-weight: bold;">Total: <span class="price">{{cartService.cart.price}} €</span></span>' +
                     '</div>' +
                     '<div ng-show="subOpen">' +
                         '<a class="btn" ng-hide="showAddS" ng-click="subService.newSubscription()">New subscription</a>'+
@@ -239,11 +239,10 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                             '<li class="prodCart" ng-repeat="prod in getSubProducts()">' +
                                 ' <img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>'+
                                 '{{prod.name}} quantity : \n\
-<input type="text" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/> \n\
-<span>\n\
-<img class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
-</span>' +
-
+                                <input type="text" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/> \n\
+                                <span>\n\
+                                <img class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
+                                </span>' +
                             '</li>' +
                         '</ul>' +
                         'Price: {{getPriceSub()}} €' +
