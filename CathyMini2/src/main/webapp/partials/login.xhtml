@@ -7,19 +7,25 @@
     <body>
         <ui:composition>
             <ul class="nav navbar-nav navbar-right login-zone" ng-controller="consumerCtrl">
-                <li ng-show="isConnected()">
-                   <a type="button" href="/account.xhtml" ng-class="{'active': header == 'myAccount'}">
+                <li>
+                    <a href="/FAQ.xhtml" type="button" ng-class="{'active': header == 'faq'}">
+                        FAQ
+                        <span class="navbar-tick"></span>
+                    </a>
+                </li>
+                <li ng-show="isConnected()" ng-cloak="ng-cloak">
+                    <a type="button" href="/account.xhtml" ng-class="{'active': header == 'myAccount'}">
                         Mon compte
                         <span class="navbar-tick"></span>
                     </a>
                 </li>
-                <li ng-show="isConnected()">
+                <li ng-show="isConnected()" ng-cloak="ng-cloak">
                     <a href="#" type="button" ng-click="disconnect()">Se déconnecter</a>
                 </li>
-                <li ng-show="!isConnected()">
+                <li ng-show="!isConnected()" ng-cloak="ng-cloak">
                     <a href="#connect" title="Connexion" type="button" data-toggle="modal" data-target="#connectModal">Se connecter</a>
                 </li>
-                <li ng-show="!isConnected()">
+                <li ng-show="!isConnected()" ng-cloak="ng-cloak">
                     <a href="#subscribe" title="Inscription" type="button" data-toggle="modal" data-target="#subscribeModal">S'inscrire</a>
                 </li>
             </ul>

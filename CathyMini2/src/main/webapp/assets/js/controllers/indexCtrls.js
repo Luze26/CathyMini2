@@ -26,7 +26,7 @@ angular.module('index').
                  * Initialize the carousel
                  */
                 $(document).ready(function() {
-                    $('#myCarousel').carousel();
+                    $('#carousel').carousel();
                 });
 
 
