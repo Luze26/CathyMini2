@@ -11,6 +11,7 @@ import com.cathymini.cathymini2.services.CartBean;
 import com.cathymini.cathymini2.services.PurchaseBean;
 import com.cathymini.cathymini2.webservices.model.Payment;
 import com.cathymini.cathymini2.webservices.model.form.PurchaseForm;
+import com.cathymini.cathymini2.webservices.model.form.SubscriptionForm;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
@@ -72,7 +73,7 @@ public class PurchaseFacade {
             }
         }
             
-        /* Block until Payement Infos undefined
+        /* Blocked until Payement Infos undefined
         Collection<PaymentInfos> paymentInfos = user.getPaymentInfoCollection();
         PaymentInfos selectedPI;
         for (PaymentInfos pi : paymentInfos){
@@ -97,8 +98,49 @@ public class PurchaseFacade {
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.MEMBER)
 
-    public String createSubscription(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-        return "Not Implemented";
+    public String createSubscription(SubscriptionForm form, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        Consumer user = sessionSecuring.getConsumer(request);
+        
+        Collection<DeliveryAddress> addresses = user.getDeliveryCollection();
+        DeliveryAddress selectedAddr = null;
+        for (DeliveryAddress da : addresses){
+            if(da.getDeliveryAddresID().compareTo(form.addressId) == 0) {
+                selectedAddr = da;
+            }
+        }
+            
+        /* Blocked until Payement Infos undefined
+        Collection<PaymentInfos> paymentInfos = user.getPaymentInfoCollection();
+        PaymentInfos selectedPI;
+        for (PaymentInfos pi : paymentInfos){
+            if(pi.getPayementInfoID() == form.paymentInfoId) {
+                selectedPI = pi;
+            }
+        }
+        */
+        PaymentInfos selectedPI = null;
+        
+        if (form.nextDelivery == null) {
+            Calendar cal = Calendar.getInstance();
+            form.nextDelivery = cal.getTimeInMillis();
+        }
+        
+        if (form.daysDelay == null) {
+            form.daysDelay = 28; // lunar month
+        }
+        
+        
+        if (form.subName != null) {
+            Cart cart = cartBean.getUserSubscriptionByName(user, form.subName);
+            
+            if (cart != null && selectedAddr != null) {
+                purchaseBean.finalizeSubscription(user, cart, form.nextDelivery, 
+                        selectedAddr, selectedPI, form.daysDelay, form.subName);
+                cartBean.clearCart(cart);
+            }
+        }
+        
+        return "subscription validated";
     }
     
     @POST
