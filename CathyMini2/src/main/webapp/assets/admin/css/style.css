@@ -36,6 +36,10 @@ textarea {
 	padding-left: 3px;
 }
 
+.drops-c .drops-inner {
+    display: block;
+}
+
 .table td {
 	vertical-align: middle;
 }

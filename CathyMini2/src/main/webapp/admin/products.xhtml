@@ -87,7 +87,7 @@
                 
                     <label>Name*</label>
                     <input name="pName" ng-model="modal.product.name" type="text" placeholder="Product name…" autofocus="autofocus" required="required" />
-
+                    <!--
                     <div class="selectFile">
                         <input type="file" id="file" ng-file-select="onFileSelect($files)" />
                         <div ng-show="selectedFiles != null">
@@ -115,7 +115,7 @@
                             </ul>
                         </div>
                     </div>
-                    
+                    -->
                     <div ng-show="modal.add" class="control-group">
                         <label>Type*</label>
                         <div class="btn-group" ng-model="modal.product.type" bs-buttons-radio="/assets/js/controllers/admin/productsCtrls.js">
@@ -126,7 +126,7 @@
 
                     <div class="selectFlux">
                         <label>Flux*</label>
-                        <select ng-model="modal.product.flux" ng-options="value.id as value.print for (key, value) in selects" data-style="btn-primary" bs-select="bs-select" required="required"></select>
+                        <select ng-model="modal.product.flux" ng-options="value.id as value.print for (key, value) in selects" data-style="btn" bs-select="bs-select" required="required"></select>
                     </div>
 
                     <div class="control-group">
