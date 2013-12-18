@@ -39,11 +39,11 @@ import org.jdom2.input.SAXBuilder;
 @Path("/article")
 public class ArticleFacade {
     
-    private static final Logger logger = Logger.getLogger(ArticleFacade.class);
-    
-    
     @EJB
     private ArticleBean articleBean;
+    
+    private static final Logger logger = Logger.getLogger(ArticleFacade.class);
+    
     @POST
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
