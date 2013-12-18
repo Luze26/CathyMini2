@@ -176,6 +176,14 @@ input {
 
     &:focus {
         outline: solid 2px @thirdColor;
+
+        &.ng-invalid.ng-dirty {
+            outline-color: #c0392b;
+        }
+
+        &.ng-valid {
+            outline-color: #2ecc71 ! important;
+        }
     }
 }
 
