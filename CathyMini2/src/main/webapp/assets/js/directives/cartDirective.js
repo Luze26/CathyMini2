@@ -251,17 +251,17 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                                 '<button type="button" class="account-btn btn col-xs-2" ng-click="cancelEdit()">Annuler</button>'+
                                 '<button type="button" class="account-btn btn btn-primary col-xs-2" ng-click="editName()">Editer</button>'+
                         '</div>'+
-                        '<ul>' +
-                            '<li class="prodCart" ng-repeat="prod in getSubProducts()">' +
-                                ' <img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>'+
-                                '{{prod.name}} quantity : \n\
-                                <input type="text" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/> \n\
-                                <span>\n\
-                                <img class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
-                                </span>' +
-                            '</li>' +
-                        '</ul>' +
-                        'Price: {{getPriceSub()}} €' +
+                        '<table class="table table-striped table-bordered table-hover product-list">' +
+                            '<tr class="prodCart" ng-repeat="prod in getSubProducts()">' +
+                                '<td><img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/></td>'+
+                                '<td>{{prod.name}}</td>' +
+                                '<td><input type="text" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/></td>\n\
+                                <td>\n\
+                                <img class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="/assets/images/remove.png"/>\n\
+                                </td>' +
+                            '</tr>' +
+                        '</table>' +
+                        '<span style="font-size: 14px; font-weight: bold;">Total: <span class="price">{{getPriceSub()}} €</span></span>' +
                     '</div>' +
                  '</div>' +
               '</div>'
