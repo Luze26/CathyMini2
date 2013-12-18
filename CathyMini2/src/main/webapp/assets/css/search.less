@@ -84,7 +84,7 @@
         width: 100%;
         border-radius: @radius;
         background-color: @gray;
-        border: solid 1px @grayDark;
+        border: none;
 
         &:hover {
             background-color: @secondaryColorDark ! important;
@@ -94,7 +94,6 @@
     &:checked + div {
         background-color: @secondaryColor;
         font-weight: bold;
-        border: solid 1px @thirdColor;
 
         &:hover {
             background-color: @secondaryColorDark ! important;
@@ -150,6 +149,12 @@ slider span.pointer {
 
     &:hover {
         background-color: @secondaryColorDark;
+    }
+}
+
+@media (max-width: 1200px) {
+    .type-text {
+        display: none;
     }
 }
 
