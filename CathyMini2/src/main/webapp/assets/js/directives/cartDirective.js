@@ -247,14 +247,14 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                         '<span style="font-style: 14px; font-weight: bold;">Total: <span class="price">{{cartService.cart.price}} €</span></span>' +
                     '</div>' +
                     '<div ng-show="subOpen">' +
-                        '<a class="btn" ng-hide="showAddS" ng-click="subService.newSubscription()">New subscription</a>'+
-                        '<select class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
+                        '<select style="margin-top: 5px; margin-left: 5px; margin-right: 5px;" class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
                         '</select>'+
-                        '<button type="button" ng-hide="showEditButton" ng-click="showEdit()">Editer</button>'+
-                        '<div ng-hide="show" >'+
-                                '<input name="input" type="text" class="account-input col-xs-5" ng-model="name" ng-change="changeNameTemp(name)" required="required" />'+
-                                '<button type="button" class="account-btn btn col-xs-2" ng-click="cancelEdit()">Annuler</button>'+
-                                '<button type="button" class="account-btn btn btn-primary col-xs-2" ng-click="editName()">Editer</button>'+
+                        '<a style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px;" title="Nouvel abonnement" class="btn btn-primary smaller-btn" ng-hide="showAddS" ng-click="subService.newSubscription()"><img src="/assets/images/add.png" alt="Ajouter"/></a>'+
+                        '<button title="Changer le nom" style="margin-top: 5px; margin-bottom: 5px;" class="btn btn-primary smaller-btn" type="button" ng-hide="showEditButton" ng-click="showEdit()"><img src="/assets/images/edit.png" alt="Editer"/>Changer le nom</button>'+
+                        '<div ng-hide="show">'+
+                                '<input style="margin-left: 5px;" name="input" type="text" class="col-xs-5" ng-model="name" ng-change="changeNameTemp(name)" required="required" />'+
+                                '<button type="button" class="account-btn btn smaller-btn col-xs-3" ng-click="cancelEdit()">Annuler</button>'+
+                                '<button type="button" class="account-btn btn smaller-btn btn-primary col-xs-3" ng-click="editName()">Editer</button>'+
                         '</div>'+
                         '<table class="table table-striped table-bordered table-hover product-list">' +
                             '<tr class="prodCart" ng-repeat="prod in getSubProducts()">' +
