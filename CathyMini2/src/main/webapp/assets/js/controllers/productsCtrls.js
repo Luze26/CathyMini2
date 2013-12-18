@@ -28,10 +28,7 @@ angular.module('products').
 
       /** true if the search panel is displayed, false otherwise **/
       $scope.displaySearchPanel = true;
-      
-      /** true if the search panel is displayed, false otherwise **/
-      $scope.displayTriePanel = true;
-      
+            
       /** Type list */
       $scope.productsType = [
         {
