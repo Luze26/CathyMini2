@@ -10,6 +10,7 @@ import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Subscription;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
@@ -132,9 +133,11 @@ public class CartSession {
      * Empty the cart.
      */
     @Remove
-    public String clearCart(Cart cart) {
+    public void clearCart(Cart cart) {
+        Consumer user = cart.getConsumer();
+        
         cart.getCartLineCollection().clear();
-        return "Empty cart";
+        manager.merge(cart);
     }
     
     private Cart findCartByConsumer(Consumer consumer) {

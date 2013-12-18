@@ -80,7 +80,7 @@ public class Consumer implements Serializable {
     @OneToMany(mappedBy = "consumer")
     @Basic(fetch = FetchType.EAGER)
     /** Consumer {@link PaymentInfo} collection */
-    private Collection<PayementInfo> paymentInfoCollection;
+    private Collection<PaymentInfos> paymentInfoCollection;
 
     public Role getRole() {
         return role;
@@ -90,11 +90,11 @@ public class Consumer implements Serializable {
         this.role = role;
     }
 
-    public Collection<PayementInfo> getPaymentInfoCollection() {
+    public Collection<PaymentInfos> getPaymentInfoCollection() {
         return paymentInfoCollection;
     }
 
-    public void setPaymentInfoCollection(Collection<PayementInfo> paymentInfoCollection) {
+    public void setPaymentInfoCollection(Collection<PaymentInfos> paymentInfoCollection) {
         this.paymentInfoCollection = paymentInfoCollection;
     }
 

@@ -188,6 +188,7 @@
     </coordinates>
     <panel_attributes>PurchaseSubscription
 --
+- nextDelivery : Long
 - daysDelay : Integer
 </panel_attributes>
     <additional_attributes/>
@@ -208,7 +209,6 @@
 - consumer : Consumer
 - deliveryAddress : DeliveryAddress
 - payementInfo : PayementInfo
-- nextDelivery : Long
 - creationDate : Long
 - payementDate : Long 
 - deliveryDate : Long 

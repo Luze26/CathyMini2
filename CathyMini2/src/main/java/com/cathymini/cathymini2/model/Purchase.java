@@ -56,7 +56,7 @@ public class Purchase implements Serializable {
     
     /** Cost of the purchase */
     @Column(name="totalCost")
-    private Integer totalCost;
+    private Float totalCost;
     
     /** Consumer {@link DeliveryAddress} for the purchase */
     @OneToOne
@@ -64,7 +64,7 @@ public class Purchase implements Serializable {
     
     /** Consumer {@link PaymentInfo} for the purchase */
     @OneToOne
-    private PayementInfo payementInfo;
+    private PaymentInfos payementInfo;
     
     /** Creation date of the purchase */
     @Column(name="creationDate")
@@ -78,11 +78,11 @@ public class Purchase implements Serializable {
     @Column(name="deliveryDate")
     private Long deliveryDate;
 
-    public Integer getTotalCost() {
+    public Float getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(Integer totalCost) {
+    public void setTotalCost(Float totalCost) {
         this.totalCost = totalCost;
     }
 
@@ -118,11 +118,11 @@ public class Purchase implements Serializable {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public PayementInfo getPayementInfo() {
+    public PaymentInfos getPayementInfo() {
         return payementInfo;
     }
 
-    public void setPayementInfo(PayementInfo payementInfo) {
+    public void setPayementInfo(PaymentInfos payementInfo) {
         this.payementInfo = payementInfo;
     }
 

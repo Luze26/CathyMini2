@@ -750,6 +750,28 @@ Bean<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
+    <edge id="e27" source="n9" target="n21">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="20.806328781512434" sy="-15.943539915966397" tx="69.96717436974791" ty="10.975412009463867"/>
+          <y:LineStyle color="#000000" type="line" width="6.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e28" source="n4" target="n7">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="-35.27796743697479" sy="-11.047400210083993" tx="67.88182773109244" ty="-22.082195378151283"/>
+          <y:LineStyle color="#000000" type="line" width="4.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
   </graph>
   <data key="d0">
     <y:Resources/>

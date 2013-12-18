@@ -12,66 +12,77 @@
             <ui:param name="ngController" value="indexCtrl" />
             <ui:param name="title" value="CathyMini" />
             <ui:define name="content">
-                <div id="myCarousel" class="carousel slide">
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <img src="http://placehold.it/1140x450" alt=""/>
-                            <div class="container">
-                                <div class="carousel-caption">
-                                    <h1>Example headline.</h1>
-                                    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                    <a class="btn btn-large btn-primary" href="#">Sign up today</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="http://placehold.it/1140x450" alt=""/>
-                            <div class="container">
-                                <div class="carousel-caption">
-                                    <h1>Another example headline.</h1>
-                                    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                    <a class="btn btn-large btn-primary" href="#">Learn more</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="http://placehold.it/1140x450" alt=""/>
-                            <div class="container">
-                                <div class="carousel-caption">
-                                    <h1>One more for good measure.</h1>
-                                    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                    <a class="btn btn-large btn-primary" href="#">Browse gallery</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="carousel-prev" href="#myCarousel" data-slide="prev"></a>
-                    <a class="carousel-next" href="#myCarousel" data-slide="next"></a>
-                </div><!-- /.carousel -->
                 <div class="row">
-                    <div class="col-md-2">
-                        <ul id="navigation">
-                            <li><a href="#presentation" title="aller à la section 5">Présentation de CathyMini</a></li>
-                            <li><a href="#about" title="aller à la section 2">Notre histoire</a></li>
-                            <li><a href="#contact" title="aller à la section 3">Nous contacter</a></li>                      
-                        </ul>
-                    </div>
-                    <div class="col-md-10" infinite-scroll="loadArticles()" infinite-scroll-distance="2">
-                        <div ng-repeat="art in articles">
-                            <div class="col-md-10">
-                                <div class="col-md-3 image">
-                                    <img class="imgGallery img-thumbnail" width="500" height="500" ng-src="{{art.image}}"/>
-                                </div>
-                                <div id="{{art.type}}" class="col-md-7">
-                                    <h3 class="type">{{art.titre}}</h3>
-                                    <h4 class="mid">{{art.description}}</h4>
-                                    <div>Detail : {{art.detail}}</div>
-                                    <a class="btn" href="#carousel" >haut2page</a>
+                    <div id="carousel" class="col-xs-12 carousel slide">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img src="http://placehold.it/1140x450" alt=""/>
+                                <div class="container">
+                                    <div class="carousel-caption">
+                                        <h1>Example headline.</h1>
+                                        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                        <a class="btn btn-large btn-primary" href="#">Sign up today</a>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="item">
+                                <img src="http://placehold.it/1140x450" alt=""/>
+                                <div class="container">
+                                    <div class="carousel-caption">
+                                        <h1>Another example headline.</h1>
+                                        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                        <a class="btn btn-large btn-primary" href="#">Learn more</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="http://placehold.it/1140x450" alt=""/>
+                                <div class="container">
+                                    <div class="carousel-caption">
+                                        <h1>One more for good measure.</h1>
+                                        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                        <a class="btn btn-large btn-primary" href="#">Browse gallery</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="carousel-prev" href="#carousel" data-slide="prev"></a>
+                        <a class="carousel-next" href="#carousel" data-slide="next"></a>
+                    </div><!-- /.carousel -->
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <br />
+                            <div class="list-group">
+                                <a class="list-group-item" tabindex="-1" href="#carousel">Les News</a>
+                                <a class="list-group-item" href="#presentation" title="aller à la section 5">Présentation de CathyMini</a>
+                                <a class="list-group-item" href="#about" title="aller à la section 2">Notre Histoire</a>
+                                <a class="list-group-item" href="#contact" title="aller à la section 3">Nous Contacter</a>                      
+                            </div>
+                    </div>
+                    <div class="col-xs-9" infinite-scroll="loadArticles()" infinite-scroll-distance="2">
+                        <div class="row list-group" ng-repeat="art in articles">
+                            <div class="list-group-item" id="{{art.type}}">
+                                    <div class="col-xs-2 image">
+                                        <img class="imgGallery img-thumbnail" width="200" height="200" ng-src="{{art.image}}"/>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <div class="row">
+                                            <h4 class="col-xs-8">{{art.titre}}</h4> 
+                                            <font size="3"><a align="center" class="glyphicon glyphicon-chevron-up col-xs-4 lien-article" href="#carousel"> Haut de Page</a></font>                           
+                                        </div>
+                                    </div>  
+                                <br />
+                                <div ><b>{{art.description}}</b></div>
+                                <br />
+                                  <div>
+                                        <p ng-bind-html="art.html"></p>
+                                  </div>
+                                </div>
                         </div>
                     </div>
             </div>
+                
             </ui:define>
             
             <ui:define name="scripts">

@@ -8,13 +8,27 @@
 @import "index.less";
 @import "account.less";
 
+html {
+    height: 100%;
+}
+
 body {
     height: 100%;
+    margin-top: -80px;
+    background-color: #F5F5F5;
 }
 
 .navbar-default {
     background-color: @mainColor; 
     border-bottom: solid 2px #fff;
+}
+
+.navbar-nav {
+    border-right: solid 1px @mainColorSoft;
+}
+
+.navbar-right {
+    border-left: solid 1px @mainColorDark;
 }
 
 .navbar a {
@@ -53,17 +67,27 @@ body {
     color: #fff;
 }
 
+#page {
+    position: relative;
+    min-height: 100%;
+}
+
 #content {
     margin-top: 82px;
+    padding-top: 80px;
     height: 100%;
+    padding-bottom: 45px;
 }
 
 #footer {
-    background: #333333;
-    border-top: 5px solid #cccccc;
+    -webkit-box-shadow: inset 0 2px 1px rgba(0,0,0,.4);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,.3);
+    background-color: @mainColorDark;
     margin-top: 20px;
     height: 50px;
     width: 100%;
+    position: absolute;
+    bottom: 0;
 }
 
 .hand-cursor {
@@ -113,6 +137,13 @@ a {
     }
 }
 
+.lien-article{
+    color: @secondaryColor;
+    &:hover {
+        color: @secondaryColorDark;
+    }
+}
+
 input {
     border: solid 1px #ddd;
     border-radius: 2px;
@@ -130,7 +161,7 @@ input {
 }
 
 input.ng-dirty.ng-invalid {
-    border: solid 1px #c0392b;
+    border: solid 1px #FF1800;
 }
 
 .error-form {
@@ -173,4 +204,27 @@ input.ng-dirty.ng-invalid {
 
 .inline-block {
     display: inline-block;
+}
+
+.tick-hidden {
+    visibility: hidden;
+}
+
+.text-page {
+    background-color: #fff;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 15px;
+}
+
+.footer-links {
+    color: #fff;
+    float: right;
+    vertical-align: middle;
+    margin-right: 50px;
+    line-height: 40px;
+
+    a {
+        color: #fff ! important; 
+    }
 }

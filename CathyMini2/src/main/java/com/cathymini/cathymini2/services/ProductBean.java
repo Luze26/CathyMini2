@@ -28,7 +28,7 @@ import org.apache.log4j.Logger;
 public class ProductBean {
 
     @PersistenceContext(unitName = "com.cathymini_CathyMini2_PU")
-    private EntityManager manager;
+    public EntityManager manager;
 
     private static final Logger logger = Logger.getLogger(ProductBean.class);
 
