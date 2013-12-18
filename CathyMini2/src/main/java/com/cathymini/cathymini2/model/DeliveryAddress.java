@@ -1,10 +1,8 @@
 package com.cathymini.cathymini2.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -51,12 +49,13 @@ public class DeliveryAddress implements Serializable {
     public DeliveryAddress() {
     }
 
-    public DeliveryAddress(String firstname, String lastname, String address, String zipCode, String city) {
+    public DeliveryAddress(String firstname, String lastname, String address, String zipCode, String city, String country) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.address = address;
         this.zipCode = zipCode;
         this.city = city;
+        this.country = country;
     }
 
     public Long getDeliveryAddresID() {
