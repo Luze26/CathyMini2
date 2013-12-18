@@ -41,7 +41,7 @@ public class PurchaseBean {
     }
     
     public void finalizeSubscription(Consumer consumer, Cart cart, Long startDate, 
-            DeliveryAddress da, PaymentInfos pi, Integer daysDelay) {
+            DeliveryAddress da, PaymentInfos pi, Integer daysDelay, String name) {
         
         PurchaseSubscription purchase = new PurchaseSubscription();
         purchase.setConsumer(consumer);
@@ -52,6 +52,7 @@ public class PurchaseBean {
         Calendar cal = Calendar.getInstance();
         purchase.setCreationDate(cal.getTimeInMillis());
         purchase.setDaysDelay(daysDelay);
+        purchase.setName(name);
         
         manager.persist(purchase);
         

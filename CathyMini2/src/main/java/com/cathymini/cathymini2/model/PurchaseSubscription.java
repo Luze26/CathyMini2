@@ -30,6 +30,18 @@ public class PurchaseSubscription extends Purchase {
     /** Number of days between two purchase. It is calculated from the 'creationDate' */
     @Column(name="daysDelay")
     private Integer daysDelay;
+    
+    /** Name of the purchase subscription */
+    @Column(name="name")
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Long getNextDelivery() {
         return nextDelivery;

@@ -101,8 +101,6 @@ public class PurchaseFacade {
     public String createSubscription(SubscriptionForm form, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
         Consumer user = sessionSecuring.getConsumer(request);
         
-        Cart cart = cartBean.getUserCart(user);
-        
         Collection<DeliveryAddress> addresses = user.getDeliveryCollection();
         DeliveryAddress selectedAddr = null;
         for (DeliveryAddress da : addresses){
@@ -131,10 +129,15 @@ public class PurchaseFacade {
             form.daysDelay = 28; // lunar month
         }
         
-        if (cart != null && selectedAddr != null) {
-            purchaseBean.finalizeSubscription(user, cart, form.nextDelivery, 
-                    selectedAddr, selectedPI, form.daysDelay);
-            cartBean.clearCart(cart);
+        
+        if (form.subName != null) {
+            Cart cart = cartBean.getUserSubscriptionByName(user, form.subName);
+            
+            if (cart != null && selectedAddr != null) {
+                purchaseBean.finalizeSubscription(user, cart, form.nextDelivery, 
+                        selectedAddr, selectedPI, form.daysDelay, form.subName);
+                cartBean.clearCart(cart);
+            }
         }
         
         return "subscription validated";
