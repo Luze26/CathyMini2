@@ -43,9 +43,9 @@
                                             </button>
                                             <div class="dropdown-menu list-group" role="menu" aria-labelledby="dLabel">
                                                 <a title="ajouter au panier" class="btn list-group-item lien-list" ng-click="addProductToCart($event, prod)">Ajouter au panier</a>
-                                                <a title="Nouvel abonnement" class="btn" ng-hide="showAddSub()" ng-click="newSubscription($event)">Nouvel abonnement</a>
-                                                <a title="Ajouter à {{sub.name}}" ng-repeat="sub in subService.sub" class="btn" ng-click="addProductToSub(null, productOverlay, sub.name)">Ajouter à {{sub.name}}</a>                                            </div>
-                                            </div>
+                                                <a title="Nouvel abonnement" class="btn list-group-item lien-list" ng-hide="showAddSub()" ng-click="newSubscription($event)">Nouvel abonnement</a>
+                                                <a title="Ajouter à {{sub.name}}" ng-repeat="sub in subService.sub" class="btn list-group-item lien-list" ng-click="addProductToSub($event, productOverlay, sub.name)">Ajouter à {{sub.name}}</a>                                            </div>
+                                        </div>
                                          <div class="infos col-xs-7">
                                              <div class="mid">{{prod.name}} <br /> <span class="brandName">{{prod.marque}}</span></div>
                                              <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>

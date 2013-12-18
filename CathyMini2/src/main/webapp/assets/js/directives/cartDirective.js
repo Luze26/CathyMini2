@@ -1,7 +1,7 @@
 /**
  * Cart directive, used to display the cart tab
  */
-angular.module('common').directive('cartDirective', ['$rootScope', 'cartService', 'subscriptionService', function($rootScope, cartService, subscriptionService) {
+angular.module('common').directive('cartDirective', ['$rootScope', 'cartService', 'subscriptionService', '$timeout', function($rootScope, cartService, subscriptionService, $timeout) {
   return {
     restrict: 'E',
     replace: true,
@@ -16,6 +16,21 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
 
         scope.subService = subscriptionService;
 
+       /**
+        * true is we can't see the edit panel
+        */
+       scope.show = true;
+
+       /**
+        * true when we can't see the edit button
+        */
+       scope.showEditButton = true;
+
+       /**
+        * have the oldname of subscription when the user want to change it
+        */
+       scope.oldName = null;
+       
         /**
          * Toggle cart's tab
          */
@@ -87,7 +102,7 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
         scope.getSubProducts = function() {
             for(var i = 0; i < subscriptionService.sub.length; i++) {
                 var sub = subscriptionService.sub[i];
-                if(scope.selectedSub !== null){
+                if(scope.selectedSub != null){
                     if(sub.name === scope.selectedSub.name) {
                         return sub.products;
                     }
@@ -124,7 +139,7 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
         scope.getPriceSub = function() {
             for(var i = 0; i < subscriptionService.sub.length; i++) {
                 var sub = subscriptionService.sub[i];
-                if(scope.selectedSub !== null){
+                if(scope.selectedSub != null){
                     if(sub.name === scope.selectedSub.name) {
                         return sub.price;
                     }
@@ -161,7 +176,7 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
         * called when the user change the subscription selection
         */
        scope.changeSelection = function () {
-           if(scope.selectedSub !== null){
+           if(scope.selectedSub != null){
                scope.showEditButton = false;
                scope.oldName = scope.selectedSub.name;
                
@@ -191,7 +206,10 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
         * called when the user charge the subscription with something already existing in it
         */
        $rootScope.$on('subLoaded', function (){
-           scope.selectedSub = scope.subService.sub[0];
+           $timeout(function() {
+                scope.selectedSub = scope.subService.sub[0];
+                scope.showEditButton = true;
+            }, 500);
        });
        
        /**
@@ -201,23 +219,13 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
        scope.changeQuantitySub = function (prod) {
            subscriptionService.changeQuantity(prod, scope.selectedSub.name);
        }
-       
-       /**
-        * true is we can't see the edit panel
-        */
-       scope.show = true;
-       
-       /**
-        * true when we can't see the edit button
-        */
-       scope.showEditButton = true;
-       
-       /**
-        * have the oldname of subscription when the user want to change it
-        */
-       scope.oldName = null;
-        
-       scope.cheminImageProduit = "/assets/images/product/";
+
+       scope.newSub = function() {
+           var promise = subscriptionService.newSubscription();
+           promise.then(function(data) {
+               scope.selectedSub = data;
+           });
+       };
     },
     template: '<div id="cart">' +
                 '<div id="cartTabs" ng-click="prevent($event)">' + 
@@ -228,15 +236,14 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                      '</div>' +
                      '<div id="subTab" ng-class="{\'active\': subOpen}" ng-click="toggleSub($event)" title="Abonnements">' +
                         '<img src="/assets/images/order.png" alt="abonnement"/>' +
-                        '<div ng-show="selectedSub">{{selectedSub.name}}</div>' +
-                        '<div ng-hide="selectedSub">Abonnement</div>' +
+                        '<div>Abonnements</div>' +
                      '</div>' +
                  '</div>' +
                  '<div id="cartPanel" ng-click="prevent($event)">' +
                     '<div ng-show="cartOpen">' +
                         '<table class="table table-striped table-bordered table-hover product-list">' +
                             '<tr class="prodCart" ng-repeat="prod in cartService.cart.products">' +
-                                '<td><img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/></td>'+
+                                '<td><img class="imgCart" ng-src="/assets/images/product/{{prod.pictureUrl}}"/></td>'+
                                 '<td>{{prod.name}}</td>' +
                                 '<td><input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/></td>' +
                                 '<td title="Enlever du panier">\n\
@@ -249,16 +256,16 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                     '<div ng-show="subOpen">' +
                         '<select style="margin-top: 5px; margin-left: 5px; margin-right: 5px;" class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
                         '</select>'+
-                        '<a style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px;" title="Nouvel abonnement" class="btn btn-primary smaller-btn" ng-hide="showAddS" ng-click="subService.newSubscription()"><img src="/assets/images/add.png" alt="Ajouter"/></a>'+
+                        '<a style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px;" title="Nouvel abonnement" class="btn btn-primary smaller-btn" ng-hide="showAddS" ng-click="newSub()"><img src="/assets/images/add.png" alt="Ajouter"/></a>'+
                         '<button title="Changer le nom" style="margin-top: 5px; margin-bottom: 5px;" class="btn btn-primary smaller-btn" type="button" ng-hide="showEditButton" ng-click="showEdit()"><img src="/assets/images/edit.png" alt="Editer"/>Changer le nom</button>'+
                         '<div ng-hide="show">'+
                                 '<input style="margin-left: 5px;" name="input" type="text" class="col-xs-5" ng-model="name" ng-change="changeNameTemp(name)" required="required" />'+
-                                '<button type="button" class="account-btn btn smaller-btn col-xs-3" ng-click="cancelEdit()">Annuler</button>'+
-                                '<button type="button" class="account-btn btn smaller-btn btn-primary col-xs-3" ng-click="editName()">Editer</button>'+
+                                '<button title="Annuler" type="button" class="account-btn btn smaller-btn col-xs-3" ng-click="cancelEdit()">Annuler</button>'+
+                                '<button title="Editer" type="button" class="account-btn btn smaller-btn btn-primary col-xs-3" ng-click="editName()">Editer</button>'+
                         '</div>'+
                         '<table class="table table-striped table-bordered table-hover product-list">' +
                             '<tr class="prodCart" ng-repeat="prod in getSubProducts()">' +
-                                '<td><img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/></td>'+
+                                '<td><img class="imgCart" ng-src="/assets/images/product/{{prod.pictureUrl}}"/></td>'+
                                 '<td>{{prod.name}}</td>' +
                                 '<td><input type="text" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/></td>\n\
                                 <td>\n\

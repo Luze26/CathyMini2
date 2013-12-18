@@ -1,4 +1,4 @@
-angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 'consumerService', function($http, $rootScope, $consumerService) {
+angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 'consumerService', '$q', function($http, $rootScope, $consumerService, $q) {
     
     var service = {};
     
@@ -188,11 +188,14 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * function called when the user create a new subscription
      */
     service.newSubscription = function(){
+        var deferred = $q.defer();
         $http.post("/webresources/cart/newSubscription")
             .success(function(data) {
                     var newS = {products: [], price: 0, name: data, nbJ: 21};
                     service.sub.push(newS);
+                    deferred.resolve(newS);
             });
+        return deferred.promise;
     };
     
     /**

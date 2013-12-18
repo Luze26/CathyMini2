@@ -45,14 +45,14 @@
                         </div>
                         <div class="modal-footer">
                             <button title="Fermer" type="button" class="btn" data-dismiss="modal">Fermer</button>
-                            <button title="Ajouter au caddie" class="btn btn-primary" ng-click="addProductToCart(null, productOverlay)">Ajouter au caddie</button>
-                            <button class="btn btn-primary dropdown" data-toggle="dropdown">
-                                <label title="Ajouter à un abonnement" data-toggle="dropdown" >Ajouter à un abonnement</label>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <li title="Nouvel abonnement"><a class="btn" ng-hide="showAddSub()" ng-click="newSubscription($event)">Nouvel abonnement</a></li>
-                                    <li title="Ajouter à l'abonnement" ng-repeat="sub in subService.sub"><a class="btn" ng-click="addProductToSub(null, productOverlay, sub.name)">Ajouter à {{sub.name}}</a></li>
-                                </ul>
+                            <button title="Ajouter au caddie" class="btn btn-primary" ng-click="addProductToCart(null, productOverlay)"><img src="/assets/images/add.png" alt="Ajouter"/> Ajouter au caddie</button>
+                            <button class="btn btn-primary dropdown" style="display: inline-block;" data-toggle="dropdown">
+                                <label style="cursor: pointer; margin-bottom: 0px;" title="Ajouter à un abonnement" ><img src="/assets/images/add.png" alt="Ajouter"/> Ajouter à un abonnement</label>
                             </button>
+                            <div class="dropdown-menu" style="right: 20px; left: inherit;" role="menu" aria-labelledby="dLabel">
+                                <a title="Nouvel abonnement" class="btn list-group-item lien-list" ng-hide="showAddSub()" ng-click="newSubscription($event)">Nouvel abonnement</a>
+                                <a style="margin-left: 0px;" ng-repeat="sub in subService.sub" title="Ajouter à l'abonnement" class="btn list-group-item lien-list" ng-click="addProductToSub(null, productOverlay, sub.name)">Ajouter à {{sub.name}}</a>
+                            </div>
                         </div>
                     </div>
                 </div>
