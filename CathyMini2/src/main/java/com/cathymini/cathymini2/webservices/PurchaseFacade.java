@@ -5,6 +5,7 @@ import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.DeliveryAddress;
 import com.cathymini.cathymini2.model.PaymentInfos;
 import com.cathymini.cathymini2.model.Purchase;
+import com.cathymini.cathymini2.model.PurchaseLine;
 import com.cathymini.cathymini2.model.PurchaseSubscription;
 import com.cathymini.cathymini2.services.CartSession;
 import com.cathymini.cathymini2.services.PurchaseBean;
@@ -13,7 +14,9 @@ import com.cathymini.cathymini2.webservices.model.form.PurchaseForm;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -159,6 +162,19 @@ public class PurchaseFacade {
             for (Purchase subscription : subscriptions) {
                 payments.add(new Payment(subscription));
             }
+        } else {
+            PurchaseSubscription ps = new PurchaseSubscription();
+            PaymentInfos pi = new PaymentInfos();
+            Collection<PaymentInfos> col = new ArrayList<PaymentInfos>();
+            col.add(pi);
+            pi.setConsumer(user);
+            pi.setInfo("Test d'un abonnement.");
+            ps.setConsumer(user);
+            ps.setDaysDelay(21);
+            ps.setPurchaseLineCollection(new ArrayList<PurchaseLine>());
+            ps.setPayementInfo(pi);
+            Payment p = new Payment(ps);
+            payments.add(p);
         }
         
         return payments;
@@ -173,7 +189,7 @@ public class PurchaseFacade {
     @POST
     @Path("/allSubscriptions")
     @Produces(MediaType.APPLICATION_JSON)
-    @Secure(Role.MEMBER)
+    //@Secure(Role.ADMIN)
     public Collection<Payment> getAllSubscriptions(@Context HttpServletResponse response) throws Exception {
         
         Collection<PurchaseSubscription> subscriptions = purchaseBean.getAllSubscriptions();
@@ -182,6 +198,30 @@ public class PurchaseFacade {
             for (Purchase subscription : subscriptions) {
                 payments.add(new Payment(subscription));
             }
+        } else {
+            Calendar cal = Calendar.getInstance();
+            PurchaseSubscription ps = new PurchaseSubscription();
+            Consumer c = new Consumer();
+            PaymentInfos pi = new PaymentInfos();
+            Collection<PaymentInfos> col = new ArrayList<PaymentInfos>();
+            col.add(pi);
+            pi.setConsumer(c);
+            pi.setInfo("Test d'un abonnement.");
+            c.setUsername("Corentin");
+            c.setMail("corentindijoux@gmail.com");
+            c.setRole(Role.MEMBER);
+            c.setPaymentInfoCollection(col);
+            ps.setConsumer(c);
+            ps.setDaysDelay(21);
+            ps.setCreationDate(cal.getTimeInMillis());
+            ps.setPayementDate(cal.getTimeInMillis());
+            ps.setDeliveryDate(cal.getTimeInMillis());
+            ps.setNextDelivery(cal.getTimeInMillis());
+            ps.setPurchaseLineCollection(new ArrayList<PurchaseLine>());
+            ps.setPayementInfo(pi);
+            Payment p = new Payment(ps);
+            payments.add(p);
+            payments.add(p);
         }
         
         return payments;

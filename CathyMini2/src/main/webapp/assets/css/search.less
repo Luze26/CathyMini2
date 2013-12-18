@@ -38,12 +38,13 @@
     padding-top: 12px;
     margin-bottom: 2px;
     border-bottom: solid 2px #ddd;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
 }
 
 .search-col {
     border-right: solid 1px #ddd;
     padding-left: 15px;
-    height: 130px;
 
     &:first-of-type {
         padding-left: 28px;
@@ -84,7 +85,7 @@
         width: 100%;
         border-radius: @radius;
         background-color: @gray;
-        border: solid 1px @grayDark;
+        border: none;
 
         &:hover {
             background-color: @secondaryColorDark ! important;
@@ -94,7 +95,6 @@
     &:checked + div {
         background-color: @secondaryColor;
         font-weight: bold;
-        border: solid 1px @thirdColor;
 
         &:hover {
             background-color: @secondaryColorDark ! important;
@@ -153,8 +153,40 @@ slider span.pointer {
     }
 }
 
+@media (max-width: 1200px) {
+    .type-text {
+        display: none;
+    }
+}
+
+.searchPanelSub {
+    text-align: center;
+}
+
+@media (max-width: 601px) {
+    .searchPanelSub {
+        text-align: left;
+    }
+
+    .closeSearch {
+        margin-left: 60px;
+    }
+
+    .closeSearchText {
+        display: none;
+    }
+}
+
 .type-tick {
     .tick-icon;
     display: inline-block;
     vertical-align: baseline;
+}
+
+.searchInputName {
+    width: 100%;
+    margin-bottom: 5px;
+    &:focus.ng-valid {
+        outline-color: @thirdColor ! important;
+    }
 }

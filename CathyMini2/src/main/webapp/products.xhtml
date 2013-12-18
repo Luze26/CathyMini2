@@ -33,12 +33,12 @@
                                             <div class="image-container">
                                                 <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
                                             </div>
-                                            <button class="btn btn-primary dropdown">
-                                                <label data-toggle="dropdown" >Ajouter Produit</label>
-                                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
-                                                    <li><a class="btn" ng-click="addProductToCart($event, prod)">Add to cart</a></li>
-                                                    <li><a class="btn" ng-hide="showAddSub()" ng-click="newSubscription($event)">New subscription</a></li>
-                                                    <li ng-repeat="sub in subService.sub"><a class="btn" ng-click="addProductToSub($event, prod, sub.name)">Add to {{sub.name}}</a></li>
+                                            <button class="btn btn-primary dropdown" data-toggle="dropdown">
+                                                <label style="margin-bottom: 0px; cursor: pointer;"><img class="product-icon" src="/assets/images/add.png" alt="add"/>Ajouter</label>
+                                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                    <li><a class="btn" ng-click="addProductToCart($event, prod)">Ajouter au panier</a></li>
+                                                    <li><a class="btn" ng-hide="showAddSub()" ng-click="newSubscription($event)">Nouveau abonnement</a></li>
+                                                    <li ng-repeat="sub in subService.sub"><a class="btn" ng-click="addProductToSub($event, prod, sub.name)">Ajouter à {{sub.name}}</a></li>
                                                 </ul>
                                             </button>
                                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -49,6 +49,7 @@
                                          <div class="infos col-xs-7">
                                              <div class="mid">{{prod.name}} <br /> <span class="brandName">{{prod.marque}}</span></div>
                                              <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>
+                                             <div ng-show="prod.appli" class="brandName">Avec applicateur.</div>
                                              <div class="price">{{prod.price}}€</div>
                                          </div>
                                     </div>

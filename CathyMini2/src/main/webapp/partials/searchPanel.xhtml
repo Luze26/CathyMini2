@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col-xs-3 search-col">
                                 <label>Nom</label>
-                                <input style="width: 100%; margin-bottom: 8px;" type="text" ng-model="search.input" placeholder="Entrez un nom" />
+                                <input class="searchInputName" type="text" ng-model="search.input" placeholder="Entrez un début de nom" />
                                 <label style="margin-bottom: 0px;">Prix</label>
                                 <div style="width: 98%">
                                     <slider floor="0" ceiling="20" ng-model-low="search.minPrice" ng-model-high="search.maxPrice"></slider>
@@ -22,36 +22,20 @@
                                 <div class="btn-group">
                                     <label class="labelCheckbox">
                                         <input class="typeCheckboxLeft" type="checkbox" ng-model="search.napkin" ng-change="changeNapkin()" />
-                                        <div class="btn btn-primary">
+                                        <div class="btn btn-primary" title="Serviette">
                                             <span class="type-tick tick" ng-class="{'tick-hidden': !search.napkin}"></span>
-                                            Serviette
+                                            <span class="type-text">Serviette</span>
                                             <img alt="Serviette" src="assets/images/serviette.png" />
                                         </div>
                                     </label>
                                     <label class="labelCheckbox">
                                         <input class="typeCheckboxRight" type="checkbox" ng-model="search.tampon" ng-change="changeTampon()" />
-                                        <div class="btn btn-primary">
+                                        <div class="btn btn-primary" title="Tampon">
                                             <span class="type-tick tick" ng-class="{'tick-hidden': !search.tampon}"></span>
-                                            Tampon
+                                            <span class="type-text">Tampon</span>
                                             <img alt="Tampon" src="assets/images/tampon.png" />
                                         </div>
                                     </label>
-                                </div>
-
-                                <div class="divTrie">
-                                    <label>Trie</label>
-                                    <span class="btn-group btn-trie">
-                                        <button type="button" class="btn btn-default" ng-click="orderBy('name')">Nom<b class="unselectable" ng-class="search.orderBy=='name' ? (search.orderByASC ? 'caret' : 'caret-up'
-                                            ) : ''"></b></button>
-                                        <button type="button" class="btn btn-default" ng-click="orderBy('price')">Prix<b class="unselectable" ng-class="search.orderBy=='price' ? (search.orderByASC ? 'caret' : 'caret-up'
-                                            ) : ''"></b></button>
-                                        <button type="button" class="btn btn-default" ng-click="orderBy('type')">Type<b class="unselectable" ng-class="search.orderBy=='type' ? (search.orderByASC ? 'caret' : 'caret-up'
-                                            ) : ''"></b></button>
-                                        <button type="button" class="btn btn-default" ng-click="orderBy('flux')">Flux<b class="unselectable" ng-class="search.orderBy=='flux' ? (search.orderByASC ? 'caret' : 'caret-up'
-                                            ) : ''"></b></button>
-                                        <button type="button" class="btn btn-default" ng-click="orderBy('marque')">Marque<b class="unselectable" ng-class="search.orderBy=='marque' ? (search.orderByASC ? 'caret' : 'caret-up'
-                                            ) : ''"></b></button>
-                                    </span>
                                 </div>
                             </div>
                             <div class="col-xs-3 search-col">
@@ -106,11 +90,25 @@
                             </div>
                         </div>
                     </div>
-                    <div style="text-align: center;">
-                        <a href="#" class="searchTab" ng-click="displaySearchPanel = !displaySearchPanel">
-                            <span ng-show="displaySearchPanel"><img src="/assets/images/double-arrow-up.png" alt="up"/> Fermer</span>
-                            <span ng-hide="displaySearchPanel"><img src="/assets/images/double-arrow-down.png" alt="down"/> Ouvrir</span> le panneau de filtres
-                        </a>
+                    <div class="searchPanelSub">
+                        <div class="col-xs-12">
+                            <a href="#" class="closeSearch searchTab" ng-click="displaySearchPanel = !displaySearchPanel" title="Fermer les filtres">
+                                <span ng-show="displaySearchPanel"><img src="/assets/images/double-arrow-up.png" alt="up"/><span class="closeSearchText"> Fermer</span></span>
+                                <span ng-hide="displaySearchPanel"><img src="/assets/images/double-arrow-down.png" alt="down"/><span class="closeSearchText"> Ouvrir</span></span><span class="closeSearchText"> le panneau de filtres</span>
+                            </a>
+                        </div>
+                        <div class="dropdown filtretri">
+                            <a data-toggle="dropdown" class="searchTab" href="#" title="Trier les produits">
+                                <span><img src="/assets/images/sort.png"/><span class="closeSearchText"> Trier les produits</span></span>
+                           </a>
+                            <ul class="dropdown-menu list-group" role="menu" aria-labelledby="dLabel">
+                                <a class="list-group-item lien-list" ng-click="orderBy('name', $event)">Nom<b class="unselectable" ng-class="search.orderBy=='name' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
+                                <a class="list-group-item lien-list" ng-click="orderBy('price', $event)">Prix<b class="unselectable" ng-class="search.orderBy=='price' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
+                                <a class="list-group-item lien-list" ng-click="orderBy('type', $event)">Type<b class="unselectable" ng-class="search.orderBy=='type' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
+                                <a class="list-group-item lien-list" ng-click="orderBy('flux', $event)">Flux<b class="unselectable" ng-class="search.orderBy=='flux' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
+                                <a class="list-group-item lien-list" ng-click="orderBy('marque', $event)">Marque<b class="unselectable" ng-class="search.orderBy=='marque' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
