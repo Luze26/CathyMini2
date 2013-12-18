@@ -70,7 +70,7 @@ angular.module('users').
       $scope.editUser = function(dismiss) {
         var editedUser = $scope.editedUser;
         $scope.displayConnectionError = false;
-        $http.post("/webresources/consumer/edit", $scope.editModal.user)
+        $http.post("/webresources/consumer/editUser", $scope.editModal.user)
           .success(function(data) {
             editedUser.username = data.username;
             editedUser.mail = data.mail;
