@@ -78,8 +78,6 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
             event.stopPropagation();
         };
         
-        scope.selectedSub = null;
-        
         /**
          * return the list of product of the selected subscription
          * @returns {@exp;sub@pro;products|unresolved}
@@ -180,8 +178,12 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
            scope.nameTemp = name;
        };
        
-       $rootScope.$on('showAddSub',scope.showAddSub = function (event, can){
+       $rootScope.$on('showAddSub', function (event, can){
            scope.showAddS = can;
+       });
+       
+      $rootScope.$on('subLoaded', function (){
+           scope.selectedSub = scope.subService.sub[0];
        });
        
        scope.changeQuantitySub = function (prod) {
@@ -194,7 +196,7 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
        
        scope.oldName = null;
         
-       scope.cheminImageProduit = "/assets/images/product/"
+       scope.cheminImageProduit = "/assets/images/product/";
     },
     template: '<div id="cart">' +
                 '<div id="cartTabs" ng-click="prevent($event)">' + 
@@ -212,11 +214,11 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                         '<ul>' +
                             '<li class="prodCart" ng-repeat="prod in cartService.cart.products">' +
                                 ' <img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>'+
-            '{{prod.name}} quantity : \n\
-<input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
-<span>\n\
-<img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
-</span>' +
+                                '{{prod.name}} quantity : \n\
+                                <input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
+                                <span>\n\
+                                <img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
+                                </span>' +
                             '</li>' +
                         '</ul>' +
                         'Price: {{cartService.cart.price}} €' +
@@ -235,10 +237,10 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                             '<li class="prodCart" ng-repeat="prod in getSubProducts()">' +
                                 ' <img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>'+
                                 '{{prod.name}} quantity : \n\
-<input type="text" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/> \n\
-<span>\n\
-<img class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
-</span>' +
+                                <input type="text" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/> \n\
+                                <span>\n\
+                                <img class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
+                                </span>' +
 
                             '</li>' +
                         '</ul>' +
