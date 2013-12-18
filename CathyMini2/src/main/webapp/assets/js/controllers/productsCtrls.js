@@ -13,7 +13,7 @@ angular.module('products').
       $scope.offset = 0;
       $scope.length = 20; 
       $scope.currentReqHolding = false;
-      $scope.search = {orderBy: "id", orderByASC: true, input: "", tampon: true,
+      $scope.search = {orderBy: "flux", orderByASC: true, input: "", tampon: true,
         napkin: true, minPrice: 0, maxPrice: 20, brands: [], flux: [1, 2, 3, 4, 5, 6]};
 
       /** Path where product's image are stock */
@@ -28,6 +28,9 @@ angular.module('products').
 
       /** true if the search panel is displayed, false otherwise **/
       $scope.displaySearchPanel = true;
+      
+      /** true if the search panel is displayed, false otherwise **/
+      $scope.displayTriePanel = true;
       
       /** Type list */
       $scope.productsType = [
