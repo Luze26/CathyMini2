@@ -151,8 +151,8 @@ public class CartFacade {
         if(cons != null){
             try{
                 Cart cart = cartBean.getUserCart(cons);
-                CartLine cl = cartBean.getCartLineCartByID(Long.parseLong(String.valueOf(clTemp.getProductId())), cart);
-                cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), true);
+                Product prod = productBean.getProduct(clTemp.getProductId());
+                cartBean.changeQuantityToCart(prod, clTemp.getQuantity(), cart, true);
             }
             catch(Exception ex){
                 response.setStatus(400);
@@ -162,8 +162,8 @@ public class CartFacade {
         else{
             Cart cart = getCartSession(request);
             if(cart != null){
-                CartLine cl = cartBean.getCartLineCartByID(Long.parseLong(String.valueOf(clTemp.getProductId())), cart);
-                cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), false);
+                Product prod = productBean.getProduct(clTemp.getProductId());
+                cartBean.changeQuantityToCart(prod, clTemp.getQuantity(), cart, false);
             }
             else{
                 response.setStatus(400);
@@ -234,7 +234,8 @@ public class CartFacade {
         name += nbAbo;
         
         Subscription sub = cartBean.newSubscription(cons,name);
-        setSubSession(request, sub);
+        if(cons == null)
+            setSubSession(request, sub);
         return name;
         
     }
@@ -256,8 +257,6 @@ public class CartFacade {
             if (cons != null) {
                 Subscription sub  = cartBean.getUserSubscriptionByName(cons, subP.getName());
                 if(sub == null){
-                    /*logger.debug("dans addProductToSub : "+subP.getName());
-                    sub = cartBean.newSubscription(cons, "abonnement2");*/
                     response.setStatus(400);
                     return false;
                 }
@@ -351,9 +350,10 @@ public class CartFacade {
         Consumer cons  = sessionSecuring.getConsumer(request);
         if(cons != null){
             try{
-                Subscription sub = cartBean.getUserSubscriptionByName(cons, clTemp.getName());
-                CartLine cl = cartBean.getCartLineSubByID(Long.parseLong(String.valueOf(clTemp.getProductId())), sub);
-                cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), true);
+                Subscription sub  = cartBean.getUserSubscriptionByName(cons, clTemp.getName());
+                Product prod = productBean.getProduct(clTemp.getProductId());
+                cartBean.changeQuantityToSub(prod, clTemp.getQuantity(), sub, true);
+                
             }
             catch(Exception ex){
                 response.setStatus(400);
@@ -363,8 +363,9 @@ public class CartFacade {
         else{
             Subscription sub = getSubSession(request);
             if(sub != null){
-                CartLine cl = cartBean.getCartLineSubByID(Long.parseLong(String.valueOf(clTemp.getProductId())), sub);
-                cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), false);
+               // CartLine cl = cartBean.getCartLineSubByID(clTemp.getProductId(), sub);
+                Product prod = productBean.getProduct(clTemp.getProductId());
+                cartBean.changeQuantityToSub(prod, clTemp.getQuantity(), sub, false);
             }
             else{
                 response.setStatus(400);

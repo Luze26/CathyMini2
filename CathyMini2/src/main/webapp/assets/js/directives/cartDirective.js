@@ -184,6 +184,10 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
            scope.showAddS = can;
        });
        
+       scope.changeQuantitySub = function (prod) {
+           subscriptionService.changeQuantity(prod, scope.selectedSub.name);
+       }
+       
        scope.show = true;
        
        scope.showEditButton = true;
@@ -231,7 +235,7 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                             '<li class="prodCart" ng-repeat="prod in getSubProducts()">' +
                                 ' <img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>'+
                                 '{{prod.name}} quantity : \n\
-<input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="subService.changeQuantity(prod)"/> \n\
+<input type="text" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/> \n\
 <span>\n\
 <img class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
 </span>' +

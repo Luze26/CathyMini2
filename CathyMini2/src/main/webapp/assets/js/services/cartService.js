@@ -27,7 +27,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
                         var prod = prodColl[i].product;
                         prod.quantity = prodColl[i].quantity;
                         service.cart.products.push(prod);
-                        service.cart.price += (prodColl[i].product.price* prodColl[i].product.quantity);
+                        service.cart.price += (prodColl[i].product.price * prodColl[i].product.quantity);
                     }
                 }
             }
