@@ -31,6 +31,11 @@ public class CartBean {
 
     private static final Logger logger = Logger.getLogger(CartBean.class);
     
+    /**
+     * Create a new cart
+     * @param cons the consumer
+     * @return the new cart 
+     */
     public Cart newCart(Consumer cons){
         Cart cart = new Cart();
         cart.setConsumer(cons);
@@ -40,16 +45,34 @@ public class CartBean {
         return cart;
     }
     
+    /**
+     * Add a product to a cart
+     * @param prod the product
+     * @param qu the new quantity
+     * @param cart the cart
+     * @param persist true if should be save
+     */
     public void addProductToCart(Product prod, int qu, Cart cart, boolean persist){
         CartLine cl = new CartLine(prod, qu);
         addProductToCart(cl, cart, persist);
     }
     
+    /**
+     * Add a product to a cart when you add 1 product
+     * @param prod the product
+     * @param cart the cart
+     * @param persist true if should be save
+     */
     public void addProductToCart(Product prod, Cart cart, Boolean persist){
         addProductToCart(prod, 1, cart, persist);
     }
     
-     
+    /**
+     * Add product to a cart
+     * @param cl the cartLine which contains the product to add
+     * @param cart the cart
+     * @param persist true if should be save
+     */ 
     public void addProductToCart(CartLine cl, Cart cart, boolean persist){
          if(cart.getCartLineCollection() == null){
              cart.setCartLineCollection(new ArrayList<CartLine>());
@@ -72,6 +95,13 @@ public class CartBean {
          }
     }
     
+    /**
+     * Change the quantity to a product in a cart
+     * @param prod the product to change
+     * @param qu the new quantity
+     * @param cart the cart 
+     * @param persist true if should be save
+     */
     public void changeQuantityToCart(Product prod, int qu, Cart cart, boolean persist){
         CartLine cl = new CartLine(prod, qu);
          for(CartLine clTemp : cart.getCartLineCollection()){
@@ -85,6 +115,12 @@ public class CartBean {
          }
     }
     
+    /**
+     * remove a product to a cart
+     * @param prod the product to delete
+     * @param cart the cart
+     * @return 0 if the product have been removed
+     */
     public int removeProductToCart(Product prod, Cart cart){
         
         int place = -1;
@@ -102,27 +138,25 @@ public class CartBean {
         return place;
     }
     
+    /**
+     * Remove a product to a cart with the cartLine
+     * @param cl the cartLine which contain the product to delete
+     * @param cart the cart
+     * @return true if the line have been saved
+     */
     public boolean subCartLineToCart(CartLine cl, Cart cart){
         cart.getCartLineCollection().remove(cl);
         Query query = manager.createNamedQuery("DeleteCartLineById", CartLine.class); 
         query.setParameter("id", cl.getCartLineID());
         return query.executeUpdate() == 1;
     }
-
     
-    public CartLine getCartLineToCart(String nom, Float flux, Cart cart){
-        CartLine cLine = null;
-        Iterator<CartLine> it = cart.getCartLineCollection().iterator();
-        CartLine myCartLine;
-        while(it.hasNext()){
-            myCartLine = it.next();
-            if(myCartLine.getProduct().getName().equals(nom) && myCartLine.getProduct().getFlux().compareTo(flux) == 0){
-                cLine = myCartLine;
-            }
-        }
-        return cLine;
-    }
-    
+    /**
+     * get the cartLine with the id
+     * @param id the cartLine's Id
+     * @param cart the cart
+     * @return the cartLine
+     */
     public CartLine getCartLineCartByID(Long id, Cart cart){
         CartLine cLine = null;
         for(CartLine myCartLine : cart.getCartLineCollection()){
@@ -149,6 +183,11 @@ public class CartBean {
         manager.merge(cart);
     }
     
+    /**
+     * find the cart the a consumer
+     * @param consumer the consumer
+     * @return the cart of the consumer
+     */
     private Cart findCartByConsumer(Consumer consumer) {
         Query q = manager.createNamedQuery("CartByName", Cart.class); 
         q.setParameter("consumer", consumer);
@@ -159,6 +198,11 @@ public class CartBean {
         
     }
     
+    /**
+     * find a cart by id
+     * @param id the cart's id
+     * @return the cart
+     */
     public Cart findCartByID(Long id){
         Query q = manager.createNamedQuery("CartByID", Cart.class); 
         q.setParameter("id", id);
@@ -169,23 +213,45 @@ public class CartBean {
         return (Cart) q.getResultList().get(0);
     }
     
+    /**
+     * Add a cart to a cnsumer
+     * @param cons the consumer
+     * @param cart the cart to add
+     */
     public void addCartToConsumer(Consumer cons, Cart cart){
         cart.setConsumer(cons);
         manager.merge(cart);
     }
     
+    /**
+     * add an item to a cartLine
+     * @param cl the cartLine to update
+     * @param persist true if it should be save
+     */
     public void addItemToCartLine(CartLine cl, Boolean persist){
         cl.setQuantity(cl.getQuantity()+1);
         if(persist)
             manager.merge(cl);
     }
     
+    /**
+     * change the quantity on a cartLine
+     * @param cl the cartLine to update
+     * @param quantity the new quantity of the product
+     * @param persist true if it should be save
+     */
     public void changeQuantityCartLine(CartLine cl, int quantity, Boolean persist){
         cl.setQuantity(quantity);
         if(persist)
             manager.merge(cl);
     }
     
+    /**
+     * mergea cart with the consumer's cart
+     * @param cons the consumer
+     * @param cartTemp the cart to merge
+     * @return 
+     */
     public String mergeCart(Consumer cons, Cart cartTemp){
         Cart cartCons = findCartByConsumer(cons);
         if(cartCons != null){
@@ -216,6 +282,12 @@ public class CartBean {
         return "";
     }
     
+    /**
+     * create a new subscription
+     * @param cons the consumer
+     * @param name the name of the subscription
+     * @return the new subscription
+     */
      public Subscription newSubscription(Consumer cons, String name){
         Subscription sub = new Subscription();
         sub.setConsumer(cons);
@@ -227,6 +299,12 @@ public class CartBean {
         return sub; 
     }
      
+     /**
+      * record a subscription
+      * @param cons the consumer
+      * @param sub the subscription to add at the consumer
+      * @return the subscription updated
+      */
      public Subscription recordSubscription(Consumer cons, Subscription sub){
          if(sub.getConsumer() != cons){
             sub.setConsumer(cons);
@@ -240,17 +318,34 @@ public class CartBean {
          return sub;
      }
     
-
+     /**
+      * Add qu product to subscription
+      * @param prod the product to add
+      * @param qu is quantity
+      * @param sub the subscription
+      * @param persist true if it should be saved
+      */
     public void addProductToSub(Product prod, int qu, Subscription sub, boolean persist){
         CartLine cl = new CartLine(prod, qu);
         addProductToSub(cl, sub, persist);
     }
     
+    /**
+     * Add one product to subscription
+     * @param prod the product to add
+     * @param sub the subscription
+     * @param persist true if it should be saved
+     */
     public void addProductToSub(Product prod, Subscription sub, Boolean persist){
         addProductToSub(prod, 1, sub, persist);
     }
     
-     
+     /**
+      * Add product to subscription
+      * @param cl the cartLine to add
+      * @param sub the subscription
+      * @param persist true if it sould be saved
+      */
     public void addProductToSub(CartLine cl, Subscription sub, boolean persist){
          if(sub.getCartLineCollection() == null){
              sub.setCartLineCollection(new ArrayList<CartLine>());
@@ -274,6 +369,13 @@ public class CartBean {
          }
     }
     
+    /**
+     * change the quantity to a product in a sub
+     * @param prod the product to update
+     * @param qu the new quantity
+     * @param sub the subscription
+     * @param persist true if it sould be saved
+     */
     public void changeQuantityToSub(Product prod, int qu, Subscription sub, boolean persist){
         CartLine cl = new CartLine(prod, qu);
          for(CartLine clTemp : sub.getCartLineCollection()){
@@ -283,11 +385,16 @@ public class CartBean {
              }
          }
          if(persist){
-           // manager.persist(cl);
             manager.merge(sub);
          }
     }
     
+    /**
+     * remove a product to a subscription
+     * @param prod the product to remove
+     * @param sub the subscription
+     * @return 0 if the product have been removed, else -1
+     */
     public int removeProductToSub(Product prod, Subscription sub){
         int place = -1;
         int i = 0;
@@ -305,40 +412,18 @@ public class CartBean {
         return place;
     }
     
+    /**
+     * remove a cartLine to a subscription
+     * @param cl the cartLine to remove
+     * @param sub the subscription
+     * @return true if have been removed
+     */
     public boolean subCartLineToSub(CartLine cl, Subscription sub){
         sub.getCartLineCollection().remove(cl);
         Query query = manager.createNamedQuery("DeleteCartLineById", CartLine.class); 
         query.setParameter("id", cl.getCartLineID());
         return query.executeUpdate() == 1;
     }
-    
-    public void subCartLineToSub(String nom, Float flux, Subscription sub){
-        subCartLineToSub(getCartLine(nom, flux, sub), sub);
-    }
-    
-    public CartLine getCartLine(String nom, Float flux, Subscription sub){
-        CartLine cLine = null;
-        Iterator<CartLine> it = sub.getCartLineCollection().iterator();
-        CartLine myCartLine;
-        while(it.hasNext()){
-            myCartLine = it.next();
-            if(myCartLine.getProduct().getName().equals(nom) && myCartLine.getProduct().getFlux().compareTo(flux) == 0){
-                cLine = myCartLine;
-            }
-        }
-        return cLine;
-    }
-    
-    public CartLine getCartLineSubByID(Long id, Subscription sub){
-        CartLine cLine = null;
-        for(CartLine myCartLine : sub.getCartLineCollection()){
-            if(myCartLine.getProduct().getId().compareTo(id) == 0){
-                cLine = myCartLine;
-            }
-        }
-        return cLine;
-    }
-    
     
     /**
      * Empty the cart.
@@ -349,6 +434,11 @@ public class CartBean {
         return "Empty cart";
     }
     
+    /**
+     * find all consumer's subscriptions
+     * @param consumer
+     * @return the list of his subscriptions
+     */
     private ArrayList<Subscription> findSubByConsumer(Consumer consumer) {
         Query q = manager.createNamedQuery("SubscriptionByCons", Subscription.class); 
         q.setParameter("consumer", consumer);
@@ -358,6 +448,12 @@ public class CartBean {
         return  new ArrayList<Subscription>(q.getResultList());
     }
     
+    /**
+     * find the consumer's subscription with the name name
+     * @param consumer the consumer
+     * @param name the name
+     * @return the subscription
+     */
     private Subscription findSubByConsumerAndName(Consumer consumer, String name) {
         Query q = manager.createNamedQuery("SubscriptionByName", Subscription.class); 
         q.setParameter("consumer", consumer);
@@ -368,51 +464,6 @@ public class CartBean {
         }
         
         return (Subscription) q.getResultList().get(0);
-    }
-    
-    public Cart findSubByID(Long id){
-        Query q = manager.createNamedQuery("SubscriptionByID", Subscription.class); 
-        q.setParameter("id", id);
-        
-        if (q.getResultList().isEmpty())
-            return null; 
-        
-        return (Cart) q.getResultList().get(0);
-    }
-    
-    public void addSubscriptionToConsumer(Consumer cons, Subscription sub){
-        sub.setConsumer(cons);
-        manager.merge(sub);
-    }
-    
-    public String mergeSub(Consumer cons, Subscription subTemp){
-        Subscription subCons = null;//TOdofindCartByConsumer(cons);
-        if(subCons != null){
-            if(subCons.getCartLineCollection().isEmpty()){
-                addSubscriptionToConsumer(cons, subTemp);       
-            }
-            else {
-                for(CartLine clTemp : subTemp.getCartLineCollection()){
-                    boolean find = false;
-                    for(CartLine cl : subCons.getCartLineCollection())
-                    {
-                        if(cl.getProduct().getId().compareTo(clTemp.getProduct().getId()) == 0){
-                            //change the quantity is it's the same product
-                            cl.setQuantity(cl.getQuantity()+clTemp.getQuantity());
-                            find = true;
-                        }
-                    }
-                    if(!find){
-                            //add the product
-                            addProductToSub(clTemp, subCons, true);
-                    }
-                }
-            }
-        }
-        else{
-            addSubscriptionToConsumer(cons, subTemp);
-        }
-        return "";
     }
     
     /**
@@ -429,6 +480,13 @@ public class CartBean {
         return findSubByConsumerAndName(consumer, name);
     }
     
+    /**
+     * change the number of days between 2 purchase
+     * @param sub the subscription
+     * @param nbJ the new number of days
+     * @param persist true if it should be saved
+     * @return the number of days
+     */
     public int changeNbJ(Subscription sub, int nbJ, boolean persist){
         sub.setDaysDelay(nbJ);
         if(persist)
@@ -436,6 +494,13 @@ public class CartBean {
         return sub.getDaysDelay();
     }
 
+    /**
+     * change the name of a subscription
+     * @param sub the subscription
+     * @param name the new name
+     * @param persist true if it should be saved
+     * @return the new name
+     */
     public String changeName(Subscription sub, String name, boolean persist){
         sub.setName(name);
         if(persist)
@@ -443,6 +508,12 @@ public class CartBean {
         return sub.getName();
     }
     
+    /**
+     * look if the new name is correct
+     * @param name the new name
+     * @param cons the consumer
+     * @return true if the name is ok
+     */
     public boolean correctName(String name, Consumer cons){
         boolean ok = true;
         try{
