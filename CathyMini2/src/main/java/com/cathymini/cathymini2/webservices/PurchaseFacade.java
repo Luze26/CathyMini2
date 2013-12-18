@@ -82,8 +82,8 @@ public class PurchaseFacade {
         PaymentInfos selectedPI = null;
         
         if (cart != null && selectedAddr != null) {
-            System.out.println(cart);
             purchaseBean.finalizePurchase(user, cart, selectedAddr, selectedPI);
+            cartBean.clearCart(cart);
         }
         
         return "purchase validated";
