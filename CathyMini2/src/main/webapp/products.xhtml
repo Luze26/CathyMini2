@@ -35,17 +35,17 @@
                                             </div>
                                             <button class="btn btn-primary dropdown" data-toggle="dropdown">
                                                 <label style="margin-bottom: 0px; cursor: pointer;"><img class="product-icon" src="/assets/images/add.png" alt="+"/>Ajouter</label>
-                                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                                    <li><a class="btn" title="ajouter au panier" ng-click="addProductToCart($event, prod)">Ajouter au panier</a></li>
-                                                    <li><a class="btn" ng-hide="showAddSub()" title="nouveau abonnement" ng-click="newSubscription($event)">Nouveau abonnement</a></li>
-                                                    <li title="ajouter à l'abonnement" ng-repeat="sub in subService.sub"><a class="btn" ng-click="addProductToSub($event, prod, sub.name)">Ajouter à {{sub.name}}</a></li>
-                                                </ul>
+                                                <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                    <a class="btn list-group-item lien-list" title="ajouter au panier" ng-click="addProductToCart($event, prod)">Ajouter au panier</a>
+                                                    <a class="btn list-group-item lien-list" ng-hide="showAddSub()" title="nouvel abonnement" ng-click="newSubscription($event)">Nouvel abonnement</a>
+                                                    <a ng-repeat="sub in subService.sub" title="ajouter à l'abonnement" class="btn list-group-item lien-list" ng-click="addProductToSub($event, prod, sub.name)">Ajouter à {{sub.name}}</a>
+                                                </div>
                                             </button>
-                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                                <li><a title="ajouter au panier" class="btn" ng-click="addProductToCart($event, prod)">Ajouter au panier</a></li>
-                                                <li><a title="ajouter à un abonnement" class="btn" ng-click="addProductToSub($event, prod)">Ajouter à un abonnement</a></li>
-                                            </ul>
-                                         </div>
+                                            <div class="dropdown-menu list-group" role="menu" aria-labelledby="dLabel">
+                                                <a title="ajouter au panier" class="btn list-group-item lien-list" ng-click="addProductToCart($event, prod)">Ajouter au panier</a>
+                                                <a title="ajouter à un abonnement" class="btn list-group-item lien-list" ng-click="addProductToSub($event, prod)">Ajouter à un abonnement</a>
+                                            </div>
+                                        </div>
                                          <div class="infos col-xs-7">
                                              <div class="mid">{{prod.name}} <br /> <span class="brandName">{{prod.marque}}</span></div>
                                              <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>
