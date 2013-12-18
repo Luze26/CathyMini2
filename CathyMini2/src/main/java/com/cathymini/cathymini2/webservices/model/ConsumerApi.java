@@ -2,7 +2,6 @@ package com.cathymini.cathymini2.webservices.model;
 
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.DeliveryAddress;
-import com.cathymini.cathymini2.services.ConsumerBean;
 import static com.cathymini.cathymini2.webservices.model.UtilsFormatter.checkMail;
 import static com.cathymini.cathymini2.webservices.model.UtilsFormatter.checkString;
 import java.util.Collection;
@@ -44,6 +43,10 @@ public class ConsumerApi {
     }
 
     public boolean validate() {
-        return checkString(username) && checkMail(mail) && (id != null);
+        return checkString(username) && checkMail(mail);
+    }
+
+    public boolean validateWithId() {
+        return validate() && (id != null);
     }
 }
