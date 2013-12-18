@@ -164,8 +164,8 @@ public class PurchaseFacade {
             }
         } else {
             PurchaseSubscription ps = new PurchaseSubscription();
-            PayementInfo pi = new PayementInfo();
-            Collection<PayementInfo> col = new ArrayList<PayementInfo>();
+            PaymentInfos pi = new PaymentInfos();
+            Collection<PaymentInfos> col = new ArrayList<PaymentInfos>();
             col.add(pi);
             pi.setConsumer(user);
             pi.setInfo("Test d'un abonnement.");
@@ -200,11 +200,10 @@ public class PurchaseFacade {
             }
         } else {
             Calendar cal = Calendar.getInstance();
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             PurchaseSubscription ps = new PurchaseSubscription();
             Consumer c = new Consumer();
-            PayementInfo pi = new PayementInfo();
-            Collection<PayementInfo> col = new ArrayList<PayementInfo>();
+            PaymentInfos pi = new PaymentInfos();
+            Collection<PaymentInfos> col = new ArrayList<PaymentInfos>();
             col.add(pi);
             pi.setConsumer(c);
             pi.setInfo("Test d'un abonnement.");
@@ -215,7 +214,7 @@ public class PurchaseFacade {
             ps.setConsumer(c);
             ps.setDaysDelay(21);
             cal.getTimeInMillis();
-            ps.setCreationDate(Long.valueOf(cal.getTimeInMillis()));
+            ps.setCreationDate(cal.getTimeInMillis());
             ps.setPurchaseLineCollection(new ArrayList<PurchaseLine>());
             ps.setPayementInfo(pi);
             Payment p = new Payment(ps);
