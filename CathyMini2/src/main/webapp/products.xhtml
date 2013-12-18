@@ -16,7 +16,10 @@
                 <ui:include src="/partials/searchPanel.xhtml" />
                 <div class="row" ng-class="displaySearchPanel == true ? 'row-products' : 'row-products-top'">
                     <div class="col-xs-12" infinite-scroll="loadProducts()" infinite-scroll-distance="2">
-                        <div class="col-xs-12 col-sm-6 col-md-4 product-container" ng-repeat="prod in products">
+                        <div class="col-xs-12" ng-show="products.length == 0" ng-cloak="ng-cloak">
+                            Cathy a trouvé aucun produit pour votre recherche.
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 product-container" ng-repeat="prod in products" ng-cloak="ng-cloak">
                             <div type="button" data-toggle="modal" data-target="#productOverlay"
                                  ng-click="showProduct(prod)" class="product">
                                 
