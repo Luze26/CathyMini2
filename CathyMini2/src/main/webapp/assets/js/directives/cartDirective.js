@@ -180,6 +180,7 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
            scope.nameTemp = name;
        };
        
+       
        scope.show = true;
        
        scope.showEditButton = true;
@@ -214,6 +215,7 @@ angular.module('common').directive('cartDirective', ['cartService', 'subscriptio
                         'Price: {{cartService.cart.price}} €' +
                     '</div>' +
                     '<div ng-show="subOpen">' +
+                        '<a class="btn" ng-click="subService.newSubscription()">New subscription</a>'+
                         '<select class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
                         '</select>'+
                         '<button type="button" ng-hide="showEditButton" ng-click="showEdit()">Editer</button>'+

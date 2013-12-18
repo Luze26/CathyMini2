@@ -21,8 +21,10 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 
 /**
@@ -446,11 +448,20 @@ public class CartFacade {
         if(cons != null){
             try{
                 sub = cartBean.getUserSubscriptionByName(cons, infoSubName.getOldName());
-                cartBean.changeName(sub, infoSubName.getNewName(), true);
+                if(cartBean.correctName(infoSubName.getNewName(), cons))
+                    cartBean.changeName(sub, infoSubName.getNewName(), true);
+                else{
+                    Response.ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+                    builder.entity("name not good");
+                    Response res = builder.build();
+                    throw new WebApplicationException(res);
+                }
             }
             catch(Exception ex){
-                response.setStatus(400);
-                return "";
+                Response.ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+                builder.entity(ex.getMessage());
+                Response res = builder.build();
+                throw new WebApplicationException(res);
             }
         }
         else{
@@ -459,8 +470,10 @@ public class CartFacade {
                 cartBean.changeName(sub, infoSubName.getNewName(), false);
             }
             else{
-                response.setStatus(400);
-                return "";
+                Response.ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+                builder.entity("sub null");
+                Response res = builder.build();
+                throw new WebApplicationException(res);
             }
         }
         return sub.getName();

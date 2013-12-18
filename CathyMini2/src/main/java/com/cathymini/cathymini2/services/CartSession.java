@@ -216,12 +216,14 @@ public class CartSession {
     }
      
      public Subscription recordSubscription(Consumer cons, Subscription sub){
-         sub.setConsumer(cons);
-         if(cons != null){
-             for (CartLine cl : sub.getCartLineCollection()) {
-                 manager.persist(cl);
-             }
-            manager.persist(sub);
+         if(sub.getConsumer() != cons){
+            sub.setConsumer(cons);
+            if(cons != null){
+                for (CartLine cl : sub.getCartLineCollection()) {
+                    manager.persist(cl);
+                }
+               manager.persist(sub);
+            }
          }
          return sub;
      }
@@ -410,5 +412,22 @@ public class CartSession {
         if(persist)
             manager.merge(sub);
         return sub.getName();
+    }
+    
+    public boolean correctName(String name, Consumer cons){
+        boolean ok = true;
+        try{
+            ArrayList<Subscription> mySub = getUserSubscription(cons);
+            for(Subscription s : mySub){
+                if(s.getName().equals(name))
+                    ok = false;
+            }
+        }
+        catch(Exception ex){
+            ok = false;
+        }
+        
+        logger.debug("correctName : "+ok);
+        return ok;
     }
 }

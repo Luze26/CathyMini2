@@ -108,7 +108,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                 }
             })
                 .error(function(data) {
-                    alert("Un problème lors du changement de quantité a été déclenché!");
+                    alert("Un problème lors du changement de nom a été déclenché!");
                 });          
        };
     

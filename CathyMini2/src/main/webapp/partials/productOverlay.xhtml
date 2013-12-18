@@ -49,6 +49,7 @@
                             <button class="btn btn-primary dropdown" data-toggle="dropdown">
                                 <label data-toggle="dropdown" >Ajouter à un abonnement</label>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <li><a class="btn" ng-click="newSubscription($event)">New subscription</a></li>
                                     <li ng-repeat="sub in subService.sub"><a class="btn" ng-click="addProductToSub(null, productOverlay, sub.name)">Add to {{sub.name}}</a></li>
                                 </ul>
                             </button>
