@@ -12,7 +12,7 @@
             <ui:param name="title" value="CathyMini - Paiement" />
             <ui:define name="content">
 
-                <div class="show-anim">
+                <div ng-cloak="ng-cloak" class="show-anim">
                     <div class="row" >
                         <ul class="navtab nav">
                             <li ng-repeat="label in btnList" class="{{getBtnClass($index)}}">
@@ -50,7 +50,7 @@
                                                     {{cartService.cart.price}} &euro;
                                                 </td>
                                                 <td ng-if="cartService.cart.price !== 0">
-                                                    <button class="btn btn-primary" ng-click="nextTab()">
+                                                    <button title="Finaliser cette commande" class="btn btn-primary" ng-click="nextTab()">
                                                         <span class="type-tick tick"/>
                                                         Finaliser cette commande
                                                     </button>
@@ -61,7 +61,7 @@
                                             </tr>
 
                                             <!-- New Line -->
-                                            <tr><td colspan="3"></td></tr>
+                                            <tr><td colspan="4"></td></tr>
 
                                             <tr>
                                                 <td><b>Abonnement</b></td>
@@ -95,7 +95,7 @@
                                                 <td>{{prod.price}} &euro;</td>
                                                 <td>{{prod.price * prod.quantity}} &euro;</td>
                                                 <td>
-                                                    <button ng-click="cartService.deleteProduct(prod)" class="btn btn-primary" data-toggle="modal">
+                                                    <button title="Supprimer ce produit de la commande" ng-click="cartService.deleteProduct(prod)" class="btn btn-primary" data-toggle="modal">
                                                         <img class="img-icon" src="/assets/images/remove-white.png" alt="supprimer" />
                                                         Supprimer
                                                     </button>
@@ -116,9 +116,9 @@
                                 <fieldset>
                                     <legend>Connectez-vous ou Inscrivez-vous un compte</legend>
                                     <div class="login-buttons">
-                                        <button class="btn btn-primary" href="#connect" title="Connexion" type="button" data-toggle="modal" data-target="#connectModal">
+                                        <button title="Se connecter à un compte client" class="btn btn-primary" href="#connect" type="button" data-toggle="modal" data-target="#connectModal">
                                             Se Connecter</button>
-                                        <button class="btn btn-primary" href="#subscribe" title="Inscription" type="button" data-toggle="modal" data-target="#subscribeModal">
+                                        <button title="S'inscrire sur CathyMini" class="btn btn-primary" href="#subscribe" type="button" data-toggle="modal" data-target="#subscribeModal">
                                             S'inscrire</button>
                                     </div>
                                 </fieldset>
@@ -143,18 +143,18 @@
                                                 <td>{{addr.zipCode}}</td>
                                                 <td>{{addr.city}}</td>
                                                 <td>
-                                                    <span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">
+                                                    <span title="Editer l'adresse selectionnée" ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">
                                                         <img class="edit-img-icon" src="/assets/images/edit.png" alt="éditer" />
                                                         Editer
                                                     </span>
-                                                    <span ng-click="selectAddr(addr);nextTab()" class="btn btn-primary">
+                                                    <span title="Choisir cette adresse de livraison" ng-click="selectAddr(addr);nextTab()" class="btn btn-primary">
                                                         <span class="type-tick tick"/> Selectionner
                                                     </span>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <button type="button" ng-click="modal = newModal" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">
+                                    <button title="Ajouter une nouvelle adresse de livraison à votre compte" type="button" ng-click="modal = newModal" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">
                                         <img class="img-icon" src="/assets/images/add.png" alt="ajouter" />
                                         Ajouter une adresse
                                     </button>

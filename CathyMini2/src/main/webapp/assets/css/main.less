@@ -105,6 +105,13 @@ a {
     }
 }
 
+a.list-group-item {
+    color: @secondaryColor;
+    &:hover {
+        color: @secondaryColorDark;
+    }
+}
+
 .img-thumbnail {
     border: none;
 }
@@ -162,6 +169,13 @@ input {
 
 input.ng-dirty.ng-invalid {
     border: solid 1px #FF1800;
+}
+
+.filtretri {
+    float: left;
+    margin-left: 30px;
+    margin-top: -21px;
+    position: absolute;
 }
 
 .error-form {
@@ -227,4 +241,12 @@ input.ng-dirty.ng-invalid {
     a {
         color: #fff ! important; 
     }
+}
+
+.smaller-btn {
+    padding: 4px 6px;
+}
+
+td {
+    vertical-align: middle ! important;
 }
