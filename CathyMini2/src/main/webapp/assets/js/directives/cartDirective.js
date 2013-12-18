@@ -182,20 +182,36 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
            scope.nameTemp = name;
        };
        
+       /**
+        * called when the user change something about the different subscription
+        */
        $rootScope.$on('showAddSub',scope.showAddSub = function (event, can){
            scope.showAddS = can;
        });
        
+       /**
+        * called when user want to change the quatity to a product in subscription
+        * @param {Product} prod
+        */
        scope.changeQuantitySub = function (prod) {
            subscriptionService.changeQuantity(prod, scope.selectedSub.name);
        }
        
+       /**
+        * true is we can't see the edit panel
+        */
        scope.show = true;
        
+       /**
+        * true when we can't see the edit button
+        */
        scope.showEditButton = true;
        
+       /**
+        * have the oldname of subscription when the user want to change it
+        */
        scope.oldName = null;
-        
+       
        scope.cheminImageProduit = "/assets/images/product/"
     },
     template: '<div id="cart">' +
