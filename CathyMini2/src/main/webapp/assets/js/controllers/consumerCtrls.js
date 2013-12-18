@@ -87,6 +87,9 @@ angular.module('common').
     /** Consuler information **/
     $scope.consumer = {user: "", pwd: ""};
     
+    /** True when we are waiting the response from the server for reset the passworrd **/
+    $scope.resetPasswordLoad = false;
+    
     /** Popup element **/
     var modal = angular.element("#connectModal");
     
@@ -131,14 +134,17 @@ angular.module('common').
      * Reset password
      */
     $scope.resetPassword = function() {
+        $scope.resetPasswordLoad = true;
         $scope.resetPasswordInfo = null;
         $scope.error = null;
         $scope.errorReset = null;
         consumerService.resetPassword($scope.resetPwdUsername).success(function() { //success
+               $scope.resetPasswordLoad = false;
                $scope.displayResetForm = false;
                $scope.modal = connectModal;
                $scope.resetPasswordInfo = "Un e-mail vous a été envoyé, avec la marche à suivre pour changer votre mot de passe."
             }).error(function(data, status) { //error
+                $scope.resetPasswordLoad = false;
                 if(status == 400) {
                     $scope.errorReset = "Aucun utilisateur correspond au nom donné.";
                 }

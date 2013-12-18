@@ -9,6 +9,11 @@ angular.module('account')
     //////////////////////////////////////////////////
     
     /**
+     * If the user is connected
+     */
+    $scope.userConnected = false;
+    
+    /**
      * Settings field
      */
     $scope.fields = [{label: "Nom", key: "username", type: "text", placeholder: "", success: false, loading: false, editable: true},
@@ -50,6 +55,7 @@ angular.module('account')
      * @type @exp;$scope@call;$on
      */
     var clearConnectWatcher = $scope.$on('consumerConnect', function(event, consumer) {
+        $scope.userConnected = true;
         $scope.consumer = consumer;
         copyConsumer();
         clearConnectWatcher();
@@ -59,6 +65,7 @@ angular.module('account')
      * Watch if the user disconnect, in this case redirect on the index
      */
     $scope.$on('consumerDisconnect', function() {
+        $scope.userConnected = false;
         window.location = "/index.xhtml";
     });
     

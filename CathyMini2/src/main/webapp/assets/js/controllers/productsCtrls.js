@@ -2,7 +2,7 @@
  * Controller for the products list
  */
 angular.module('products').
-  controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', 'subscriptionService', function($rootScope, $scope, $http, cartService, subscriptionService) {
+  controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', 'subscriptionService', 'consumerService', function($rootScope, $scope, $http, cartService, subscriptionService, consumerService) {
       
       /**
        * Set the tick on the navbar
@@ -108,9 +108,13 @@ angular.module('products').
       /**
        * Order by the product's list
        * @param {type} property, property on which the sort is done
-       * @param {type} state, state oof the orderBy
+       * @param {event} click event
        */
-      $scope.orderBy = function(property) {
+      $scope.orderBy = function(property, event) {
+        if(event) {
+            event.stopPropagation();
+        }
+        
         if (property === $scope.search.orderBy) { //If the property is unchanged, we change the direction of the sort
           $scope.search.orderByASC = !$scope.search.orderByASC;
         }
@@ -271,6 +275,17 @@ angular.module('products').
        */
       $scope.showProduct = function(product) {
         $scope.productOverlay = product;
+      };
+      
+      /**
+       * return true if consumer can add a new Subscription, else if false
+       */
+      $scope.showAddSub = function() {
+          var can = false;
+          if(!consumerService.isConnected && subscriptionService.sub.length !== 0)
+              can = true;
+          $rootScope.$broadcast('showAddSub', can);
+          return can;
       };
       
       /**

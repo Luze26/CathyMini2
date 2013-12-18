@@ -14,6 +14,24 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     service.nbProducts = function() {
         return service.cart.products.length;
     };
+    
+    
+    $http.post("/webresources/cart/getCart")
+    .success(function(data){
+            service.cart.price = 0;
+            if(data !== null){
+                service.cart.products = [];
+                var prodColl = data.cartLineCollection;
+                if(prodColl != null){
+                    for( var i = 0;i<prodColl.length; i++){
+                        var prod = prodColl[i].product;
+                        prod.quantity = prodColl[i].quantity;
+                        service.cart.products.push(prod);
+                        service.cart.price += (prodColl[i].product.price * prodColl[i].product.quantity);
+                    }
+                }
+            }
+        });
 
     
     /**

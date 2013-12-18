@@ -56,16 +56,31 @@ public class CartSession {
          }
          Boolean find = false;
          for(CartLine clTemp : cart.getCartLineCollection()){
-             if(clTemp.getProduct().getId() == cl.getProduct().getId()){
+             if(clTemp.getProduct().getId().compareTo(cl.getProduct().getId())==0){
                  int q = clTemp.getQuantity() + cl.getQuantity();
                  changeQuantityCartLine(clTemp, q, persist);
                  find = true;
              }
          }
-         if(!find)
+         if(!find){
             cart.getCartLineCollection().add(cl);
+            if(persist)
+                manager.persist(cl);
+         }
          if(persist){
-            manager.persist(cl);
+            manager.merge(cart);
+         }
+    }
+    
+    public void changeQuantityToCart(Product prod, int qu, Cart cart, boolean persist){
+        CartLine cl = new CartLine(prod, qu);
+         for(CartLine clTemp : cart.getCartLineCollection()){
+             if(clTemp.getProduct().getId().compareTo(cl.getProduct().getId())==0){
+                 int q = cl.getQuantity();
+                 changeQuantityCartLine(clTemp, q, persist);
+             }
+         }
+         if(persist){
             manager.merge(cart);
          }
     }
@@ -73,12 +88,11 @@ public class CartSession {
     public int removeProductToCart(Product prod, Cart cart){
         
         int place = -1;
-        Iterator<CartLine> it = cart.getCartLineCollection().iterator();
         int i = 0;
         for(CartLine myCartLine : cart.getCartLineCollection()){
 	// Manipulations avec l'élément actuel
-            if(myCartLine.getProduct().getId() == prod.getId()){
-                cart.getCartLineCollection().remove(myCartLine);
+            if(myCartLine.getProduct().getId().compareTo(prod.getId()) == 0){
+                subCartLineToCart(myCartLine, cart);
                 manager.merge(cart);
                 return i;
             }
@@ -94,10 +108,7 @@ public class CartSession {
         query.setParameter("id", cl.getCartLineID());
         return query.executeUpdate() == 1;
     }
-    
-    public void subProductToCart(String nom, Float flux, Cart cart){
-        subCartLineToCart(getCartLineToCart(nom, flux, cart), cart);
-    }
+
     
     public CartLine getCartLineToCart(String nom, Float flux, Cart cart){
         CartLine cLine = null;
@@ -105,7 +116,7 @@ public class CartSession {
         CartLine myCartLine;
         while(it.hasNext()){
             myCartLine = it.next();
-            if(myCartLine.getProduct().getName().equals(nom) && myCartLine.getProduct().getFlux() == flux){
+            if(myCartLine.getProduct().getName().equals(nom) && myCartLine.getProduct().getFlux().compareTo(flux) == 0){
                 cLine = myCartLine;
             }
         }
@@ -115,7 +126,7 @@ public class CartSession {
     public CartLine getCartLineCartByID(Long id, Cart cart){
         CartLine cLine = null;
         for(CartLine myCartLine : cart.getCartLineCollection()){
-            if(myCartLine.getProduct().getId() == id){
+            if(myCartLine.getProduct().getId().compareTo(id) == 0){
                 cLine = myCartLine;
             }
         }
@@ -134,8 +145,6 @@ public class CartSession {
      */
     @Remove
     public void clearCart(Cart cart) {
-        Consumer user = cart.getConsumer();
-        
         cart.getCartLineCollection().clear();
         manager.merge(cart);
     }
@@ -188,7 +197,7 @@ public class CartSession {
                     boolean find = false;
                     for(CartLine cl : cartCons.getCartLineCollection())
                     {
-                        if(cl.getProduct().getId() == clTemp.getProduct().getId()){
+                        if(cl.getProduct().getId().compareTo(clTemp.getProduct().getId()) == 0){
                             //change the quantity is it's the same product
                             cl.setQuantity(cl.getQuantity()+clTemp.getQuantity());
                             find = true;
@@ -219,12 +228,14 @@ public class CartSession {
     }
      
      public Subscription recordSubscription(Consumer cons, Subscription sub){
-         sub.setConsumer(cons);
-         if(cons != null){
-             for (CartLine cl : sub.getCartLineCollection()) {
-                 manager.persist(cl);
-             }
-            manager.persist(sub);
+         if(sub.getConsumer() != cons){
+            sub.setConsumer(cons);
+            if(cons != null){
+                for (CartLine cl : sub.getCartLineCollection()) {
+                    manager.persist(cl);
+                }
+               manager.persist(sub);
+            }
          }
          return sub;
      }
@@ -246,16 +257,33 @@ public class CartSession {
          }
          Boolean find = false;
          for(CartLine clTemp : sub.getCartLineCollection()){
-             if(clTemp.getProduct().getId() == cl.getProduct().getId()){
+             if(clTemp.getProduct().getId().compareTo(cl.getProduct().getId()) == 0){
                  int q = clTemp.getQuantity() + cl.getQuantity();
                  changeQuantityCartLine(clTemp, q, persist);
                  find = true;
              }
          }
-         if(!find)
+         if(!find){
+            if(persist){
+                manager.persist(cl);
+            }
             sub.getCartLineCollection().add(cl);
+         }
          if(persist){
-            manager.persist(cl);
+            manager.merge(sub);
+         }
+    }
+    
+    public void changeQuantityToSub(Product prod, int qu, Subscription sub, boolean persist){
+        CartLine cl = new CartLine(prod, qu);
+         for(CartLine clTemp : sub.getCartLineCollection()){
+             if(clTemp.getProduct().getId().compareTo(cl.getProduct().getId()) == 0){
+                 int q = cl.getQuantity();
+                 changeQuantityCartLine(clTemp, q, persist);
+             }
+         }
+         if(persist){
+           // manager.persist(cl);
             manager.merge(sub);
          }
     }
@@ -263,12 +291,11 @@ public class CartSession {
     public int removeProductToSub(Product prod, Subscription sub){
         int place = -1;
         int i = 0;
-        int size = sub.getCartLineCollection().size();
         
         for(CartLine myCartLine : sub.getCartLineCollection()){
 	// Manipulations avec l'élément actuel
-            if(myCartLine.getProduct().getId() == prod.getId()){
-                sub.getCartLineCollection().remove(myCartLine);
+            if(myCartLine.getProduct().getId().compareTo(prod.getId()) == 0){
+                subCartLineToSub(myCartLine, sub);
                 manager.merge(sub);
                 return i;
             }
@@ -295,7 +322,7 @@ public class CartSession {
         CartLine myCartLine;
         while(it.hasNext()){
             myCartLine = it.next();
-            if(myCartLine.getProduct().getName().equals(nom) && myCartLine.getProduct().getFlux() == flux){
+            if(myCartLine.getProduct().getName().equals(nom) && myCartLine.getProduct().getFlux().compareTo(flux) == 0){
                 cLine = myCartLine;
             }
         }
@@ -305,7 +332,7 @@ public class CartSession {
     public CartLine getCartLineSubByID(Long id, Subscription sub){
         CartLine cLine = null;
         for(CartLine myCartLine : sub.getCartLineCollection()){
-            if(myCartLine.getProduct().getId() == id){
+            if(myCartLine.getProduct().getId().compareTo(id) == 0){
                 cLine = myCartLine;
             }
         }
@@ -336,8 +363,9 @@ public class CartSession {
         q.setParameter("consumer", consumer);
         q.setParameter("name", name);
         
-        if (q.getResultList().isEmpty())
+        if (q.getResultList().isEmpty()){
             return null; 
+        }
         
         return (Subscription) q.getResultList().get(0);
     }
@@ -368,7 +396,7 @@ public class CartSession {
                     boolean find = false;
                     for(CartLine cl : subCons.getCartLineCollection())
                     {
-                        if(cl.getProduct().getId() == clTemp.getProduct().getId()){
+                        if(cl.getProduct().getId().compareTo(clTemp.getProduct().getId()) == 0){
                             //change the quantity is it's the same product
                             cl.setQuantity(cl.getQuantity()+clTemp.getQuantity());
                             find = true;
@@ -413,5 +441,20 @@ public class CartSession {
         if(persist)
             manager.merge(sub);
         return sub.getName();
+    }
+    
+    public boolean correctName(String name, Consumer cons){
+        boolean ok = true;
+        try{
+            ArrayList<Subscription> mySub = getUserSubscription(cons);
+            for(Subscription s : mySub){
+                if(s.getName().equals(name))
+                    ok = false;
+            }
+        }
+        catch(Exception ex){
+            ok = false;
+        }
+        return ok;
     }
 }
