@@ -12,7 +12,6 @@
             <ui:param name="ngController" value="indexCtrl" />
             <ui:param name="title" value="CathyMini" />
             <ui:define name="content">
-                
                 <div id="carousel" class="carousel slide">
                     <div class="carousel-inner">
                         <div class="item active">
@@ -50,7 +49,7 @@
                     <a class="carousel-next" href="#myCarousel" data-slide="next"></a>
                 </div><!-- /.carousel -->
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <br />
                             <div class="list-group">
                                 <a class="list-group-item" tabindex="-1" href="#carousel">Les News</a>
@@ -59,16 +58,16 @@
                                 <a class="list-group-item" href="#contact" title="aller à la section 3">Nous Contacter</a>                      
                             </div>
                     </div>
-                    <div class="col-md-9" infinite-scroll="loadArticles()" infinite-scroll-distance="2">
+                    <div class="col-xs-9" infinite-scroll="loadArticles()" infinite-scroll-distance="2">
                         <div class="row list-group" ng-repeat="art in articles">
                             <div class="list-group-item" id="{{art.type}}">
-                                    <div class="col-md-2 image">
+                                    <div class="col-xs-2 image">
                                         <img class="imgGallery img-thumbnail" width="200" height="200" ng-src="{{art.image}}"/>
                                     </div>
-                                    <div class="col-md-10">
+                                    <div class="col-xs-10">
                                         <div class="row">
-                                            <h4 class="col-md-10">{{art.titre}}</h4> 
-                                            <a align="center" class="glyphicon glyphicon-chevron-up col-md-2" href="#carousel"><br />Haut de Page</a>                              
+                                            <h4 class="col-xs-8">{{art.titre}}</h4> 
+                                            <font size="3"><a align="center" class="glyphicon glyphicon-chevron-up col-xs-4 lien-article" href="#carousel"> Haut de Page</a></font>                           
                                         </div>
                                     </div>  
                                 <br />

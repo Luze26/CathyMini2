@@ -42,38 +42,8 @@
                     Ce formulaire a été conçu pour recevoir vos commentaires ou vos questions par rapport à nos produits ou ce site. <![CDATA[<br />]]> 
                     En cas d'urgence médicale, ou si vous souhaitez un conseil médical spécifique, vous devez contacter votre médecin traitant ou un service médical. <![CDATA[<br />]]>
                     Les informations recueillies dans ce formulaire sont destinées exclusivement à CathyMini, et sont réservées à la mise en oeuvre des services offerts sur le site. En aucun cas ces informations ne seront transmises à des tiers. <![CDATA[<br />]]>
-                    Les e-mails envoyés de et vers ce site peuvent ne pas être sécurisés, nous vous conseillons de prendre des précautions particulières en choisissant les informations que vous nous envoyez. <![CDATA[<br />]]>
                     Conformément à la loi du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés, modifiée par la loi du 6 Août 2004,vous disposez d'un droit d'accès, de rectification et de radiation des données vous concernant, dans les conditions définies par la charte de confidentialité.<![CDATA[<br />]]>
-                    <![CDATA[                    
-                    <form class="form-horizontal" role="search">
-                        <div class="form-group">
-                            <label> Nom : </label>
-                            <input type="text" ng-model="Nom" class="form-control" placeholder="Nom"/>
-                        </div>   
-                        <div class="form-group">
-                            <label> Prénom : </label>
-                            <input type="text" ng-model="Prenom" class="form-control" placeholder="Prénom"/>
-                        </div>   
-                        <div class="form-group">    
-                            <label> Adresse Mail : </label>
-                            <input type="text" ng-model="Mail" class="form-control" placeholder="Adresse Mail"/>
-                        </div>   
-                        <div class="form-group">      
-                            <label> Age : </label>
-                            <input type="text" ng-model="Age" class="form-control" placeholder="Age"/>
-                        </div>   
-                        <div class="form-group">     
-                            <label> Sujet : </label>
-                            <input type="text" ng-model="Sujet" class="form-control" placeholder="Sujet"/>
-                        </div>   
-                        <div class="form-group">     
-                            <label>
-                                Message : <br />
-                                <textarea type="text" ng-model="Message" class="form-control" placeholder="Contenu du message ..."/>
-                            </label>
-                        </div>
-                        <button ng-clik="envoyerMail()">Envoyer</button>
-                    </form> ]]>
+                    Pour nous contacter envoyer votre mail à <![CDATA[<i>cathyminicontact@gmail.fr. </i><br />]]>
                 </detail>
                 <image>/assets/images/article/message-icone.png</image>
 	</article>
