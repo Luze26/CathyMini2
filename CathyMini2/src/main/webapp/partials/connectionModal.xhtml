@@ -15,17 +15,20 @@
                 <ui:param name="okAction2" value="resetPassword()" />
                 <ui:param name="closeAction" value="displayResetForm = false" />
                 <ui:param name="ngDisabled" value="form.$invalid" />
-                <ui:param name="ngDisabled2" value="resetForm.$invalid" />
+                <ui:param name="ngDisabled2" value="resetForm.$invalid || resetPasswordLoad" />
                 <ui:param name="ngShow" value="!displayResetForm" />
                 <ui:param name="ngShow2" value="displayResetForm" />
                 <ui:define name="modalContent">
-                    <div ng-show="error" class="alert alert-danger">
+                    <div ng-show="error" class="alert alert-danger" ng-cloak="ng-cloak">
                         {{error}}
                     </div>
-                    <div ng-show="and(errorReset,displayResetForm)" class="alert alert-danger">
+                    <div ng-show="and(errorReset,displayResetForm)" ng-cloak="ng-cloak" class="alert alert-danger">
                         {{errorReset}}
                     </div>
-                    <div ng-show="resetPasswordInfo" class="alert alert-info">
+                    <div ng-show="resetPasswordLoad" ng-cloak="ng-cloak" class="alert alert-info">
+                        <img src="/assets/images/loading.gif" alt="loading" /> Cathy traite votre demande, veuillez patienter quelques secondes.
+                    </div>
+                    <div ng-show="resetPasswordInfo" class="alert alert-info" ng-cloak="ng-cloak">
                         Un e-mail vous a été envoyé pour changer votre mot de passe.
                     </div>
                     <form ng-hide="displayResetForm" ng-model="form" name="form" class="form-horizontal" novalidate="novalidate">
