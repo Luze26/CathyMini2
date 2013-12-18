@@ -102,17 +102,13 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * @param {String} name
      */
     service.changeQuantity = function(product, name) {    
-        console.log("nom : "+name+" / q :"+product.quantity);
         $http.post("/webresources/cart/changeQuantityToSub", {"productId": product.id, "quantity": product.quantity, "name": name})
                 .success(function(data) {
                 for(var i =0;i<service.sub.length;i++){
                     if(service.sub[i].name === name){
-                        console.log("dans nameegale : "+product.id);
                         service.sub[i].price += (data *product.price)-(product.quantity*product.price);
                         for(var j = 0; j<service.sub[i].products.length;j++){
-                            console.log("dans boucle");
                             if(service.sub[i].products[j].id === product.id){
-                               console.log("dans id"+ data);
                                service.sub[i].products[j].quantity = data; 
                             }
                         }

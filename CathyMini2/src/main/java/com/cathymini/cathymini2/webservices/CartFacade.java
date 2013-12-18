@@ -363,7 +363,6 @@ public class CartFacade {
         else{
             Subscription sub = getSubSession(request);
             if(sub != null){
-               // CartLine cl = cartBean.getCartLineSubByID(clTemp.getProductId(), sub);
                 Product prod = productBean.getProduct(clTemp.getProductId());
                 cartBean.changeQuantityToSub(prod, clTemp.getQuantity(), sub, false);
             }

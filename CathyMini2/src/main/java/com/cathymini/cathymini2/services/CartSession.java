@@ -64,7 +64,8 @@ public class CartSession {
          }
          if(!find){
             cart.getCartLineCollection().add(cl);
-            manager.persist(cl);
+            if(persist)
+                manager.persist(cl);
          }
          if(persist){
             manager.merge(cart);
@@ -87,12 +88,11 @@ public class CartSession {
     public int removeProductToCart(Product prod, Cart cart){
         
         int place = -1;
-        Iterator<CartLine> it = cart.getCartLineCollection().iterator();
         int i = 0;
         for(CartLine myCartLine : cart.getCartLineCollection()){
 	// Manipulations avec l'élément actuel
             if(myCartLine.getProduct().getId().compareTo(prod.getId()) == 0){
-                cart.getCartLineCollection().remove(myCartLine);
+                subCartLineToCart(myCartLine, cart);
                 manager.merge(cart);
                 return i;
             }
@@ -108,10 +108,7 @@ public class CartSession {
         query.setParameter("id", cl.getCartLineID());
         return query.executeUpdate() == 1;
     }
-    
-    public void subProductToCart(String nom, Float flux, Cart cart){
-        subCartLineToCart(getCartLineToCart(nom, flux, cart), cart);
-    }
+
     
     public CartLine getCartLineToCart(String nom, Float flux, Cart cart){
         CartLine cLine = null;
@@ -148,8 +145,6 @@ public class CartSession {
      */
     @Remove
     public void clearCart(Cart cart) {
-        Consumer user = cart.getConsumer();
-        
         cart.getCartLineCollection().clear();
         manager.merge(cart);
     }
@@ -268,10 +263,13 @@ public class CartSession {
                  find = true;
              }
          }
-         if(!find)
+         if(!find){
+            if(persist){
+                manager.persist(cl);
+            }
             sub.getCartLineCollection().add(cl);
+         }
          if(persist){
-            manager.persist(cl);
             manager.merge(sub);
          }
     }
@@ -293,12 +291,11 @@ public class CartSession {
     public int removeProductToSub(Product prod, Subscription sub){
         int place = -1;
         int i = 0;
-        int size = sub.getCartLineCollection().size();
         
         for(CartLine myCartLine : sub.getCartLineCollection()){
 	// Manipulations avec l'élément actuel
             if(myCartLine.getProduct().getId().compareTo(prod.getId()) == 0){
-                sub.getCartLineCollection().remove(myCartLine);
+                subCartLineToSub(myCartLine, sub);
                 manager.merge(sub);
                 return i;
             }
@@ -333,7 +330,6 @@ public class CartSession {
     }
     
     public CartLine getCartLineSubByID(Long id, Subscription sub){
-        logger.debug(sub == null);
         CartLine cLine = null;
         for(CartLine myCartLine : sub.getCartLineCollection()){
             if(myCartLine.getProduct().getId().compareTo(id) == 0){
