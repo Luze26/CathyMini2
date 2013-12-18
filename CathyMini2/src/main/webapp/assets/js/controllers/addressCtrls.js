@@ -18,9 +18,11 @@ angular.module('address')
     $scope.addAddress = function() {
         var newAddress = $scope.newModal.address;
         consumerService.addAddress(newAddress).success(function() {
-            $scope.address.push(newAddress);
             modal.modal('hide');
             $scope.newModal.address = {};
+            consumerService.getAddress().success(function(data) {
+                $scope.address = data;
+            });
         });
     };
     
