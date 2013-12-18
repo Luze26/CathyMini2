@@ -38,7 +38,7 @@
                                     </label>
                                 </div>
 
-                                <div class="divTrie">
+                                <!--<div class="divTrie">
                                     <label>Trie</label>
                                     <span class="btn-group btn-trie">
                                         <button type="button" class="btn btn-default" ng-click="orderBy('name')">Nom<b class="unselectable" ng-class="search.orderBy=='name' ? (search.orderByASC ? 'caret' : 'caret-up'
@@ -52,7 +52,7 @@
                                         <button type="button" class="btn btn-default" ng-click="orderBy('marque')">Marque<b class="unselectable" ng-class="search.orderBy=='marque' ? (search.orderByASC ? 'caret' : 'caret-up'
                                             ) : ''"></b></button>
                                     </span>
-                                </div>
+                                </div>-->
                             </div>
                             <div class="col-xs-3 search-col">
                                 <label>
@@ -107,10 +107,24 @@
                         </div>
                     </div>
                     <div style="text-align: center;">
-                        <a href="#" class="searchTab" ng-click="displaySearchPanel = !displaySearchPanel">
-                            <span ng-show="displaySearchPanel"><img src="/assets/images/double-arrow-up.png" alt="up"/> Fermer</span>
-                            <span ng-hide="displaySearchPanel"><img src="/assets/images/double-arrow-down.png" alt="down"/> Ouvrir</span> le panneau de filtres
-                        </a>
+                        <div class="col-xs-12">
+                            <a href="#" class="searchTab" ng-click="displaySearchPanel = !displaySearchPanel">
+                                <span ng-show="displaySearchPanel"><img src="/assets/images/double-arrow-up.png" alt="up"/> Fermer</span>
+                                <span ng-hide="displaySearchPanel"><img src="/assets/images/double-arrow-down.png" alt="down"/> Ouvrir</span> le panneau de filtres
+                            </a>
+                        </div>
+                        <div class="dropdown filtretri">
+                           <a data-toggle="dropdown" class="searchTab" href="#">
+                                <span><img src="/assets/images/double-arrow-down.png"/> Trier les produits</span>
+                           </a>
+                            <ul class="dropdown-menu list-group" role="menu" aria-labelledby="dLabel">
+                                <a class="list-group-item lien-list" ng-click="orderBy('name')">Nom<b class="unselectable" ng-class="search.orderBy=='name' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
+                                <a class="list-group-item lien-list" ng-click="orderBy('price')">Prix<b class="unselectable" ng-class="search.orderBy=='price' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
+                                <a class="list-group-item lien-list" ng-click="orderBy('type')">Type<b class="unselectable" ng-class="search.orderBy=='type' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
+                                <a class="list-group-item lien-list" ng-click="orderBy('flux')">Flux<b class="unselectable" ng-class="search.orderBy=='flux' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
+                                <a class="list-group-item lien-list" ng-click="orderBy('marque')">Marque<b class="unselectable" ng-class="search.orderBy=='marque' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

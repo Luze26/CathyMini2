@@ -50,19 +50,25 @@
                                 <table ng-switch-when="true" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
+                                            <th>Nom</th>
+                                            <th>Prenom</th>
                                             <th>Adresse</th>
                                             <th>Code postal</th>
                                             <th>Ville</th>
+                                            <th>Pays</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="addr in address">
+                                            <td>{{addr.lastname}}</td>
+                                            <td>{{addr.firstname}}</td>
                                             <td>{{addr.address}}</td>
                                             <td>{{addr.zipCode}}</td>
                                             <td>{{addr.city}}</td>
-                                            <td><span ng-click="initEditAddress(addr)" class="btn btn-primary smaller-btn" data-toggle="modal" data-target="#addressModal"><img class="edit-img-icon" src="/assets/images/edit.png" alt="éditer" /> Editer</span>
-                                                <span ng-click="deleteAddress(addr)" class="btn btn-primary smaller-btn" data-toggle="modal"><img class="img-icon" src="/assets/images/remove-white.png" alt="supprimer" /> Supprimer</span>
+                                            <td>{{addr.country}}</td>
+                                            <td><span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal"><img class="edit-img-icon" src="/assets/images/edit.png" alt="éditer" /> Editer</span>
+                                                <span ng-click="deleteAddress(addr)" class="btn btn-primary" data-toggle="modal"><img class="img-icon" src="/assets/images/remove-white.png" alt="supprimer" /> Supprimer</span>
                                             </td>
                                         </tr>
                                     </tbody>
