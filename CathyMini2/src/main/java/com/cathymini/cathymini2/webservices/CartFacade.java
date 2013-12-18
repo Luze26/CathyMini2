@@ -5,7 +5,7 @@ import com.cathymini.cathymini2.model.CartLine;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.Product;
 import com.cathymini.cathymini2.model.Subscription;
-import com.cathymini.cathymini2.services.CartSession;
+import com.cathymini.cathymini2.services.CartBean;
 import com.cathymini.cathymini2.services.ProductBean;
 import com.cathymini.cathymini2.webservices.model.CartProduct;
 import com.cathymini.cathymini2.webservices.model.SubProduct;
@@ -21,8 +21,10 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 
 /**
@@ -39,7 +41,7 @@ public class CartFacade {
     private static final ConsumerSessionSecuring sessionSecuring = ConsumerSessionSecuring.getInstance();
 
     @EJB
-    private CartSession cartBean;
+    private CartBean cartBean;
     @EJB
     private ProductBean productBean;
 
@@ -110,21 +112,25 @@ public class CartFacade {
     @Path("/getCart")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Cart consumerIsConnected(@Context HttpServletRequest request, @Context HttpServletResponse response){
+    public Cart getCart(@Context HttpServletRequest request, @Context HttpServletResponse response){
         Cart oldCart = getCartSession(request);
         Consumer cons  = sessionSecuring.getConsumer(request);
-        if(oldCart != null){
-            cartBean.mergeCart(cons, oldCart);
-            setCartSession(request, null);
+        if(cons != null){
+            if(oldCart != null){
+                cartBean.mergeCart(cons, oldCart);
+                setCartSession(request, null);
+            }
+            try{
+                    Cart cartToSend = cartBean.getUserCart(cons);
+                    return cartToSend;
+            }
+            catch(Exception ex){
+                response.setStatus(400);
+                return null;
+            }
         }
-        try{
-                Cart cartToSend = cartBean.getUserCart(cons);
-                return cartToSend;
-        }
-        catch(Exception ex){
-            response.setStatus(400);
-            return null;
-        }
+        else
+            return oldCart;
 
     }
 
@@ -145,8 +151,8 @@ public class CartFacade {
         if(cons != null){
             try{
                 Cart cart = cartBean.getUserCart(cons);
-                CartLine cl = cartBean.getCartLineCartByID(Long.parseLong(String.valueOf(clTemp.getProductId())), cart);
-                cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), true);
+                Product prod = productBean.getProduct(clTemp.getProductId());
+                cartBean.changeQuantityToCart(prod, clTemp.getQuantity(), cart, true);
             }
             catch(Exception ex){
                 response.setStatus(400);
@@ -156,8 +162,8 @@ public class CartFacade {
         else{
             Cart cart = getCartSession(request);
             if(cart != null){
-                CartLine cl = cartBean.getCartLineCartByID(Long.parseLong(String.valueOf(clTemp.getProductId())), cart);
-                cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), false);
+                Product prod = productBean.getProduct(clTemp.getProductId());
+                cartBean.changeQuantityToCart(prod, clTemp.getQuantity(), cart, false);
             }
             else{
                 response.setStatus(400);
@@ -228,7 +234,8 @@ public class CartFacade {
         name += nbAbo;
         
         Subscription sub = cartBean.newSubscription(cons,name);
-        setSubSession(request, sub);
+        if(cons == null)
+            setSubSession(request, sub);
         return name;
         
     }
@@ -250,8 +257,6 @@ public class CartFacade {
             if (cons != null) {
                 Subscription sub  = cartBean.getUserSubscriptionByName(cons, subP.getName());
                 if(sub == null){
-                    /*logger.debug("dans addProductToSub : "+subP.getName());
-                    sub = cartBean.newSubscription(cons, "abonnement2");*/
                     response.setStatus(400);
                     return false;
                 }
@@ -300,20 +305,31 @@ public class CartFacade {
     @Path("/getSub")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList consumerIsConnectedSub(@Context HttpServletRequest request, @Context HttpServletResponse response){
+    public ArrayList getSub(@Context HttpServletRequest request, @Context HttpServletResponse response){
         Subscription sub = getSubSession(request);
         Consumer cons  = sessionSecuring.getConsumer(request);
-        if(sub != null){
-            cartBean.recordSubscription(cons, sub);
-            setSubSession(request, null);
+        if(cons != null){
+            if(sub != null){
+                cartBean.recordSubscription(cons, sub);
+                setSubSession(request, null);
+            }
+            try{
+                    ArrayList  cartToSend = cartBean.getUserSubscription(cons);
+                    return cartToSend;
+            }
+            catch(Exception ex){
+                response.setStatus(400);
+                return null;
+            }
         }
-        try{
-                ArrayList  cartToSend = cartBean.getUserSubscription(cons);
-                return cartToSend;
-        }
-        catch(Exception ex){
-            response.setStatus(400);
-            return null;
+        else{
+            if(sub == null)
+                return null;
+            else{
+                ArrayList abo = new ArrayList();
+                abo.add(sub);
+                return abo;
+            }
         }
 
     }
@@ -334,9 +350,10 @@ public class CartFacade {
         Consumer cons  = sessionSecuring.getConsumer(request);
         if(cons != null){
             try{
-                Subscription sub = cartBean.getUserSubscriptionByName(cons, clTemp.getName());
-                CartLine cl = cartBean.getCartLineSubByID(Long.parseLong(String.valueOf(clTemp.getProductId())), sub);
-                cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), true);
+                Subscription sub  = cartBean.getUserSubscriptionByName(cons, clTemp.getName());
+                Product prod = productBean.getProduct(clTemp.getProductId());
+                cartBean.changeQuantityToSub(prod, clTemp.getQuantity(), sub, true);
+                
             }
             catch(Exception ex){
                 response.setStatus(400);
@@ -346,8 +363,8 @@ public class CartFacade {
         else{
             Subscription sub = getSubSession(request);
             if(sub != null){
-                CartLine cl = cartBean.getCartLineSubByID(Long.parseLong(String.valueOf(clTemp.getProductId())), sub);
-                cartBean.changeQuantityCartLine(cl, clTemp.getQuantity(), false);
+                Product prod = productBean.getProduct(clTemp.getProductId());
+                cartBean.changeQuantityToSub(prod, clTemp.getQuantity(), sub, false);
             }
             else{
                 response.setStatus(400);
@@ -425,7 +442,7 @@ public class CartFacade {
                 return -1;
             }
         }
-        return sub.getNbJ();
+        return sub.getDaysDelay();
     }
     
     /**
@@ -446,11 +463,20 @@ public class CartFacade {
         if(cons != null){
             try{
                 sub = cartBean.getUserSubscriptionByName(cons, infoSubName.getOldName());
-                cartBean.changeName(sub, infoSubName.getNewName(), true);
+                if(cartBean.correctName(infoSubName.getNewName(), cons))
+                    cartBean.changeName(sub, infoSubName.getNewName(), true);
+                else{
+                    Response.ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+                    builder.entity("name not good");
+                    Response res = builder.build();
+                    throw new WebApplicationException(res);
+                }
             }
             catch(Exception ex){
-                response.setStatus(400);
-                return "";
+                Response.ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+                builder.entity(ex.getMessage());
+                Response res = builder.build();
+                throw new WebApplicationException(res);
             }
         }
         else{
@@ -459,8 +485,10 @@ public class CartFacade {
                 cartBean.changeName(sub, infoSubName.getNewName(), false);
             }
             else{
-                response.setStatus(400);
-                return "";
+                Response.ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+                builder.entity("sub null");
+                Response res = builder.build();
+                throw new WebApplicationException(res);
             }
         }
         return sub.getName();
@@ -486,6 +514,7 @@ public class CartFacade {
      */
     private void setCartSession(HttpServletRequest request, Cart cart) {
         HttpSession session = request.getSession(true);
+        //session.
         session.setAttribute(CART_ATTR, cart);
     }
 

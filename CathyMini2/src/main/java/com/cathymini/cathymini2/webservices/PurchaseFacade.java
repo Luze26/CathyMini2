@@ -7,7 +7,7 @@ import com.cathymini.cathymini2.model.PaymentInfos;
 import com.cathymini.cathymini2.model.Purchase;
 import com.cathymini.cathymini2.model.PurchaseLine;
 import com.cathymini.cathymini2.model.PurchaseSubscription;
-import com.cathymini.cathymini2.services.CartSession;
+import com.cathymini.cathymini2.services.CartBean;
 import com.cathymini.cathymini2.services.PurchaseBean;
 import com.cathymini.cathymini2.webservices.model.Payment;
 import com.cathymini.cathymini2.webservices.model.form.PurchaseForm;
@@ -22,7 +22,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -46,7 +45,7 @@ public class PurchaseFacade {
     @EJB
     private PurchaseBean purchaseBean;
     @EJB
-    private CartSession cartBean;
+    private CartBean cartBean;
 
     /**
      * Create a purchase

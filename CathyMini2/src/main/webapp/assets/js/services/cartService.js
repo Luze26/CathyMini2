@@ -14,12 +14,9 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     service.nbProducts = function() {
         return service.cart.products.length;
     };
-
     
-    /**
-     * load the cart when the consumer been connected
-     */
-    $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
+    
+    service.getCart = function() {
         $http.post("/webresources/cart/getCart")
         .success(function(data){
             service.cart.price = 0;
@@ -31,12 +28,20 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
                         var prod = prodColl[i].product;
                         prod.quantity = prodColl[i].quantity;
                         service.cart.products.push(prod);
-                        service.cart.price += (prodColl[i].product.price* prodColl[i].product.quantity);
+                        service.cart.price += (prodColl[i].product.price * prodColl[i].product.quantity);
                     }
                 }
             }
         });
-    } );
+    };
+    service.getCart();
+    
+    /**
+     * load the cart when the consumer been connected
+     */
+    $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
+        service.getCart();
+    });
     
      $rootScope.$on('consumerDisconnect',function (){
                 service.cart.products = [];

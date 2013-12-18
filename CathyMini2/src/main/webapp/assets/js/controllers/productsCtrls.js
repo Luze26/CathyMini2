@@ -2,7 +2,7 @@
  * Controller for the products list
  */
 angular.module('products').
-  controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', 'subscriptionService', function($rootScope, $scope, $http, cartService, subscriptionService) {
+  controller('productsCtrl', ['$rootScope', '$scope', '$http', 'cartService', 'subscriptionService', 'consumerService', function($rootScope, $scope, $http, cartService, subscriptionService, consumerService) {
       
       /**
        * Set the tick on the navbar
@@ -275,6 +275,17 @@ angular.module('products').
        */
       $scope.showProduct = function(product) {
         $scope.productOverlay = product;
+      };
+      
+      /**
+       * return true if consumer can add a new Subscription, else if false
+       */
+      $scope.showAddSub = function() {
+          var can = false;
+          if(!consumerService.isConnected && subscriptionService.sub.length !== 0)
+              can = true;
+          $rootScope.$broadcast('showAddSub', can);
+          return can;
       };
       
       /**

@@ -74,6 +74,8 @@ angular.module('payment').
                 $http.post("/webresources/purchase/createPurchase", $scope.paymentData)
                     .success(function() { 
                         $scope.activeTab = 0;
+                        cartService.getCart();
+                        $scope.cartService = cartService;
                         notificationService.displayMessage("Votre commande a bien été validée !")
                     })
                     .error(function(data, status, headers, config) {
