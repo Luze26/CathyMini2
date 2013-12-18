@@ -1,13 +1,16 @@
 package com.cathymini.cathymini2.webservices;
 
+import com.cathymini.cathymini2.model.Cart;
 import com.cathymini.cathymini2.model.Consumer;
 import com.cathymini.cathymini2.model.DeliveryAddress;
-import com.cathymini.cathymini2.model.PayementInfo;
+import com.cathymini.cathymini2.model.PaymentInfos;
 import com.cathymini.cathymini2.model.Purchase;
 import com.cathymini.cathymini2.model.PurchaseLine;
 import com.cathymini.cathymini2.model.PurchaseSubscription;
+import com.cathymini.cathymini2.services.CartSession;
 import com.cathymini.cathymini2.services.PurchaseBean;
 import com.cathymini.cathymini2.webservices.model.Payment;
+import com.cathymini.cathymini2.webservices.model.form.PurchaseForm;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
@@ -19,6 +22,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -41,6 +45,8 @@ public class PurchaseFacade {
     
     @EJB
     private PurchaseBean purchaseBean;
+    @EJB
+    private CartSession cartBean;
 
     /**
      * Create a purchase
@@ -53,14 +59,45 @@ public class PurchaseFacade {
     @Path("/createPurchase")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String createPurchase(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-        return "Not Implemented";
+    @Secure(Role.MEMBER)
+    public String createPurchase(PurchaseForm form, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
+        Consumer user = sessionSecuring.getConsumer(request);
+        
+        Cart cart = cartBean.getUserCart(user);
+        
+        Collection<DeliveryAddress> addresses = user.getDeliveryCollection();
+        DeliveryAddress selectedAddr = null;
+        for (DeliveryAddress da : addresses){
+            if(da.getDeliveryAddresID().compareTo(form.addressId) == 0) {
+                selectedAddr = da;
+            }
+        }
+            
+        /* Block until Payement Infos undefined
+        Collection<PaymentInfos> paymentInfos = user.getPaymentInfoCollection();
+        PaymentInfos selectedPI;
+        for (PaymentInfos pi : paymentInfos){
+            if(pi.getPayementInfoID() == form.paymentInfoId) {
+                selectedPI = pi;
+            }
+        }
+        */
+        PaymentInfos selectedPI = null;
+        
+        if (cart != null && selectedAddr != null) {
+            purchaseBean.finalizePurchase(user, cart, selectedAddr, selectedPI);
+            cartBean.clearCart(cart);
+        }
+        
+        return "purchase validated";
     }
     
     @POST
     @Path("/createSubscription")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Secure(Role.MEMBER)
+
     public String createSubscription(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         return "Not Implemented";
     }

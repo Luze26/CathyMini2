@@ -32,7 +32,7 @@ public class Payment {
     public String nextDelivery;
     
     public Integer daysDelay;
-    public Integer cost;
+    public Float cost;
     public Collection<Payment.PurchaseProduct> products;
 
     public Payment() {
@@ -42,21 +42,21 @@ public class Payment {
         Calendar cal = Calendar.getInstance();
         if (purchase.getCreationDate() != null) {
             cal.setTimeInMillis(purchase.getCreationDate());
-            this.creationDate = formatter.format(cal.getTime().toString());
+            this.creationDate = formatter.format(cal.getTime());
         } else {
             this.creationDate = "";
         }
         
         if (purchase.getDeliveryDate() != null) {
             cal.setTimeInMillis(purchase.getDeliveryDate());
-            this.deliveryDate = formatter.format(cal.getTime().toString());
+            this.deliveryDate = formatter.format(cal.getTime());
         } else {
             this.deliveryDate = "";
         }
         
         if (purchase.getPayementDate() != null) {
         cal.setTimeInMillis(purchase.getPayementDate());
-        this.paymentDate = formatter.format(cal.getTime().toString());
+        this.paymentDate = formatter.format(cal.getTime());
         } else {
             this.paymentDate = "";
         }

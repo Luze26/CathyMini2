@@ -2,12 +2,12 @@ package com.cathymini.cathymini2.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -41,18 +41,19 @@ import javax.persistence.Table;
         query="select object(c) from Cart c where c.cartID=:id")
 })
 public class Cart implements Serializable {
+    /** Integer primary Key */
     @Id
     @GeneratedValue
     @Column(name="cartID")
-    /** Integer primary Key */
     private Long cartID;
     
-    @OneToOne
     /* Cart owner */
+    @OneToOne
     private Consumer consumer;
     
-    @OneToMany
     /** Cart {@link CartLine} collection */
+    @OneToMany
+    @Basic(fetch = FetchType.EAGER)
     private Collection<CartLine> cartLineCollection;
 
     public Collection<CartLine> getCartLineCollection() {

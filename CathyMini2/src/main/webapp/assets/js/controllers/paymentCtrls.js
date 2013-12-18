@@ -2,17 +2,20 @@
  * Controller for the payment chain
  */
 angular.module('payment').
-    controller('paymentCtrl', ['$scope', '$http', 'cartService', 'consumerService', 
-        function($scope, $http, cartService, consumerService) {
+    controller('paymentCtrl', ['$scope', '$http', 'cartService', 'consumerService', 'notificationService', 
+        function($scope, $http, cartService, consumerService, notificationService) {
         $scope.cartService = cartService; // load the service in the scope
         
         // Payment tabs buttons values
-        $scope.btnList = ['Selection du caddie', 'Récaputulatif de la commande', 'Identification du client', 'Adresse de livraison',
+        $scope.btnList = ['Selection du caddie', 'Résumé de la commande', 'Identification du client', 'Adresse de livraison',
             'Calcul des frais de port', 'Choix du mode de paiement'];
         $scope.lastBtnValue = ['', 'Valider le panier', '', '', 'Accepter', 'Commander'];
         
         // Current active tab
         $scope.activeTab = 0;
+        
+        // Payement data
+        $scope.paymentData = {};
     
         // User do return to index when login out
         $scope.$on('consumerDisconnect', function() {
@@ -33,13 +36,17 @@ angular.module('payment').
             }
         });
         
+        $scope.selectAddr = function(addr) {
+            $scope.paymentData.addressId = addr.id;
+        };
+        
         // Behaviour of the pager 'next'
-        $scope.nextTab = function(param) {
+        $scope.nextTab = function() {
             if($scope.activeTab === 0) {
-                // Cart validation
+                // Cart/Sub selection
                 $scope.activeTab++;
             } else if($scope.activeTab === 1) {
-                // Cart validation
+                // Cart/Sub validation
                 if (cartService.cart.price !== 0) {
                     if (consumerService.isConnected) {
                         $scope.activeTab += 2;
@@ -54,15 +61,23 @@ angular.module('payment').
                 }
                 
             } else if($scope.activeTab === 3) {
-                // Verification de l'adresse de livraison
+                // Delivery Address selection
                 $scope.activeTab++;
                 
             } else if($scope.activeTab === 4) {
-                // Validation des frais de transports
+                // Shipping Cost validation
                 $scope.activeTab++;
+            } else if($scope.activeTab === 5) {
+                // Purchase/Sub finalization
                 
-            } if($scope.activeTab === 5) {
-                // Verificaction des informations de paiement et commande
+                console.log($scope.paymentData);
+                $http.post("/webresources/purchase/createPurchase", $scope.paymentData)
+                    .success(function() { 
+                        $scope.activeTab = 0;
+                        notificationService.displayMessage("Votre commande a bien été validée !")
+                    })
+                    .error(function(data, status, headers, config) {
+                    });
             }
         };
         

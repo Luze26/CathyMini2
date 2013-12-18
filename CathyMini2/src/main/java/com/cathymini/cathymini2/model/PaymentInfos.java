@@ -9,18 +9,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * The class {@link PayementInfo} is an EJB Entity representing a {@link Consumer} {@link PayementInfo}.
+ * The class {@link PaymentInfo} is an EJB Entity representing a {@link Consumer} {@link PaymentInfo}.
  * 
  * @author kraiss
  */
-@Entity(name="PayementInfo")
-@Table(name="PayementInfo")
-public class PayementInfo implements Serializable {
+@Entity(name="PaymentInfo")
+@Table(name="PaymentInfo")
+public class PaymentInfos implements Serializable {
     @Id
     @GeneratedValue
-    @Column(name="payementInfoID")
+    @Column(name="ID")
     /** Integer primary key */
-    private Long payementInfoID;
+    private Long id;
     
     @ManyToOne
     /** Owner of the {@link PayementInfo} */
@@ -28,14 +28,6 @@ public class PayementInfo implements Serializable {
     
     @Column(name="info")
     private String info;
-
-    public Long getCartId() {
-        return payementInfoID;
-    }
-
-    public void setCartId(Long cartID) {
-        this.payementInfoID = cartID;
-    }
 
     public Consumer getConsumer() {
         return consumer;

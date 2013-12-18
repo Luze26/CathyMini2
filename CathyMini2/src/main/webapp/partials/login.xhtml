@@ -7,6 +7,12 @@
     <body>
         <ui:composition>
             <ul class="nav navbar-nav navbar-right login-zone" ng-controller="consumerCtrl">
+                <li>
+                    <a href="/FAQ.xhtml" type="button" ng-class="{'active': header == 'faq'}">
+                        FAQ
+                        <span class="navbar-tick"></span>
+                    </a>
+                </li>
                 <li ng-show="isConnected()" ng-cloak="ng-cloak">
                     <a type="button" href="/account.xhtml" ng-class="{'active': header == 'myAccount'}">
                         Mon compte

@@ -18,9 +18,11 @@ angular.module('address')
     $scope.addAddress = function() {
         var newAddress = $scope.newModal.address;
         consumerService.addAddress(newAddress).success(function() {
-            $scope.address.push(newAddress);
             modal.modal('hide');
             $scope.newModal.address = {};
+            consumerService.getAddress().success(function(data) {
+                $scope.address = data;
+            });
         });
     };
     
@@ -31,9 +33,13 @@ angular.module('address')
     $scope.initEditAddress = function(address) {
         $scope.modal = $scope.editModal;
         $scope.editModal.address.id = address.id; 
+        $scope.editModal.address.firstname = address.firstname;
+        $scope.editModal.address.lastname = address.lastname;
         $scope.editModal.address.address = address.address;
         $scope.editModal.address.zipCode = parseInt(address.zipCode);
         $scope.editModal.address.city = address.city;
+        $scope.editModal.address.country = address.country;
+        
         $scope.editModal.oldAddress = address;
     };
     
@@ -45,9 +51,12 @@ angular.module('address')
         var editedAddress = $scope.editModal.address;
         var oldAddress = $scope.editModal.oldAddress;
         consumerService.editAddress(editedAddress).success(function() {
+            oldAddress.firstname = editedAddress.firstname;
+            oldAddress.lastname = editedAddress.lastname;
             oldAddress.address = editedAddress.address;
             oldAddress.zipCode = editedAddress.zipCode;
             oldAddress.city = editedAddress.city;
+            oldAddress.country = editedAddress.country;
             modal.modal('hide');
             $scope.editAddress.address = {};
         }); 
