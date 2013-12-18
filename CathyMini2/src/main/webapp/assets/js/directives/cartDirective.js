@@ -62,12 +62,14 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
          * Watch click on body to close tabs
          */
         angular.element("body").click(function() {
-            if (scope.cartOpen) {
-                scope.toggleCart();
-            }
-            else if(scope.subOpen) {
-                scope.toggleSub();
-            }
+            scope.$apply(function() {
+                if (scope.cartOpen) {
+                    scope.toggleCart();
+                }
+                else if(scope.subOpen) {
+                    scope.toggleSub();
+                }
+            });
         });
         
         /**
@@ -198,13 +200,15 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
     },
     template: '<div id="cart">' +
                 '<div id="cartTabs" ng-click="prevent($event)">' + 
-                    '<div id="cartTab" ng-class="{\'active\': cartOpen}" ng-click="toggleCart($event)">' +
+                    '<div id="cartTab" ng-class="{\'active\': cartOpen}" ng-click="toggleCart($event)" title="Panier">' +
                         '<i class="fa fa-shopping-cart fa-4x"></i>' +
-                        '<div>{{cartService.nbProducts()}} products</div>' +
+                        '<div ng-show="cartService.nbProducts() == 0">Panier bien vide</div>' +
+                        '<div ng-show="cartService.nbProducts() != 0" ng-cloak="ng-cloak">{{cartService.nbProducts()}} produits dans le panier</div>' +
                      '</div>' +
-                     '<div id="subTab" ng-class="{\'active\': subOpen}" ng-click="toggleSub($event)">' +
-                        '<i class="fa fa-shopping-cart fa-4x"></i>' +
-                        '<div>{{subService.nbProducts()}} products</div>' +
+                     '<div id="subTab" ng-class="{\'active\': subOpen}" ng-click="toggleSub($event)" title="Abonnements">' +
+                        '<img src="/assets/images/order.png" alt="abonnement"/>' +
+                        '<div ng-show="subService.nbProducts() == 0">Abonnement bien vide</div>' +
+                        '<div ng-show="subService.nbProducts() != 0">{{subService.nbProducts()}} produits dans l\'abonnement</div>' +
                      '</div>' +
                  '</div>' +
                  '<div id="cartPanel" ng-click="prevent($event)">' +
@@ -212,11 +216,11 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                         '<ul>' +
                             '<li class="prodCart" ng-repeat="prod in cartService.cart.products">' +
                                 ' <img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>'+
-            '{{prod.name}} quantity : \n\
-<input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
-<span>\n\
-<img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
-</span>' +
+                            '{{prod.name}} quantity : \n\
+                <input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
+                <span>\n\
+                <img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
+                </span>' +
                             '</li>' +
                         '</ul>' +
                         'Price: {{cartService.cart.price}} €' +
