@@ -107,8 +107,20 @@ a {
 
 a.list-group-item {
     color: @secondaryColor;
+    cursor: pointer;
+    font-weight: bold;
     &:hover {
         color: @secondaryColorDark;
+    }
+
+    .caret {
+        margin-left: 5px;
+        border-top: 4px solid @thirdColor;
+    }
+
+    .caret-up {
+        margin-left: 5px;
+        border-bottom: 4px solid @thirdColor;
     }
 }
 
@@ -249,4 +261,9 @@ input.ng-dirty.ng-invalid {
 
 td {
     vertical-align: middle ! important;
+}
+
+.dropdown-menu {
+    margin-top: 5px;
+    padding: 0px;
 }
