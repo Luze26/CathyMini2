@@ -15,11 +15,11 @@ import java.util.Collection;
 public class Payment {
     /** Inner class to associate a product to a quantity */
     public class PurchaseProduct {
-        public String product; // product name
+        public String name; // product name
         public Integer quantity;
 
         public PurchaseProduct(String name, Integer quantity) {
-            this.product = name;
+            this.name = name;
             this.quantity = quantity;
         }
     }
@@ -75,29 +75,28 @@ public class Payment {
         Calendar cal = Calendar.getInstance();
         if (subscription.getCreationDate() != null) {
             cal.setTimeInMillis(subscription.getCreationDate());
-            System.out.println("Creation date : " + subscription.getCreationDate() + " Calendar : " + cal.getTimeInMillis() + " ToString : " + cal.getTime().toString());
-            this.creationDate = formatter.format(cal.getTime().toString());
+            this.creationDate = formatter.format(cal.getTime());
         } else {
             this.creationDate = "";
         }
         
         if (subscription.getDeliveryDate() != null) {
             cal.setTimeInMillis(subscription.getDeliveryDate());
-            this.deliveryDate = formatter.format(cal.getTime().toString());
+            this.deliveryDate = formatter.format(cal.getTime());
         } else {
             this.deliveryDate = "";
         }
         
         if (subscription.getPayementDate() != null) {
         cal.setTimeInMillis(subscription.getPayementDate());
-        this.paymentDate = formatter.format(cal.getTime().toString());
+        this.paymentDate = formatter.format(cal.getTime());
         } else {
             this.paymentDate = "";
         }
         
         if (subscription.getNextDelivery()!= null) {
         cal.setTimeInMillis(subscription.getNextDelivery());
-        this.nextDelivery = formatter.format(cal.getTime().toString());
+        this.nextDelivery = formatter.format(cal.getTime());
         } else {
             this.nextDelivery = "";
         }

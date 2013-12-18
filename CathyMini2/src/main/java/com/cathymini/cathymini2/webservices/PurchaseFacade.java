@@ -213,11 +213,14 @@ public class PurchaseFacade {
             c.setPaymentInfoCollection(col);
             ps.setConsumer(c);
             ps.setDaysDelay(21);
-            cal.getTimeInMillis();
             ps.setCreationDate(cal.getTimeInMillis());
+            ps.setPayementDate(cal.getTimeInMillis());
+            ps.setDeliveryDate(cal.getTimeInMillis());
+            ps.setNextDelivery(cal.getTimeInMillis());
             ps.setPurchaseLineCollection(new ArrayList<PurchaseLine>());
             ps.setPayementInfo(pi);
             Payment p = new Payment(ps);
+            payments.add(p);
             payments.add(p);
         }
         
