@@ -16,8 +16,9 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     };
     
     
-    $http.post("/webresources/cart/getCart")
-    .success(function(data){
+    service.getCart = function() {
+        $http.post("/webresources/cart/getCart")
+        .success(function(data){
             service.cart.price = 0;
             if(data !== null){
                 service.cart.products = [];
@@ -32,29 +33,15 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
                 }
             }
         });
-
+    };
+    service.getCart();
     
     /**
      * load the cart when the consumer been connected
      */
     $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
-        $http.post("/webresources/cart/getCart")
-        .success(function(data){
-            service.cart.price = 0;
-            if(data !== null){
-                service.cart.products = [];
-                var prodColl = data.cartLineCollection;
-                if(prodColl != null){
-                    for( var i = 0;i<prodColl.length; i++){
-                        var prod = prodColl[i].product;
-                        prod.quantity = prodColl[i].quantity;
-                        service.cart.products.push(prod);
-                        service.cart.price += (prodColl[i].product.price* prodColl[i].product.quantity);
-                    }
-                }
-            }
-        });
-    } );
+        service.getCart();
+    });
     
      $rootScope.$on('consumerDisconnect',function (){
                 service.cart.products = [];
