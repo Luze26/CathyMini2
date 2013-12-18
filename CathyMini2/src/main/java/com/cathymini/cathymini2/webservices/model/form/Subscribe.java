@@ -14,6 +14,6 @@ public class Subscribe {
     public String mail;
 
     public boolean validate() {
-        return checkString(username) && checkMail(mail) && checkString(pwd) && pwd.equals(confirmPwd);
+        return checkString(username) && checkMail(mail) && checkString(pwd) && pwd.length()>=6 && pwd.equals(confirmPwd);
     }
 }

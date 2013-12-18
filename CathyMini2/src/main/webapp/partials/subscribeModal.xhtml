@@ -45,19 +45,19 @@
                             </div>
                             <div class="form-group">
                                 <label>Mot de passe *</label>
-                                <input name="password" id="pwd" ng-model="subscriber.pwd" type="password" placeholder="Entrez votre mot de passe, 3 caractères minimum"
-                                       autofocus="autofocus" required="required" ng-minlength="3" />
+                                <input name="password" id="pwd" ng-model="subscriber.pwd" type="password" placeholder="Entrez votre mot de passe, 6 caractères minimum"
+                                       autofocus="autofocus" required="required" ng-minlength="6" />
                                 <div ng-show="and(form.password.$error.required, form.password.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
                                 <div ng-show="form.password.$error.minlength" class="error-form">
-                                    Votre mot de passe est trop court, 3 caractères minimum, soyez malin !
+                                    Votre mot de passe est trop court, 6 caractères minimum, soyez malin !
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Confirmation du mot de passe *</label>
                                 <input name="confirmPassword" ng-model="subscriber.confirmPwd" type="password" placeholder="Retaper votre mot de passe"
-                                       autofocus="autofocus" required="required" ng-minlength="3" pw-check="pwd"/>
+                                       autofocus="autofocus" required="required" ng-minlength="6" pw-check="pwd"/>
                                 <div ng-show="and(form.confirmPassword.$error.required, form.confirmPassword.$dirty)" class="error-form">
                                     Ce champ est requis.
                                 </div>
