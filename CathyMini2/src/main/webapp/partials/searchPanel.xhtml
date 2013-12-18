@@ -92,7 +92,7 @@
                     </div>
                     <div class="searchPanelSub">
                         <div class="col-xs-12">
-                            <a href="#" class="closeSearch searchTab" ng-click="displaySearchPanel = !displaySearchPanel" title="Fermer les filtres">
+                            <a href="#" class="closeSearch searchTab" ng-click="displaySearchPanel = !displaySearchPanel" title="Ouvrir ou fermer les filtres">
                                 <span ng-show="displaySearchPanel"><img src="/assets/images/double-arrow-up.png" alt="up"/><span class="closeSearchText"> Fermer</span></span>
                                 <span ng-hide="displaySearchPanel"><img src="/assets/images/double-arrow-down.png" alt="down"/><span class="closeSearchText"> Ouvrir</span></span><span class="closeSearchText"> le panneau de filtres</span>
                             </a>
@@ -101,13 +101,13 @@
                             <a data-toggle="dropdown" class="searchTab" href="#" title="Trier les produits">
                                 <span><img src="/assets/images/sort.png"/><span class="closeSearchText"> Trier les produits</span></span>
                            </a>
-                            <ul class="dropdown-menu list-group" role="menu" aria-labelledby="dLabel">
+                            <div class="dropdown-menu list-group" role="menu" aria-labelledby="dLabel">
                                 <a title="trier par nom" class="list-group-item lien-list" ng-click="orderBy('name', $event)">Nom<b class="unselectable" ng-class="search.orderBy=='name' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
                                 <a title="trier par prix" class="list-group-item lien-list" ng-click="orderBy('price', $event)">Prix<b class="unselectable" ng-class="search.orderBy=='price' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
                                 <a title="trier par type" class="list-group-item lien-list" ng-click="orderBy('type', $event)">Type<b class="unselectable" ng-class="search.orderBy=='type' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
                                 <a title="trier par flux" class="list-group-item lien-list" ng-click="orderBy('flux', $event)">Flux<b class="unselectable" ng-class="search.orderBy=='flux' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
                                 <a title="trier par marque" class="list-group-item lien-list" ng-click="orderBy('marque', $event)">Marque<b class="unselectable" ng-class="search.orderBy=='marque' ? (search.orderByASC ? 'caret' : 'caret-up' ) : ''"></b></a>
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

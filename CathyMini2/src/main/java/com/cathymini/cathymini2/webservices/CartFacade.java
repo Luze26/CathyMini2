@@ -140,7 +140,7 @@ public class CartFacade {
      * @param clTemp product's id + quantity
      * @param request
      * @param response
-     * @return
+     * @return the new quantity
      */
     @POST
     @Path("/changeQuantityToCart")

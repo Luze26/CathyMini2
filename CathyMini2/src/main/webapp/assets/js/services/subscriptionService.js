@@ -19,7 +19,9 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
         return "";
     };
 
-    
+    /**
+     * function called when the site is load to fill the subscription
+     */
     $http.post("/webresources/cart/getSub")
         .success(function(data){
             service.sub.price = 0;
@@ -39,7 +41,9 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
             }
         });
     
-    
+    /**
+     * function called when a consumer is connected
+     */
     $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
         $http.post("/webresources/cart/getSub")
         .success(function(data){
@@ -60,6 +64,9 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
         });
     } );
     
+    /**
+     * function called when the consumer disconnect
+     */
      $rootScope.$on('consumerDisconnect',function (){
                 service.sub = [];
                 //service.sub.price = 0;
@@ -122,6 +129,12 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                 });
     };
     
+    /**
+     * called when the user want to change a subscription name
+     * @param {string} oldName
+     * @param {string} newName
+     * @returns {undefined}
+     */
     service.editName = function(oldName, newName) {
          $http.post("/webresources/cart/changeName", {"oldName": oldName, "newName": newName})
                 .success(function(data) {
@@ -155,8 +168,10 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
     };
     
     /**
-     * Delete a product from the sub
-     * @param {Product} product
+     * called when the user want to change the number of day
+     * @param {int} nbJ
+     * @param {String} name
+     * @returns {undefined}
      */
     service.changeNbJ = function(nbJ, name) {
         $http.post("/webresources/cart/changeNbJ", nbJ, name)
@@ -170,7 +185,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
     };
     
     /**
-     * 
+     * function called when the user create a new subscription
      */
     service.newSubscription = function(){
         $http.post("/webresources/cart/newSubscription")

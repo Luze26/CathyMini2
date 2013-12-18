@@ -62,12 +62,14 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
          * Watch click on body to close tabs
          */
         angular.element("body").click(function() {
-            if (scope.cartOpen) {
-                scope.toggleCart();
-            }
-            else if(scope.subOpen) {
-                scope.toggleSub();
-            }
+            scope.$apply(function() {
+                if (scope.cartOpen) {
+                    scope.toggleCart();
+                }
+                else if(scope.subOpen) {
+                    scope.toggleSub();
+                }
+            });
         });
         
         /**
@@ -178,50 +180,71 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
            scope.nameTemp = name;
        };
        
+       /**
+        * called when the user change something about the different subscription
+        */
        $rootScope.$on('showAddSub', function (event, can){
            scope.showAddS = can;
        });
        
-      $rootScope.$on('subLoaded', function (){
+       /**
+        * called when the user charge the subscription with something already existing in it
+        */
+       $rootScope.$on('subLoaded', function (){
            scope.selectedSub = scope.subService.sub[0];
        });
        
+       /**
+        * called when user want to change the quatity to a product in subscription
+        * @param {Product} prod
+        */
        scope.changeQuantitySub = function (prod) {
            subscriptionService.changeQuantity(prod, scope.selectedSub.name);
        }
        
+       /**
+        * true is we can't see the edit panel
+        */
        scope.show = true;
        
+       /**
+        * true when we can't see the edit button
+        */
        scope.showEditButton = true;
        
+       /**
+        * have the oldname of subscription when the user want to change it
+        */
        scope.oldName = null;
         
        scope.cheminImageProduit = "/assets/images/product/";
     },
     template: '<div id="cart">' +
                 '<div id="cartTabs" ng-click="prevent($event)">' + 
-                    '<div id="cartTab" ng-class="{\'active\': cartOpen}" ng-click="toggleCart($event)">' +
+                    '<div id="cartTab" ng-class="{\'active\': cartOpen}" ng-click="toggleCart($event)" title="Panier">' +
                         '<i class="fa fa-shopping-cart fa-4x"></i>' +
-                        '<div>{{cartService.nbProducts()}} products</div>' +
+                        '<div ng-show="cartService.nbProducts() == 0">Panier bien vide</div>' +
+                        '<div ng-show="cartService.nbProducts() != 0" ng-cloak="ng-cloak">{{cartService.nbProducts()}} produits dans le panier</div>' +
                      '</div>' +
-                     '<div id="subTab" ng-class="{\'active\': subOpen}" ng-click="toggleSub($event)">' +
-                        '<i class="fa fa-shopping-cart fa-4x"></i>' +
-                        '<div>{{subService.nbProducts()}} products</div>' +
+                     '<div id="subTab" ng-class="{\'active\': subOpen}" ng-click="toggleSub($event)" title="Abonnements">' +
+                        '<img src="/assets/images/order.png" alt="abonnement"/>' +
+                        '<div ng-show="selectedSub">{{selectedSub.name}}</div>' +
+                        '<div ng-hide="selectedSub">Abonnement</div>' +
                      '</div>' +
                  '</div>' +
                  '<div id="cartPanel" ng-click="prevent($event)">' +
                     '<div ng-show="cartOpen">' +
-                        '<ul>' +
-                            '<li class="prodCart" ng-repeat="prod in cartService.cart.products">' +
-                                ' <img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>'+
-                                '{{prod.name}} quantity : \n\
-                                <input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/> \n\
-                                <span>\n\
-                                <img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
-                                </span>' +
-                            '</li>' +
-                        '</ul>' +
-                        'Price: {{cartService.cart.price}} €' +
+                        '<table class="table table-striped table-bordered table-hover product-list">' +
+                            '<tr class="prodCart" ng-repeat="prod in cartService.cart.products">' +
+                                '<td><img class="imgCart" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/></td>'+
+                                '<td>{{prod.name}}</td>' +
+                                '<td><input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/></td>' +
+                                '<td title="Enlever du panier">\n\
+                                <img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/images/remove.png"/>\n\
+                                </td>' +
+                            '</tr>' +
+                        '</table>' +
+                        '<span style="font-style: 14px; font-weight: bold;">Total: <span class="price">{{cartService.cart.price}} €</span></span>' +
                     '</div>' +
                     '<div ng-show="subOpen">' +
                         '<a class="btn" ng-hide="showAddS" ng-click="subService.newSubscription()">New subscription</a>'+
@@ -241,7 +264,6 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                                 <span>\n\
                                 <img class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="{{cheminImageProduit}}supprimer.jpg"/>\n\
                                 </span>' +
-
                             '</li>' +
                         '</ul>' +
                         'Price: {{getPriceSub()}} €' +

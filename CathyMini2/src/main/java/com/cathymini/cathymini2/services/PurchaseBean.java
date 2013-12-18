@@ -23,6 +23,7 @@ public class PurchaseBean {
     private static final Logger logger = Logger.getLogger(PurchaseBean.class);
 
     public void finalizePurchase(Consumer consumer, Cart cart, DeliveryAddress da, PaymentInfos pi) {
+        
         Purchase purchase = new Purchase();
         purchase.setConsumer(consumer);
         purchase.setPurchaseLineCollection(
@@ -40,16 +41,18 @@ public class PurchaseBean {
     }
     
     public void finalizeSubscription(Consumer consumer, Cart cart, Long startDate, 
-            DeliveryAddress da, PaymentInfos pi, Integer daysDelay) {
+            DeliveryAddress da, PaymentInfos pi, Integer daysDelay, String name) {
+        
         PurchaseSubscription purchase = new PurchaseSubscription();
         purchase.setConsumer(consumer);
-        purchase.setPurchaseLineCollection(cartLineToPurchaseLine(
-                cart.getCartLineCollection()));
+        purchase.setPurchaseLineCollection(
+                cartLineToPurchaseLine(cart.getCartLineCollection()));
         purchase.setPayementInfo(pi);
         purchase.setDeliveryAddress(da);
         Calendar cal = Calendar.getInstance();
         purchase.setCreationDate(cal.getTimeInMillis());
         purchase.setDaysDelay(daysDelay);
+        purchase.setName(name);
         
         manager.persist(purchase);
         

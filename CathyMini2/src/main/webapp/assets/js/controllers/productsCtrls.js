@@ -292,4 +292,14 @@ angular.module('products').
        * Watch if the search query change
        */
       $scope.$watch('search', $scope.refreshSearch, true);
+      
+      /**
+       * And function, because xhtml not allow & in attributes
+       * @param {type} x
+       * @param {type} y
+       * @returns {boolean} x && y
+       */
+      $scope.and = function(x,y) {
+          return x && y;
+      };
     }]);

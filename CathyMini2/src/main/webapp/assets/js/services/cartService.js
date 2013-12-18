@@ -15,7 +15,10 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
         return service.cart.products.length;
     };
     
-    
+    /**
+     * function to load the cart
+     * @returns {undefined}
+     */
     service.getCart = function() {
         $http.post("/webresources/cart/getCart")
         .success(function(data){
@@ -34,6 +37,10 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
             }
         });
     };
+    
+    /**
+     * load the cart
+     */
     service.getCart();
     
     /**
@@ -43,6 +50,9 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
         service.getCart();
     });
     
+    /**
+     * function called when a user disconnect
+     */
      $rootScope.$on('consumerDisconnect',function (){
                 service.cart.products = [];
                 service.cart.price = 0;
