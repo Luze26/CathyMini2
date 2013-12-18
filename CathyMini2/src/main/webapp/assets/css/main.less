@@ -80,8 +80,9 @@ body {
 }
 
 #footer {
-    background: #333333;
-    border-top: 5px solid #cccccc;
+    -webkit-box-shadow: inset 0 2px 1px rgba(0,0,0,.4);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,.3);
+    background-color: @mainColorDark;
     margin-top: 20px;
     height: 50px;
     width: 100%;
@@ -200,4 +201,23 @@ input.ng-dirty.ng-invalid {
 
 .tick-hidden {
     visibility: hidden;
+}
+
+.text-page {
+    background-color: #fff;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 15px;
+}
+
+.footer-links {
+    color: #fff;
+    float: right;
+    vertical-align: middle;
+    margin-right: 50px;
+    line-height: 40px;
+
+    a {
+        color: #fff ! important; 
+    }
 }
