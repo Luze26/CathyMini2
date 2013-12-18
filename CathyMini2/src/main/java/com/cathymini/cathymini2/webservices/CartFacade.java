@@ -112,21 +112,25 @@ public class CartFacade {
     @Path("/getCart")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Cart consumerIsConnected(@Context HttpServletRequest request, @Context HttpServletResponse response){
+    public Cart getCart(@Context HttpServletRequest request, @Context HttpServletResponse response){
         Cart oldCart = getCartSession(request);
         Consumer cons  = sessionSecuring.getConsumer(request);
-        if(oldCart != null){
-            cartBean.mergeCart(cons, oldCart);
-            setCartSession(request, null);
+        if(cons != null){
+            if(oldCart != null){
+                cartBean.mergeCart(cons, oldCart);
+                setCartSession(request, null);
+            }
+            try{
+                    Cart cartToSend = cartBean.getUserCart(cons);
+                    return cartToSend;
+            }
+            catch(Exception ex){
+                response.setStatus(400);
+                return null;
+            }
         }
-        try{
-                Cart cartToSend = cartBean.getUserCart(cons);
-                return cartToSend;
-        }
-        catch(Exception ex){
-            response.setStatus(400);
-            return null;
-        }
+        else
+            return oldCart;
 
     }
 
@@ -302,20 +306,27 @@ public class CartFacade {
     @Path("/getSub")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList consumerIsConnectedSub(@Context HttpServletRequest request, @Context HttpServletResponse response){
+    public ArrayList getSub(@Context HttpServletRequest request, @Context HttpServletResponse response){
         Subscription sub = getSubSession(request);
         Consumer cons  = sessionSecuring.getConsumer(request);
-        if(sub != null){
-            cartBean.recordSubscription(cons, sub);
-            setSubSession(request, null);
+        if(cons != null){
+            if(sub != null){
+                cartBean.recordSubscription(cons, sub);
+                setSubSession(request, null);
+            }
+            try{
+                    ArrayList  cartToSend = cartBean.getUserSubscription(cons);
+                    return cartToSend;
+            }
+            catch(Exception ex){
+                response.setStatus(400);
+                return null;
+            }
         }
-        try{
-                ArrayList  cartToSend = cartBean.getUserSubscription(cons);
-                return cartToSend;
-        }
-        catch(Exception ex){
-            response.setStatus(400);
-            return null;
+        else{
+            ArrayList abo = new ArrayList();
+            abo.add(sub);
+            return abo;
         }
 
     }
@@ -499,6 +510,7 @@ public class CartFacade {
      */
     private void setCartSession(HttpServletRequest request, Cart cart) {
         HttpSession session = request.getSession(true);
+        //session.
         session.setAttribute(CART_ATTR, cart);
     }
 

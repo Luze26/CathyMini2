@@ -20,6 +20,24 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
     };
 
     
+    $http.post("/webresources/cart/getSub")
+        .success(function(data){
+            service.sub.price = 0;
+            if(data !== null){
+                service.sub = [];
+                for(var j = 0; j < data.length; j++){
+                    var prodColl = data[j].cartLineCollection;
+                    service.sub.push({products: [], price: 0, name: data[j].name, nbJ: data[j].nbJ});
+                    for( var i = 0;i<prodColl.length; i++){
+                        var prod = prodColl[i].product;
+                        prod.quantity = prodColl[i].quantity;
+                        service.sub[j].products.push(prod);
+                        service.sub[j].price += (prodColl[i].product.quantity * prodColl[i].product.price);
+                    }
+                }
+            }
+        });
+    
     
     $rootScope.$on('consumerConnect',service.consumerIsConnected = function (){
         $http.post("/webresources/cart/getSub")
