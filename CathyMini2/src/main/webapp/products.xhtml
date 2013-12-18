@@ -37,7 +37,7 @@
                                                 <label style="margin-bottom: 0px; cursor: pointer;"><img class="product-icon" src="/assets/images/add.png" alt="+"/>Ajouter</label>
                                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                                     <li><a class="btn" title="ajouter au panier" ng-click="addProductToCart($event, prod)">Ajouter au panier</a></li>
-                                                    <li><a class="btn" title="nouveau abonnement" ng-hide="showAddSub()" ng-click="newSubscription($event)">Nouveau abonnement</a></li>
+                                                    <li><a class="btn" ng-hide="showAddSub()" title="nouveau abonnement" ng-hide="showAddSub()" ng-click="newSubscription($event)">Nouveau abonnement</a></li>
                                                     <li title="ajouter à l'abonnement" ng-repeat="sub in subService.sub"><a class="btn" ng-click="addProductToSub($event, prod, sub.name)">Ajouter à {{sub.name}}</a></li>
                                                 </ul>
                                             </button>
