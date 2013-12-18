@@ -94,7 +94,7 @@
                                                     <td>{{prod.price}} &euro;</td>
                                                     <td>{{prod.price * prod.quantity}} &euro;</td>
                                                     <td>
-                                                        <span><img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/></span>
+                                                        <button ng-click="cartService.deleteProduct(prod)" class="btn btn-primary" data-toggle="modal">Supprimer</button>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -138,7 +138,8 @@
                                                     <td>{{addr.address}}</td>
                                                     <td>{{addr.zipCode}}</td>
                                                     <td>{{addr.city}}</td>
-                                                    <td><span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Editer</span>
+                                                    <td>
+                                                        <span ng-click="initEditAddress(addr)" class="btn btn-primary" data-toggle="modal" data-target="#addressModal">Editer</span>
                                                         <span ng-click="selectAddr(addr);nextTab()" class="btn btn-primary">Selectionner</span>
                                                     </td>
                                                 </tr>
@@ -160,7 +161,6 @@
                                                     <th>Quantité</th>
                                                     <th>Prix Unitaire</th>
                                                     <th>Total</th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -169,9 +169,6 @@
                                                     <td>{{prod.quantity}}</td>
                                                     <td>{{prod.price}} &euro;</td>
                                                     <td>{{prod.price * prod.quantity}} &euro;</td>
-                                                    <td>
-                                                        <span><img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/product/supprimer.jpg"/></span>
-                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2"></td>

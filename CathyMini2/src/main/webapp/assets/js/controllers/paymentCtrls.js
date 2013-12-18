@@ -37,7 +37,7 @@ angular.module('payment').
         });
         
         $scope.selectAddr = function(addr) {
-            $scope.paymentData.addr = addr.id;
+            $scope.paymentData.addressId = addr.id;
         };
         
         // Behaviour of the pager 'next'
@@ -67,10 +67,10 @@ angular.module('payment').
             } else if($scope.activeTab === 4) {
                 // Shipping Cost validation
                 $scope.activeTab++;
-                console.log('ship');
             } else if($scope.activeTab === 5) {
                 // Purchase/Sub finalization
                 
+                console.log($scope.paymentData);
                 $http.post("/webresources/purchase/createPurchase", $scope.paymentData)
                     .success(function() { 
                         $scope.activeTab = 0;

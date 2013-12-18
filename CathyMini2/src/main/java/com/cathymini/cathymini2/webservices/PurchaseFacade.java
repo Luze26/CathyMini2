@@ -6,6 +6,7 @@ import com.cathymini.cathymini2.model.DeliveryAddress;
 import com.cathymini.cathymini2.model.PaymentInfos;
 import com.cathymini.cathymini2.model.Purchase;
 import com.cathymini.cathymini2.model.PurchaseSubscription;
+import com.cathymini.cathymini2.services.CartSession;
 import com.cathymini.cathymini2.services.PurchaseBean;
 import com.cathymini.cathymini2.webservices.model.Payment;
 import com.cathymini.cathymini2.webservices.model.form.PurchaseForm;
@@ -41,6 +42,8 @@ public class PurchaseFacade {
     
     @EJB
     private PurchaseBean purchaseBean;
+    @EJB
+    private CartSession cartBean;
 
     /**
      * Create a purchase
@@ -54,16 +57,15 @@ public class PurchaseFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.MEMBER)
-    public String createPurchase(PurchaseForm form, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+    public String createPurchase(PurchaseForm form, @Context HttpServletRequest request, @Context HttpServletResponse response) throws Exception {
         Consumer user = sessionSecuring.getConsumer(request);
         
-        HttpSession session = request.getSession(true);
-        Cart cart = (Cart) session.getAttribute(CartFacade.CART_ATTR);
+        Cart cart = cartBean.getUserCart(user);
         
         Collection<DeliveryAddress> addresses = user.getDeliveryCollection();
         DeliveryAddress selectedAddr = null;
         for (DeliveryAddress da : addresses){
-            if(da.getDeliveryAddresID() == form.addressId) {
+            if(da.getDeliveryAddresID().compareTo(form.addressId) == 0) {
                 selectedAddr = da;
             }
         }
@@ -79,8 +81,9 @@ public class PurchaseFacade {
         */
         PaymentInfos selectedPI = null;
         
-        if (selectedAddr != null) {
-            purchaseBean.finalizePurchase(cart, selectedAddr, selectedPI);
+        if (cart != null && selectedAddr != null) {
+            System.out.println(cart);
+            purchaseBean.finalizePurchase(user, cart, selectedAddr, selectedPI);
         }
         
         return "purchase validated";
@@ -91,6 +94,7 @@ public class PurchaseFacade {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secure(Role.MEMBER)
+
     public String createSubscription(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         return "Not Implemented";
     }

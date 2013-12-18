@@ -56,7 +56,7 @@ public class Purchase implements Serializable {
     
     /** Cost of the purchase */
     @Column(name="totalCost")
-    private Integer totalCost;
+    private Float totalCost;
     
     /** Consumer {@link DeliveryAddress} for the purchase */
     @OneToOne
@@ -78,11 +78,11 @@ public class Purchase implements Serializable {
     @Column(name="deliveryDate")
     private Long deliveryDate;
 
-    public Integer getTotalCost() {
+    public Float getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(Integer totalCost) {
+    public void setTotalCost(Float totalCost) {
         this.totalCost = totalCost;
     }
 

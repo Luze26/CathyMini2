@@ -22,25 +22,27 @@ public class PurchaseBean {
 
     private static final Logger logger = Logger.getLogger(PurchaseBean.class);
 
-    public void finalizePurchase(Cart cart, DeliveryAddress da, PaymentInfos pi) {
+    public void finalizePurchase(Consumer consumer, Cart cart, DeliveryAddress da, PaymentInfos pi) {
         Purchase purchase = new Purchase();
-        purchase.setConsumer(cart.getConsumer());
-        purchase.setPurchaseLineCollection(cartLineToPurchaseLine(
-                cart.getCartLineCollection()));
+        purchase.setConsumer(consumer);
+        purchase.setPurchaseLineCollection(
+                cartLineToPurchaseLine(cart.getCartLineCollection()));
         purchase.setPayementInfo(pi);
         purchase.setDeliveryAddress(da);
         Calendar cal = Calendar.getInstance();
         purchase.setCreationDate(cal.getTimeInMillis());
+        purchase.setTotalCost(cartLinesTotalCost(cart.getCartLineCollection()));
         
         manager.persist(purchase);
         
-        String message = cart.getConsumer().getUsername() + "finalize a purchase.";
+        String message = cart.getConsumer().getUsername() + " finalize a purchase.";
         logger.debug(message);
     }
     
-    public void finalizeSubscription(Cart cart, Long startDate, DeliveryAddress da, PaymentInfos pi, Integer daysDelay) {
+    public void finalizeSubscription(Consumer consumer, Cart cart, Long startDate, 
+            DeliveryAddress da, PaymentInfos pi, Integer daysDelay) {
         PurchaseSubscription purchase = new PurchaseSubscription();
-        purchase.setConsumer(cart.getConsumer());
+        purchase.setConsumer(consumer);
         purchase.setPurchaseLineCollection(cartLineToPurchaseLine(
                 cart.getCartLineCollection()));
         purchase.setPayementInfo(pi);
@@ -123,6 +125,14 @@ public class PurchaseBean {
             purchase.add(purchaseline);
         }
         return purchase;
+    }
+    
+    private Float cartLinesTotalCost(Collection<CartLine> cartLines) {
+        Float cost = new Float(0);
+        for (CartLine cartline : cartLines){
+            cost = cartline.getProduct().getPrice() * cartline.getQuantity();
+        }
+        return cost;
     }
     
     private PurchaseSubscription getSubscriptionById(Long id) {
