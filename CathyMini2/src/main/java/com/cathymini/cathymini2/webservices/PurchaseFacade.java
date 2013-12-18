@@ -1,15 +1,19 @@
 package com.cathymini.cathymini2.webservices;
 
 import com.cathymini.cathymini2.model.Consumer;
+import com.cathymini.cathymini2.model.DeliveryAddress;
 import com.cathymini.cathymini2.model.PayementInfo;
 import com.cathymini.cathymini2.model.Purchase;
+import com.cathymini.cathymini2.model.PurchaseLine;
 import com.cathymini.cathymini2.model.PurchaseSubscription;
 import com.cathymini.cathymini2.services.PurchaseBean;
 import com.cathymini.cathymini2.webservices.model.Payment;
 import com.cathymini.cathymini2.webservices.secure.ConsumerSessionSecuring;
 import com.cathymini.cathymini2.webservices.secure.Role;
 import com.cathymini.cathymini2.webservices.secure.Secure;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -121,6 +125,19 @@ public class PurchaseFacade {
             for (Purchase subscription : subscriptions) {
                 payments.add(new Payment(subscription));
             }
+        } else {
+            PurchaseSubscription ps = new PurchaseSubscription();
+            PayementInfo pi = new PayementInfo();
+            Collection<PayementInfo> col = new ArrayList<PayementInfo>();
+            col.add(pi);
+            pi.setConsumer(user);
+            pi.setInfo("Test d'un abonnement.");
+            ps.setConsumer(user);
+            ps.setDaysDelay(21);
+            ps.setPurchaseLineCollection(new ArrayList<PurchaseLine>());
+            ps.setPayementInfo(pi);
+            Payment p = new Payment(ps);
+            payments.add(p);
         }
         
         return payments;
@@ -135,7 +152,7 @@ public class PurchaseFacade {
     @POST
     @Path("/allSubscriptions")
     @Produces(MediaType.APPLICATION_JSON)
-    @Secure(Role.MEMBER)
+    //@Secure(Role.ADMIN)
     public Collection<Payment> getAllSubscriptions(@Context HttpServletResponse response) throws Exception {
         
         Collection<PurchaseSubscription> subscriptions = purchaseBean.getAllSubscriptions();
@@ -145,6 +162,8 @@ public class PurchaseFacade {
                 payments.add(new Payment(subscription));
             }
         } else {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             PurchaseSubscription ps = new PurchaseSubscription();
             Consumer c = new Consumer();
             PayementInfo pi = new PayementInfo();
@@ -158,9 +177,9 @@ public class PurchaseFacade {
             c.setPaymentInfoCollection(col);
             ps.setConsumer(c);
             ps.setDaysDelay(21);
-            ps.setCreationDate(Long.valueOf("17122013"));
-            ps.setDeliveryDate(Long.valueOf("20122013"));
-            ps.setPayementDate(Long.valueOf("17122013"));
+            cal.getTimeInMillis();
+            ps.setCreationDate(Long.valueOf(cal.getTimeInMillis()));
+            ps.setPurchaseLineCollection(new ArrayList<PurchaseLine>());
             ps.setPayementInfo(pi);
             Payment p = new Payment(ps);
             payments.add(p);

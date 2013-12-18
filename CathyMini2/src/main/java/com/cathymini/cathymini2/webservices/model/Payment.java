@@ -75,6 +75,7 @@ public class Payment {
         Calendar cal = Calendar.getInstance();
         if (subscription.getCreationDate() != null) {
             cal.setTimeInMillis(subscription.getCreationDate());
+            System.out.println("Creation date : " + subscription.getCreationDate() + " Calendar : " + cal.getTimeInMillis() + " ToString : " + cal.getTime().toString());
             this.creationDate = formatter.format(cal.getTime().toString());
         } else {
             this.creationDate = "";
