@@ -25,8 +25,8 @@
 
                                 <div class="product-aura">
                                     <div class="type">
-                                        <img ng-if="prod.type==='serviette'" src="assets/images/serviette.png"/>
-                                        <img ng-if="prod.type==='tampon'" src="assets/images/tampon.png"/>
+                                        <img ng-if="prod.type==='serviette'" src="assets/images/serviette.png" alt="serviette" title="serviette"/>
+                                        <img ng-if="prod.type==='tampon'" src="assets/images/tampon.png" alt="tampon" title="tampon"/>
                                     </div>
                                     <div class="row">
                                         <div class="image col-xs-5">
@@ -34,7 +34,7 @@
                                                 <img class="imgGallery img-thumbnail" ng-src="{{cheminImageProduit}}{{prod.pictureUrl}}"/>
                                             </div>
                                             <button class="btn btn-primary dropdown" data-toggle="dropdown">
-                                                <label style="margin-bottom: 0px; cursor: pointer;"><img class="product-icon" src="/assets/images/add.png" alt="+"/>Ajouter</label>
+                                                <label style="margin-bottom: 0px; cursor: pointer;" title="Ajouter au panier ou à un abonnement"><img class="product-icon" src="/assets/images/add.png" alt="+"/>Ajouter</label>
                                                 <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                                     <a class="btn list-group-item lien-list" title="ajouter au panier" ng-click="addProductToCart($event, prod)">Ajouter au panier</a>
                                                     <a class="btn list-group-item lien-list" ng-hide="showAddSub()" title="nouvel abonnement" ng-click="newSubscription($event)">Nouvel abonnement</a>
@@ -49,7 +49,7 @@
                                          <div class="infos col-xs-7">
                                              <div class="mid">{{prod.name}} <br /> <span class="brandName">{{prod.marque}}</span></div>
                                              <div class="drops-c drops-c-6 drops-active-{{prod.flux}}"><div class="drops-inner"></div></div>
-                                             <div ng-show="prod.appli" class="brandName">Avec applicateur.</div>
+                                             <div ng-show="prod.type == 'tampon'" class="brandName"><span ng-show="prod.appli">Avec applicateur.</span></div>
                                              <div class="price">{{prod.price}}€</div>
                                          </div>
                                     </div>
