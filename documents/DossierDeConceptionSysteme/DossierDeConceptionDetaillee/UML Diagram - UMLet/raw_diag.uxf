@@ -358,7 +358,7 @@ m1= 1</panel_attributes>
     </coordinates>
     <panel_attributes>Subscription
 --
-- nbDays : Integer ///</panel_attributes>
+- daysDelay : Integer</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

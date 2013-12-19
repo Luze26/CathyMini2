@@ -12,6 +12,7 @@
             <ui:param name="ngController" value="indexCtrl" />
             <ui:param name="title" value="CathyMini" />
             <ui:define name="content">
+                <cart-directive></cart-directive>
                 <div class="row" style="margin-bottom: 20px">
                     <div id="carousel" class="col-xs-12 carousel slide">
                         <div class="carousel-inner">
@@ -26,13 +27,23 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="item">
+                                <a href="https://www.facebook.com/cathy.mini.5832" alt="CathyMini sur Facebook">
+                                    <img src="/assets/images/slides/slide3.png" alt="Likez nous sur Facebook"/>
+                                    <div class="container">
+                                        <div class="carousel-caption">
+                                            <a class="btn btn-large btn-primary" title="Likez CathyMini" href="https://www.facebook.com/cathy.mini.5832">Likez CathyMini!</a>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                         <a class="carousel-prev" title="image précédente" href="#carousel" data-slide="prev"></a>
                         <a class="carousel-next" title="image suivante" href="#carousel" data-slide="next"></a>
                     </div><!-- /.carousel -->
                 </div>
                 <div class="row">
-                    <div class="col-xs-3">
+                    <div class="col-xs-12 col-md-3 col-lg-3">
                         <br />
                             <div class="list-group">
                                 <a class="list-group-item lien-list" tabindex="-1" href="#carousel" title="Les News">Les News</a>
@@ -41,7 +52,7 @@
                                 <a class="list-group-item lien-list" href="#contact" title="Nous Contacter">Nous Contacter</a>                      
                             </div>
                     </div>
-                    <div class="col-xs-9" infinite-scroll="loadArticles()" infinite-scroll-distance="2">
+                    <div class="col-xs-12 col-md-9 col-lg-9" infinite-scroll="loadArticles()" infinite-scroll-distance="2">
                         <div class="row list-group" ng-repeat="art in articles">
                             <div class="list-group-item" id="{{art.type}}">
                                     <div class="col-xs-2 image">
@@ -70,6 +81,10 @@
                 <script src="/assets/js/lib/ng-infinite-scroll.min.js"></script>
                 <script src="/assets/js/modules/indexModule.js"></script>
                 <script src="/assets/js/controllers/indexCtrls.js"></script>
+                <script src="/assets/js/services/consumerService.js"></script>
+                <script src="/assets/js/services/cartService.js"></script>
+                <script src="/assets/js/services/subscriptionService.js"></script>
+                <script src="/assets/js/directives/cartDirective.js"></script>
             </ui:define>
     	</ui:composition>
  

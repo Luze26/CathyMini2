@@ -151,7 +151,7 @@ angular.module('products').
        */
       $scope.changeTampon = function() {
         if($scope.search.tampon === false && $scope.search.napkin === false) {
-          $scope.search.napkin = true;
+          $scope.search.tampon = true;
         }
       };
 
@@ -160,7 +160,7 @@ angular.module('products').
        */
       $scope.changeNapkin = function() {
         if($scope.search.napkin === false && $scope.search.tampon === false) {
-          $scope.search.tampon = true;
+          $scope.search.napkin = true;
         }
       };
 
@@ -242,6 +242,28 @@ angular.module('products').
               $scope.currentReqHolding = false;
             });
         }
+      };
+      
+      /**
+       * Name of flux by number of drops
+       * @param {type} nb
+       * @returns {string} flux's name
+       */
+      $scope.getFluxName = function(nb) {
+          switch(nb) {
+              case 1:
+                  return "Mini";
+              case 2:
+                  return "Normal";
+              case 3:
+                  return "Normal+";
+              case 4:
+                  return "Super";
+              case 5:
+                  return "Super+";
+              case 6:
+                  return "Extra";
+          }
       };
       
        /**
