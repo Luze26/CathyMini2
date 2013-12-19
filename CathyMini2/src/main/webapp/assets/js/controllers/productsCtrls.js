@@ -14,7 +14,7 @@ angular.module('products').
       $scope.length = 20; 
       $scope.currentReqHolding = false;
       $scope.search = {orderBy: "flux", orderByASC: true, input: "", tampon: true,
-        napkin: true, minPrice: 0, maxPrice: 20, brands: [], flux: [1, 2, 3, 4, 5, 6]};
+        napkin: true, minPrice: 0, maxPrice: 20, brands: ['Vania', 'Tampax', 'Always', 'Nett'], flux: [1, 2, 3, 4, 5, 6]};
 
       /** Path where product's image are stock */
 
@@ -125,13 +125,25 @@ angular.module('products').
       };
 
       /**
+       * If bouton all/no for flux or brands have been used, usefull for refresh search
+       * @type Boolean|Boolean
+       */
+      var allNoDoneFlux = false;
+      var allNoDoneBrands = false;
+      
+      /**
        * Refresh product list with the new search query
        */
       $scope.refreshSearch = function() {
         $scope.offset = 0;
         $scope.length = 20;
         $scope.loadMore = true;
-        $scope.loadProducts();
+        if(allNoDoneFlux && $scope.search.flux.length == 0 || allNoDoneBrands && $scope.search.brands.length == 0) { //If all no done have been used
+            $scope.products = [];
+        }
+        else {
+            $scope.loadProducts();
+        }
       };
 
       /**
@@ -171,16 +183,12 @@ angular.module('products').
        * @param {type} true = enable, false = disable
        */
       $scope.allNoBrands = function(checked) {
+        allNoDoneBrands = true;
         for (var i = 0; i < $scope.brands.length; i++) {
             var brand = $scope.brands[i];
             brand.check = checked;
         }
-        if(checked) {
-            $scope.refreshBrand();
-        }
-        else {
-            $scope.products = [];
-        }
+        $scope.refreshBrand();
       };
       
       /**
@@ -194,7 +202,7 @@ angular.module('products').
             flux.push($scope.flux[i].id);
           }
         }
-        $scope.search.flux = flux;
+        $scope.search.flux = flux; 
       };
 
       /**
@@ -202,16 +210,12 @@ angular.module('products').
        * @param {type} true = enable, false = disable
        */
       $scope.allNoFlux = function(checked) {
+        allNoDoneFlux = true;
         for (var i = 0; i < $scope.flux.length; i++) {
             var flu = $scope.flux[i];
             flu.check = checked;
         }
-        if(checked) {
-            $scope.refreshFlux();
-        }
-        else {
-            $scope.products = [];
-        }
+        $scope.refreshFlux();
       };
       
       /**
