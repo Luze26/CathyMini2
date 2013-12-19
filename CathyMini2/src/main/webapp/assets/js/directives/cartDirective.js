@@ -257,30 +257,41 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                             '</tr>' +
                         '</table>' +
                         '<div ng-hide="cartService.nbProducts() == 0"><span style="font-style: 14px; font-weight: bold;">Total: <span class="price">{{cartService.cart.price}} €</span></span>' +
-                        '<a style="margin-top:20px; margin-left: 20px;" class="pull-right btn btn-primary" href="/payment.xhtml">Terminer vos commandes</a></div>'+
+                        '<a style="margin-top:20px; margin-right: 20px;" class="pull-right btn btn-primary" href="/payment.xhtml">Terminer vos commandes</a></div>'+
                     '</div>' +
                     '<div ng-show="subOpen">' +
-                        '<select style="margin-top: 5px; margin-left: 5px; margin-right: 5px;" class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
-                        '</select>'+
-                        '<button title="Changer le nom" style="margin-right: 5px; margin-top: 5px; margin-bottom: 5px;" class="btn btn-primary smaller-btn" type="button" ng-hide="showEditButton" ng-click="showEdit()"><img src="/assets/images/edit.png" alt="Editer"/>Changer le nom</button>'+
-                        '<a style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px;" title="Nouvel abonnement" class="btn btn-primary smaller-btn" ng-hide="showAddS" ng-click="newSub()"><img src="/assets/images/add.png" alt="Ajouter"/></a>'+
-                        '<div ng-hide="show">'+
-                                '<input style="margin-left: 5px;" name="input" type="text" class="col-xs-5" ng-model="name" ng-change="changeNameTemp(name)" required="required" />'+
-                                '<button title="Annuler" type="button" class="account-btn btn smaller-btn col-xs-3" ng-click="cancelEdit()">Annuler</button>'+
-                                '<button title="Editer" type="button" class="account-btn btn smaller-btn btn-primary col-xs-3" ng-click="editName()">Editer</button>'+
-                        '</div>'+
-                        '<table class="table table-striped table-bordered table-hover product-list">' +
-                            '<tr class="prodCart" ng-repeat="prod in getSubProducts()">' +
-                                '<td><img class="imgCart" ng-src="/assets/images/product/{{prod.pictureUrl}}"/></td>'+
-                                '<td>{{prod.name}}</td>' +
-                                '<td><input type="number" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/></td>\n\
-                                <td>\n\
-                                <img title="Enelever de l\'abonnement" class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="/assets/images/remove.png"/>\n\
-                                </td>' +
-                            '</tr>' +
-                        '</table>' +
-                        '<span style="font-size: 14px; font-weight: bold;">Total: <span class="price">{{getPriceSub()}} €</span></span>' +
-                        '<a style="margin-top:20px" class="pull-right btn btn-primary" href="/payment.xhtml">Terminer vos commandes</a>'+
+                        '<div class="empty-basket" ng-show="subService.sub.length == 0">' +
+                            'Vous n\'avez pas encore d\'abonnement.' +
+                            '<a style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px;" title="Nouvel abonnement" class="btn btn-primary smaller-btn" ng-hide="showAddS" ng-click="newSub()"><img src="/assets/images/add.png" alt="Ajouter"/> Créer mon abonnement</a>' +
+                        '</div>' +
+                        '<div ng-hide="subService.sub.length == 0">' +
+                            '<select style="margin-top: 5px; margin-left: 5px; margin-right: 5px;" class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
+                            '</select>'+
+                            '<button title="Changer le nom" style="margin-right: 5px; margin-top: 5px; margin-bottom: 5px;" class="btn btn-primary smaller-btn" type="button" ng-hide="showEditButton" ng-click="showEdit()"><img src="/assets/images/edit.png" alt="Editer"/>Changer le nom</button>'+
+                            '<a style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px;" title="Nouvel abonnement" class="btn btn-primary smaller-btn" ng-hide="showAddS" ng-click="newSub()"><img src="/assets/images/add.png" alt="Ajouter"/></a>'+
+                            '<div ng-hide="show">'+
+                                    '<input style="margin-left: 5px;" name="input" type="text" class="col-xs-5" ng-model="name" ng-change="changeNameTemp(name)" required="required" />'+
+                                    '<button title="Annuler" type="button" class="account-btn btn smaller-btn col-xs-3" ng-click="cancelEdit()">Annuler</button>'+
+                                    '<button title="Editer" type="button" class="account-btn btn smaller-btn btn-primary col-xs-3" ng-click="editName()">Editer</button>'+
+                            '</div>'+
+                            '<table class="table table-striped table-bordered table-hover product-list">' +
+                                '<tr class="prodCart" ng-repeat="prod in getSubProducts()">' +
+                                    '<td><img class="imgCart" ng-src="/assets/images/product/{{prod.pictureUrl}}"/></td>'+
+                                    '<td>{{prod.name}}</td>' +
+                                    '<td><input type="number" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/></td>\n\
+                                    <td>\n\
+                                    <img title="Enelever de l\'abonnement" class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="/assets/images/remove.png"/>\n\
+                                    </td>' +
+                                '</tr>' +
+                            '</table>' +
+                            '<div ng-show="getSubProducts().length != 0" ng-cloak="ng-cloak">' +
+                                '<span style="font-size: 14px; font-weight: bold;">Total: <span class="price">{{getPriceSub()}} €</span></span>' +
+                                '<a style="margin-top:20px; margin-right: 20px;" class="pull-right btn btn-primary" href="/payment.xhtml">Terminer vos commandes</a>'+
+                            '</div>' +
+                            '<div class="empty-basket" ng-show="getSubProducts().length == 0" ng-cloak="ng-cloak">' +
+                                'Abonnement bien vide.' +
+                            '</div>' +
+                        '</div>' + 
                     '</div>' +
                  '</div>' +
               '</div>'
