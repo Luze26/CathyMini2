@@ -23,10 +23,10 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
         $http.post("/webresources/cart/getCart")
         .success(function(data){
             service.cart.price = 0;
-            if(data !== null){
+            if(data !== null && data !== ""){
                 service.cart.products = [];
                 var prodColl = data.cartLineCollection;
-                if(prodColl !== null){
+                if(prodColl !== null && prodColl.isEmpty()){
                     for( var i = 0;i<prodColl.length; i++){
                         var prod = prodColl[i].product;
                         prod.quantity = prodColl[i].quantity;

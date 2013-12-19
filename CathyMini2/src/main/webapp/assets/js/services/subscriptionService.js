@@ -91,13 +91,13 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                             if(service.sub[j].products[i].id === product.id){
                                 found = true;
                                 service.sub[j].products[i].quantity++;
-                                notif = "Et un "+service.cart.products[i].name+" de plus dans l'abonnement "+service.sub[j].name;
+                                notif = "Et un "+service.sub[j].products[i].name+" de plus dans l'abonnement "+service.sub[j].name;
                             }
                         }
                         if(!found){ //Else, new product for the cart
                             product.quantity = 1;
                             service.sub[j].products.push(product);
-                            notif = "Le produit "+service.cart.products[i].name+" a été ajouté à l'abonnement "+service.sub[j].name+" !";
+                            notif = "Le produit "+service.sub[j].products[i].name+" a été ajouté à l'abonnement "+service.sub[j].name+" !";
                         }
                         service.sub[j].price += product.price;
                         notificationService.displayMessage(notif);
