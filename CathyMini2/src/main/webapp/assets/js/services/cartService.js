@@ -34,7 +34,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
             if(data !== null && data !== ""){
                 service.cart.products = [];
                 var prodColl = data.cartLineCollection;
-                if(prodColl !== null && prodColl.isEmpty()){
+                if(prodColl){
                     for( var i = 0;i<prodColl.length; i++){
                         var prod = prodColl[i].product;
                         prod.quantity = parseInt(prodColl[i].quantity);
