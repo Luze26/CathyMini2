@@ -252,6 +252,7 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                             '</tr>' +
                         '</table>' +
                         '<span style="font-style: 14px; font-weight: bold;">Total: <span class="price">{{cartService.cart.price}} €</span></span>' +
+                        '<a style="margin-top:20px" class="pull-right btn btn-primary" href="/payment.xhtml">Terminer vos commandes</a>'+
                     '</div>' +
                     '<div ng-show="subOpen">' +
                         '<select style="margin-top: 5px; margin-left: 5px; margin-right: 5px;" class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
@@ -274,6 +275,7 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                             '</tr>' +
                         '</table>' +
                         '<span style="font-size: 14px; font-weight: bold;">Total: <span class="price">{{getPriceSub()}} €</span></span>' +
+                        '<a style="margin-top:20px" class="pull-right btn btn-primary" href="/payment.xhtml">Terminer vos commandes</a>'+
                     '</div>' +
                  '</div>' +
               '</div>'
