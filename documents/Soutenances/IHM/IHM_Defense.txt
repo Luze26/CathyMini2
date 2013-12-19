@@ -1,0 +1,70 @@
+1 - Diapo présentation (comme pour la présentation Système)
+
+2 - Intro : 
+    - sujet du site = nous allons vous présenter votre site de e-commerce qui vous permettra de vendre des produits hygiéniques pour femmes (tampons et serviettes)
+        - présentation des aspects classiques d'un site de vente de ecom
+    - intérêt supplémentaire, idée novatrice
+        - l'intérêt de notre site est qu'il vous permettra de proposer aux utilisateurs l'achat de ces produits de manière conventionnel, 
+            mais aussi un système d'abonnements, qui permettra aux utilisateurs de recevoir, de manière périodique, leur paquet, sans besoin de revenir tout les mois sur 
+            le site pour passer commande. le paquet qu'il veut, quand il veut jusqu'à chez lui.
+    - cibles du produit (CathyMini)
+    
+
+3 - Organisation du groupe :
+    - Deroulement du projet
+        - CDC => conception système => développement système + conception IHM => développement système et IHM
+            - définition des systèmes et interactions décidé par l'ensemble du groupe
+            - développement par tout le groupe
+            - spécification et conception réalisé par 2 (+1) personnes mais relecture par tout le groupe.
+            - La charte graphique a été donné a un sous-traitant mais nous avons du la réalisé mais nous develepperont ce point plus loin
+    - déroulement qui suis le processus agile 
+        => pas de clients lourds mais, et des le debut, prototypages dans le but d'obtenir des retours d'utilisateurs externes au groupe 
+            (plusieurs phases de pré-productions pour un résultat proche de l'utilisateur)
+            => notre objectif n'est pas seulement un projet de demonstration de compétences mais a projet a but réel qui pourra être mis en production !!
+
+4 - Nos objectifs (ne pas oublié de parler du modele des taches, de la conception IHM)
+    liste des objectifs
+
+4.1 - Site simple et moderne
+    - AJAX 
+        => réactivite, rapidité de l'interface
+    - plusieurs affichage en overlay 
+        => moins de chemins entre les interfaces => simplification de l'utilisation
+    - un grand nombre de feedback + préremplissage quand possible
+        => rapidité, simplicité, ADAPTIVITE
+    - pas de fil d'ariane car très simple
+    - tout est toujours accessible depuis n'importe ou (du catalogue aux CGU, tout!)
+
+4.2 - Deux niveaux d'utilisateurs
+    - un utilisateur peu habitué
+        - un site simple et moderne ou l'utilisateur est complement guidé, constamment assisté
+            - feedbacks, informations visuelles (nombre de produits du panier, fleches dans la chaine de paiement, ...)
+            - systeme de notifications => une interface interactive qui 'donne vie' au site 
+    - un utilisateur habitué
+        - réaction précis, un panel de recherche complet (optimisation des ressources d'un utilisateur expert pour le rende perfomant)
+
+4.3 - Site responsive    
+    - pour permettre un affichage correct du site sur n'importe quel résolution et donc support (pc/tablette)
+        - le site n'a pas pu être testé sur d'autres supports à cause de manque de moyens logistiques
+
+4.4 - Une partie d'administration
+    - optimisation des performances
+        - Toutes les données peuvent être affichées, triées, recherchés
+        - Moins d'interet pour l'esthetisme, plus pour l'efficacité!
+        
+        
+5 - Réalisation des objectifs (ne pas oublié de parler du modele des taches, de la conception IHM)
+    5.1 - Site simple et moderne
+        - Peu de page, beaucoup d'overlay, bcp feedback, design épuré
+    
+    5.2 - Deux niveaux d'utilisateurs
+        - Plusieurs façon de faire la même chose plus ou  moins rapide
+
+    5.3 - Site responsive    
+        - utilisation de bootstrap, css
+
+    
+6 - Contraintes/Problemes rencontrés
+    - charte graphique et logo -> prestataire de service qui nous a fait perdre du temps 
+        => un point TRES positif meme si il a mis la production en retard
+    - caddie multiple -> panier/abonnement(s) problème d'adaptation IHM et des interactions
