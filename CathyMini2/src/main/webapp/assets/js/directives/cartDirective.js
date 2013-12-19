@@ -286,7 +286,7 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                             '</table>' +
                             '<div ng-show="getSubProducts().length != 0" ng-cloak="ng-cloak">' +
                                 '<span style="font-size: 14px; font-weight: bold;">Total: <span class="price">{{getPriceSub()}} €</span></span>' +
-                                '<a style="margin-top:20px; margin-right: 20px;" class="pull-right btn btn-primary" href="/payment.xhtml">Terminer vos commandes</a>'+
+                                '<a title="Terminer votre commande" style="margin-top:20px; margin-right: 20px;" class="pull-right btn btn-primary" href="/payment.xhtml">Terminer vos commandes</a>'+
                             '</div>' +
                             '<div class="empty-basket" ng-show="getSubProducts().length == 0" ng-cloak="ng-cloak">' +
                                 'Abonnement bien vide.' +

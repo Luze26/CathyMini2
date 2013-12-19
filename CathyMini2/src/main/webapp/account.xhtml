@@ -100,12 +100,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="hand-cursor" ng-repeat="purchase in purchases" ng-click="showPurchaseDetails($index)">
+                                            <tr title="Voir/Cacher le detail de la commande" class="hand-cursor show-table-anim" ng-repeat="purchase in purchases" ng-click="showPurchaseDetails($index)">
                                                 <td ng-if="$index!==selectedPurchase">{{purchase.creationDate}}</td>
                                                 <td ng-if="$index!==selectedPurchase">{{purchase.deliveryDate}}</td>
                                                 <td ng-if="$index!==selectedPurchase">{{purchase.paymentDate}}</td>
                                                 <td ng-if="$index!==selectedPurchase">{{purchase.cost}} &euro;</td>
-                                                <td ng-if="$index===selectedPurchase" class="show-table-anim" colspan="4">
+                                                <td ng-if="$index===selectedPurchase" colspan="4">
                                                     <span class="col-lg-3"><b>Date de commande</b></span>
                                                     <span class="col-lg-2">{{purchase.creationDate}}</span>
                                                     <br/>
@@ -161,7 +161,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="hand-cursor show-table-anim" ng-repeat="subscription in subscriptions" ng-click="showSubscriptionDetails($index)">
+                                            <tr title="Voir/Cacher le detail de la commande" class="hand-cursor show-table-anim" ng-repeat="subscription in subscriptions" ng-click="showSubscriptionDetails($index)">
                                                 <td ng-if="$index!==selectedSubscription">{{subscription.creationDate}}</td>
                                                 <td ng-if="$index!==selectedSubscription">{{subscription.deliveryDate}}</td>
                                                 <td ng-if="$index!==selectedSubscription">{{subscription.paymentDate}}</td>

@@ -76,7 +76,7 @@ angular.module('payment').
                         $scope.activeTab = 0;
                         cartService.getCart();
                         $scope.cartService = cartService;
-                        notificationService.displayMessage("Votre commande a bien été validée !")
+                        notificationService.displayMessage("Votre commande a bien été enregistrée et vous sere bientôt envoyée !")
                     })
                     .error(function(data, status, headers, config) {
                     });
@@ -116,7 +116,7 @@ angular.module('payment').
         };
         
         $scope.getLastBtnClass = function() {
-            return ($scope.activeTab !== 0) ? '' : 'disabled';
+            return ($scope.activeTab !== 0) ? '' : 'hidden';
         };
         
         $scope.getNextBtnClass = function() {
