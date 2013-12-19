@@ -10,7 +10,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <button title="fermer" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -27,6 +27,7 @@
                                                 <span ng-if="productOverlay.type==='tampon'"><img src="assets/images/tampon.png"/> Tampon</span>
                                             </p>
                                             <p><b>Flux:</b> 
+                                                {{getFluxName(productOverlay.flux)}}
                                                 <span class="drops-c drops-c-6 drops-active-{{productOverlay.flux}}"><span class="drops-inner"></span></span>
                                             </p>
                                         </div>

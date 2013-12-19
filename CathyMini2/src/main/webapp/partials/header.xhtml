@@ -7,13 +7,6 @@
 	    <ui:composition>
                 <div class="navbar navbar-default navbar-fixed-top">
                     <div class="container">
-                        <div class="notification-container" ng-controller="notificationCtrl">
-                            <div ng-class="notificationService.message != null ? 'notification-show' : ''" ng-if="notificationService.message" class="notification-animation" ng-cloak="ng-cloak">
-                                <div class="cathy cathy-icon"></div>
-                                <span class="notification-triangle"></span>
-                                <div class="notification">{{notificationService.message}}</div>
-                            </div>
-                        </div>
                         <div class="navbar-header">
                             <a href="../" class="navbar-brand" ng-class="{'active': header == 'home'}" title="Accueil">
                                 <div class="logo"></div>

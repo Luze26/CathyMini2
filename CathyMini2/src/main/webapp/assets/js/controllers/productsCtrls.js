@@ -244,6 +244,28 @@ angular.module('products').
         }
       };
       
+      /**
+       * Name of flux by number of drops
+       * @param {type} nb
+       * @returns {string} flux's name
+       */
+      $scope.getFluxName = function(nb) {
+          switch(nb) {
+              case 1:
+                  return "Mini";
+              case 2:
+                  return "Normal";
+              case 3:
+                  return "Normal+";
+              case 4:
+                  return "Super";
+              case 5:
+                  return "Super+";
+              case 6:
+                  return "Extra";
+          }
+      };
+      
        /**
        * Add a product to the cart
        * @param {Product} product
