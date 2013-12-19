@@ -20,7 +20,6 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
         * true is we can't see the edit panel
         */
        scope.show = true;
-
        /**
         * true when we can't see the edit button
         */
@@ -30,6 +29,8 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
         * have the oldname of subscription when the user want to change it
         */
        scope.oldName = null;
+       
+       scope.selectedSub = null;
        
         /**
          * Toggle cart's tab
@@ -102,7 +103,7 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
         scope.getSubProducts = function() {
             for(var i = 0; i < subscriptionService.sub.length; i++) {
                 var sub = subscriptionService.sub[i];
-                if(scope.selectedSub != null){
+                if(scope.selectedSub !== null){
                     if(sub.name === scope.selectedSub.name) {
                         return sub.products;
                     }
@@ -139,7 +140,7 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
         scope.getPriceSub = function() {
             for(var i = 0; i < subscriptionService.sub.length; i++) {
                 var sub = subscriptionService.sub[i];
-                if(scope.selectedSub != null){
+                if(scope.selectedSub !== null){
                     if(sub.name === scope.selectedSub.name) {
                         return sub.price;
                     }
@@ -169,22 +170,8 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
         */
        scope.editName = function(){
            subscriptionService.editName(scope.oldName, scope.nameTemp);
+           //scope.selectedSub = scope.nameTemp;
            scope.show = true;
-       };
-       
-       /**
-        * called when the user change the subscription selection
-        */
-       scope.changeSelection = function () {
-           if(scope.selectedSub != null){
-               scope.showEditButton = false;
-               scope.oldName = scope.selectedSub.name;
-               
-           }
-           else{
-               scope.showEditButton = true;
-               scope.oldName = null;
-           }
        };
        
        /**
@@ -208,9 +195,25 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
        $rootScope.$on('subLoaded', function (){
            $timeout(function() {
                 scope.selectedSub = scope.subService.sub[0];
-                scope.showEditButton = true;
+                scope.showEditButton = false;
             }, 500);
        });
+       
+              /**
+        * called when the user change the subscription selection
+        */
+       scope.changeSelection = function () {
+           if(scope.selectedSub !== null){
+               scope.showEditButton = false;
+               scope.oldName = scope.selectedSub.name;
+           }
+           else{
+               scope.showEditButton = true;
+               scope.oldName = null;
+           }
+       };
+       
+       //scope.changeSelection();
        
        /**
         * called when user want to change the quatity to a product in subscription
@@ -218,12 +221,13 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
         */
        scope.changeQuantitySub = function (prod) {
            subscriptionService.changeQuantity(prod, scope.selectedSub.name);
-       }
+       };
 
        scope.newSub = function() {
            var promise = subscriptionService.newSubscription();
            promise.then(function(data) {
                scope.selectedSub = data;
+               scope.showEditButton = false;
            });
        };
     },

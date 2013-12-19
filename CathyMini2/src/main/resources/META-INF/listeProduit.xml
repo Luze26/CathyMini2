@@ -10,17 +10,17 @@
 		<listeFlux>
 			<flux>
 			  <name>2</name>
-			  <prix>7</prix>
+			  <prix>3.4</prix>
 			  <img>Nett_original_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
+			  <prix>4.2</prix>
 			  <img>Nett_original_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
+			  <prix>5</prix>
 			  <img>Nett_original_5.png</img>
 			</flux>
 		</listeFlux>
@@ -38,22 +38,22 @@
 		<listeFlux>
 		      <flux>
 			  <name>1</name>
-			  <prix>7</prix>
+			  <prix>2.5</prix>
 			  <img>Nett_proConfort_1.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
-			  <prix>7</prix>
+			  <prix>5</prix>
 			  <img>Nett_proConfort_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
+			  <prix>6</prix>
 			  <img>Nett_proConfort_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
+			  <prix>6.8</prix>
 			  <img>Nett_proConfort_5.png</img>
 			</flux>
 		</listeFlux>
@@ -71,12 +71,12 @@
 		<listeFlux>
 			<flux>
 			  <name>2</name>
-			  <prix>7</prix>
+			  <prix>3.9</prix>
 			  <img>Nett_proConfortNuit_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
+			  <prix>4.6</prix>
 			  <img>Nett_proConfortNuit_4.png</img>
 			</flux>
 		</listeFlux>
@@ -94,17 +94,17 @@
 		<listeFlux>
 		  <flux>
 			  <name>1</name>
-			  <prix>7</prix>
+			  <prix>8.3</prix>
 			  <img>NETT_BODYADAPT_1.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
-			  <prix>7</prix>
+			  <prix>9.6</prix>
 			  <img>NETT_BODYADAPT_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
+			  <prix>8</prix>
 			  <img>NETT_BODYADAPT_4.png</img>
 			</flux>
 		</listeFlux>
@@ -121,23 +121,23 @@
 		<listeFlux>
 		  <flux>
 			  <name>1</name>
-			  <prix>7</prix>
-			  <img>tampax_pearl_1.jpg</img>
+			  <prix>4.3</prix>
+			  <img>tampax_pearl_1.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
-			  <prix>7</prix>
-			  <img>tampax_pearl_2.jpg</img>
+			  <prix>5.6</prix>
+			  <img>tampax_pearl_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
-			  <img>tampax_pearl_4.jpg</img>
+			  <prix>6.1</prix>
+			  <img>tampax_pearl_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
-			  <img>tampax_pearl_5.jpg</img>
+			  <prix>6.9</prix>
+			  <img>tampax_pearl_5.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -146,33 +146,29 @@
 		</description>
 		
 	</product>
-	
-	
-				6
-	
 	<product typeP="tampon">
 		<nom>TAMPAX COMPACT</nom>
 		<marque>TAMPAX</marque>
 		<listeFlux>
 			<flux>
 			  <name>1</name>
-			  <prix>7</prix>
-			  <img>tampax_compak_1.jpg</img>
+			  <prix>8.6</prix>
+			  <img>tampax_compak_1.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
-			  <prix>7</prix>
-			   <img>tampax_compak_2.jpg</img>
+			  <prix>10.5</prix>
+			   <img>tampax_compak_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
-			   <img>tampax_compak_4.jpg</img>
+			  <prix>16.2</prix>
+			   <img>tampax_compak_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
-			   <img>tampax_compak_5.jpg</img>
+			  <prix>17.5</prix>
+			   <img>tampax_compak_5.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -189,13 +185,13 @@
 		<listeFlux>
 			<flux>
 			  <name>2</name>
-			  <prix>7</prix>
-			  <img>tampax_compak_fresh_2.jpg</img>
+			  <prix>6.7</prix>
+			  <img>tampax_compak_fresh_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
-			  <img>tampax_compak_fresh_4.jpg</img>
+			  <prix>7.4</prix>
+			  <img>tampax_compak_fresh_4.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -212,23 +208,23 @@
 		<listeFlux>
 			<flux>
 			  <name>1</name>
-			  <prix>12</prix>
-			  <img>tampax_classique_1.jpg</img>
+			  <prix>12.6</prix>
+			  <img>tampax_classique_1.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
-			  <prix>7</prix>
-			  <img>tampax_classique_2.jpg</img>
+			  <prix>14</prix>
+			  <img>tampax_classique_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
-			  <img>tampax_classique_4.jpg</img>
+			  <prix>16</prix>
+			  <img>tampax_classique_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
-			  <img>tampax_classique_5.jpg</img>
+			  <prix>18</prix>
+			  <img>tampax_classique_5.png</img>
 			</flux>
 		</listeFlux>
 		<applicateur>true</applicateur>
@@ -244,23 +240,23 @@
 		<listeFlux>
 			<flux>
 			  <name>2</name>
-			  <prix>12</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20maxi%20Confort%20Normal.png</img>
+			  <prix>6.5</prix>
+			  <img>vania_maxiConf_2.png</img>
 			</flux>
 			<flux>
 			  <name>3</name>
 			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20maxi%20%20Confort%20Normal%20Plus%20.png</img>
+			  <img>vania_maxiConf_3.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
 			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20maxi%20confort%20Super%20_0.png</img>
+			  <img>vania_maxiConf_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Maxi%20Confort%20Super%20Plus%20x14_0.png</img>
+			  <prix>7.8</prix>
+			  <img>vania_maxiConf_5.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -279,8 +275,8 @@
 		<listeFlux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Maxi%20Fresh%20Super%20.png</img>
+			  <prix>16</prix>
+			  <img>vania_maxiFresh_4.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -302,8 +298,8 @@
 		<listeFlux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20maxi%20Vania%C2%AE%20Super%20Aloe%20Vera%20.png</img>
+			  <prix>15.6</prix>
+			  <img>vania_aloeVera.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -320,8 +316,8 @@
 		<listeFlux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Maxi%20Nuit.png</img>
+			  <prix>13</prix>
+			  <img>vania_maxiNuit.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -336,8 +332,8 @@
 		<listeFlux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Sweet%20DreamsT%20Maxi.png</img>
+			  <prix>8.9</prix>
+			  <img>vania_sweetMaxiNuit.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -357,13 +353,13 @@
 		<listeFlux>
 			<flux>
 			  <name>2</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20maxi%20Protect%20Normal%20.png</img>
+			  <prix>6.8</prix>
+			  <img>vania_maxiProtect_2.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20%20maxi%20Protect%20Super.png</img>
+			  <prix>7.4</prix>
+			  <img>vania_maxiProtect_4.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -382,22 +378,22 @@
 			<flux>
 			  <name>1</name>
 			  <prix>12</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Optima%C2%AE%20AirT%20Mini.png</img>
+			  <img>vania_optimaAir_1.png</img>
 			</flux>
 			<flux>
 			  <name>2</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Optima%C2%AE%20AirT%20Normal%20_0.png</img>
+			  <prix>13</prix>
+			  <img>vania_optimaAir_2.png</img>
 			</flux>
 			<flux>
 			  <name>3</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Optima%C2%AE%20AirT%20Normal%20Plus_0.png</img>
+			  <prix>14.2</prix>
+			  <img>vania_optimaAir_3.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Optima%C2%AE%20AirT%20Super%20Plus.png</img>
+			  <prix>15.3</prix>
+			  <img>vania_optimaAir_5.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -415,13 +411,13 @@
 		<listeFlux>
 			<flux>
 			  <name>2</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Optima%C2%AE%20AirT%20Fresh%20Normal.png</img>
+			  <prix>6.5</prix>
+			  <img>vania_optimaAirFresh_2.png</img>
 			</flux>
 			<flux>
 			  <name>3</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Optima%C2%AE%20AirT%20Fresh%20Normal%20Plus_0.png</img>
+			  <prix>3.7</prix>
+			  <img>vania_optimaAirFresh_3.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -440,8 +436,8 @@
 		<listeFlux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
-			  <img>http://www.vania.com/sites/www.vania.com/files/imagecache/vania_product_linked/Serviette%20Vania%C2%AE%20Sweet%20DreamsT%20extrafine_0.png</img>
+			  <prix>15.3</prix>
+			  <img>vania_sweetExtraFine.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -462,28 +458,28 @@
 		<listeFlux>
 		  <flux>
 			  <name>2</name>
-			  <prix>7</prix>
-			  <img>http://www.always.fr/images/fr-fr/products/pads/always-ultra/thumbnails/Always-Ultra-normal.png</img>
+			  <prix>15.8</prix>
+			  <img>always_actiPearl_2.png</img>
 			</flux>
 			<flux>
 			  <name>3</name>
-			  <prix>7</prix>
-			  <img>http://www.always.fr/images/fr-fr/products/pads/always-ultra/thumbnails/Always-Ultra-normal-plus.png</img>
+			  <prix>16.5</prix>
+			  <img>always_actiPearl_3.png</img>
 			</flux>
 			<flux>
 			  <name>4</name>
-			  <prix>7</prix>
-			  <img>http://www.always.fr/images/fr-fr/products/pads/always-ultra/thumbnails/Always-Ultra-long.png</img>
+			  <prix>17.9</prix>
+			  <img>always_actiPearl_4.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
-			  <img>http://www.always.fr/images/fr-fr/products/pads/always-ultra/thumbnails/Always-Ultra-long-plus.png</img>
+			  <prix>18</prix>
+			  <img>always_actiPearl_5.png</img>
 			</flux>
 			<flux>
 			  <name>6</name>
-			  <prix>7</prix>
-			  <img>http://www.always.fr/images/fr-fr/products/pads/always-ultra/thumbnails/Always-Ultra-nuit.png</img>
+			  <prix>19.9</prix>
+			  <img>always_actiPearl_6.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>
@@ -507,17 +503,17 @@
 			<flux>
 			  <name>3</name>
 			  <prix>7</prix>
-			  <img>http://www.always.fr/images/fr-fr/products/pads/Always_Infinity/img3_101.png</img>
+			  <img>always_infinity_3.png</img>
 			</flux>
 			<flux>
 			  <name>5</name>
-			  <prix>7</prix>
-			  <img>http://www.always.fr/images/fr-fr/products/pads/Always_Infinity/img1_101.png</img>
+			  <prix>7.5</prix>
+			  <img>always_infinity_5.png</img>
 			</flux>
 			<flux>
 			  <name>6</name>
-			  <prix>7</prix>
-			  <img>http://www.always.fr/images/fr-fr/products/pads/Always_Infinity/img2_101.png</img>
+			  <prix>8.3</prix>
+			  <img>always_infinity_6.png</img>
 			</flux>
 		</listeFlux>
 		<type>serviette</type>

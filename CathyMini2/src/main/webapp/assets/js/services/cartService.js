@@ -30,10 +30,11 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     service.getCart = function() {
         $http.post("/webresources/cart/getCart")
         .success(function(data){
-            if(data !== null){
+            service.cart.price = 0;
+            if(data !== null && data !== ""){
                 service.cart.products = [];
                 var prodColl = data.cartLineCollection;
-                if(prodColl !== null){
+                if(prodColl){
                     for( var i = 0;i<prodColl.length; i++){
                         var prod = prodColl[i].product;
                         prod.quantity = parseInt(prodColl[i].quantity);
