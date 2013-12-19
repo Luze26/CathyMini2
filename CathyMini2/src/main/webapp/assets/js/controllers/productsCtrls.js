@@ -151,7 +151,7 @@ angular.module('products').
        */
       $scope.changeTampon = function() {
         if($scope.search.tampon === false && $scope.search.napkin === false) {
-          $scope.search.napkin = true;
+          $scope.search.tampon = true;
         }
       };
 
@@ -160,7 +160,7 @@ angular.module('products').
        */
       $scope.changeNapkin = function() {
         if($scope.search.napkin === false && $scope.search.tampon === false) {
-          $scope.search.tampon = true;
+          $scope.search.napkin = true;
         }
       };
 

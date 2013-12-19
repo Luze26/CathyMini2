@@ -2,6 +2,7 @@
 
 .navtab {
     text-align : center;
+    margin-top:-12px;
 }
 
 .navtab.nav li.disabled, .nav li.disabled a {
@@ -24,6 +25,14 @@
     
 }
 
+.navtab-btn:first-of-type a {
+    border-top-left-radius:5px;
+}
+
+.navtab-btn:last-of-type a {
+    border-top-right-radius:5px;
+}
+
 .navtab-follow {
     width: 0px;
     height: 0px;
@@ -35,12 +44,19 @@
     position: absolute;
 }
 
+
 .pager {
     margin-top : 10px;
 }
 
-.payment-tabs legend {
-    text-align : center;
+.payment-tabs {
+    border-top-right-radius:0px ! important;
+    border-top-left-radius:0px ! important;
+    margin-top:-px;
+
+    & legend {
+        text-align : center;
+    }
 }
 
 .login-buttons {
@@ -52,6 +68,7 @@
 
 /* Tabs Content Animation 'ON' */
 .show-anim {
+    margin-left:-10px;
     animation: show-anim-param 1.3s ease;
     -webkit-animation: show-anim-param 1.3s ease;
 }

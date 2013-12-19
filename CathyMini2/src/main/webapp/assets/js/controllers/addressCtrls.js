@@ -95,7 +95,7 @@ angular.module('address')
     /**
      * New modal object
      */
-    $scope.newModal = {title: "Ajout d'adresse", okLabel: "Ajouter l'adresse", address: {}, action: $scope.addAddress};
+    $scope.newModal = {title: "Ajout d'une adresse", okLabel: "Ajouter l'adresse", address: {}, action: $scope.addAddress};
     
     /**
      * Modal
