@@ -15,6 +15,14 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
         return service.cart.products.length;
     };
     
+    var refreshPrice = function() {
+        var price = 0;
+        for(var i = 0; i < service.cart.products.length; i++) {
+            price += service.cart.products[i].quantity * service.cart.products[i].price;
+        }
+        service.cart.price = price;
+    };
+    
     /**
      * function to load the cart
      * @returns {undefined}
@@ -22,18 +30,18 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
     service.getCart = function() {
         $http.post("/webresources/cart/getCart")
         .success(function(data){
-            service.cart.price = 0;
             if(data !== null){
                 service.cart.products = [];
                 var prodColl = data.cartLineCollection;
                 if(prodColl !== null){
                     for( var i = 0;i<prodColl.length; i++){
                         var prod = prodColl[i].product;
-                        prod.quantity = prodColl[i].quantity;
+                        prod.quantity = parseInt(prodColl[i].quantity);
                         service.cart.products.push(prod);
                         service.cart.price += (prodColl[i].product.price * prodColl[i].product.quantity);
                     }
                 }
+                refreshPrice();
             }
         });
     };
@@ -82,7 +90,7 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
                     notif = "Le produit "+service.cart.products[i].name+" a été ajouté au panier !";
                 }
                 notificationService.displayMessage(notif);
-                service.cart.price += product.price; //Increment the total price
+                refreshPrice(); //Increment the total price
             });
     };
     
@@ -91,22 +99,20 @@ angular.module('common').factory('cartService', ['$http', '$rootScope', 'consume
      * @param {Product} product
      */
     service.changeQuantity = function(product) {
+        if(product.quantity < 0) {
+            product.quantity = 0;
+            refreshPrice();
+            return;
+        }
         $http.post("/webresources/cart/changeQuantityToCart", {"productId": product.id, "quantity": product.quantity})
                 .success(function(data) {
-                service.cart.price += (data *product.price)-(product.quantity*product.price);
-               /* var diff = data - product.quantity;
-                var notif;
-                if(diff<0){
-                    notif = -diff+" "+product.name+" ont été enlevé au panier";
-                }
-                else
-                    notif = diff+" "+product.name+" ont été ajouté au panier";*/
-                product.quantity = data;
+                product.quantity = parseInt(data);
+                refreshPrice();
                 notificationService.displayMessage("Le nombre de "+product.name+" dans le panier a été modifié");
             })
-                .error(function(data) {
-                    alert("Un problème lors du changement de quantité a été déclenché!");
-                });
+            .error(function(data) {
+                notificationService.displayMessage("Un problème lors du changement de quantité a été déclenché!");
+            });
     };
     
     /**

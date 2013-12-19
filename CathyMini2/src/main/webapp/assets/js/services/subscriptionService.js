@@ -7,6 +7,14 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      */
     service.sub = [];
 
+    var refreshPrice = function(sub) {
+        var price = 0;
+        for(var i = 0; i < sub.products.length; i++) {
+            price += sub.products[i].quantity * sub.products[i].price;
+        }
+        sub.price = price;
+    };
+    
     /**
      * Number of different products in the sub
      * @returns {service.sub.products.length|Number}
@@ -32,7 +40,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                     service.sub.push({products: [], price: 0, name: data[j].name, nbJ: data[j].nbJ});
                     for( var i = 0;i<prodColl.length; i++){
                         var prod = prodColl[i].product;
-                        prod.quantity = prodColl[i].quantity;
+                        prod.quantity = parseInt(prodColl[i].quantity);
                         service.sub[j].products.push(prod);
                         service.sub[j].price += (prodColl[i].product.quantity * prodColl[i].product.price);
                     }
@@ -55,7 +63,7 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                     service.sub.push({products: [], price: 0, name: data[j].name, nbJ: data[j].nbJ});
                     for( var i = 0;i<prodColl.length; i++){
                         var prod = prodColl[i].product;
-                        prod.quantity = prodColl[i].quantity;
+                        prod.quantity = parseInt(prodColl[i].quantity);
                         service.sub[j].products.push(prod);
                         service.sub[j].price += (prodColl[i].product.quantity * prodColl[i].product.price);
                     }
@@ -91,21 +99,19 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                             if(service.sub[j].products[i].id === product.id){
                                 found = true;
                                 service.sub[j].products[i].quantity++;
-                                notif = "Et un "+service.cart.products[i].name+" de plus dans l'abonnement "+service.sub[j].name;
+                                notif = "Et un "+service.sub[j].products[i].name+" de plus dans l'abonnement "+service.sub[j].name;
                             }
                         }
                         if(!found){ //Else, new product for the cart
                             product.quantity = 1;
                             service.sub[j].products.push(product);
-                            notif = "Le produit "+service.cart.products[i].name+" a été ajouté à l'abonnement "+service.sub[j].name+" !";
+                            notif = "Le produit "+service.sub[j].products[i].name+" a été ajouté à l'abonnement "+service.sub[j].name+" !";
                         }
-                        service.sub[j].price += product.price;
+                        refreshPrice(service.sub[j]);
                         notificationService.displayMessage(notif);
-
+                        return;
                     }
                 }
-                
-                 //Increment the total price
             });
     };
     
@@ -115,33 +121,30 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
      * @param {String} name
      */
     service.changeQuantity = function(product, name) {    
+        if(product.quantity < 0) {
+            product.quantity = 0;
+            return;
+        }
         $http.post("/webresources/cart/changeQuantityToSub", {"productId": product.id, "quantity": product.quantity, "name": name})
                 .success(function(data) {
                 for(var i =0;i<service.sub.length;i++){
                     if(service.sub[i].name === name){
-                        service.sub[i].price += (data *product.price)-(product.quantity*product.price);
                         for(var j = 0; j<service.sub[i].products.length;j++){
                             if(service.sub[i].products[j].id === product.id){
-                               service.sub[i].products[j].quantity = data; 
-                               /*var diff = data - product.quantity;
-                               var notif;
-                               if(diff<0){
-                                   notif = -diff+" "+product.name+" ont été enlevé à l'abonnement "+service.sub[i].name;
-                               }
-                               else
-                                   notif = diff+" "+product.name+" ont été ajouté à l'abonnement "+service.sub[i].name;
-                               notificationService.displayMessage(notif);*/
+                               service.sub[i].products[j].quantity = parseInt(data);
                                notificationService.displayMessage("Le nombre de "+service.sub[i].products[j].name+" dans l'abonnement "+service.sub[i].name+" a été modifié");
 
                             }
                         }
+                        refreshPrice(service.sub[i]);
+                        return;
                     }
                 }
                 //product.quantity = data;
             })
-                .error(function(data) {
-                    alert("Un problème lors du changement de quantité a été déclenché!");
-                });
+            .error(function(data) {
+                notificationService.displayMessage("Un problème lors du changement de quantité a été déclenché!");
+            });
     };
     
     /**
@@ -161,9 +164,9 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                     }
                 }
             })
-                .error(function(data) {
-                    alert("Un problème lors du changement de nom a été déclenché!");
-                });          
+            .error(function(data) {
+                notificationService.displayMessage("Un problème lors du changement de nom a été déclenché!");
+            });          
        };
     
     /**
@@ -177,9 +180,9 @@ angular.module('common').factory('subscriptionService', ['$http', '$rootScope', 
                 for(var i =0;i<service.sub.length;i++){
                     if(service.sub[i].name === name){
                         service.sub[i].products.splice(data,1);
-                        service.sub[i].price += -(q *product.price);
                         notificationService.displayMessage("Le produit "+product.name+" a bien été supprimé de l'abonnement "+service.sub[i].name+" !");
-
+                        refreshPrice(service.sub[i]);
+                        return;
                     }
                 }
                 

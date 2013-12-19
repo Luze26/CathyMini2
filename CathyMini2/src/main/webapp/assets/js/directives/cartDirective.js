@@ -231,23 +231,24 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                 '<div id="cartTabs" ng-click="prevent($event)">' + 
                     '<div id="cartTab" ng-class="{\'active\': cartOpen}" ng-click="toggleCart($event)" title="Panier">' +
                         '<i class="fa fa-shopping-cart fa-4x"></i>' +
-                        '<div ng-show="cartService.nbProducts() == 0">Panier bien vide</div>' +
+                        '<div ng-show="cartService.nbProducts() == 0">Panier tout vide</div>' +
                         '<div ng-show="cartService.nbProducts() != 0" ng-cloak="ng-cloak">{{cartService.nbProducts()}} produits dans le panier</div>' +
                      '</div>' +
                      '<div id="subTab" ng-class="{\'active\': subOpen}" ng-click="toggleSub($event)" title="Abonnements">' +
-                        '<img src="/assets/images/order.png" alt="abonnement"/>' +
+                        '<img style="margin-top: 5px;" src="/assets/images/order.png" alt="abonnement"/>' +
                         '<div>Abonnements</div>' +
                      '</div>' +
                  '</div>' +
                  '<div id="cartPanel" ng-click="prevent($event)">' +
                     '<div ng-show="cartOpen">' +
+                        '<div class="empty-basket" ng-show="cartService.nbProducts() == 0" ng-cloak="ng-cloak">Votre panier est tout vide.<br/>Il se sent très triste.</div>' +
                         '<table class="table table-striped table-bordered table-hover product-list">' +
                             '<tr class="prodCart" ng-repeat="prod in cartService.cart.products">' +
                                 '<td><img class="imgCart" ng-src="/assets/images/product/{{prod.pictureUrl}}"/></td>'+
                                 '<td>{{prod.name}}</td>' +
-                                '<td><input type="text" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/></td>' +
+                                '<td><input type="number" class="inputQ" name="lname" ng-model="prod.quantity" ng-change="cartService.changeQuantity(prod)"/></td>' +
                                 '<td title="Enlever du panier">\n\
-                                <img class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/images/remove.png"/>\n\
+                                <img title="Enelver du panier" class="deleteProduct" ng-click="cartService.deleteProduct(prod)" src="/assets/images/remove.png"/>\n\
                                 </td>' +
                             '</tr>' +
                         '</table>' +
@@ -257,8 +258,8 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                     '<div ng-show="subOpen">' +
                         '<select style="margin-top: 5px; margin-left: 5px; margin-right: 5px;" class="selectSub" ng-change="changeSelection()" ng-model="selectedSub" ng-options="s.name for s in subService.sub">'+
                         '</select>'+
+                        '<button title="Changer le nom" style="margin-right: 5px; margin-top: 5px; margin-bottom: 5px;" class="btn btn-primary smaller-btn" type="button" ng-hide="showEditButton" ng-click="showEdit()"><img src="/assets/images/edit.png" alt="Editer"/>Changer le nom</button>'+
                         '<a style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px;" title="Nouvel abonnement" class="btn btn-primary smaller-btn" ng-hide="showAddS" ng-click="newSub()"><img src="/assets/images/add.png" alt="Ajouter"/></a>'+
-                        '<button title="Changer le nom" style="margin-top: 5px; margin-bottom: 5px;" class="btn btn-primary smaller-btn" type="button" ng-hide="showEditButton" ng-click="showEdit()"><img src="/assets/images/edit.png" alt="Editer"/>Changer le nom</button>'+
                         '<div ng-hide="show">'+
                                 '<input style="margin-left: 5px;" name="input" type="text" class="col-xs-5" ng-model="name" ng-change="changeNameTemp(name)" required="required" />'+
                                 '<button title="Annuler" type="button" class="account-btn btn smaller-btn col-xs-3" ng-click="cancelEdit()">Annuler</button>'+
@@ -268,9 +269,9 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
                             '<tr class="prodCart" ng-repeat="prod in getSubProducts()">' +
                                 '<td><img class="imgCart" ng-src="/assets/images/product/{{prod.pictureUrl}}"/></td>'+
                                 '<td>{{prod.name}}</td>' +
-                                '<td><input type="text" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/></td>\n\
+                                '<td><input type="number" class="inputQ" name="lname" value="prod.quantity" ng-model="prod.quantity" ng-change="changeQuantitySub(prod)"/></td>\n\
                                 <td>\n\
-                                <img class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="/assets/images/remove.png"/>\n\
+                                <img title="Enelever de l\'abonnement" class="deleteProduct" ng-click="subService.deleteProduct(prod, getNameSub())" src="/assets/images/remove.png"/>\n\
                                 </td>' +
                             '</tr>' +
                         '</table>' +
