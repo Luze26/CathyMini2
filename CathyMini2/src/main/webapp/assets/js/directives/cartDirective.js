@@ -231,7 +231,7 @@ angular.module('common').directive('cartDirective', ['$rootScope', 'cartService'
            });
        };
     },
-    template: '<div id="cart">' +
+    template: '<div ng-cloak id="cart">' +
                 '<div id="cartTabs" ng-click="prevent($event)">' + 
                     '<div id="cartTab" ng-class="{\'active\': cartOpen}" ng-click="toggleCart($event)" title="Panier">' +
                         '<i class="fa fa-shopping-cart fa-4x"></i>' +
