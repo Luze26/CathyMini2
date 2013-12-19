@@ -116,7 +116,7 @@ angular.module('payment').
         };
         
         $scope.getLastBtnClass = function() {
-            return ($scope.activeTab !== 0) ? '' : 'disabled';
+            return ($scope.activeTab !== 0) ? '' : 'hidden';
         };
         
         $scope.getNextBtnClass = function() {
