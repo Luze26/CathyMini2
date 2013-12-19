@@ -203,19 +203,6 @@ public class PurchaseFacade {
             for (Purchase subscription : subscriptions) {
                 payments.add(new Payment(subscription));
             }
-        } else {
-            PurchaseSubscription ps = new PurchaseSubscription();
-            PaymentInfos pi = new PaymentInfos();
-            Collection<PaymentInfos> col = new ArrayList<PaymentInfos>();
-            col.add(pi);
-            pi.setConsumer(user);
-            pi.setInfo("Test d'un abonnement.");
-            ps.setConsumer(user);
-            ps.setDaysDelay(21);
-            ps.setPurchaseLineCollection(new ArrayList<PurchaseLine>());
-            ps.setPayementInfo(pi);
-            Payment p = new Payment(ps);
-            payments.add(p);
         }
         
         return payments;
@@ -239,30 +226,6 @@ public class PurchaseFacade {
             for (Purchase subscription : subscriptions) {
                 payments.add(new Payment(subscription));
             }
-        } else {
-            Calendar cal = Calendar.getInstance();
-            PurchaseSubscription ps = new PurchaseSubscription();
-            Consumer c = new Consumer();
-            PaymentInfos pi = new PaymentInfos();
-            Collection<PaymentInfos> col = new ArrayList<PaymentInfos>();
-            col.add(pi);
-            pi.setConsumer(c);
-            pi.setInfo("Test d'un abonnement.");
-            c.setUsername("Corentin");
-            c.setMail("corentindijoux@gmail.com");
-            c.setRole(Role.MEMBER);
-            c.setPaymentInfoCollection(col);
-            ps.setConsumer(c);
-            ps.setDaysDelay(21);
-            ps.setCreationDate(cal.getTimeInMillis());
-            ps.setPayementDate(cal.getTimeInMillis());
-            ps.setDeliveryDate(cal.getTimeInMillis());
-            ps.setNextDelivery(cal.getTimeInMillis());
-            ps.setPurchaseLineCollection(new ArrayList<PurchaseLine>());
-            ps.setPayementInfo(pi);
-            Payment p = new Payment(ps);
-            payments.add(p);
-            payments.add(p);
         }
         
         return payments;
