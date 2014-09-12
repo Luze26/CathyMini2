@@ -2,6 +2,7 @@ CathyMini2
 ==========
 Ecommerce website. Tampons and feminine supplies delivering website.
 
+/!\ Build for GlassFish 4.0. Does not work on GlassFish 4.1
 
 Global Structure
 -------------
